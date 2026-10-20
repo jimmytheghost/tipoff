@@ -15,6 +15,6 @@ Native SwiftUI macOS 15+ NBA viewing guide, part of the Bug / Worklog menu bar s
 
 ## GitHub delivery
 
-- The repository is private at `https://github.com/jimmytheghost/tipoff`; preserve that visibility.
+- The repository is public at `https://github.com/jimmytheghost/tipoff`. It is an MIT-licensed personal tool shared as-is; keep that framing in documentation. Do not promise product support or a release cadence.
 - After each completed change, run relevant validation, update affected documentation, commit, and push the current branch before reporting completion. Preserve unrelated work and report commit or push failures.
 - Keep generated builds, local caches, credentials, and user data out of Git. Documentation-only changes need diff/content checks rather than an app rebuild.

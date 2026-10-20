@@ -1,26 +1,43 @@
-# Tipoff
+# Tipoff 🏀
 
-A native macOS menu bar app that answers: who’s playing, when, and where can I watch?
+**Who’s playing, when, and where can I watch?** A small native macOS menu bar app for NBA broadcast listings. No scores.
 
-Tipoff starts with the NBA and matches Bug / Worklog: a 360-point SwiftUI popover, mint accent, system typography, and rounded cards. Requires macOS 15 or newer.
+I built this because I was tired of checking the NBA schedule every day to figure out which channel or streaming service had a game. I’m a Nuggets fan in Mountain Time, so there’s also an Altitude-specific supplement for Denver games.
 
-## First version
+This is a personal tool I’m sharing as it stands. If it’s useful, take it. If you want something different, fork it and have your agents—or yourself—make it work the way you want. There’s no product roadmap or promise of ongoing support. Bug reports and improvements are welcome, but you don’t need to wait on me to change your copy.
 
-- Basketball menu bar icon; no Dock window.
-- Today’s games, with previous/next day navigation.
-- Compact three-column game rows: stacked away/home teams (`@`), local tipoff time, and TV/streaming listings, sorted by scheduled tipoff.
-- Times follow the Mac’s time zone, including daylight saving changes. Tested for America/Denver.
-- National, local, streaming, and subscription broadcasters when listed by the source. Radio is hidden.
-- Personal Nuggets supplement: source-listed Altitude / Altitude 2 / Altitude+ and Denver channel 9/20 broadcasts, with pregame/postgame times and regional notes under Details.
-- No scores, standings, game clocks, or live game status. Postponements, cancellations, and delays can appear because they affect the schedule.
-- Refresh on opening, after wake, on date/time-zone changes, and every five minutes while running.
-- Cached schedules with visible freshness and refresh-failure labels.
-- Launch at login setting, off until enabled.
+<img src="docs/preview.png" alt="Tipoff menu bar popover with stacked teams, local tipoff times, and broadcast listings" width="360">
 
-## Build and run
+## What it does today
+
+- Opens from a basketball icon in the menu bar; no Dock window.
+- Shows today’s NBA games, with previous/next day navigation.
+- Keeps each game in three columns: stacked teams, local time, and TV/streaming listings.
+- Follows your Mac’s time zone, including daylight saving changes.
+- Adds source-listed Altitude, Altitude 2, Altitude+, and channel 9/20 information for Nuggets games. Details include pregame/postgame times and regional notes.
+- Refreshes when opened, after wake, and every five minutes while running.
+- Keeps an offline copy and shows source/freshness information.
+- Offers launch at login, off by default.
+
+Radio is hidden. There are no scores, standings, live game clocks, notifications, or automatic updates. Broadcaster watch links are a future possibility.
+
+## Try it
+
+Requires **macOS 15 or newer**. The downloadable build is **Apple Silicon (arm64)**, built and tested on my Mac. Intel Macs can try building from source; I haven’t tested them.
+
+[Download v0.2.0](https://github.com/jimmytheghost/tipoff/releases/tag/v0.2.0) · [All releases](https://github.com/jimmytheghost/tipoff/releases)
+
+Unzip `Tipoff.app`, move it to your Applications folder, and open it. Click the basketball in your menu bar. To update an existing copy, quit Tipoff before replacing it.
+
+The shared build is ad-hoc signed and **not notarized**. macOS may block a downloaded copy. Building locally is another option. There is no installer or update service, and no account or API key is required.
+
+## Build it yourself
+
+Install Apple’s Xcode Command Line Tools first (`xcode-select --install` if needed). The current version was built with Swift 6.3.3. No third-party Swift packages are required.
 
 ```sh
-swift build
+git clone https://github.com/jimmytheghost/tipoff.git
+cd tipoff
 scripts/test.sh
 scripts/package-app.sh
 mkdir -p ~/Applications
@@ -28,47 +45,39 @@ ditto dist/Tipoff.app ~/Applications/Tipoff.app
 open ~/Applications/Tipoff.app
 ```
 
-Use the basketball icon in the macOS menu bar to open Tipoff. No account or API key is required. Packaging uses ad-hoc signing unless `TIPOFF_SIGNING_IDENTITY` names an available certificate.
+Quit an existing Tipoff instance before copying a replacement. `swift build` also builds the development tools. Packaging uses ad-hoc signing unless you set `TIPOFF_SIGNING_IDENTITY` to a signing certificate available on your machine.
 
-## Data and accuracy
+## Where it’s at
 
-The primary source is the structured `__NEXT_DATA__` embedded in `https://www.nba.com/games?date=YYYY-MM-DD`. This is the NBA’s own game-card data, including broadcast arrays. The separate NBA CDN schedule endpoint returned HTTP 403 during development; Tipoff does not depend on that endpoint.
+This version is NBA-only and focused on US broadcast listings. The Nuggets supplement is deliberately built in for my own use, rather than a general favorites or location system. You can change that.
 
-ESPN’s public website schedule endpoint is the fallback. Fallback mode is visibly labeled because local and streaming listings may be incomplete. Tipoff does not infer Peacock from NBC, infer League Pass eligibility, or guess local networks. Even NBA.com sometimes omits local TV information. A listed service is not a determination of eligibility or blackout status.
+NBA.com supplies the main game and broadcast data, ESPN is the fallback, and Altitude’s schedule supplements matching Nuggets games. These are public website endpoints, not guaranteed APIs. They can change or stop working. Listings can be incomplete, and a listed channel or service does not mean your subscription or location can receive it. Altitude’s Denver/outer-market restrictions are preserved in Details.
 
-These website endpoints are undocumented dependencies, with no availability guarantee. A page/schema change can require a decoder update. On failure Tipoff retains its last successful cache rather than displaying a false empty schedule. `Checked` means retrieved by Tipoff, not a claim that the upstream broadcaster independently reconfirmed it.
+Tipoff doesn’t guess missing broadcasters or League Pass eligibility. Times come from the sources and use your Mac’s time zone. A failed refresh retains saved listings with a visible warning. “Checked” means the app retrieved the data, not that a broadcaster reconfirmed it.
 
-Source dates use Eastern time. Tipoff fetches every source date intersecting the user’s local day, filters by local start time, and removes duplicates. An unknown tipoff time stays on the source’s named schedule date and displays `Time TBD`.
+No analytics or app account. Local schedule caches live under `~/Library/Application Support/Tipoff/`. The app makes network requests to its schedule sources. [Source details and cache behavior](docs/DATA.md).
 
-Schedule caches live in `~/Library/Application Support/Tipoff/Schedules/` and contain only the app’s schedule/broadcast model, never scores. At most 45 snapshots are retained. No analytics, cloud account, or paid service is used.
+## Make it yours
 
-## Nuggets / Altitude supplement
+Start with [AGENTS.md](AGENTS.md). It describes the existing behavior, design choices, and validation commands so you or your agents can get oriented.
 
-For this personal version, Nuggets games also consult [Altitude’s Nuggets broadcast schedule](https://www.altitudeplus.com/nuggets-broadcasts). Listed channels appear first in the existing three-column row. `Details` opens pregame/game/postgame times in your Mac’s time zone, the source’s exact network labels, the last Altitude check time, and the source link. `Details*` indicates regional notes: the source distinguishes Denver-DMA exclusivity from outer-market coverage; all listed channels should not be assumed available in the same location.
+- `Sources/Tipoff/`: menu bar app entry point.
+- `Sources/TipoffCore/TipoffMenuView.swift`: the popover and broadcast details.
+- `Sources/TipoffCore/ScheduleProvider.swift` and `FeedDecoder.swift`: NBA/ESPN fetching and decoding.
+- `Sources/TipoffCore/AltitudeSchedule.swift`: the personal Nuggets supplement.
+- `Tests/TipoffTests/`: source fixtures and tests for matching, time zones, failures, and caching.
 
-[Row preview](docs/altitude-preview.png) · [Broadcast details preview](docs/altitude-details.png).
-
-The supplement matches the Mountain calendar date, opponent, and home/away designation. Its published tipoff must agree with the main schedule within one minute. Changed or mismatched games keep their primary listings and display a warning. National-only games do not acquire invented Altitude coverage. Other teams are unaffected.
-
-Altitude is fetched on refresh only when a Nuggets game is on the selected day. Parsed schedule/broadcast fields are cached separately at `~/Library/Application Support/Tipoff/Altitude.json`; page configuration and visitor metadata are never stored. On a failed Altitude request, a saved supplement can still be used with an explicit warning and its original check timestamp. Primary NBA/ESPN listings remain usable when Altitude is unavailable. No-match or format changes are reported rather than silently assumed to mean no broadcast.
-
-The publisher’s clocks are interpreted as America/Denver, with daylight saving time; the agreement check against the main feed prevents applying a conflicting tipoff. Pregame/postgame times come directly from the publisher, not from calculated offsets. This is another undocumented page dependency, with no guarantee of completeness or unchanged rights.
-
-## Development
-
-`Sources/TipoffCore/` contains models, source decoders, the network provider, cache, store, and popover. `AltitudeSchedule.swift` handles the personal Nuggets supplement and its cache. `Sources/Tipoff/` is the menu bar entry point. `Sources/TipoffCheck/` is a development-only live-source check / renderer; it is not packaged in the app.
+For a live source check:
 
 ```sh
-swift run TipoffCheck 2026-10-20
+swift run TipoffCheck 2026-10-24
 .build/debug/TipoffCheck --render /tmp/tipoff-preview.png
 ```
 
-The live check prints scheduling/broadcast information and writes `/tmp/tipoff-preview.png.json`. The renderer uses that snapshot, without network requests. Add `--light` before the image path for a light-mode render.
+The check writes a snapshot to `/tmp/tipoff-preview.png.json`; the renderer uses it without another network request. Add `--light` before the image path for light mode, or `--altitude-details` to preview a matched Nuggets game’s details.
 
-See [docs/PLAN.md](docs/PLAN.md) for future scope and [docs/VALIDATION.md](docs/VALIDATION.md) for executed checks and remaining manual checks.
+[What’s implemented / possible next steps](docs/PLAN.md) · [Validation and remaining manual checks](docs/VALIDATION.md) · [Nuggets row](docs/altitude-preview.png) · [Altitude details](docs/altitude-details.png)
 
-## Repository
+## License
 
-Private GitHub repository: [jimmytheghost/tipoff](https://github.com/jimmytheghost/tipoff).
-
-`main` tracks `origin/main`. Build outputs and local schedule caches are excluded from version control. Contributor instructions are in [AGENTS.md](AGENTS.md).
+The code is [MIT licensed](LICENSE): use it, change it, and share it. It’s provided as-is. Third-party schedule data, names, and marks remain with their respective owners; see [NOTICE](NOTICE). Tipoff is not affiliated with or endorsed by the NBA, ESPN, Altitude, or any team or broadcaster.

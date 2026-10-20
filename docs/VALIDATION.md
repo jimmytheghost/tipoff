@@ -2,6 +2,15 @@
 
 Environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Initial personal-use time zone: America/Denver.
 
+## Public sharing preparation — v0.2.0
+
+- README rewritten for a personal tool shared as-is, with screenshots, source/build/install instructions, current scope, and clear Apple Silicon / ad-hoc signing / no-notarization limits. Detailed source documentation lives in `docs/DATA.md`.
+- MIT license and third-party notice added; both are included in the packaged application.
+- Scanned all 45 pre-publication historical file blobs for common credential formats and raw visitor metadata assignments; no matches. Reviewed tracked paths: no build outputs, schedule caches, signing material, or credentials are tracked. Original commit author names/emails remain in history.
+- `scripts/test.sh`: **28 executed, 28 passed**. `scripts/package-app.sh`: passed; no runtime behavior changes in this preparation.
+- Packaged `Tipoff-0.2.0-macos-arm64.zip` and `SHA256SUMS` for a basic GitHub release. Verified archive members, license/notice inclusion, extracted app code signature, and Mach-O arm64 architecture. No Intel or notarization claim is made.
+- Local Markdown/image links and diff whitespace checks passed.
+
 ## Altitude Nuggets supplement — version 0.2.0
 
 - `scripts/test.sh`: **28 executed, 28 passed** after the final changes. Includes 13 new Altitude cases: actual schedule fixture (85 dated games; unassigned Cup placeholders ignored), channel variants, neutral sites, national-only games, market notes, duplicate broadcasters, strict matchup/tipoff agreement, changed game suppression, Mountain DST, malformed pages/headers/missing footnotes, score-free cache round-trip, and failed-refresh handling with and without saved data.
@@ -30,7 +39,7 @@ Environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Too
 - Live `TipoffCheck 2026-10-21`: NBA.com primary succeeded, 11 games. Source-provided national, subscription, and radio listings parsed.
 - Direct Swift URLSession request to NBA CDN schedule endpoint returned HTTP 403. The accessible NBA Games page is used instead.
 - Offscreen AppKit/SwiftUI renders inspected in dark and light appearances: all three opening-day games visible, source/time freshness footer visible, no clipping. Final dark preview: `docs/preview.png`.
-- Installed `/Users/jimmytheghost/Applications/Tipoff.app`, verified its signature, launched it, and confirmed its executable remained running.
+- Installed `~/Applications/Tipoff.app`, verified its signature, launched it, and confirmed its executable remained running.
 
 ## Remaining hands-on checks
 

@@ -9,6 +9,7 @@ BIN_DIR=$(swift build --package-path "$PROJECT_ROOT" -c release --show-bin-path)
 mkdir -p "$APP_DIR/Contents/MacOS" "$APP_DIR/Contents/Resources"
 cp "$BIN_DIR/Tipoff" "$APP_DIR/Contents/MacOS/Tipoff"
 cp "$PROJECT_ROOT/Resources/Info.plist" "$APP_DIR/Contents/Info.plist"
+cp "$PROJECT_ROOT/LICENSE" "$PROJECT_ROOT/NOTICE" "$APP_DIR/Contents/Resources/"
 if [ ! -f "$PROJECT_ROOT/Resources/Tipoff.icns" ]; then
     swift "$SCRIPT_DIR/generate-icon.swift" "$PROJECT_ROOT/Resources"
     iconutil -c icns "$PROJECT_ROOT/Resources/Tipoff.iconset" -o "$PROJECT_ROOT/Resources/Tipoff.icns"
