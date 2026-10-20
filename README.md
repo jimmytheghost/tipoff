@@ -8,9 +8,9 @@ Tipoff starts with the NBA and matches Bug / Worklog: a 360-point SwiftUI popove
 
 - Basketball menu bar icon; no Dock window.
 - Today’s games, with previous/next day navigation.
-- Away team above home team (`@`), sorted by scheduled tipoff.
+- Compact three-column game rows: stacked away/home teams (`@`), local tipoff time, and TV/streaming listings, sorted by scheduled tipoff.
 - Times follow the Mac’s time zone, including daylight saving changes. Tested for America/Denver.
-- National, local, streaming, and subscription broadcasters when listed by the source. Radio expands separately.
+- National, local, streaming, and subscription broadcasters when listed by the source. Radio is hidden.
 - No scores, standings, game clocks, or live game status. Postponements, cancellations, and delays can appear because they affect the schedule.
 - Refresh on opening, after wake, on date/time-zone changes, and every five minutes while running.
 - Cached schedules with visible freshness and refresh-failure labels.

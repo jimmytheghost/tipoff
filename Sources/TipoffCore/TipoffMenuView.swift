@@ -5,6 +5,7 @@ import SwiftUI
 public struct TipoffMenuView: View {
     @ObservedObject private var store: ScheduleStore
     @State private var showingSettings = false
+    @State private var gameListHeight: CGFloat?
     @State private var loginEnabled = SMAppService.mainApp.status == .enabled
     @State private var loginError: String?
     public init(store: ScheduleStore) { self.store = store }
@@ -66,11 +67,18 @@ public struct TipoffMenuView: View {
                     empty("No NBA games scheduled", detail: "Check the next day’s lineup.", symbol: "moon.stars")
                 } else {
                     ScrollView {
-                        VStack(spacing: 10) {
-                            ForEach(snapshot.games) { game in GameCard(game: game, timeZone: store.timeZone) }
-                        }.padding(.vertical, 1)
+                        VStack(spacing: 8) {
+                            ForEach(snapshot.games) { game in GameRow(game: game, timeZone: store.timeZone) }
+                        }
+                        .padding(.vertical, 1)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .onGeometryChange(for: CGFloat.self) { geometry in
+                            geometry.size.height
+                        } action: { height in
+                            if height > 0 { gameListHeight = height }
+                        }
                     }
-                    .frame(height: min(CGFloat(snapshot.games.count) * 176, 450))
+                    .frame(height: min(max(gameListHeight ?? CGFloat(snapshot.games.count) * 76, 60), 450))
                 }
             } else if store.refreshing {
                 empty("Finding the lineup", detail: "Checking the latest broadcast listings…", symbol: "basketball")
@@ -151,58 +159,57 @@ public struct TipoffMenuView: View {
     }
 }
 
-private struct GameCard: View {
+private struct GameRow: View {
     let game: Game
     let timeZone: TimeZone
-    @State private var showRadio = false
     private var video: [Broadcast] { game.broadcasts.filter { !$0.category.lowercased().contains("radio") } }
-    private var radio: [Broadcast] { game.broadcasts.filter { $0.category.lowercased().contains("radio") } }
     private var categories: [String] { var seen = Set<String>(); return video.map(\.category).filter { seen.insert($0).inserted } }
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack(alignment: .top, spacing: 8) {
-                VStack(alignment: .leading, spacing: 5) {
-                    team(game.away, code: game.awayCode, location: "AWAY")
-                    team(game.home, code: game.homeCode, location: "HOME")
-                }
-                Spacer(minLength: 0)
-                VStack(alignment: .trailing, spacing: 4) {
-                    Text(game.timeLabel(timeZone: timeZone)).font(.caption.weight(.semibold)).monospacedDigit()
-                    if let notice = game.notice { Text(notice).font(.caption2).foregroundStyle(.orange) }
+        HStack(alignment: .center, spacing: 8) {
+            VStack(alignment: .leading, spacing: 5) {
+                team(game.away, home: false)
+                team(game.home, home: true)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text(game.timeLabel(timeZone: timeZone))
+                    .font(.caption.weight(.semibold)).monospacedDigit()
+                    .fixedSize(horizontal: false, vertical: true)
+                if let notice = game.notice {
+                    Text(notice).font(.caption2).foregroundStyle(.orange)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
-            Rectangle().fill(Color.primary.opacity(0.07)).frame(height: 1)
-            if video.isEmpty {
-                Label("TV / streaming not listed", systemImage: "tv").font(.caption).foregroundStyle(.secondary)
-            } else {
-                ForEach(categories, id: \.self) { category in
-                    VStack(alignment: .leading, spacing: 3) {
-                        Text(category.uppercased()).font(.system(size: 9, weight: .semibold)).foregroundStyle(.secondary)
-                        Text(video.filter { $0.category == category }.map(\.name).joined(separator: " · "))
-                            .font(.callout.weight(.semibold)).foregroundStyle(.mint)
-                            .fixedSize(horizontal: false, vertical: true)
+            .frame(width: 64, alignment: .leading)
+
+            VStack(alignment: .leading, spacing: 6) {
+                if video.isEmpty {
+                    Text("Not listed").font(.caption).foregroundStyle(.secondary)
+                } else {
+                    ForEach(categories, id: \.self) { category in
+                        VStack(alignment: .leading, spacing: 3) {
+                            Text(category.uppercased())
+                                .font(.system(size: 9, weight: .semibold)).foregroundStyle(.secondary)
+                            ForEach(video.filter { $0.category == category }) { broadcast in
+                                Text(broadcast.name).font(.caption.weight(.semibold)).foregroundStyle(.mint)
+                            }
+                        }
                     }
                 }
             }
-            if !radio.isEmpty {
-                DisclosureGroup("Radio", isExpanded: $showRadio) {
-                    VStack(alignment: .leading, spacing: 5) {
-                        ForEach(radio) { station in
-                            Text("\(station.category): \(station.name)").font(.caption2).foregroundStyle(.secondary)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                    }.padding(.top, 5)
-                }.font(.caption2).foregroundStyle(.secondary)
-            }
-        }.padding(12)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color.primary.opacity(0.035), in: RoundedRectangle(cornerRadius: 10))
-            .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.primary.opacity(0.055), lineWidth: 1))
+            .fixedSize(horizontal: false, vertical: true)
+            .frame(width: 92, alignment: .leading)
+        }
+        .frame(minHeight: 48)
+        .padding(10)
+        .background(Color.primary.opacity(0.035), in: RoundedRectangle(cornerRadius: 10))
+        .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.primary.opacity(0.055), lineWidth: 1))
     }
-    private func team(_ name: String, code: String, location: String) -> some View {
-        HStack(spacing: 7) {
-            Text(code).font(.system(size: 9, weight: .bold)).foregroundStyle(.secondary).frame(width: 28, alignment: .leading)
-            Text(location == "HOME" ? "@ \(name)" : name).font(.callout.weight(.medium)).lineLimit(2)
-        }.accessibilityElement(children: .ignore).accessibilityLabel("\(location): \(name)")
+    private func team(_ name: String, home: Bool) -> some View {
+        Text(home ? "@ \(name)" : name)
+            .font(.callout.weight(.medium))
+            .fixedSize(horizontal: false, vertical: true)
+            .accessibilityLabel("\(home ? "HOME" : "AWAY"): \(name)")
     }
 }

@@ -17,6 +17,12 @@ import TipoffCore
             hosting.frame = NSRect(origin: .zero, size: hosting.fittingSize)
             let window = NSWindow(contentRect: hosting.bounds, styleMask: .borderless, backing: .buffered, defer: false)
             window.contentView = hosting
+            // Allow measured list sizing to settle before capturing the popover.
+            for _ in 0..<4 {
+                hosting.layoutSubtreeIfNeeded()
+                try await Task.sleep(for: .milliseconds(20))
+                window.setContentSize(hosting.fittingSize)
+            }
             hosting.layoutSubtreeIfNeeded()
             guard let bitmap = hosting.bitmapImageRepForCachingDisplay(in: hosting.bounds) else { throw FeedError.invalid }
             hosting.cacheDisplay(in: hosting.bounds, to: bitmap)
