@@ -2,6 +2,15 @@
 
 Environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Initial personal-use time zone: America/Denver.
 
+## Public-sharing review using Agentic Toolkit v0.2
+
+- Applied the toolkit's `core/GITHUB-PROJECT-PAGES.md` version 0.2, from toolkit commit `8b30f57e79a7bb2d298f027c2db841dd1ba1463f`.
+- Confirmed that the repository is already public and v0.2.0 is published with an Apple Silicon archive and checksums. Anonymous repository and release-download access returned HTTP 200.
+- Reviewed the existing README, AGENTS.md, license/notice, source entry point, package/build metadata, validation notes, and existing open issues. No open GitHub issues were listed at this review; this is not a claim that the app is bug-free.
+- Added the already-known upstream broadcast-coverage gaps to README's Known issues section, with a suggestion to check the broadcaster's own schedule for missing options.
+- Changes are documentation-only. Runtime source, packaging, and resources match the v0.2.0 tag, so the existing release remains applicable. No new bug sweep, repair backlog, rebuild, or test run was introduced. The 28-test result below is the prior executed baseline.
+- Checked documentation links, image references, and diff whitespace for the updated files. Review of the changed public text found no added personal data or credentials; the original publication's history review remains recorded below.
+
 ## Public sharing preparation — v0.2.0
 
 - README rewritten for a personal tool shared as-is, with screenshots, source/build/install instructions, current scope, and clear Apple Silicon / ad-hoc signing / no-notarization limits. Detailed source documentation lives in `docs/DATA.md`.

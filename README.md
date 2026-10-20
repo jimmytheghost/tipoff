@@ -57,6 +57,10 @@ Tipoff doesn’t guess missing broadcasters or League Pass eligibility. Times co
 
 No analytics or app account. Local schedule caches live under `~/Library/Application Support/Tipoff/`. The app makes network requests to its schedule sources. [Source details and cache behavior](docs/DATA.md).
 
+## Known issues
+
+Some local TV and streaming options are missing from the upstream NBA/ESPN listings. The Altitude supplement adds coverage for matching Nuggets games, but listings for other teams can still be incomplete. If an option is missing, check the broadcaster’s own schedule before assuming the game is unavailable.
+
 ## Make it yours
 
 Start with [AGENTS.md](AGENTS.md). It describes the existing behavior, design choices, and validation commands so you or your agents can get oriented.
