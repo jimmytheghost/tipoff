@@ -11,7 +11,11 @@ import TipoffCore
             let snapshot = try JSONDecoder().decode(ScheduleSnapshot.self, from: data)
             let store = ScheduleStore(timeZone: TimeZone(identifier: snapshot.timeZone)!, previewSnapshot: snapshot)
             let light = CommandLine.arguments.contains("--light")
-            let view = TipoffMenuView(store: store).environment(\.colorScheme, light ? .light : .dark)
+            let content: AnyView
+            if CommandLine.arguments.contains("--altitude-details"), let game = snapshot.games.first(where: { $0.altitude != nil }) {
+                content = AnyView(AltitudeDetailsView(game: game, timeZone: store.timeZone))
+            } else { content = AnyView(TipoffMenuView(store: store)) }
+            let view = content.environment(\.colorScheme, light ? .light : .dark)
             let hosting = NSHostingView(rootView: view)
             hosting.appearance = NSAppearance(named: light ? .aqua : .darkAqua)
             hosting.frame = NSRect(origin: .zero, size: hosting.fittingSize)
@@ -39,6 +43,7 @@ import TipoffCore
         let data = try encoder.encode(snapshot)
         try data.write(to: URL(fileURLWithPath: "/tmp/tipoff-preview.png.json"))
         print("\(snapshot.source) | \(snapshot.day) | \(snapshot.games.count) games | limited: \(snapshot.limitedCoverage)")
+        if let warning = snapshot.altitudeWarning { print("Warning: \(warning)") }
         for game in snapshot.games {
             print("\(game.away) @ \(game.home) · \(game.timeLabel(timeZone: zone))")
             for broadcast in game.broadcasts { print("  \(broadcast.category): \(broadcast.name)") }

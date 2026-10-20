@@ -5,6 +5,7 @@ public protocol ScheduleLoading: Sendable {
 }
 
 public actor ScheduleProvider: ScheduleLoading {
+    private let altitude = AltitudeProvider()
     private let session: URLSession
     public init() {
         let config = URLSessionConfiguration.ephemeral
@@ -41,9 +42,25 @@ public actor ScheduleProvider: ScheduleLoading {
         }
         var calendar = Calendar(identifier: .gregorian); calendar.timeZone = timeZone
         var seen = Set<String>()
-        let selected = games.filter { $0.falls(on: day, calendar: calendar) && seen.insert($0.id).inserted }
-        return ScheduleSnapshot(games: Dates.sorted(selected), day: Dates.key(day, timeZone: timeZone),
-            timeZone: timeZone.identifier, source: source, limitedCoverage: limited)
+        var selected = games.filter { $0.falls(on: day, calendar: calendar) && seen.insert($0.id).inserted }
+        var warning: String?
+        var usedAltitude = false
+        if selected.contains(where: { $0.homeCode == "DEN" || $0.awayCode == "DEN" }) {
+            let supplement = try await altitude.load()
+            warning = supplement.warning
+            if let schedule = supplement.schedule {
+                selected = selected.map { game in
+                    let result = AltitudeDecoder.enrich(game, with: schedule, saved: supplement.saved)
+                    if let issue = result.warning { warning = [warning, issue].compactMap { $0 }.joined(separator: " ") }
+                    if result.game.altitude != nil { usedAltitude = true }
+                    return result.game
+                }
+            }
+        }
+        var snapshot = ScheduleSnapshot(games: Dates.sorted(selected), day: Dates.key(day, timeZone: timeZone),
+            timeZone: timeZone.identifier, source: source + (usedAltitude ? " + Altitude" : ""), limitedCoverage: limited)
+        snapshot.altitudeWarning = warning
+        return snapshot
     }
     private func fetchDays(_ days: [String], nba: Bool) async throws -> [Game] {
         try await withThrowingTaskGroup(of: [Game].self) { group in

@@ -17,6 +17,7 @@ public struct Game: Codable, Equatable, Identifiable, Sendable {
     public var scheduleDay: String
     public var notice: String?
     public var broadcasts: [Broadcast]
+    public var altitude: AltitudeDetails?
     public init(id: String, away: String, home: String, awayCode: String, homeCode: String,
                 start: Date?, scheduleDay: String, notice: String? = nil, broadcasts: [Broadcast]) {
         self.id = id; self.away = away; self.home = home; self.awayCode = awayCode; self.homeCode = homeCode
@@ -42,6 +43,7 @@ public struct ScheduleSnapshot: Codable, Equatable, Sendable {
     public var timeZone: String
     public var source: String
     public var limitedCoverage: Bool
+    public var altitudeWarning: String?
     public init(games: [Game], fetchedAt: Date = Date(), day: String, timeZone: String, source: String, limitedCoverage: Bool) {
         self.games = games; self.fetchedAt = fetchedAt; self.day = day; self.timeZone = timeZone
         self.source = source; self.limitedCoverage = limitedCoverage

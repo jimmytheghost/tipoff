@@ -7,6 +7,7 @@ Native SwiftUI macOS 15+ NBA viewing guide, part of the Bug / Worklog menu bar s
 - Use source-provided broadcasters. Never infer streaming availability, local rights, or League Pass eligibility.
 - Preserve working cached data on network/schema errors. Show source, freshness, and fallback limitations honestly.
 - Follow the Mac’s time zone and use calendar days rather than fixed 24-hour offsets.
+- Nuggets games have a personal Altitude schedule supplement. Require date/opponent/home-away/tipoff agreement; preserve regional footnotes and original freshness when using saved data.
 - Do not modify sibling projects.
 - Validate with `scripts/test.sh`, `scripts/package-app.sh`, and a live `TipoffCheck` when networking/source code changes. Record the actual executed test count.
 - Public website sources are undocumented. Keep fixtures and malformed/schema-change cases in decoder tests.

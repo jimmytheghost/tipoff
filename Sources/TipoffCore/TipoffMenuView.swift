@@ -62,6 +62,9 @@ public struct TipoffMenuView: View {
             if store.snapshot?.limitedCoverage == true {
                 message("Using ESPN. Local and streaming listings may be incomplete.", symbol: "info.circle", color: .secondary)
             }
+            if let warning = store.snapshot?.altitudeWarning {
+                message(warning, symbol: "info.circle", color: .orange)
+            }
             if let snapshot = store.snapshot {
                 if snapshot.games.isEmpty {
                     empty("No NBA games scheduled", detail: "Check the next day’s lineup.", symbol: "moon.stars")
@@ -123,7 +126,7 @@ public struct TipoffMenuView: View {
             }
             VStack(alignment: .leading, spacing: 6) {
                 Text("Broadcast listings").font(.callout.weight(.medium))
-                Text("NBA.com is the primary source; ESPN is the fallback. Tipoff checks on opening, after wake, and every five minutes while running.")
+                Text("NBA.com is the primary source; ESPN is the fallback. Nuggets games also use Altitude’s broadcast schedule. Tipoff checks on opening, after wake, and every five minutes while running.")
                 Text("Listings reflect what the source provides. Local rights, subscriptions, and League Pass blackouts still affect availability.")
             }.font(.caption).foregroundStyle(.secondary)
             Text("No scores. Just where to watch.").font(.caption).foregroundStyle(.mint)
@@ -162,6 +165,7 @@ public struct TipoffMenuView: View {
 private struct GameRow: View {
     let game: Game
     let timeZone: TimeZone
+    @State private var showingAltitude = false
     private var video: [Broadcast] { game.broadcasts.filter { !$0.category.lowercased().contains("radio") } }
     private var categories: [String] { var seen = Set<String>(); return video.map(\.category).filter { seen.insert($0).inserted } }
     var body: some View {
@@ -197,6 +201,17 @@ private struct GameRow: View {
                         }
                     }
                 }
+                if game.altitude != nil {
+                    Button { showingAltitude.toggle() } label: {
+                        Label(game.altitude?.notes.isEmpty == false ? "Details*" : "Details", systemImage: "info.circle").font(.caption2)
+                    }
+                    .buttonStyle(.plain).foregroundStyle(.secondary)
+                    .help("Altitude broadcast times and regional notes")
+                    .accessibilityLabel("Altitude broadcast details for \(game.away) at \(game.home)")
+                    .popover(isPresented: $showingAltitude) {
+                        AltitudeDetailsView(game: game, timeZone: timeZone)
+                    }
+                }
             }
             .fixedSize(horizontal: false, vertical: true)
             .frame(width: 92, alignment: .leading)
@@ -211,5 +226,53 @@ private struct GameRow: View {
             .font(.callout.weight(.medium))
             .fixedSize(horizontal: false, vertical: true)
             .accessibilityLabel("\(home ? "HOME" : "AWAY"): \(name)")
+    }
+}
+
+public struct AltitudeDetailsView: View {
+    let game: Game
+    let timeZone: TimeZone
+    public init(game: Game, timeZone: TimeZone) { self.game = game; self.timeZone = timeZone }
+    public var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Nuggets broadcast details").font(.headline)
+            Text("\(game.away) @ \(game.home)").font(.caption).foregroundStyle(.secondary)
+            if let details = game.altitude {
+                VStack(alignment: .leading, spacing: 5) {
+                    Text("ALTITUDE’S LISTINGS").font(.caption2.weight(.semibold)).foregroundStyle(.secondary)
+                    Text(details.networks.isEmpty ? "No networks listed" : details.networks.joined(separator: " / "))
+                        .font(.callout.weight(.medium)).foregroundStyle(.mint)
+                }
+                VStack(spacing: 6) {
+                    time("Pregame", details.pregame)
+                    time("Game", game.start)
+                    time("Postgame", details.postgame)
+                }.font(.caption)
+                ForEach(details.notes, id: \.self) { note in
+                    Text(note).font(.caption).foregroundStyle(.secondary)
+                }
+                Divider()
+                Text("\(details.saved ? "Saved Altitude listings" : "Altitude checked") · \(timestamp(details.fetchedAt, includeYear: true))")
+                    .font(.caption2).foregroundStyle(details.saved ? .orange : .secondary)
+                Link("Open Altitude schedule", destination: AltitudeDecoder.sourceURL).font(.caption)
+            }
+        }
+        .fixedSize(horizontal: false, vertical: true)
+        .frame(width: 280, alignment: .leading)
+        .padding(14)
+        .background(Color(nsColor: .windowBackgroundColor))
+        .tint(.mint)
+    }
+    private func timestamp(_ date: Date, includeYear: Bool = false) -> String {
+        let f = DateFormatter(); f.timeZone = timeZone
+        f.dateFormat = includeYear ? "MMM d, yyyy h:mm a z" : "MMM d, h:mm a z"
+        return f.string(from: date)
+    }
+    private func time(_ title: String, _ date: Date?) -> some View {
+        HStack {
+            Text(title).foregroundStyle(.secondary)
+            Spacer()
+            Text(date.map { timestamp($0) } ?? "Not listed").monospacedDigit()
+        }
     }
 }

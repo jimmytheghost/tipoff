@@ -11,6 +11,7 @@ Tipoff starts with the NBA and matches Bug / Worklog: a 360-point SwiftUI popove
 - Compact three-column game rows: stacked away/home teams (`@`), local tipoff time, and TV/streaming listings, sorted by scheduled tipoff.
 - Times follow the Mac’s time zone, including daylight saving changes. Tested for America/Denver.
 - National, local, streaming, and subscription broadcasters when listed by the source. Radio is hidden.
+- Personal Nuggets supplement: source-listed Altitude / Altitude 2 / Altitude+ and Denver channel 9/20 broadcasts, with pregame/postgame times and regional notes under Details.
 - No scores, standings, game clocks, or live game status. Postponements, cancellations, and delays can appear because they affect the schedule.
 - Refresh on opening, after wake, on date/time-zone changes, and every five minutes while running.
 - Cached schedules with visible freshness and refresh-failure labels.
@@ -41,9 +42,21 @@ Source dates use Eastern time. Tipoff fetches every source date intersecting the
 
 Schedule caches live in `~/Library/Application Support/Tipoff/Schedules/` and contain only the app’s schedule/broadcast model, never scores. At most 45 snapshots are retained. No analytics, cloud account, or paid service is used.
 
+## Nuggets / Altitude supplement
+
+For this personal version, Nuggets games also consult [Altitude’s Nuggets broadcast schedule](https://www.altitudeplus.com/nuggets-broadcasts). Listed channels appear first in the existing three-column row. `Details` opens pregame/game/postgame times in your Mac’s time zone, the source’s exact network labels, the last Altitude check time, and the source link. `Details*` indicates regional notes: the source distinguishes Denver-DMA exclusivity from outer-market coverage; all listed channels should not be assumed available in the same location.
+
+[Row preview](docs/altitude-preview.png) · [Broadcast details preview](docs/altitude-details.png).
+
+The supplement matches the Mountain calendar date, opponent, and home/away designation. Its published tipoff must agree with the main schedule within one minute. Changed or mismatched games keep their primary listings and display a warning. National-only games do not acquire invented Altitude coverage. Other teams are unaffected.
+
+Altitude is fetched on refresh only when a Nuggets game is on the selected day. Parsed schedule/broadcast fields are cached separately at `~/Library/Application Support/Tipoff/Altitude.json`; page configuration and visitor metadata are never stored. On a failed Altitude request, a saved supplement can still be used with an explicit warning and its original check timestamp. Primary NBA/ESPN listings remain usable when Altitude is unavailable. No-match or format changes are reported rather than silently assumed to mean no broadcast.
+
+The publisher’s clocks are interpreted as America/Denver, with daylight saving time; the agreement check against the main feed prevents applying a conflicting tipoff. Pregame/postgame times come directly from the publisher, not from calculated offsets. This is another undocumented page dependency, with no guarantee of completeness or unchanged rights.
+
 ## Development
 
-`Sources/TipoffCore/` contains models, source decoders, the network provider, cache, store, and popover. `Sources/Tipoff/` is the menu bar entry point. `Sources/TipoffCheck/` is a development-only live-source check / renderer; it is not packaged in the app.
+`Sources/TipoffCore/` contains models, source decoders, the network provider, cache, store, and popover. `AltitudeSchedule.swift` handles the personal Nuggets supplement and its cache. `Sources/Tipoff/` is the menu bar entry point. `Sources/TipoffCheck/` is a development-only live-source check / renderer; it is not packaged in the app.
 
 ```sh
 swift run TipoffCheck 2026-10-20
