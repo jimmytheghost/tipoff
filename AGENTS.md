@@ -11,3 +11,9 @@ Native SwiftUI macOS 15+ NBA viewing guide, part of the Bug / Worklog menu bar s
 - Validate with `scripts/test.sh`, `scripts/package-app.sh`, and a live `TipoffCheck` when networking/source code changes. Record the actual executed test count.
 - Public website sources are undocumented. Keep fixtures and malformed/schema-change cases in decoder tests.
 - Keep README, docs/PLAN.md, and docs/VALIDATION.md synchronized with implemented behavior and actual evidence.
+
+## GitHub delivery
+
+- The repository is private at `https://github.com/jimmytheghost/tipoff`; preserve that visibility.
+- After each completed change, run relevant validation, update affected documentation, commit, and push the current branch before reporting completion. Preserve unrelated work and report commit or push failures.
+- Keep generated builds, local caches, credentials, and user data out of Git. Documentation-only changes need diff/content checks rather than an app rebuild.

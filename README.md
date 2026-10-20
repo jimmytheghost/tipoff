@@ -53,3 +53,9 @@ swift run TipoffCheck 2026-10-20
 The live check prints scheduling/broadcast information and writes `/tmp/tipoff-preview.png.json`. The renderer uses that snapshot, without network requests. Add `--light` before the image path for a light-mode render.
 
 See [docs/PLAN.md](docs/PLAN.md) for future scope and [docs/VALIDATION.md](docs/VALIDATION.md) for executed checks and remaining manual checks.
+
+## Repository
+
+Private GitHub repository: [jimmytheghost/tipoff](https://github.com/jimmytheghost/tipoff).
+
+`main` tracks `origin/main`. Build outputs and local schedule caches are excluded from version control. Contributor instructions are in [AGENTS.md](AGENTS.md).
