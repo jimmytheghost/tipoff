@@ -83,7 +83,7 @@ swift run TipoffCheck 2026-10-25 --nfl
 
 The check writes a snapshot to `/tmp/tipoff-preview.png.json`; the renderer uses it without another network request. Add `--light` before the image path for light mode, or `--altitude-details` to preview a matched Nuggets game’s details.
 
-[What’s implemented / possible next steps](docs/PLAN.md) · [Validation and remaining manual checks](docs/VALIDATION.md) · [NFL view](docs/nfl-preview.png) · [Nuggets row](docs/altitude-preview.png) · [Altitude details](docs/altitude-details.png)
+[WNBA / MLB / NHL source research](docs/SOURCE-RESEARCH.md) · [What’s implemented / possible next steps](docs/PLAN.md) · [Validation and remaining manual checks](docs/VALIDATION.md) · [NFL view](docs/nfl-preview.png) · [Nuggets row](docs/altitude-preview.png) · [Altitude details](docs/altitude-details.png)
 
 ## License
 

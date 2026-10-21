@@ -16,6 +16,10 @@ Implemented: NBA / NFL selector and daily NFL listings with Denver first. Bronco
 
 ESPN supplies NFL daily schedules, including source-listed networks only. Unknown kickoff times remain TBD. NFL has a visible limited-coverage notice and no independent fallback source. Cache keys and stale-response guards separate NBA and NFL; existing daily cache files remain readable. Old Broncos-window caches are not used as daily NFL data. No scores or live telemetry enter models or caches.
 
+## Additional-sport source research
+
+[WNBA / MLB / NHL research](SOURCE-RESEARCH.md) records direct endpoint probes and broadcaster coverage observations. Proposed starting points are ESPN for WNBA, MLB's schedule feed with broadcast hydration for baseball, and NHL's schedule feed with ESPN fallback and a possible Avalanche/Altitude supplement for hockey. These sports are not implemented. Keep teams inside their respective sport, with score-free caches and source-listed broadcasters only.
+
 ## Possible next steps (not commitments)
 
 - Click a broadcaster to open its watch page (explicitly deferred by the user).

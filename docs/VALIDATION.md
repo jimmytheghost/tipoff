@@ -2,6 +2,13 @@
 
 Environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Initial personal-use time zone: America/Denver.
 
+## WNBA / MLB / NHL source research
+
+- Documentation-only investigation; runtime and packaged version remain 0.3.2. No app tests, package build, or `TipoffCheck` run was introduced for this research. The last executed implementation baseline remains **39 tests passed**.
+- Direct HTTP/JSON probes verified ESPN feeds for all three sports, MLB's schedule/broadcast feed, NHL's week and Avalanche season feeds, and Altitude's `/avs-broadcasts` table. Several WNBA dates were checked so a single empty day was not mistaken for source failure. Tested candidate WNBA CDN URLs did not return usable JSON; no first-party WNBA JSON feed is claimed verified.
+- Recorded exact sample dates, counts, endpoints, broadcaster differences, and implementation gaps in `docs/SOURCE-RESEARCH.md`. Raw responses stayed outside Git; only schedule-related observations are recorded. No new sport support, decoder test coverage, or availability guarantee is claimed.
+- README and plan link the findings. Checked local documentation links and diff whitespace before commit.
+
 ## NFL Sunday shortcut — version 0.3.2
 
 - NFL replaces the date navigation's Today action with Sunday, visible on non-Sunday dates including today. It jumps to the upcoming local Sunday relative to the current date (today if already Sunday), rather than a Sunday relative to a browsed historical/future date. Sunday views hide the shortcut. NBA retains Today.
