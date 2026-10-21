@@ -7,7 +7,7 @@ Native SwiftUI macOS 15+ NBA/NFL viewing guide, part of the Bug / Worklog menu b
 - Use source-provided broadcasters. Never infer streaming availability, local rights, or League Pass eligibility.
 - Preserve working cached data on network/schema errors. Show source, freshness, and fallback limitations honestly.
 - Follow the Mac’s time zone and use calendar days rather than fixed 24-hour offsets.
-- NFL uses ESPN with an explicit coverage warning; put Denver first on NFL days. The Broncos guide spans 35 local calendar days and has an isolated cache. Never infer local affiliate or streaming access.
+- NFL uses ESPN with an explicit coverage warning; put Denver first on NFL days. NBA and NFL are the only top-level guides; the Broncos belong within NFL. Never infer local affiliate or streaming access.
 - Nuggets games have a personal Altitude schedule supplement. Require date/opponent/home-away/tipoff agreement; preserve regional footnotes and original freshness when using saved data.
 - Do not modify sibling projects.
 - Validate with `scripts/test.sh`, `scripts/package-app.sh`, and a live `TipoffCheck` when networking/source code changes. Record the actual executed test count.

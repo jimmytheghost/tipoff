@@ -95,21 +95,6 @@ public enum FeedDecoder {
         }
         return try espnEvents(events, nfl: nfl)
     }
-    public static func broncos(_ data: Data, season: Int, seasonType: Int) throws -> [Game] {
-        let root = try object(data)
-        guard let team = root["team"] as? [String: Any], team["abbreviation"] as? String == "DEN",
-              let year = (root["requestedSeason"] ?? root["season"]) as? [String: Any], year["year"] as? Int == season,
-              let events = root["events"] as? [[String: Any]], events.count < 100 else { throw FeedError.invalid }
-        // The root season can describe the current league phase, even for a preseason request.
-        for event in events {
-            guard (event["season"] as? [String: Any])?["year"] as? Int == season,
-                  (event["seasonType"] as? [String: Any])?["type"] as? Int == seasonType else { throw FeedError.invalid }
-        }
-        if let status = root["status"] as? String, status != "success" { throw FeedError.invalid }
-        let games = try espnEvents(events, nfl: true)
-        guard games.allSatisfy(\.isBroncos) else { throw FeedError.invalid }
-        return games
-    }
     private static func espnEvents(_ events: [[String: Any]], nfl: Bool) throws -> [Game] {
         return try events.map { row in
             guard let id = row["id"] as? String,

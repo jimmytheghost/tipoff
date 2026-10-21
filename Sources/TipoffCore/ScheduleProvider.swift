@@ -74,45 +74,30 @@ public actor ScheduleProvider: ScheduleLoading {
         if guide == .nba { return try await load(day: day, timeZone: timeZone) }
         var calendar = Calendar(identifier: .gregorian); calendar.timeZone = timeZone
         let start = calendar.startOfDay(for: day)
-        let end = calendar.date(byAdding: .day, value: guide.dayCount, to: start)!
+        let end = calendar.date(byAdding: .day, value: 1, to: start)!
         var games: [Game] = []
-        if guide == .nfl {
-            for sourceDay in Self.sourceDays(day: day, timeZone: timeZone) {
-                let data = try await fetchNFL("scoreboard?dates=\(sourceDay.replacingOccurrences(of: "-", with: ""))&limit=100")
-                let decoded = try FeedDecoder.espn(data, nfl: true)
-                guard decoded.allSatisfy({ $0.scheduleDay == sourceDay }) else { throw FeedError.invalid }
-                games += decoded
-            }
-        } else {
-            // NFL seasons cross New Year. Include all season years touching the local window.
-            func seasonYear(_ date: Date) -> Int {
-                let parts = calendar.dateComponents([.year, .month], from: date)
-                return parts.year! - (parts.month! <= 2 ? 1 : 0)
-            }
-            let years = Set([seasonYear(start), seasonYear(end.addingTimeInterval(-1))])
-            for year in years.sorted() {
-                for type in 1...3 {
-                    let data = try await fetchNFL("teams/den/schedule?season=\(year)&seasontype=\(type)")
-                    games += try FeedDecoder.broncos(data, season: year, seasonType: type)
-                }
-            }
+        for sourceDay in Self.sourceDays(day: day, timeZone: timeZone) {
+            let data = try await fetchNFL("scoreboard?dates=\(sourceDay.replacingOccurrences(of: "-", with: ""))&limit=100")
+            let decoded = try FeedDecoder.espn(data, nfl: true)
+            guard decoded.allSatisfy({ $0.scheduleDay == sourceDay }) else { throw FeedError.invalid }
+            games += decoded
         }
         var seen = Set<String>()
         let selected = games.filter { game in
             let inWindow: Bool
             if let time = game.start { inWindow = time >= start && time < end }
             else { inWindow = game.scheduleDay >= Dates.key(start, timeZone: timeZone) && game.scheduleDay < Dates.key(end, timeZone: timeZone) }
-            return inWindow && (guide != .broncos || game.isBroncos) && seen.insert(game.id).inserted
+            return inWindow && seen.insert(game.id).inserted
         }
         var snapshot = ScheduleSnapshot(games: selected.sorted {
-            if guide == .nfl && $0.isBroncos != $1.isBroncos { return $0.isBroncos }
+            if $0.isBroncos != $1.isBroncos { return $0.isBroncos }
             let dayA = $0.start.map { Dates.key($0, timeZone: timeZone) } ?? $0.scheduleDay
             let dayB = $1.start.map { Dates.key($0, timeZone: timeZone) } ?? $1.scheduleDay
             if dayA != dayB { return dayA < dayB }
             let a = $0.start ?? .distantFuture, b = $1.start ?? .distantFuture
             return a == b ? $0.id < $1.id : a < b
         }, day: Dates.key(day, timeZone: timeZone), timeZone: timeZone.identifier,
-            source: guide == .broncos ? "ESPN · Broncos schedule" : "ESPN · NFL", limitedCoverage: true)
+            source: "ESPN · NFL", limitedCoverage: true)
         snapshot.guide = guide
         return snapshot
     }

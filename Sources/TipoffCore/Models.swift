@@ -1,10 +1,9 @@
 import Foundation
 
 public enum ScheduleGuide: String, Codable, CaseIterable, Sendable {
-    case nba, nfl, broncos
-    public var title: String { self == .nba ? "NBA" : self == .nfl ? "NFL" : "Broncos" }
+    case nba, nfl
+    public var title: String { self == .nba ? "NBA" : "NFL" }
     public var symbol: String { self == .nba ? "basketball.fill" : "american.football.fill" }
-    public var dayCount: Int { self == .broncos ? 35 : 1 }
 }
 
 public struct Broadcast: Codable, Equatable, Hashable, Identifiable, Sendable {

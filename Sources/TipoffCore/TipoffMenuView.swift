@@ -47,10 +47,6 @@ public struct TipoffMenuView: View {
             Picker("Viewing guide", selection: Binding(get: { store.guide }, set: { store.selectGuide($0) })) {
                 ForEach(ScheduleGuide.allCases, id: \.self) { Text($0.title).tag($0) }
             }.pickerStyle(.segmented).labelsHidden()
-            if store.guide == .broncos {
-                Text("DENVER BRONCOS · FIVE-WEEK WINDOW").font(.caption2.weight(.semibold))
-                    .foregroundStyle(.mint).frame(maxWidth: .infinity, alignment: .leading)
-            }
             HStack(spacing: 8) {
                 Button { store.moveDay(-1) } label: { Image(systemName: "chevron.left").frame(width: 22, height: 24) }
                     .help("Previous day").accessibilityLabel("Previous day")
@@ -74,12 +70,11 @@ public struct TipoffMenuView: View {
             }
             if let snapshot = store.snapshot {
                 if snapshot.games.isEmpty {
-                    empty(store.guide == .broncos ? "No Broncos games listed" : "No \(store.guide.title) games scheduled",
-                          detail: store.guide == .broncos ? "No games listed in this five-week window. Future matchups may be unassigned." : "Check the next day’s lineup.", symbol: "moon.stars")
+                    empty("No \(store.guide.title) games scheduled", detail: "Check the next day’s lineup.", symbol: "moon.stars")
                 } else {
                     ScrollView {
                         VStack(spacing: 8) {
-                            ForEach(snapshot.games) { game in GameRow(game: game, timeZone: store.timeZone, showDate: store.guide == .broncos) }
+                            ForEach(snapshot.games) { game in GameRow(game: game, timeZone: store.timeZone) }
                         }
                         .padding(.vertical, 1)
                         .fixedSize(horizontal: false, vertical: true)
@@ -102,11 +97,7 @@ public struct TipoffMenuView: View {
         let f = DateFormatter(); f.timeZone = store.timeZone; f.dateFormat = "MMM d"
         let zone = store.timeZone.abbreviation(for: store.selectedDate) ?? store.timeZone.identifier
         let count = store.snapshot.map { " · \($0.games.count) \($0.games.count == 1 ? "game" : "games")" } ?? ""
-        var dates = f.string(from: store.selectedDate)
-        if store.guide == .broncos, let end = store.calendar.date(byAdding: .day, value: 34, to: store.selectedDate) {
-            dates += " – " + f.string(from: end)
-        }
-        return "\(dates) · \(zone)\(count)"
+        return "\(f.string(from: store.selectedDate)) · \(zone)\(count)"
     }
     private func empty(_ title: String, detail: String, symbol: String) -> some View {
         VStack(spacing: 10) {
@@ -138,7 +129,7 @@ public struct TipoffMenuView: View {
             }
             VStack(alignment: .leading, spacing: 6) {
                 Text("Broadcast listings").font(.callout.weight(.medium))
-                Text("NBA uses NBA.com with ESPN fallback and the Nuggets’ Altitude supplement. NFL and the Broncos’ next five weeks use ESPN. NFL days put Denver first. Tipoff checks on opening, after wake, and every five minutes.")
+                Text("NBA uses NBA.com with ESPN fallback and the Nuggets’ Altitude supplement. NFL uses ESPN. NFL days put Denver first. Tipoff checks on opening, after wake, and every five minutes.")
                 Text("Listings reflect what the source provides. Local rights, subscriptions, and League Pass blackouts still affect availability.")
             }.font(.caption).foregroundStyle(.secondary)
             Text("No scores. Just where to watch.").font(.caption).foregroundStyle(.mint)
@@ -178,7 +169,6 @@ public struct TipoffMenuView: View {
 private struct GameRow: View {
     let game: Game
     let timeZone: TimeZone
-    var showDate = false
     @State private var showingAltitude = false
     private var video: [Broadcast] { game.broadcasts.filter { !$0.category.lowercased().contains("radio") } }
     private var categories: [String] { var seen = Set<String>(); return video.map(\.category).filter { seen.insert($0).inserted } }
@@ -194,7 +184,6 @@ private struct GameRow: View {
             .frame(maxWidth: .infinity, alignment: .leading)
 
             VStack(alignment: .leading, spacing: 4) {
-                if showDate { Text(gameDate).font(.caption2).foregroundStyle(.secondary) }
                 Text(game.timeLabel(timeZone: timeZone))
                     .font(.caption.weight(.semibold)).monospacedDigit()
                     .fixedSize(horizontal: false, vertical: true)
@@ -238,11 +227,6 @@ private struct GameRow: View {
         .padding(10)
         .background(Color.primary.opacity(0.035), in: RoundedRectangle(cornerRadius: 10))
         .overlay(RoundedRectangle(cornerRadius: 10).stroke((game.isBroncos ? Color.mint.opacity(0.45) : Color.primary.opacity(0.055)), lineWidth: 1))
-    }
-    private var gameDate: String {
-        guard let start = game.start else { return game.scheduleDay }
-        let f = DateFormatter(); f.timeZone = timeZone; f.dateFormat = "EEE, MMM d"
-        return f.string(from: start)
     }
     private func team(_ name: String, home: Bool) -> some View {
         Text(home ? "@ \(name)" : name)

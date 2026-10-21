@@ -2,6 +2,15 @@
 
 Environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Initial personal-use time zone: America/Denver.
 
+## Broncos within NFL — version 0.3.1
+
+- Only NBA and NFL remain in the top-level selector. Broncos matchups appear within NFL's selected-day schedule, with Denver first and a mint outline. Removed the separate Broncos window, team-schedule requests, decoder, and associated fixtures. Old window caches are ignored; existing NBA/NFL daily caches keep their keys.
+- `scripts/test.sh`: **37 executed, 37 passed**. Removed four tests for the deleted team-schedule feature and added an explicit NBA/NFL-only guide test. Existing daily NFL decoder, malformed/schema-change, cache isolation, source-date/DST, score exclusion, failure, and stale-response tests still pass.
+- Live `TipoffCheck 2026-10-25 --nfl`: **12 games**, Denver at Arizona first with ESPN-listed CBS and 2:05 PM local kickoff. Live `TipoffCheck 2026-10-24`: **NBA.com + Altitude, 8 games**, matching Nuggets supplement retained.
+- Inspected dark and light native renders: only NBA/NFL tabs, Denver highlighted inside the NFL list, 360-point width, source/coverage/freshness information intact. Updated `docs/nfl-preview.png`. The older Broncos screenshot below documents the superseded 0.3.0 design.
+- `scripts/package-app.sh`: **passed**, release build and strict signature verification; `plutil -lint` passed. Packaged **0.3.1 (5)** and relaunched the local `dist/Tipoff.app` for user testing. Interactive switching remains a user check.
+- Updated README, plan, source documentation, and repository instructions. Local Markdown links and diff whitespace checked before commit.
+
 ## NFL / Broncos — version 0.3.0
 
 - `scripts/test.sh`: **40 executed, 40 passed** after the final source, test, and fixture changes (28 existing and 12 NFL/Broncos tests). New coverage includes real sanitized daily/team/preseason fixtures, source-listed broadcasters, wrong league/season/type, malformed entries and schema changes, valid empty schedules, TBD kickoffs, local-day filtering, Denver priority, 35-calendar-day windows across DST/New Year, guide cache isolation and legacy NBA snapshots, excluded score/clock/record fields, regional/radio handling, and stale response rejection with saved-cache preservation on failure.

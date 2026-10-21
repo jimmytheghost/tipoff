@@ -21,12 +21,7 @@ private func encoded(_ root: [String: Any]) throws -> Data { try JSONSerializati
     #expect(denver.altitude == nil)
     #expect(games.allSatisfy { $0.id.hasPrefix("nfl-espn-") })
 }
-@Test func broncosSeasonUsesStructuredBroadcasts() throws {
-    let games = try FeedDecoder.broncos(nflFixture("broncos"), season: 2026, seasonType: 2)
-    #expect(games.count == 17)
-    #expect(games.allSatisfy { $0.isBroncos })
-    #expect(games[0].broadcasts.map(\.name) == ["ESPN", "ABC"])
-}
+
 @Test func nflRejectsSchemaChangesAndWrongLeague() throws {
     for replacement in ["NBA", ""] {
         var root = try nflRoot(); root["leagues"] = [["abbreviation": replacement]]
@@ -41,13 +36,7 @@ private func encoded(_ root: [String: Any]) throws -> Data { try JSONSerializati
     var root = try nflRoot(); root["events"] = Array(repeating: (root["events"] as! [[String: Any]])[0], count: 100)
     #expect(throws: (any Error).self) { try FeedDecoder.espn(encoded(root), nfl: true) }
 }
-@Test func broncosRejectsWrongTeamSeasonAndSeasonType() throws {
-    let data = try nflFixture("broncos")
-    #expect(throws: (any Error).self) { try FeedDecoder.broncos(data, season: 2027, seasonType: 2) }
-    #expect(throws: (any Error).self) { try FeedDecoder.broncos(data, season: 2026, seasonType: 3) }
-    var root = try nflRoot("broncos"); root["team"] = ["abbreviation": "KC"]
-    #expect(throws: (any Error).self) { try FeedDecoder.broncos(encoded(root), season: 2026, seasonType: 2) }
-}
+
 @Test func nflValidEmptyAndUnknownTimeAreDistinct() throws {
     let empty = Data(#"{"leagues":[{"abbreviation":"NFL"}],"events":[]}"#.utf8)
     #expect(try FeedDecoder.espn(empty, nfl: true).isEmpty)
@@ -94,15 +83,8 @@ private final class NFLFixtureProtocol: URLProtocol, @unchecked Sendable {
             let components = URLComponents(url: request.url!, resolvingAgainstBaseURL: false)!
             let query = Dictionary(uniqueKeysWithValues: (components.queryItems ?? []).map { ($0.name, $0.value ?? "") })
             var root: [String: Any]
-            if components.path.contains("teams/den") {
-                root = try nflRoot("broncos")
-                let year = Int(query["season"]!)!, type = Int(query["seasontype"]!)!
-                root["requestedSeason"] = ["year": year, "type": type]
-                if year != 2026 || type != 2 { root["events"] = [] }
-            } else {
-                root = try nflRoot()
-                if query["dates"] != "20261025" { root["events"] = [] }
-            }
+            root = try nflRoot()
+            if query["dates"] != "20261025" { root["events"] = [] }
             client?.urlProtocol(self, didReceive: HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!, cacheStoragePolicy: .notAllowed)
             client?.urlProtocol(self, didLoad: try encoded(root))
             client?.urlProtocolDidFinishLoading(self)
@@ -122,22 +104,6 @@ private func nflProvider() -> ScheduleProvider {
     #expect(result.selectedGuide == .nfl)
     #expect(result.limitedCoverage)
     #expect(result.altitudeWarning == nil)
-}
-@Test func broncosWindowUsesCalendarDaysAcrossDSTAndYearBoundary() async throws {
-    for iso in ["2026-10-20T18:00:00Z", "2026-12-20T18:00:00Z", "2027-01-01T18:00:00Z"] {
-        let day = Dates.parse(iso)!
-        let result = try await nflProvider().load(day: day, timeZone: nflZone, guide: .broncos)
-        var calendar = Calendar(identifier: .gregorian); calendar.timeZone = nflZone
-        let start = calendar.startOfDay(for: day), end = calendar.date(byAdding: .day, value: 35, to: calendar.startOfDay(for: day))!
-        let all = try FeedDecoder.broncos(nflFixture("broncos"), season: 2026, seasonType: 2)
-        let expected = all.filter {
-            if let time = $0.start { return time >= start && time < end }
-            return $0.scheduleDay >= Dates.key(start, timeZone: nflZone) && $0.scheduleDay < Dates.key(end, timeZone: nflZone)
-        }
-        #expect(!expected.isEmpty)
-        #expect(result.games == Dates.sorted(expected))
-        #expect(result.selectedGuide == .broncos)
-    }
 }
 
 private actor GuideControlledProvider: ScheduleLoading {
@@ -183,12 +149,7 @@ private actor GuideControlledProvider: ScheduleLoading {
     #expect(cache.read(day: saved!.day, timeZone: nflZone.identifier, guide: .nfl) == saved)
 }
 
-@Test func broncosPreseasonUsesRequestedAndEventSeasonMetadata() throws {
-    let games = try FeedDecoder.broncos(nflFixture("broncos-preseason"), season: 2026, seasonType: 1)
-    #expect(games.count == 1)
-    #expect(games[0].isBroncos)
-    #expect(throws: (any Error).self) { try FeedDecoder.broncos(nflFixture("broncos-preseason"), season: 2026, seasonType: 2) }
-}
+
 @Test func nflDoesNotInferStreamingOrReuseForeignBroadcasts() throws {
     var root = try nflRoot(); var events = root["events"] as! [[String: Any]]
     var competitions = events[0]["competitions"] as! [[String: Any]]
@@ -208,4 +169,9 @@ private actor GuideControlledProvider: ScheduleLoading {
     competitions[0]["geoBroadcasts"] = [["renamedMedia": ["name": "CBS"]]]
     events[0]["competitions"] = competitions; root["events"] = events
     #expect(throws: (any Error).self) { try FeedDecoder.espn(encoded(root), nfl: true) }
+}
+
+@Test func guidesContainOnlySports() {
+    #expect(ScheduleGuide.allCases == [.nba, .nfl])
+    #expect(ScheduleGuide(rawValue: "broncos") == nil)
 }

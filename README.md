@@ -2,7 +2,7 @@
 
 **Who’s playing, when, and where can I watch?** A small native macOS menu bar app for NBA and NFL broadcast listings. No scores.
 
-I built this because I was tired of checking the NBA schedule every day to figure out which channel or streaming service had a game. I’m a Nuggets and Broncos fan in Mountain Time, so there’s an Altitude-specific supplement for Nuggets games and a dedicated Broncos view.
+I built this because I was tired of checking the NBA schedule every day to figure out which channel or streaming service had a game. I’m a Nuggets and Broncos fan in Mountain Time, so there’s an Altitude-specific supplement for Nuggets games and Broncos emphasis within NFL.
 
 This is a personal tool I’m sharing as it stands. If it’s useful, take it. If you want something different, fork it and have your agents—or yourself—make it work the way you want. There’s no product roadmap or promise of ongoing support. Bug reports and improvements are welcome, but you don’t need to wait on me to change your copy.
 
@@ -10,9 +10,9 @@ This is a personal tool I’m sharing as it stands. If it’s useful, take it. I
 
 ## What it does today
 
-- Switches between NBA, NFL, and Broncos in the same 360-point popover; no Dock window. The menu bar icon follows the selected sport.
+- Switches between NBA and NFL in the same 360-point popover; no Dock window. The menu bar icon follows the selected sport.
 - NBA and NFL show the selected day, with previous/next day navigation. Denver appears first on NFL days.
-- Broncos shows five weeks (35 calendar days) from the selected date, with dated matchups and highlighted Denver cards. Unassigned future matchups may not appear.
+- Highlights Broncos matchups within NFL; teams do not have separate sport tabs.
 - Keeps each game in three columns: stacked teams, local time, and TV/streaming listings.
 - Follows your Mac’s time zone, including daylight saving changes.
 - Adds source-listed Altitude, Altitude 2, Altitude+, and channel 9/20 information for Nuggets games. Details include pregame/postgame times and regional notes.
@@ -50,7 +50,7 @@ Quit an existing Tipoff instance before copying a replacement. `swift build` als
 
 ## Where it’s at
 
-Version 0.3.0 adds NFL and Broncos viewing guides, focused on source-provided US broadcast listings. Build from source for this version; the linked v0.2.0 download is NBA-only. The Nuggets supplement and Broncos emphasis are deliberately built in for my own use, rather than a general favorites or location system. You can change that.
+Version 0.3.1 includes NBA and NFL viewing guides, with Broncos emphasis within NFL, focused on source-provided US broadcast listings. Build from source for this version; the linked v0.2.0 download is NBA-only. The Nuggets supplement and Broncos emphasis are deliberately built in for my own use, rather than a general favorites or location system. You can change that.
 
 NBA.com supplies the NBA game and broadcast data, ESPN is the NBA fallback and the NFL source, and Altitude’s schedule supplements matching Nuggets games. These are public website endpoints, not guaranteed APIs. They can change or stop working. Listings can be incomplete, and a listed channel or service does not mean your subscription or location can receive it. Altitude’s Denver/outer-market restrictions are preserved in Details.
 
@@ -77,13 +77,12 @@ For a live source check:
 ```sh
 swift run TipoffCheck 2026-10-24
 swift run TipoffCheck 2026-10-25 --nfl
-swift run TipoffCheck 2026-10-20 --broncos
 .build/debug/TipoffCheck --render /tmp/tipoff-preview.png
 ```
 
 The check writes a snapshot to `/tmp/tipoff-preview.png.json`; the renderer uses it without another network request. Add `--light` before the image path for light mode, or `--altitude-details` to preview a matched Nuggets game’s details.
 
-[What’s implemented / possible next steps](docs/PLAN.md) · [Validation and remaining manual checks](docs/VALIDATION.md) · [Broncos view](docs/broncos-preview.png) · [Nuggets row](docs/altitude-preview.png) · [Altitude details](docs/altitude-details.png)
+[What’s implemented / possible next steps](docs/PLAN.md) · [Validation and remaining manual checks](docs/VALIDATION.md) · [NFL view](docs/nfl-preview.png) · [Nuggets row](docs/altitude-preview.png) · [Altitude details](docs/altitude-details.png)
 
 ## License
 
