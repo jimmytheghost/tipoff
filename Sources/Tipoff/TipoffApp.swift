@@ -8,7 +8,7 @@ import TipoffCore
         MenuBarExtra {
             TipoffMenuView(store: store).onAppear { store.opened() }
         } label: {
-            Image(systemName: "basketball").accessibilityLabel("Tipoff")
+            Image(systemName: store.guide == .nba ? "basketball" : "american.football").accessibilityLabel("Tipoff")
         }.menuBarExtraStyle(.window)
     }
 }

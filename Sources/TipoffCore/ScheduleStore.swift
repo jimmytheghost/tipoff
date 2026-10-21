@@ -3,6 +3,7 @@ import Combine
 import Foundation
 
 @MainActor public final class ScheduleStore: ObservableObject {
+    @Published public private(set) var guide: ScheduleGuide
     @Published public private(set) var snapshot: ScheduleSnapshot?
     @Published public private(set) var selectedDate: Date
     @Published public private(set) var refreshing = false
@@ -26,11 +27,15 @@ import Foundation
         return f.string(from: selectedDate)
     }
     public init(provider: any ScheduleLoading = ScheduleProvider(), cache: ScheduleCache = ScheduleCache(),
-                timeZone: TimeZone = .autoupdatingCurrent, previewSnapshot: ScheduleSnapshot? = nil) {
+                timeZone: TimeZone = .autoupdatingCurrent, guide: ScheduleGuide = .nba, previewSnapshot: ScheduleSnapshot? = nil) {
         self.provider = provider; self.cache = cache; self.timeZone = timeZone
+        self.guide = previewSnapshot?.selectedGuide ?? guide
         preview = previewSnapshot != nil
         snapshot = previewSnapshot
-        if let previewSnapshot { selectedDate = previewSnapshot.games.first?.start ?? Date() }
+        if let previewSnapshot {
+            let f = DateFormatter(); f.timeZone = timeZone; f.dateFormat = "yyyy-MM-dd"
+            selectedDate = f.date(from: previewSnapshot.day) ?? Date()
+        }
         else { selectedDate = Date() }
         guard !preview else { return }
         timer = Timer.scheduledTimer(withTimeInterval: 300, repeats: true) { [weak self] _ in
@@ -53,6 +58,11 @@ import Foundation
             NSWorkspace.shared.notificationCenter.removeObserver(observation)
         }
     }
+    public func selectGuide(_ guide: ScheduleGuide) {
+        guard self.guide != guide else { return }
+        self.guide = guide
+        refresh()
+    }
     public func moveDay(_ offset: Int) {
         selectedDate = calendar.date(byAdding: .day, value: offset, to: selectedDate)!
         followsToday = isToday
@@ -69,16 +79,16 @@ import Foundation
         guard !preview else { return }
         request?.cancel()
         let token = UUID(); generation = token
-        let day = selectedDate, zone = timeZone
+        let day = selectedDate, zone = timeZone, selectedGuide = guide
         let dayKey = Dates.key(day, timeZone: zone)
-        if snapshot?.day != dayKey || snapshot?.timeZone != zone.identifier {
-            snapshot = cache.read(day: dayKey, timeZone: zone.identifier)
+        if snapshot?.day != dayKey || snapshot?.timeZone != zone.identifier || snapshot?.selectedGuide != selectedGuide {
+            snapshot = cache.read(day: dayKey, timeZone: zone.identifier, guide: selectedGuide)
             isCached = snapshot != nil
         }
         refreshing = true; error = nil; cacheWarning = nil
         request = Task { [weak self, provider, cache] in
             do {
-                let result = try await provider.load(day: day, timeZone: zone)
+                let result = try await provider.load(day: day, timeZone: zone, guide: selectedGuide)
                 guard !Task.isCancelled, let self, self.generation == token else { return }
                 self.snapshot = result; self.isCached = false; self.refreshing = false
                 do { try cache.write(result) }

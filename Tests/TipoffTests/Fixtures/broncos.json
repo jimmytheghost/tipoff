@@ -1,0 +1,868 @@
+{
+  "season": {
+    "year": 2026,
+    "type": 2
+  },
+  "team": {
+    "abbreviation": "DEN"
+  },
+  "events": [
+    {
+      "id": "401872931",
+      "date": "2026-09-15T00:15Z",
+      "competitions": [
+        {
+          "date": "2026-09-15T00:15Z",
+          "timeValid": true,
+          "competitors": [
+            {
+              "homeAway": "home",
+              "team": {
+                "displayName": "Kansas City Chiefs",
+                "abbreviation": "KC"
+              }
+            },
+            {
+              "homeAway": "away",
+              "team": {
+                "displayName": "Denver Broncos",
+                "abbreviation": "DEN"
+              }
+            }
+          ],
+          "status": {
+            "type": {
+              "name": "STATUS_SCHEDULED"
+            }
+          },
+          "broadcasts": [
+            {
+              "region": "us",
+              "media": {
+                "shortName": "ESPN"
+              },
+              "type": {
+                "shortName": "TV"
+              },
+              "market": {
+                "type": "National"
+              }
+            },
+            {
+              "region": "us",
+              "media": {
+                "shortName": "ABC"
+              },
+              "type": {
+                "shortName": "TV"
+              },
+              "market": {
+                "type": "National"
+              }
+            }
+          ]
+        }
+      ],
+      "season": {
+        "year": 2026
+      },
+      "seasonType": {
+        "type": 2
+      }
+    },
+    {
+      "id": "401872940",
+      "date": "2026-09-20T20:05Z",
+      "competitions": [
+        {
+          "date": "2026-09-20T20:05Z",
+          "timeValid": true,
+          "competitors": [
+            {
+              "homeAway": "home",
+              "team": {
+                "displayName": "Denver Broncos",
+                "abbreviation": "DEN"
+              }
+            },
+            {
+              "homeAway": "away",
+              "team": {
+                "displayName": "Jacksonville Jaguars",
+                "abbreviation": "JAX"
+              }
+            }
+          ],
+          "status": {
+            "type": {
+              "name": "STATUS_SCHEDULED"
+            }
+          },
+          "broadcasts": [
+            {
+              "region": "us",
+              "media": {
+                "shortName": "CBS"
+              },
+              "type": {
+                "shortName": "TV"
+              },
+              "market": {
+                "type": "National"
+              }
+            }
+          ]
+        }
+      ],
+      "season": {
+        "year": 2026
+      },
+      "seasonType": {
+        "type": 2
+      }
+    },
+    {
+      "id": "401872962",
+      "date": "2026-09-28T00:20Z",
+      "competitions": [
+        {
+          "date": "2026-09-28T00:20Z",
+          "timeValid": true,
+          "competitors": [
+            {
+              "homeAway": "home",
+              "team": {
+                "displayName": "Denver Broncos",
+                "abbreviation": "DEN"
+              }
+            },
+            {
+              "homeAway": "away",
+              "team": {
+                "displayName": "Los Angeles Rams",
+                "abbreviation": "LAR"
+              }
+            }
+          ],
+          "status": {
+            "type": {
+              "name": "STATUS_SCHEDULED"
+            }
+          },
+          "broadcasts": [
+            {
+              "region": "us",
+              "media": {
+                "shortName": "NBC"
+              },
+              "type": {
+                "shortName": "TV"
+              },
+              "market": {
+                "type": "National"
+              }
+            }
+          ]
+        }
+      ],
+      "season": {
+        "year": 2026
+      },
+      "seasonType": {
+        "type": 2
+      }
+    },
+    {
+      "id": "401872975",
+      "date": "2026-10-04T20:25Z",
+      "competitions": [
+        {
+          "date": "2026-10-04T20:25Z",
+          "timeValid": true,
+          "competitors": [
+            {
+              "homeAway": "home",
+              "team": {
+                "displayName": "San Francisco 49ers",
+                "abbreviation": "SF"
+              }
+            },
+            {
+              "homeAway": "away",
+              "team": {
+                "displayName": "Denver Broncos",
+                "abbreviation": "DEN"
+              }
+            }
+          ],
+          "status": {
+            "type": {
+              "name": "STATUS_SCHEDULED"
+            }
+          },
+          "broadcasts": [
+            {
+              "region": "us",
+              "media": {
+                "shortName": "CBS"
+              },
+              "type": {
+                "shortName": "TV"
+              },
+              "market": {
+                "type": "National"
+              }
+            }
+          ]
+        }
+      ],
+      "season": {
+        "year": 2026
+      },
+      "seasonType": {
+        "type": 2
+      }
+    },
+    {
+      "id": "401872989",
+      "date": "2026-10-11T20:05Z",
+      "competitions": [
+        {
+          "date": "2026-10-11T20:05Z",
+          "timeValid": true,
+          "competitors": [
+            {
+              "homeAway": "home",
+              "team": {
+                "displayName": "Los Angeles Chargers",
+                "abbreviation": "LAC"
+              }
+            },
+            {
+              "homeAway": "away",
+              "team": {
+                "displayName": "Denver Broncos",
+                "abbreviation": "DEN"
+              }
+            }
+          ],
+          "status": {
+            "type": {
+              "name": "STATUS_SCHEDULED"
+            }
+          },
+          "broadcasts": [
+            {
+              "region": "us",
+              "media": {
+                "shortName": "CBS"
+              },
+              "type": {
+                "shortName": "TV"
+              },
+              "market": {
+                "type": "National"
+              }
+            }
+          ]
+        }
+      ],
+      "season": {
+        "year": 2026
+      },
+      "seasonType": {
+        "type": 2
+      }
+    },
+    {
+      "id": "401872995",
+      "date": "2026-10-16T00:15Z",
+      "competitions": [
+        {
+          "date": "2026-10-16T00:15Z",
+          "timeValid": true,
+          "competitors": [
+            {
+              "homeAway": "home",
+              "team": {
+                "displayName": "Denver Broncos",
+                "abbreviation": "DEN"
+              }
+            },
+            {
+              "homeAway": "away",
+              "team": {
+                "displayName": "Seattle Seahawks",
+                "abbreviation": "SEA"
+              }
+            }
+          ],
+          "status": {
+            "type": {
+              "name": "STATUS_SCHEDULED"
+            }
+          },
+          "broadcasts": [
+            {
+              "region": "us",
+              "media": {
+                "shortName": "Prime Video"
+              },
+              "type": {
+                "shortName": "Streaming"
+              },
+              "market": {
+                "type": "National"
+              }
+            }
+          ]
+        }
+      ],
+      "season": {
+        "year": 2026
+      },
+      "seasonType": {
+        "type": 2
+      }
+    },
+    {
+      "id": "401873019",
+      "date": "2026-10-25T20:05Z",
+      "competitions": [
+        {
+          "date": "2026-10-25T20:05Z",
+          "timeValid": true,
+          "competitors": [
+            {
+              "homeAway": "home",
+              "team": {
+                "displayName": "Arizona Cardinals",
+                "abbreviation": "ARI"
+              }
+            },
+            {
+              "homeAway": "away",
+              "team": {
+                "displayName": "Denver Broncos",
+                "abbreviation": "DEN"
+              }
+            }
+          ],
+          "status": {
+            "type": {
+              "name": "STATUS_SCHEDULED"
+            }
+          },
+          "broadcasts": [
+            {
+              "region": "us",
+              "media": {
+                "shortName": "CBS"
+              },
+              "type": {
+                "shortName": "TV"
+              },
+              "market": {
+                "type": "National"
+              }
+            }
+          ]
+        }
+      ],
+      "season": {
+        "year": 2026
+      },
+      "seasonType": {
+        "type": 2
+      }
+    },
+    {
+      "id": "401873033",
+      "date": "2026-11-01T21:25Z",
+      "competitions": [
+        {
+          "date": "2026-11-01T21:25Z",
+          "timeValid": true,
+          "competitors": [
+            {
+              "homeAway": "home",
+              "team": {
+                "displayName": "Denver Broncos",
+                "abbreviation": "DEN"
+              }
+            },
+            {
+              "homeAway": "away",
+              "team": {
+                "displayName": "Kansas City Chiefs",
+                "abbreviation": "KC"
+              }
+            }
+          ],
+          "status": {
+            "type": {
+              "name": "STATUS_SCHEDULED"
+            }
+          },
+          "broadcasts": [
+            {
+              "region": "us",
+              "media": {
+                "shortName": "CBS"
+              },
+              "type": {
+                "shortName": "TV"
+              },
+              "market": {
+                "type": "National"
+              }
+            }
+          ]
+        }
+      ],
+      "season": {
+        "year": 2026
+      },
+      "seasonType": {
+        "type": 2
+      }
+    },
+    {
+      "id": "401873041",
+      "date": "2026-11-08T18:00Z",
+      "competitions": [
+        {
+          "date": "2026-11-08T18:00Z",
+          "timeValid": true,
+          "competitors": [
+            {
+              "homeAway": "home",
+              "team": {
+                "displayName": "Carolina Panthers",
+                "abbreviation": "CAR"
+              }
+            },
+            {
+              "homeAway": "away",
+              "team": {
+                "displayName": "Denver Broncos",
+                "abbreviation": "DEN"
+              }
+            }
+          ],
+          "status": {
+            "type": {
+              "name": "STATUS_SCHEDULED"
+            }
+          },
+          "broadcasts": [
+            {
+              "region": "us",
+              "media": {
+                "shortName": "CBS"
+              },
+              "type": {
+                "shortName": "TV"
+              },
+              "market": {
+                "type": "National"
+              }
+            }
+          ]
+        }
+      ],
+      "season": {
+        "year": 2026
+      },
+      "seasonType": {
+        "type": 2
+      }
+    },
+    {
+      "id": "401873075",
+      "date": "2026-11-22T21:25Z",
+      "competitions": [
+        {
+          "date": "2026-11-22T21:25Z",
+          "timeValid": true,
+          "competitors": [
+            {
+              "homeAway": "home",
+              "team": {
+                "displayName": "Denver Broncos",
+                "abbreviation": "DEN"
+              }
+            },
+            {
+              "homeAway": "away",
+              "team": {
+                "displayName": "Las Vegas Raiders",
+                "abbreviation": "LV"
+              }
+            }
+          ],
+          "status": {
+            "type": {
+              "name": "STATUS_SCHEDULED"
+            }
+          },
+          "broadcasts": [
+            {
+              "region": "us",
+              "media": {
+                "shortName": "CBS"
+              },
+              "type": {
+                "shortName": "TV"
+              },
+              "market": {
+                "type": "National"
+              }
+            }
+          ]
+        }
+      ],
+      "season": {
+        "year": 2026
+      },
+      "seasonType": {
+        "type": 2
+      }
+    },
+    {
+      "id": "401873083",
+      "date": "2026-11-27T20:00Z",
+      "competitions": [
+        {
+          "date": "2026-11-27T20:00Z",
+          "timeValid": true,
+          "competitors": [
+            {
+              "homeAway": "home",
+              "team": {
+                "displayName": "Pittsburgh Steelers",
+                "abbreviation": "PIT"
+              }
+            },
+            {
+              "homeAway": "away",
+              "team": {
+                "displayName": "Denver Broncos",
+                "abbreviation": "DEN"
+              }
+            }
+          ],
+          "status": {
+            "type": {
+              "name": "STATUS_SCHEDULED"
+            }
+          },
+          "broadcasts": [
+            {
+              "region": "us",
+              "media": {
+                "shortName": "Prime Video"
+              },
+              "type": {
+                "shortName": "Streaming"
+              },
+              "market": {
+                "type": "National"
+              }
+            }
+          ]
+        }
+      ],
+      "season": {
+        "year": 2026
+      },
+      "seasonType": {
+        "type": 2
+      }
+    },
+    {
+      "id": "401873103",
+      "date": "2026-12-06T21:05Z",
+      "competitions": [
+        {
+          "date": "2026-12-06T21:05Z",
+          "timeValid": true,
+          "competitors": [
+            {
+              "homeAway": "home",
+              "team": {
+                "displayName": "Denver Broncos",
+                "abbreviation": "DEN"
+              }
+            },
+            {
+              "homeAway": "away",
+              "team": {
+                "displayName": "Miami Dolphins",
+                "abbreviation": "MIA"
+              }
+            }
+          ],
+          "status": {
+            "type": {
+              "name": "STATUS_SCHEDULED"
+            }
+          },
+          "broadcasts": [
+            {
+              "region": "us",
+              "media": {
+                "shortName": "Fox"
+              },
+              "type": {
+                "shortName": "TV"
+              },
+              "market": {
+                "type": "National"
+              }
+            }
+          ]
+        }
+      ],
+      "season": {
+        "year": 2026
+      },
+      "seasonType": {
+        "type": 2
+      }
+    },
+    {
+      "id": "401873112",
+      "date": "2026-12-13T18:00Z",
+      "competitions": [
+        {
+          "date": "2026-12-13T18:00Z",
+          "timeValid": true,
+          "competitors": [
+            {
+              "homeAway": "home",
+              "team": {
+                "displayName": "New York Jets",
+                "abbreviation": "NYJ"
+              }
+            },
+            {
+              "homeAway": "away",
+              "team": {
+                "displayName": "Denver Broncos",
+                "abbreviation": "DEN"
+              }
+            }
+          ],
+          "status": {
+            "type": {
+              "name": "STATUS_SCHEDULED"
+            }
+          },
+          "broadcasts": [
+            {
+              "region": "us",
+              "media": {
+                "shortName": "CBS"
+              },
+              "type": {
+                "shortName": "TV"
+              },
+              "market": {
+                "type": "National"
+              }
+            }
+          ]
+        }
+      ],
+      "season": {
+        "year": 2026
+      },
+      "seasonType": {
+        "type": 2
+      }
+    },
+    {
+      "id": "401873137",
+      "date": "2026-12-20T21:25Z",
+      "competitions": [
+        {
+          "date": "2026-12-20T21:25Z",
+          "timeValid": true,
+          "competitors": [
+            {
+              "homeAway": "home",
+              "team": {
+                "displayName": "Las Vegas Raiders",
+                "abbreviation": "LV"
+              }
+            },
+            {
+              "homeAway": "away",
+              "team": {
+                "displayName": "Denver Broncos",
+                "abbreviation": "DEN"
+              }
+            }
+          ],
+          "status": {
+            "type": {
+              "name": "STATUS_SCHEDULED"
+            }
+          },
+          "broadcasts": [
+            {
+              "region": "us",
+              "media": {
+                "shortName": "CBS"
+              },
+              "type": {
+                "shortName": "TV"
+              },
+              "market": {
+                "type": "National"
+              }
+            }
+          ]
+        }
+      ],
+      "season": {
+        "year": 2026
+      },
+      "seasonType": {
+        "type": 2
+      }
+    },
+    {
+      "id": "401873142",
+      "date": "2026-12-25T21:30Z",
+      "competitions": [
+        {
+          "date": "2026-12-25T21:30Z",
+          "timeValid": true,
+          "competitors": [
+            {
+              "homeAway": "home",
+              "team": {
+                "displayName": "Denver Broncos",
+                "abbreviation": "DEN"
+              }
+            },
+            {
+              "homeAway": "away",
+              "team": {
+                "displayName": "Buffalo Bills",
+                "abbreviation": "BUF"
+              }
+            }
+          ],
+          "status": {
+            "type": {
+              "name": "STATUS_SCHEDULED"
+            }
+          },
+          "broadcasts": [
+            {
+              "region": "us",
+              "media": {
+                "shortName": "Netflix"
+              },
+              "type": {
+                "shortName": "Streaming"
+              },
+              "market": {
+                "type": "National"
+              }
+            }
+          ]
+        }
+      ],
+      "season": {
+        "year": 2026
+      },
+      "seasonType": {
+        "type": 2
+      }
+    },
+    {
+      "id": "401873157",
+      "date": "2027-01-03T05:00Z",
+      "competitions": [
+        {
+          "date": "2027-01-03T05:00Z",
+          "timeValid": false,
+          "competitors": [
+            {
+              "homeAway": "home",
+              "team": {
+                "displayName": "New England Patriots",
+                "abbreviation": "NE"
+              }
+            },
+            {
+              "homeAway": "away",
+              "team": {
+                "displayName": "Denver Broncos",
+                "abbreviation": "DEN"
+              }
+            }
+          ],
+          "status": {
+            "type": {
+              "name": "STATUS_SCHEDULED"
+            }
+          },
+          "broadcasts": []
+        }
+      ],
+      "season": {
+        "year": 2026
+      },
+      "seasonType": {
+        "type": 2
+      }
+    },
+    {
+      "id": "401873179",
+      "date": "2027-01-10T05:00Z",
+      "competitions": [
+        {
+          "date": "2027-01-10T05:00Z",
+          "timeValid": false,
+          "competitors": [
+            {
+              "homeAway": "home",
+              "team": {
+                "displayName": "Denver Broncos",
+                "abbreviation": "DEN"
+              }
+            },
+            {
+              "homeAway": "away",
+              "team": {
+                "displayName": "Los Angeles Chargers",
+                "abbreviation": "LAC"
+              }
+            }
+          ],
+          "status": {
+            "type": {
+              "name": "STATUS_SCHEDULED"
+            }
+          },
+          "broadcasts": []
+        }
+      ],
+      "season": {
+        "year": 2026
+      },
+      "seasonType": {
+        "type": 2
+      }
+    }
+  ],
+  "requestedSeason": {
+    "year": 2026,
+    "type": 2
+  }
+}

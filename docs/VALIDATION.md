@@ -2,6 +2,17 @@
 
 Environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Initial personal-use time zone: America/Denver.
 
+## NFL / Broncos — version 0.3.0
+
+- `scripts/test.sh`: **40 executed, 40 passed** after the final source, test, and fixture changes (28 existing and 12 NFL/Broncos tests). New coverage includes real sanitized daily/team/preseason fixtures, source-listed broadcasters, wrong league/season/type, malformed entries and schema changes, valid empty schedules, TBD kickoffs, local-day filtering, Denver priority, 35-calendar-day windows across DST/New Year, guide cache isolation and legacy NBA snapshots, excluded score/clock/record fields, regional/radio handling, and stale response rejection with saved-cache preservation on failure.
+- Live `TipoffCheck 2026-10-20 --broncos`: ESPN Broncos schedule, **4 games** in October 20–November 23. Dates: October 25, November 1, November 8, November 22. CBS listed directly by ESPN; no streaming or local affiliate added. Preseason, regular-season, and postseason requests completed. ESPN's root current-season phase differs from requested preseason metadata; validation uses the requested/event phase rather than assuming they match.
+- Live `TipoffCheck 2026-10-25 --nfl`: ESPN NFL, **12 games**, Broncos at Cardinals first, 2:05 PM local time. Other games remain visible in time order after Denver. Coverage warning shown.
+- Live regression `TipoffCheck 2026-10-24`: **NBA.com + Altitude, 8 games**. Pelicans at Nuggets at 7:00 PM local time still matches Altitude / Altitude+ / KTVD-20*.
+- Inspected native SwiftUI dark and light renders for Broncos and NFL. Selector, dated Broncos rows, mint emphasis, coverage warning, source/freshness footer, and scrolling NFL list fit the 360-point layout. Dark artifacts: `docs/broncos-preview.png`, `docs/nfl-preview.png`. The check renderer now takes its selected date from the snapshot day so multi-day previews retain the correct window origin.
+- `scripts/package-app.sh`: **passed**, release build and strict code-signature verification. Bundle metadata: **0.3.0 (4)**. `plutil -lint` passed; packaged executable confirmed **arm64**. Build is ad-hoc signed, not notarized. App output is in ignored `dist/Tipoff.app`; no installation or GitHub release publication is claimed.
+- Documentation/diff/link checks passed. Fixtures retain public schedule fields only; no raw website response or telemetry is persisted by the app. Existing NBA caches keep their filenames; NFL and Broncos use separate prefixes under the shared 45-snapshot cap.
+- Remaining manual checks: interactive menu bar switching/scrolling, launch-at-login approval and OS wake behavior. Rendering exercises the production views; URLProtocol and controlled-provider tests exercise failure/cancellation behavior. NFL currently has ESPN as its only source, and future unassigned matchups may be absent.
+
 ## Public-sharing review using Agentic Toolkit v0.2
 
 - Applied the toolkit's `core/GITHUB-PROJECT-PAGES.md` version 0.2, from toolkit commit `8b30f57e79a7bb2d298f027c2db841dd1ba1463f`.

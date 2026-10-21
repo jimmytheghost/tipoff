@@ -1,5 +1,12 @@
 import Foundation
 
+public enum ScheduleGuide: String, Codable, CaseIterable, Sendable {
+    case nba, nfl, broncos
+    public var title: String { self == .nba ? "NBA" : self == .nfl ? "NFL" : "Broncos" }
+    public var symbol: String { self == .nba ? "basketball.fill" : "american.football.fill" }
+    public var dayCount: Int { self == .broncos ? 35 : 1 }
+}
+
 public struct Broadcast: Codable, Equatable, Hashable, Identifiable, Sendable {
     public var name: String
     public var category: String
@@ -23,6 +30,7 @@ public struct Game: Codable, Equatable, Identifiable, Sendable {
         self.id = id; self.away = away; self.home = home; self.awayCode = awayCode; self.homeCode = homeCode
         self.start = start; self.scheduleDay = scheduleDay; self.notice = notice; self.broadcasts = broadcasts
     }
+    public var isBroncos: Bool { id.hasPrefix("nfl-") && (awayCode == "DEN" || homeCode == "DEN") }
     public func falls(on date: Date, calendar: Calendar) -> Bool {
         if let start { return calendar.isDate(start, inSameDayAs: date) }
         return scheduleDay == Dates.key(date, timeZone: calendar.timeZone)
@@ -44,6 +52,9 @@ public struct ScheduleSnapshot: Codable, Equatable, Sendable {
     public var source: String
     public var limitedCoverage: Bool
     public var altitudeWarning: String?
+    // Missing on v0.2 snapshots: retain existing NBA caches unchanged.
+    public var guide: ScheduleGuide?
+    public var selectedGuide: ScheduleGuide { guide ?? .nba }
     public init(games: [Game], fetchedAt: Date = Date(), day: String, timeZone: String, source: String, limitedCoverage: Bool) {
         self.games = games; self.fetchedAt = fetchedAt; self.day = day; self.timeZone = timeZone
         self.source = source; self.limitedCoverage = limitedCoverage

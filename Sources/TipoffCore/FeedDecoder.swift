@@ -86,8 +86,31 @@ public enum FeedDecoder {
         guard !games.isEmpty else { throw FeedError.invalid }
         return Dates.sorted(games)
     }
-    public static func espn(_ data: Data) throws -> [Game] {
+    public static func espn(_ data: Data, nfl: Bool = false) throws -> [Game] {
         guard let events = try object(data)["events"] as? [[String: Any]] else { throw FeedError.invalid }
+        if nfl {
+            let root = try object(data)
+            let league = (root["leagues"] as? [[String: Any]])?.first
+            guard league?["abbreviation"] as? String == "NFL", events.count < 100 else { throw FeedError.invalid }
+        }
+        return try espnEvents(events, nfl: nfl)
+    }
+    public static func broncos(_ data: Data, season: Int, seasonType: Int) throws -> [Game] {
+        let root = try object(data)
+        guard let team = root["team"] as? [String: Any], team["abbreviation"] as? String == "DEN",
+              let year = (root["requestedSeason"] ?? root["season"]) as? [String: Any], year["year"] as? Int == season,
+              let events = root["events"] as? [[String: Any]], events.count < 100 else { throw FeedError.invalid }
+        // The root season can describe the current league phase, even for a preseason request.
+        for event in events {
+            guard (event["season"] as? [String: Any])?["year"] as? Int == season,
+                  (event["seasonType"] as? [String: Any])?["type"] as? Int == seasonType else { throw FeedError.invalid }
+        }
+        if let status = root["status"] as? String, status != "success" { throw FeedError.invalid }
+        let games = try espnEvents(events, nfl: true)
+        guard games.allSatisfy(\.isBroncos) else { throw FeedError.invalid }
+        return games
+    }
+    private static func espnEvents(_ events: [[String: Any]], nfl: Bool) throws -> [Game] {
         return try events.map { row in
             guard let id = row["id"] as? String,
                   let competition = (row["competitions"] as? [[String: Any]])?.first,
@@ -95,11 +118,30 @@ public enum FeedDecoder {
                   let home = competitors.first(where: { text($0["homeAway"]) == "home" })?["team"] as? [String: Any],
                   let away = competitors.first(where: { text($0["homeAway"]) == "away" })?["team"] as? [String: Any],
                   let start = Dates.parse((competition["date"] ?? row["date"]) as? String) else { throw FeedError.invalid }
+            if nfl {
+                guard !id.isEmpty, !text(home["displayName"]).isEmpty, !text(away["displayName"]).isEmpty,
+                      !text(home["abbreviation"]).isEmpty, !text(away["abbreviation"]).isEmpty else { throw FeedError.invalid }
+            }
             let status = (competition["status"] ?? row["status"]) as? [String: Any] ?? [:]
             let type = status["type"] as? [String: Any] ?? [:]
             let statusName = text(type["name"])
             var broadcasts: [Broadcast] = []
-            for b in competition["geoBroadcasts"] as? [[String: Any]] ?? [] {
+            let geo = competition["geoBroadcasts"] as? [[String: Any]]
+            let listed = competition["broadcasts"] as? [[String: Any]]
+            if nfl {
+                for key in ["geoBroadcasts", "broadcasts"] {
+                    if let value = competition[key] {
+                        guard let entries = value as? [[String: Any]] else { throw FeedError.invalid }
+                        for entry in entries {
+                            let media = entry["media"] as? [String: Any]
+                            let names = entry["names"] as? [String]
+                            guard media?["shortName"] is String || names != nil else { throw FeedError.invalid }
+                        }
+                    }
+                }
+            }
+            let structured = (geo?.isEmpty == false ? geo : nil) ?? listed?.filter { $0["media"] != nil } ?? []
+            for b in structured {
                 let region = text(b["region"]).lowercased()
                 guard region.isEmpty || region == "us" else { continue }
                 let market = b["market"] as? [String: Any] ?? [:]
@@ -112,13 +154,16 @@ public enum FeedDecoder {
             // Some events expose only the older broadcast list.
             if broadcasts.isEmpty {
                 for b in competition["broadcasts"] as? [[String: Any]] ?? [] {
+                    let region = text(b["region"]).lowercased()
+                    guard region.isEmpty || region == "us" else { continue }
+                    let kind = text((b["type"] as? [String: Any])?["shortName"])
                     for name in b["names"] as? [String] ?? [] {
-                        broadcasts.append(Broadcast(name: name, category: text(b["market"]).capitalized))
+                        broadcasts.append(Broadcast(name: name, category: kind.lowercased() == "radio" ? "Radio" : (b["market"] as? String ?? "TV / streaming").capitalized))
                     }
                 }
             }
-            let tbd = type["name"] as? String == "STATUS_SCHEDULED" && (competition["timeValid"] as? Bool == false)
-            return Game(id: "espn-" + id, away: text(away["displayName"]), home: text(home["displayName"]),
+            let tbd = type["name"] as? String == "STATUS_SCHEDULED" && ((competition["timeValid"] ?? row["timeValid"]) as? Bool == false)
+            return Game(id: (nfl ? "nfl-espn-" : "espn-") + id, away: text(away["displayName"]), home: text(home["displayName"]),
                 awayCode: text(away["abbreviation"]), homeCode: text(home["abbreviation"]),
                 start: tbd ? nil : start, scheduleDay: Dates.key(start, timeZone: TimeZone(identifier: "America/New_York")!),
                 notice: notice(statusName), broadcasts: unique(broadcasts))

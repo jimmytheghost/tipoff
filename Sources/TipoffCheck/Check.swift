@@ -37,15 +37,16 @@ import TipoffCore
         }
         let zone = TimeZone(identifier: "America/Denver")!
         let f = DateFormatter(); f.timeZone = zone; f.dateFormat = "yyyy-MM-dd"
-        let date = CommandLine.arguments.dropFirst().first.flatMap { f.date(from: $0) } ?? Date()
-        let snapshot = try await ScheduleProvider().load(day: date, timeZone: zone)
+        let date = CommandLine.arguments.dropFirst().first(where: { !$0.hasPrefix("--") }).flatMap { f.date(from: $0) } ?? Date()
+        let guide: ScheduleGuide = CommandLine.arguments.contains("--broncos") ? .broncos : CommandLine.arguments.contains("--nfl") ? .nfl : .nba
+        let snapshot = try await ScheduleProvider().load(day: date, timeZone: zone, guide: guide)
         let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         let data = try encoder.encode(snapshot)
         try data.write(to: URL(fileURLWithPath: "/tmp/tipoff-preview.png.json"))
         print("\(snapshot.source) | \(snapshot.day) | \(snapshot.games.count) games | limited: \(snapshot.limitedCoverage)")
         if let warning = snapshot.altitudeWarning { print("Warning: \(warning)") }
         for game in snapshot.games {
-            print("\(game.away) @ \(game.home) · \(game.timeLabel(timeZone: zone))")
+            print("\(game.scheduleDay) · \(game.away) @ \(game.home) · \(game.timeLabel(timeZone: zone))")
             for broadcast in game.broadcasts { print("  \(broadcast.category): \(broadcast.name)") }
         }
     }

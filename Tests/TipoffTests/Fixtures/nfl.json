@@ -1,0 +1,115 @@
+{
+  "leagues": [
+    {
+      "abbreviation": "NFL"
+    }
+  ],
+  "events": [
+    {
+      "id": "401873019",
+      "date": "2026-10-25T20:05Z",
+      "competitions": [
+        {
+          "date": "2026-10-25T20:05Z",
+          "timeValid": true,
+          "competitors": [
+            {
+              "homeAway": "home",
+              "team": {
+                "displayName": "Arizona Cardinals",
+                "abbreviation": "ARI"
+              }
+            },
+            {
+              "homeAway": "away",
+              "team": {
+                "displayName": "Denver Broncos",
+                "abbreviation": "DEN"
+              }
+            }
+          ],
+          "status": {
+            "type": {
+              "name": "STATUS_SCHEDULED"
+            }
+          },
+          "broadcasts": [
+            {
+              "names": [
+                "CBS"
+              ],
+              "market": "national"
+            }
+          ],
+          "geoBroadcasts": [
+            {
+              "region": "us",
+              "media": {
+                "shortName": "CBS"
+              },
+              "type": {
+                "shortName": "TV"
+              },
+              "market": {
+                "type": "National"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401873011",
+      "date": "2026-10-25T13:30Z",
+      "competitions": [
+        {
+          "date": "2026-10-25T13:30Z",
+          "timeValid": true,
+          "competitors": [
+            {
+              "homeAway": "home",
+              "team": {
+                "displayName": "New Orleans Saints",
+                "abbreviation": "NO"
+              }
+            },
+            {
+              "homeAway": "away",
+              "team": {
+                "displayName": "Pittsburgh Steelers",
+                "abbreviation": "PIT"
+              }
+            }
+          ],
+          "status": {
+            "type": {
+              "name": "STATUS_SCHEDULED"
+            }
+          },
+          "broadcasts": [
+            {
+              "names": [
+                "NFL Net"
+              ],
+              "market": "national"
+            }
+          ],
+          "geoBroadcasts": [
+            {
+              "region": "us",
+              "media": {
+                "shortName": "NFL Net"
+              },
+              "type": {
+                "shortName": "TV"
+              },
+              "market": {
+                "type": "National"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
