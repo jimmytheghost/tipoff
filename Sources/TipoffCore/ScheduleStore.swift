@@ -20,6 +20,7 @@ import Foundation
     private var timer: Timer?
     private let preview: Bool
     public var calendar: Calendar { var c = Calendar(identifier: .gregorian); c.timeZone = timeZone; return c }
+    public var isSunday: Bool { calendar.component(.weekday, from: selectedDate) == 1 }
     public var isToday: Bool { calendar.isDateInToday(selectedDate) }
     public var dateTitle: String {
         if isToday { return "Today" }
@@ -65,6 +66,11 @@ import Foundation
     }
     public func moveDay(_ offset: Int) {
         selectedDate = calendar.date(byAdding: .day, value: offset, to: selectedDate)!
+        followsToday = isToday
+        refresh()
+    }
+    public func sunday(now: Date = Date()) {
+        selectedDate = Dates.upcomingSunday(from: now, timeZone: timeZone)
         followsToday = isToday
         refresh()
     }

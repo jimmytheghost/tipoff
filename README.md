@@ -12,6 +12,7 @@ This is a personal tool I’m sharing as it stands. If it’s useful, take it. I
 
 - Switches between NBA and NFL in the same 360-point popover; no Dock window. The menu bar icon follows the selected sport.
 - NBA and NFL show the selected day, with previous/next day navigation. Denver appears first on NFL days.
+- NFL’s Sunday shortcut jumps to the upcoming Sunday (or today on Sunday); NBA keeps its Today shortcut. The Sunday shortcut is hidden while viewing a Sunday.
 - Highlights Broncos matchups within NFL; teams do not have separate sport tabs.
 - Keeps each game in three columns: stacked teams, local time, and TV/streaming listings.
 - Follows your Mac’s time zone, including daylight saving changes.
@@ -50,7 +51,7 @@ Quit an existing Tipoff instance before copying a replacement. `swift build` als
 
 ## Where it’s at
 
-Version 0.3.1 includes NBA and NFL viewing guides, with Broncos emphasis within NFL, focused on source-provided US broadcast listings. Build from source for this version; the linked v0.2.0 download is NBA-only. The Nuggets supplement and Broncos emphasis are deliberately built in for my own use, rather than a general favorites or location system. You can change that.
+Version 0.3.2 includes NBA and NFL viewing guides, with Broncos emphasis within NFL, focused on source-provided US broadcast listings. Build from source for this version; the linked v0.2.0 download is NBA-only. The Nuggets supplement and Broncos emphasis are deliberately built in for my own use, rather than a general favorites or location system. You can change that.
 
 NBA.com supplies the NBA game and broadcast data, ESPN is the NBA fallback and the NFL source, and Altitude’s schedule supplements matching Nuggets games. These are public website endpoints, not guaranteed APIs. They can change or stop working. Listings can be incomplete, and a listed channel or service does not mean your subscription or location can receive it. Altitude’s Denver/outer-market restrictions are preserved in Details.
 

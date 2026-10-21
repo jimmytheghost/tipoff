@@ -175,3 +175,28 @@ private actor GuideControlledProvider: ScheduleLoading {
     #expect(ScheduleGuide.allCases == [.nba, .nfl])
     #expect(ScheduleGuide(rawValue: "broncos") == nil)
 }
+
+@Test func sundayShortcutUsesLocalCalendarAcrossDSTAndYearBoundary() {
+    let cases = [
+        ("2026-10-20T18:00:00Z", "2026-10-25T06:00:00Z"),
+        ("2026-10-25T18:00:00Z", "2026-10-25T06:00:00Z"),
+        ("2026-10-26T18:00:00Z", "2026-11-01T06:00:00Z"),
+        ("2026-03-07T19:00:00Z", "2026-03-08T07:00:00Z"),
+        ("2026-12-31T19:00:00Z", "2027-01-03T07:00:00Z"),
+        // UTC is already Sunday, but Denver is still Saturday.
+        ("2026-10-25T02:00:00Z", "2026-10-25T06:00:00Z")
+    ]
+    for (input, expected) in cases {
+        #expect(Dates.upcomingSunday(from: Dates.parse(input)!, timeZone: nflZone) == Dates.parse(expected))
+    }
+}
+@Test @MainActor func sundayShortcutTargetsUpcomingSundayFromTodayRatherThanBrowsedDate() {
+    var snapshot = ScheduleSnapshot(games: [], day: "2026-12-15", timeZone: nflZone.identifier, source: "Preview", limitedCoverage: true)
+    snapshot.guide = .nfl
+    let store = ScheduleStore(timeZone: nflZone, previewSnapshot: snapshot)
+    #expect(!store.isSunday)
+    store.sunday(now: Dates.parse("2026-10-20T18:00:00Z")!)
+    #expect(store.selectedDate == Dates.parse("2026-10-25T06:00:00Z"))
+    #expect(store.isSunday)
+    #expect(store.guide == .nfl)
+}

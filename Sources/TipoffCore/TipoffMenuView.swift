@@ -55,7 +55,12 @@ public struct TipoffMenuView: View {
                     Text(dateSubtitle).font(.caption2).foregroundStyle(.secondary)
                 }
                 Spacer(minLength: 2)
-                if !store.isToday { Button("Today") { store.today() }.font(.caption) }
+                if store.guide == .nfl {
+                    if !store.isSunday {
+                        Button("Sunday") { store.sunday() }.font(.caption)
+                            .help("Show the upcoming Sunday’s NFL games")
+                    }
+                } else if !store.isToday { Button("Today") { store.today() }.font(.caption) }
                 Button { store.moveDay(1) } label: { Image(systemName: "chevron.right").frame(width: 22, height: 24) }
                     .help("Next day").accessibilityLabel("Next day")
             }.buttonStyle(.plain)

@@ -2,6 +2,14 @@
 
 Environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Initial personal-use time zone: America/Denver.
 
+## NFL Sunday shortcut — version 0.3.2
+
+- NFL replaces the date navigation's Today action with Sunday, visible on non-Sunday dates including today. It jumps to the upcoming local Sunday relative to the current date (today if already Sunday), rather than a Sunday relative to a browsed historical/future date. Sunday views hide the shortcut. NBA retains Today.
+- Date calculation uses calendar-day addition in the Mac's time zone. The selected Sunday remains selected when reopening/refreshing; normal today-following behavior still applies when the target is today.
+- `scripts/test.sh`: **39 executed, 39 passed**. Two new tests cover weekday/Sunday behavior, local Saturday versus UTC Sunday, DST dates, New Year, and jumping from a distant browsed date.
+- Live `TipoffCheck 2026-10-20 --nfl`: **0 games**. Live `TipoffCheck 2026-10-25 --nfl`: **12 games**, Denver first. Native renders inspected: Sunday action visible on October 20 and absent on October 25, with compact layout intact.
+- `scripts/package-app.sh`: **passed**, release build and strict signature verification, version **0.3.2 (6)**. Relaunched the packaged local app for user testing. README and plan updated; local Markdown links and diff whitespace checked before commit.
+
 ## Broncos within NFL — version 0.3.1
 
 - Only NBA and NFL remain in the top-level selector. Broncos matchups appear within NFL's selected-day schedule, with Denver first and a mint outline. Removed the separate Broncos window, team-schedule requests, decoder, and associated fixtures. Old window caches are ignored; existing NBA/NFL daily caches keep their keys.

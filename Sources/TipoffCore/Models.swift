@@ -61,6 +61,11 @@ public struct ScheduleSnapshot: Codable, Equatable, Sendable {
 }
 
 public enum Dates {
+    public static func upcomingSunday(from date: Date, timeZone: TimeZone) -> Date {
+        var calendar = Calendar(identifier: .gregorian); calendar.timeZone = timeZone
+        let offset = (8 - calendar.component(.weekday, from: date)) % 7
+        return calendar.date(byAdding: .day, value: offset, to: calendar.startOfDay(for: date))!
+    }
     public static func key(_ date: Date, timeZone: TimeZone) -> String {
         let f = DateFormatter(); f.locale = Locale(identifier: "en_US_POSIX"); f.timeZone = timeZone
         f.dateFormat = "yyyy-MM-dd"; return f.string(from: date)
