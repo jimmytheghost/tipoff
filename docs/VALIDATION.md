@@ -2,6 +2,15 @@
 
 Environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Initial personal-use time zone: America/Denver.
 
+## Rockies and Avalanche preference — version 0.4.1
+
+- Rockies games appear first within MLB and Avalanche games first within NHL, with mint outline and uppercase team label matching Nuggets/Broncos. Other games stay chronological; multiple preferred games retain their own time order. The display preference also applies to older saved snapshots without changing stored game arrays, broadcasters, source/coverage fields, or original freshness.
+- `scripts/test.sh`: **55 tests passed**, including four parameterized guide-switch cases (**58 individual test/case executions**). Two new regression tests cover both venues, NHL/MLB primary and ESPN fallback identities, cross-sport isolation, saved snapshot round-trips, preserved data/freshness, multiple preferred games, and empty lists. Existing Nuggets/Broncos tests still pass.
+- Live `TipoffCheck 2026-07-01 --mlb`: **MLB.com, 14 games**, Miami at Colorado displayed first at 6:40 PM local time with source-listed Rockies.TV; remaining games chronological. Live `TipoffCheck 2026-10-23 --nhl`: **NHL.com, 2 games**, Tampa Bay at Colorado displayed first at 7:00 PM, with source-listed The Spot / ALT. The check tool now prints the same display order as the UI.
+- Inspected native dark/light renders of both preferred rows at the existing 360-point width. Team labels, mint outlines, source-provided long network names, coverage warning, and freshness footer fit without clipping. Updated `docs/mlb-preview.png` and `docs/nhl-preview.png`.
+- `scripts/package-app.sh`: **passed**, release build and strict code-signature verification, **0.4.1 (8)**; packaged Info.plist lint passed. Relaunched the local packaged app for user testing. Source fetching/decoding and cache schema are unchanged; no viewing availability is inferred and no Avalanche/Altitude supplement is added.
+- README, plan, data notes, and repository instructions updated. Local documentation links and diff whitespace checked before commit. App remains a personal tool shared as-is; no release publication is claimed.
+
 ## WNBA, NHL, MLB — version 0.4.0
 
 - Added sports in the requested order: WNBA, NHL, MLB. The 360-point selector is now NBA / NFL / WNBA / NHL / MLB. WNBA uses ESPN; NHL and MLB use league feeds with labeled ESPN fallback. NBA/NFL caches and Nuggets/Broncos emphasis remain compatible; new guides have isolated cache prefixes and no team/sport identity collisions. Today applies to WNBA/NHL/MLB; Sunday remains NFL-only.

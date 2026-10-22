@@ -45,7 +45,7 @@ import TipoffCore
         try data.write(to: URL(fileURLWithPath: "/tmp/tipoff-preview.png.json"))
         print("\(snapshot.source) | \(snapshot.day) | \(snapshot.games.count) games | limited: \(snapshot.limitedCoverage)")
         if let warning = snapshot.altitudeWarning { print("Warning: \(warning)") }
-        for game in snapshot.games {
+        for game in snapshot.displayGames {
             print("\(game.scheduleDay) · \(game.away) @ \(game.home) · \(game.timeLabel(timeZone: zone))")
             for broadcast in game.broadcasts { print("  \(broadcast.category): \(broadcast.name)") }
         }

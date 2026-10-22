@@ -140,7 +140,7 @@ public struct TipoffMenuView: View {
             }
             VStack(alignment: .leading, spacing: 6) {
                 Text("Broadcast listings").font(.callout.weight(.medium))
-                Text("NBA uses NBA.com with ESPN fallback and the Nuggets’ Altitude supplement. NFL and WNBA use ESPN. NHL and MLB use league schedules with ESPN fallback. Nuggets and Broncos games appear first in their guides. Tipoff checks on opening, after wake, and every five minutes.")
+                Text("NBA uses NBA.com with ESPN fallback and the Nuggets’ Altitude supplement. NFL and WNBA use ESPN. NHL and MLB use league schedules with ESPN fallback. Nuggets, Broncos, Avalanche, and Rockies games appear first in their guides. Tipoff checks on opening, after wake, and every five minutes.")
                 Text("Listings reflect what the source provides. Local rights, subscriptions, and League Pass blackouts still affect availability.")
             }.font(.caption).foregroundStyle(.secondary)
             Text("No scores. Just where to watch.").font(.caption).foregroundStyle(.mint)
@@ -189,8 +189,8 @@ private struct GameRow: View {
     var body: some View {
         HStack(alignment: .center, spacing: 8) {
             VStack(alignment: .leading, spacing: 5) {
-                if game.isBroncos || game.isNuggets {
-                    Text(game.isBroncos ? "BRONCOS" : "NUGGETS").font(.system(size: 9, weight: .semibold)).foregroundStyle(.mint)
+                if let label = game.preferredTeamLabel {
+                    Text(label).font(.system(size: 9, weight: .semibold)).foregroundStyle(.mint)
                 }
                 team(game.away, home: false)
                 team(game.home, home: true)
@@ -240,7 +240,7 @@ private struct GameRow: View {
         .frame(minHeight: 48)
         .padding(10)
         .background(Color.primary.opacity(0.035), in: RoundedRectangle(cornerRadius: 10))
-        .overlay(RoundedRectangle(cornerRadius: 10).stroke((game.isBroncos || game.isNuggets ? Color.mint.opacity(0.45) : Color.primary.opacity(0.055)), lineWidth: 1))
+        .overlay(RoundedRectangle(cornerRadius: 10).stroke((game.preferredTeamLabel != nil ? Color.mint.opacity(0.45) : Color.primary.opacity(0.055)), lineWidth: 1))
     }
     private func team(_ name: String, home: Bool) -> some View {
         Text(home ? "@ \(name)" : name)

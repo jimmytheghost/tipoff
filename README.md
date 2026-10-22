@@ -2,7 +2,7 @@
 
 **Who’s playing, when, and where can I watch?** A small native macOS menu bar app for NBA, NFL, WNBA, NHL, and MLB broadcast listings. No scores.
 
-I built this because I was tired of checking the NBA schedule every day to figure out which channel or streaming service had a game. I’m a Nuggets and Broncos fan in Mountain Time, so there’s an Altitude-specific supplement for Nuggets games and highlighted Denver matchups in both guides.
+I built this because I was tired of checking the NBA schedule every day to figure out which channel or streaming service had a game. I’m a Nuggets and Broncos fan in Mountain Time, so there’s an Altitude-specific supplement for Nuggets games and highlighted Denver matchups in both guides. The Rockies and Avalanche get the same treatment in MLB and NHL.
 
 This is a personal tool I’m sharing as it stands. If it’s useful, take it. If you want something different, fork it and have your agents—or yourself—make it work the way you want. There’s no product roadmap or promise of ongoing support. Bug reports and improvements are welcome, but you don’t need to wait on me to change your copy.
 
@@ -11,9 +11,9 @@ This is a personal tool I’m sharing as it stands. If it’s useful, take it. I
 ## What it does today
 
 - Switches between NBA, NFL, WNBA, NHL, and MLB in the same 360-point popover; no Dock window. The menu bar icon follows the selected sport.
-- All five sports show the selected day, with 28×28-point clickable areas around the previous/next arrows. Nuggets games appear first on NBA days; Broncos games appear first on NFL days.
+- All five sports show the selected day, with 28×28-point clickable areas around the previous/next arrows. Nuggets, Broncos, Avalanche, and Rockies games appear first within NBA, NFL, NHL, and MLB respectively.
 - NFL’s Sunday shortcut jumps to the upcoming Sunday (or today on Sunday); the other sports keep their Today shortcut. The Sunday shortcut is hidden while viewing a Sunday.
-- Highlights Nuggets matchups within NBA and Broncos matchups within NFL with a mint outline and team label; teams do not have separate sport tabs.
+- Highlights Nuggets, Broncos, Avalanche, and Rockies matchups within their sports with a mint outline and team label; teams do not have separate sport tabs.
 - Keeps each game in three columns: stacked teams, local time, and TV/streaming listings.
 - Follows your Mac’s time zone, including daylight saving changes.
 - Adds source-listed Altitude, Altitude 2, Altitude+, and channel 9/20 information for Nuggets games. Details include pregame/postgame times and regional notes.
@@ -53,7 +53,7 @@ Quit an existing Tipoff instance before copying a replacement. `swift build` als
 
 ## Where it’s at
 
-Version 0.4.0 includes NBA, NFL, WNBA, NHL, and MLB viewing guides, with Nuggets and Broncos emphasis within their guides, focused on source-provided US broadcast listings. Build from source for this version; the linked v0.2.0 download is NBA-only. The Nuggets supplement and Denver team emphasis are deliberately built in for my own use, rather than a general favorites or location system. You can change that.
+Version 0.4.1 includes NBA, NFL, WNBA, NHL, and MLB viewing guides, with Colorado team emphasis within the appropriate guides, focused on source-provided US broadcast listings. Build from source for this version; the linked v0.2.0 download is NBA-only. The Nuggets supplement and Denver team emphasis are deliberately built in for my own use, rather than a general favorites or location system. You can change that.
 
 NBA.com supplies NBA data, ESPN supplies NFL and WNBA listings, and NHL.com and MLB.com supply their league schedules. ESPN is the NBA/NHL/MLB fallback. Altitude’s schedule supplements matching Nuggets games. These are public website endpoints, not guaranteed APIs. They can change or stop working. Listings can be incomplete, and a listed channel or service does not mean your subscription or location can receive it. Altitude’s Denver/outer-market restrictions are preserved in Details.
 

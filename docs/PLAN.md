@@ -28,6 +28,10 @@ WNBA uses source-listed national/local/streaming names without inferring League 
 
 [Source research](SOURCE-RESEARCH.md) records the earlier investigation and remaining gaps. An Avalanche/Altitude supplement remains a possible follow-up; it is not part of this version. This app remains a personal tool shared as-is, with no release cadence or support promise.
 
+## Rockies and Avalanche preference — version 0.4.1
+
+Implemented: Avalanche games lead the NHL list and Rockies games lead MLB, with the same mint outline and uppercase team label used for Nuggets/Broncos. Identity is scoped to each sport, recognizing NHL/COL and MLB's team ID 115 plus ESPN's COL abbreviation. Multiple preferred games retain time order (including doubleheaders); remaining games are chronological. Existing saved snapshots receive the display preference without rewriting schedule fields, source, or freshness. WNBA remains chronological and the sport selector stays unchanged. No broadcaster or network behavior is changed.
+
 ## Possible next steps (not commitments)
 
 - Click a broadcaster to open its watch page (explicitly deferred by the user).

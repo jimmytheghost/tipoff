@@ -47,6 +47,15 @@ public struct Game: Codable, Equatable, Identifiable, Sendable {
     }
     public var isBroncos: Bool { id.hasPrefix("nfl-") && (awayCode == "DEN" || homeCode == "DEN") }
     public var isNuggets: Bool { (id.hasPrefix("nba-") || id.hasPrefix("espn-")) && (awayCode == "DEN" || homeCode == "DEN") }
+    public var isAvalanche: Bool { id.hasPrefix("nhl-") && (awayCode == "COL" || homeCode == "COL") }
+    public var isRockies: Bool { id.hasPrefix("mlb-") && (["115", "COL"].contains(awayCode) || ["115", "COL"].contains(homeCode)) }
+    public var preferredTeamLabel: String? {
+        if isNuggets { return "NUGGETS" }
+        if isBroncos { return "BRONCOS" }
+        if isAvalanche { return "AVALANCHE" }
+        if isRockies { return "ROCKIES" }
+        return nil
+    }
     public func falls(on date: Date, calendar: Calendar) -> Bool {
         if let start { return calendar.isDate(start, inSameDayAs: date) }
         return scheduleDay == Dates.key(date, timeZone: calendar.timeZone)
@@ -73,9 +82,15 @@ public struct ScheduleSnapshot: Codable, Equatable, Sendable {
     public var selectedGuide: ScheduleGuide { guide ?? .nba }
     // Apply to saved snapshots too, without changing their data or freshness.
     public var displayGames: [Game] {
-        guard selectedGuide == .nba else { return games }
+        let preferred: (Game) -> Bool
+        switch selectedGuide {
+        case .nba: preferred = { $0.isNuggets }
+        case .nhl: preferred = { $0.isAvalanche }
+        case .mlb: preferred = { $0.isRockies }
+        case .nfl, .wnba: return games
+        }
         let chronological = Dates.sorted(games)
-        return chronological.filter(\.isNuggets) + chronological.filter { !$0.isNuggets }
+        return chronological.filter(preferred) + chronological.filter { !preferred($0) }
     }
     public init(games: [Game], fetchedAt: Date = Date(), day: String, timeZone: String, source: String, limitedCoverage: Bool) {
         self.games = games; self.fetchedAt = fetchedAt; self.day = day; self.timeZone = timeZone
