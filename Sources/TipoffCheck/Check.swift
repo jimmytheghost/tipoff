@@ -38,7 +38,7 @@ import TipoffCore
         let zone = TimeZone(identifier: "America/Denver")!
         let f = DateFormatter(); f.timeZone = zone; f.dateFormat = "yyyy-MM-dd"
         let date = CommandLine.arguments.dropFirst().first(where: { !$0.hasPrefix("--") }).flatMap { f.date(from: $0) } ?? Date()
-        let guide: ScheduleGuide = CommandLine.arguments.contains("--nfl") ? .nfl : .nba
+        let guide = ScheduleGuide.allCases.first { CommandLine.arguments.contains("--" + $0.rawValue) } ?? .nba
         let snapshot = try await ScheduleProvider().load(day: date, timeZone: zone, guide: guide)
         let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         let data = try encoder.encode(snapshot)

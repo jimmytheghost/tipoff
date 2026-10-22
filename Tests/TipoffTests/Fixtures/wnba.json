@@ -1,0 +1,192 @@
+{
+  "leagues": [
+    {
+      "abbreviation": "WNBA"
+    }
+  ],
+  "events": [
+    {
+      "id": "401857009",
+      "date": "2026-06-21T20:00Z",
+      "competitions": [
+        {
+          "date": "2026-06-21T20:00Z",
+          "timeValid": true,
+          "competitors": [
+            {
+              "homeAway": "home",
+              "team": {
+                "displayName": "Las Vegas Aces",
+                "abbreviation": "LV"
+              }
+            },
+            {
+              "homeAway": "away",
+              "team": {
+                "displayName": "Golden State Valkyries",
+                "abbreviation": "GS"
+              }
+            }
+          ],
+          "status": {
+            "type": {
+              "name": "STATUS_SCHEDULED"
+            }
+          },
+          "geoBroadcasts": [
+            {
+              "type": {
+                "shortName": "TV"
+              },
+              "market": {
+                "type": "National"
+              },
+              "media": {
+                "shortName": "CBS"
+              },
+              "region": "us"
+            },
+            {
+              "type": {
+                "shortName": "Streaming"
+              },
+              "market": {
+                "type": "National"
+              },
+              "media": {
+                "shortName": "Paramount+"
+              },
+              "region": "us"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401857010",
+      "date": "2026-06-21T22:00Z",
+      "competitions": [
+        {
+          "date": "2026-06-21T22:00Z",
+          "timeValid": true,
+          "competitors": [
+            {
+              "homeAway": "home",
+              "team": {
+                "displayName": "Minnesota Lynx",
+                "abbreviation": "MIN"
+              }
+            },
+            {
+              "homeAway": "away",
+              "team": {
+                "displayName": "Washington Mystics",
+                "abbreviation": "WSH"
+              }
+            }
+          ],
+          "status": {
+            "type": {
+              "name": "STATUS_SCHEDULED"
+            }
+          },
+          "geoBroadcasts": [
+            {
+              "type": {
+                "shortName": "TV"
+              },
+              "market": {
+                "type": "National"
+              },
+              "media": {
+                "shortName": "NBA TV"
+              },
+              "region": "us"
+            },
+            {
+              "type": {
+                "shortName": "TV"
+              },
+              "market": {
+                "type": "Away"
+              },
+              "media": {
+                "shortName": "MNMT"
+              },
+              "region": "us"
+            },
+            {
+              "type": {
+                "shortName": "Streaming"
+              },
+              "market": {
+                "type": "Home"
+              },
+              "media": {
+                "shortName": "Victory+ MIN"
+              },
+              "region": "us"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401857011",
+      "date": "2026-06-22T00:00Z",
+      "competitions": [
+        {
+          "date": "2026-06-22T00:00Z",
+          "timeValid": true,
+          "competitors": [
+            {
+              "homeAway": "home",
+              "team": {
+                "displayName": "Los Angeles Sparks",
+                "abbreviation": "LA"
+              }
+            },
+            {
+              "homeAway": "away",
+              "team": {
+                "displayName": "New York Liberty",
+                "abbreviation": "NY"
+              }
+            }
+          ],
+          "status": {
+            "type": {
+              "name": "STATUS_SCHEDULED"
+            }
+          },
+          "geoBroadcasts": [
+            {
+              "type": {
+                "shortName": "TV"
+              },
+              "market": {
+                "type": "National"
+              },
+              "media": {
+                "shortName": "ESPN"
+              },
+              "region": "us"
+            },
+            {
+              "type": {
+                "shortName": "Streaming"
+              },
+              "market": {
+                "type": "National"
+              },
+              "media": {
+                "shortName": "Disney+"
+              },
+              "region": "us"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

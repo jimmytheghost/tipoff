@@ -75,12 +75,27 @@ public actor ScheduleProvider: ScheduleLoading {
         var calendar = Calendar(identifier: .gregorian); calendar.timeZone = timeZone
         let start = calendar.startOfDay(for: day)
         let end = calendar.date(byAdding: .day, value: 1, to: start)!
+        let days = Self.sourceDays(day: day, timeZone: timeZone)
         var games: [Game] = []
-        for sourceDay in Self.sourceDays(day: day, timeZone: timeZone) {
-            let data = try await fetchNFL("scoreboard?dates=\(sourceDay.replacingOccurrences(of: "-", with: ""))&limit=100")
-            let decoded = try FeedDecoder.espn(data, nfl: true)
-            guard decoded.allSatisfy({ $0.scheduleDay == sourceDay }) else { throw FeedError.invalid }
-            games += decoded
+        let source: String
+        let limited: Bool
+        if guide == .nhl || guide == .mlb {
+            do {
+                for sourceDay in days {
+                    let address = guide == .nhl ? "https://api-web.nhle.com/v1/schedule/\(sourceDay)"
+                        : "https://statsapi.mlb.com/api/v1/schedule?sportId=1&date=\(sourceDay)&hydrate=broadcasts"
+                    let data = try await fetch(URL(string: address)!)
+                    games += try guide == .nhl ? LeagueFeedDecoder.nhl(data, expectedDay: sourceDay) : LeagueFeedDecoder.mlb(data, expectedDay: sourceDay)
+                }
+                source = guide == .nhl ? "NHL.com" : "MLB.com"
+                limited = guide == .nhl // The league TV list can omit streaming options.
+            } catch {
+                games = try await fetchESPNDays(days, guide: guide)
+                source = "ESPN · \(guide.title) fallback"; limited = true
+            }
+        } else {
+            games = try await fetchESPNDays(days, guide: guide)
+            source = "ESPN · \(guide.title)"; limited = true
         }
         var seen = Set<String>()
         let selected = games.filter { game in
@@ -90,20 +105,30 @@ public actor ScheduleProvider: ScheduleLoading {
             return inWindow && seen.insert(game.id).inserted
         }
         var snapshot = ScheduleSnapshot(games: selected.sorted {
-            if $0.isBroncos != $1.isBroncos { return $0.isBroncos }
+            if guide == .nfl && $0.isBroncos != $1.isBroncos { return $0.isBroncos }
             let dayA = $0.start.map { Dates.key($0, timeZone: timeZone) } ?? $0.scheduleDay
             let dayB = $1.start.map { Dates.key($0, timeZone: timeZone) } ?? $1.scheduleDay
             if dayA != dayB { return dayA < dayB }
             let a = $0.start ?? .distantFuture, b = $1.start ?? .distantFuture
             return a == b ? $0.id < $1.id : a < b
         }, day: Dates.key(day, timeZone: timeZone), timeZone: timeZone.identifier,
-            source: "ESPN · NFL", limitedCoverage: true)
+            source: source, limitedCoverage: limited)
         snapshot.guide = guide
         return snapshot
     }
-    private func fetchNFL(_ path: String) async throws -> Data {
-        var request = URLRequest(url: URL(string: "https://site.api.espn.com/apis/site/v2/sports/football/nfl/" + path)!)
-        request.setValue("Mozilla/5.0 Tipoff/0.3", forHTTPHeaderField: "User-Agent")
+    private func fetchESPNDays(_ days: [String], guide: ScheduleGuide) async throws -> [Game] {
+        var games: [Game] = []
+        for day in days {
+            let address = "https://site.api.espn.com/apis/site/v2/sports/\(guide.espnPath)/scoreboard?dates=\(day.replacingOccurrences(of: "-", with: ""))&limit=100"
+            let decoded = try FeedDecoder.espn(await fetch(URL(string: address)!), guide: guide)
+            guard decoded.allSatisfy({ $0.scheduleDay == day }) else { throw FeedError.invalid }
+            games += decoded
+        }
+        return games
+    }
+    private func fetch(_ url: URL) async throws -> Data {
+        var request = URLRequest(url: url)
+        request.setValue("Mozilla/5.0 Tipoff/0.4", forHTTPHeaderField: "User-Agent")
         let (data, response) = try await session.data(for: request)
         guard let http = response as? HTTPURLResponse else { throw FeedError.invalid }
         guard http.statusCode == 200 else { throw FeedError.http(http.statusCode) }
@@ -116,7 +141,7 @@ public actor ScheduleProvider: ScheduleLoading {
                     let address = nba ? "https://www.nba.com/games?date=\(day)"
                         : "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=\(day.replacingOccurrences(of: "-", with: ""))&limit=100"
                     var request = URLRequest(url: URL(string: address)!)
-                    request.setValue("Mozilla/5.0 Tipoff/0.3", forHTTPHeaderField: "User-Agent")
+                    request.setValue("Mozilla/5.0 Tipoff/0.4", forHTTPHeaderField: "User-Agent")
                     request.setValue("en-US,en;q=0.9", forHTTPHeaderField: "Accept-Language")
                     let (data, response) = try await session.data(for: request)
                     guard let http = response as? HTTPURLResponse else { throw FeedError.invalid }

@@ -86,16 +86,16 @@ public enum FeedDecoder {
         guard !games.isEmpty else { throw FeedError.invalid }
         return Dates.sorted(games)
     }
-    public static func espn(_ data: Data, nfl: Bool = false) throws -> [Game] {
+    public static func espn(_ data: Data, guide: ScheduleGuide = .nba) throws -> [Game] {
         guard let events = try object(data)["events"] as? [[String: Any]] else { throw FeedError.invalid }
-        if nfl {
+        if guide != .nba {
             let root = try object(data)
             let league = (root["leagues"] as? [[String: Any]])?.first
-            guard league?["abbreviation"] as? String == "NFL", events.count < 100 else { throw FeedError.invalid }
+            guard league?["abbreviation"] as? String == guide.title, events.count < 100 else { throw FeedError.invalid }
         }
-        return try espnEvents(events, nfl: nfl)
+        return try espnEvents(events, guide: guide)
     }
-    private static func espnEvents(_ events: [[String: Any]], nfl: Bool) throws -> [Game] {
+    private static func espnEvents(_ events: [[String: Any]], guide: ScheduleGuide) throws -> [Game] {
         return try events.map { row in
             guard let id = row["id"] as? String,
                   let competition = (row["competitions"] as? [[String: Any]])?.first,
@@ -103,7 +103,7 @@ public enum FeedDecoder {
                   let home = competitors.first(where: { text($0["homeAway"]) == "home" })?["team"] as? [String: Any],
                   let away = competitors.first(where: { text($0["homeAway"]) == "away" })?["team"] as? [String: Any],
                   let start = Dates.parse((competition["date"] ?? row["date"]) as? String) else { throw FeedError.invalid }
-            if nfl {
+            if guide != .nba {
                 guard !id.isEmpty, !text(home["displayName"]).isEmpty, !text(away["displayName"]).isEmpty,
                       !text(home["abbreviation"]).isEmpty, !text(away["abbreviation"]).isEmpty else { throw FeedError.invalid }
             }
@@ -113,7 +113,7 @@ public enum FeedDecoder {
             var broadcasts: [Broadcast] = []
             let geo = competition["geoBroadcasts"] as? [[String: Any]]
             let listed = competition["broadcasts"] as? [[String: Any]]
-            if nfl {
+            if guide != .nba {
                 for key in ["geoBroadcasts", "broadcasts"] {
                     if let value = competition[key] {
                         guard let entries = value as? [[String: Any]] else { throw FeedError.invalid }
@@ -148,7 +148,7 @@ public enum FeedDecoder {
                 }
             }
             let tbd = type["name"] as? String == "STATUS_SCHEDULED" && ((competition["timeValid"] ?? row["timeValid"]) as? Bool == false)
-            return Game(id: (nfl ? "nfl-espn-" : "espn-") + id, away: text(away["displayName"]), home: text(home["displayName"]),
+            return Game(id: (guide == .nba ? "espn-" : guide.rawValue + "-espn-") + id, away: text(away["displayName"]), home: text(home["displayName"]),
                 awayCode: text(away["abbreviation"]), homeCode: text(home["abbreviation"]),
                 start: tbd ? nil : start, scheduleDay: Dates.key(start, timeZone: TimeZone(identifier: "America/New_York")!),
                 notice: notice(statusName), broadcasts: unique(broadcasts))

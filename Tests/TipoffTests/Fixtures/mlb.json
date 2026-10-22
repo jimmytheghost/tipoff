@@ -1,0 +1,880 @@
+{
+  "totalGames": 14,
+  "dates": [
+    {
+      "date": "2026-07-01",
+      "games": [
+        {
+          "gamePk": 824818,
+          "gameDate": "2026-07-01T16:35:00Z",
+          "officialDate": "2026-07-01",
+          "gameNumber": 1,
+          "doubleHeader": "N",
+          "status": {
+            "startTimeTBD": false,
+            "detailedState": "Scheduled"
+          },
+          "teams": {
+            "away": {
+              "team": {
+                "id": 145,
+                "name": "Chicago White Sox"
+              }
+            },
+            "home": {
+              "team": {
+                "id": 110,
+                "name": "Baltimore Orioles"
+              }
+            }
+          },
+          "broadcasts": [
+            {
+              "name": "MASN",
+              "type": "TV",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "Chicago Sports Network",
+              "type": "TV",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "ESPN Chicago WMVP 1000 AM",
+              "type": "AM",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "98 Rock 97.9 FM",
+              "type": "FM",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "WBAL 1090 AM",
+              "type": "AM",
+              "homeAway": "home",
+              "isNational": false
+            }
+          ]
+        },
+        {
+          "gamePk": 824419,
+          "gameDate": "2026-07-01T17:10:00Z",
+          "officialDate": "2026-07-01",
+          "gameNumber": 1,
+          "doubleHeader": "N",
+          "status": {
+            "startTimeTBD": false,
+            "detailedState": "Scheduled"
+          },
+          "teams": {
+            "away": {
+              "team": {
+                "id": 140,
+                "name": "Texas Rangers"
+              }
+            },
+            "home": {
+              "team": {
+                "id": 114,
+                "name": "Cleveland Guardians"
+              }
+            }
+          },
+          "broadcasts": [
+            {
+              "name": "WTAM 1100",
+              "type": "AM",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "Rangers Sports Network, presented by Progressive",
+              "type": "TV",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "Guardians.TV Presented by Progressive",
+              "type": "TV",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "105.3 The Fan",
+              "type": "FM",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "Guardians Radio Network",
+              "type": "FM",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "WARF 1350",
+              "type": "AM",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "KFLC 1270",
+              "type": "AM",
+              "homeAway": "away",
+              "isNational": false
+            }
+          ]
+        },
+        {
+          "gamePk": 824740,
+          "gameDate": "2026-07-01T17:35:00Z",
+          "officialDate": "2026-07-01",
+          "gameNumber": 1,
+          "doubleHeader": "N",
+          "status": {
+            "startTimeTBD": false,
+            "detailedState": "Scheduled"
+          },
+          "teams": {
+            "away": {
+              "team": {
+                "id": 120,
+                "name": "Washington Nationals"
+              }
+            },
+            "home": {
+              "team": {
+                "id": 111,
+                "name": "Boston Red Sox"
+              }
+            }
+          },
+          "broadcasts": [
+            {
+              "name": "NESN",
+              "type": "TV",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "WJFK 106.7 The Fan",
+              "type": "FM",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "WEEI 93.7",
+              "type": "FM",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "WCCM 1490 AM (SP)",
+              "type": "AM",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "WESX 1230 AM (SP)",
+              "type": "AM",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "Nationals.TV",
+              "type": "TV",
+              "homeAway": "away",
+              "isNational": false
+            }
+          ]
+        },
+        {
+          "gamePk": 823530,
+          "gameDate": "2026-07-01T17:35:00Z",
+          "officialDate": "2026-07-01",
+          "gameNumber": 1,
+          "doubleHeader": "N",
+          "status": {
+            "startTimeTBD": false,
+            "detailedState": "Scheduled"
+          },
+          "teams": {
+            "away": {
+              "team": {
+                "id": 116,
+                "name": "Detroit Tigers"
+              }
+            },
+            "home": {
+              "team": {
+                "id": 147,
+                "name": "New York Yankees"
+              }
+            }
+          },
+          "broadcasts": [
+            {
+              "name": "YES",
+              "type": "TV",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "Detroit SportsNet",
+              "type": "TV",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "WFAN 660/101.9 FM",
+              "type": "AM",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "WXYT 97.1 FM",
+              "type": "FM",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "WADO 1280",
+              "type": "AM",
+              "homeAway": "home",
+              "isNational": false
+            }
+          ]
+        },
+        {
+          "gamePk": 824660,
+          "gameDate": "2026-07-01T18:20:00Z",
+          "officialDate": "2026-07-01",
+          "gameNumber": 1,
+          "doubleHeader": "N",
+          "status": {
+            "startTimeTBD": false,
+            "detailedState": "Scheduled"
+          },
+          "teams": {
+            "away": {
+              "team": {
+                "id": 135,
+                "name": "San Diego Padres"
+              }
+            },
+            "home": {
+              "team": {
+                "id": 112,
+                "name": "Chicago Cubs"
+              }
+            }
+          },
+          "broadcasts": [
+            {
+              "name": "Marquee Sports Network",
+              "type": "TV",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "104.3 The Score",
+              "type": "FM",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "Padres.TV Presented by UC San Diego Health",
+              "type": "TV",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "TUDN",
+              "type": "AM",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "KWFN 97.3",
+              "type": "FM",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "XEMO 860",
+              "type": "AM",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "WPPN 106.7 / TUDN",
+              "type": "AM",
+              "homeAway": "home",
+              "isNational": false
+            }
+          ]
+        },
+        {
+          "gamePk": 822791,
+          "gameDate": "2026-07-01T19:07:00Z",
+          "officialDate": "2026-07-01",
+          "gameNumber": 1,
+          "doubleHeader": "N",
+          "status": {
+            "startTimeTBD": false,
+            "detailedState": "Scheduled"
+          },
+          "teams": {
+            "away": {
+              "team": {
+                "id": 121,
+                "name": "New York Mets"
+              }
+            },
+            "home": {
+              "team": {
+                "id": 141,
+                "name": "Toronto Blue Jays"
+              }
+            }
+          },
+          "broadcasts": [
+            {
+              "name": "SNY",
+              "type": "TV",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "Sportsnet",
+              "type": "TV",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "SN590 THE FAN",
+              "type": "AM",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "Audacy Mets Radio WHSQ 880AM",
+              "type": "AM",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "Audacy App 92.3 HD2",
+              "type": "FM",
+              "homeAway": "away",
+              "isNational": false
+            }
+          ]
+        },
+        {
+          "gamePk": 823446,
+          "gameDate": "2026-07-01T22:40:00Z",
+          "officialDate": "2026-07-01",
+          "gameNumber": 1,
+          "doubleHeader": "N",
+          "status": {
+            "startTimeTBD": false,
+            "detailedState": "Scheduled"
+          },
+          "teams": {
+            "away": {
+              "team": {
+                "id": 134,
+                "name": "Pittsburgh Pirates"
+              }
+            },
+            "home": {
+              "team": {
+                "id": 143,
+                "name": "Philadelphia Phillies"
+              }
+            }
+          },
+          "broadcasts": [
+            {
+              "name": "NBCSP",
+              "type": "TV",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "SportsNet Pittsburgh",
+              "type": "TV",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "94 WIP",
+              "type": "FM",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "Sports Radio 93.7 KDKA The Fan",
+              "type": "FM",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "iHeart App",
+              "type": "AM",
+              "homeAway": "home",
+              "isNational": false
+            }
+          ]
+        },
+        {
+          "gamePk": 824905,
+          "gameDate": "2026-07-01T23:15:00Z",
+          "officialDate": "2026-07-01",
+          "gameNumber": 1,
+          "doubleHeader": "N",
+          "status": {
+            "startTimeTBD": false,
+            "detailedState": "Scheduled"
+          },
+          "teams": {
+            "away": {
+              "team": {
+                "id": 138,
+                "name": "St. Louis Cardinals"
+              }
+            },
+            "home": {
+              "team": {
+                "id": 144,
+                "name": "Atlanta Braves"
+              }
+            }
+          },
+          "broadcasts": [
+            {
+              "name": "680 AM/93.7 FM The Fan",
+              "type": "AM",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "Cardinals.TV Presented by bet365",
+              "type": "TV",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "BravesVision",
+              "type": "TV",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "KMOX 1120 AM/104.1 FM",
+              "type": "AM",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "Los Bravos",
+              "type": "AM",
+              "homeAway": "home",
+              "isNational": false
+            }
+          ]
+        },
+        {
+          "gamePk": 824094,
+          "gameDate": "2026-07-01T23:40:00Z",
+          "officialDate": "2026-07-01",
+          "gameNumber": 1,
+          "doubleHeader": "N",
+          "status": {
+            "startTimeTBD": false,
+            "detailedState": "Scheduled"
+          },
+          "teams": {
+            "away": {
+              "team": {
+                "id": 139,
+                "name": "Tampa Bay Rays"
+              }
+            },
+            "home": {
+              "team": {
+                "id": 118,
+                "name": "Kansas City Royals"
+              }
+            }
+          },
+          "broadcasts": [
+            {
+              "name": "Rays.TV",
+              "type": "TV",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "Royals.TV",
+              "type": "TV",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "WDAE 95.7 FM",
+              "type": "AM",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "96.5 The Fan",
+              "type": "FM",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "Royals Radio Network",
+              "type": "AM",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "WQBN/1300AM",
+              "type": "AM",
+              "homeAway": "away",
+              "isNational": false
+            }
+          ]
+        },
+        {
+          "gamePk": 824174,
+          "gameDate": "2026-07-02T00:10:00Z",
+          "officialDate": "2026-07-01",
+          "gameNumber": 1,
+          "doubleHeader": "N",
+          "status": {
+            "startTimeTBD": false,
+            "detailedState": "Scheduled"
+          },
+          "teams": {
+            "away": {
+              "team": {
+                "id": 142,
+                "name": "Minnesota Twins"
+              }
+            },
+            "home": {
+              "team": {
+                "id": 117,
+                "name": "Houston Astros"
+              }
+            }
+          },
+          "broadcasts": [
+            {
+              "name": "Twins.TV Presented by Progressive",
+              "type": "TV",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "TIBN",
+              "type": "AM",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "Space City Home Network",
+              "type": "TV",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "WCCO 830",
+              "type": "AM",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "KBME 790 AM/94.5 FM HD-2",
+              "type": "AM",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "The Wolf 102.9 FM",
+              "type": "FM",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "Audacy App",
+              "type": "AM",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "KLTN-TUDN 102.9 FM",
+              "type": "AM",
+              "homeAway": "home",
+              "isNational": false
+            }
+          ]
+        },
+        {
+          "gamePk": 823767,
+          "gameDate": "2026-07-02T00:10:00Z",
+          "officialDate": "2026-07-01",
+          "gameNumber": 1,
+          "doubleHeader": "N",
+          "status": {
+            "startTimeTBD": false,
+            "detailedState": "Scheduled"
+          },
+          "teams": {
+            "away": {
+              "team": {
+                "id": 113,
+                "name": "Cincinnati Reds"
+              }
+            },
+            "home": {
+              "team": {
+                "id": 158,
+                "name": "Milwaukee Brewers"
+              }
+            }
+          },
+          "broadcasts": [
+            {
+              "name": "ESPN/ESPN App",
+              "type": "TV",
+              "homeAway": "away",
+              "isNational": true
+            },
+            {
+              "name": "ESPN/ESPN App",
+              "type": "TV",
+              "homeAway": "home",
+              "isNational": true
+            },
+            {
+              "name": "WLW 700",
+              "type": "AM",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "WTMJ 620",
+              "type": "AM",
+              "homeAway": "home",
+              "isNational": false
+            }
+          ]
+        },
+        {
+          "gamePk": 824337,
+          "gameDate": "2026-07-02T00:40:00Z",
+          "officialDate": "2026-07-01",
+          "gameNumber": 1,
+          "doubleHeader": "N",
+          "status": {
+            "startTimeTBD": false,
+            "detailedState": "Scheduled"
+          },
+          "teams": {
+            "away": {
+              "team": {
+                "id": 146,
+                "name": "Miami Marlins"
+              }
+            },
+            "home": {
+              "team": {
+                "id": 115,
+                "name": "Colorado Rockies"
+              }
+            }
+          },
+          "broadcasts": [
+            {
+              "name": "Rockies.TV",
+              "type": "TV",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "Marlins.TV presented by Werner, Hoffman, Greig & Garcia",
+              "type": "TV",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "WQAM 104.3",
+              "type": "FM",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "KOA 850 AM/94.1 FM ",
+              "type": "AM",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "WAQI 710",
+              "type": "AM",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "KNRV 1150",
+              "type": "AM",
+              "homeAway": "home",
+              "isNational": false
+            }
+          ]
+        },
+        {
+          "gamePk": 824985,
+          "gameDate": "2026-07-02T01:40:00Z",
+          "officialDate": "2026-07-01",
+          "gameNumber": 1,
+          "doubleHeader": "N",
+          "status": {
+            "startTimeTBD": false,
+            "detailedState": "Scheduled"
+          },
+          "teams": {
+            "away": {
+              "team": {
+                "id": 119,
+                "name": "Los Angeles Dodgers"
+              }
+            },
+            "home": {
+              "team": {
+                "id": 133,
+                "name": "Athletics"
+              }
+            }
+          },
+          "broadcasts": [
+            {
+              "name": "SportsNet LA",
+              "type": "TV",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "NBCSCA",
+              "type": "TV",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "Dodgers Radio AM570",
+              "type": "AM",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "Talk 650 KSTE",
+              "type": "AM",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "KVMX 92.1/105.5",
+              "type": "FM",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "KTNQ 1020",
+              "type": "AM",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "A's Cast",
+              "type": "AM",
+              "homeAway": "home",
+              "isNational": false
+            }
+          ]
+        },
+        {
+          "gamePk": 825064,
+          "gameDate": "2026-07-02T01:40:00Z",
+          "officialDate": "2026-07-01",
+          "gameNumber": 1,
+          "doubleHeader": "N",
+          "status": {
+            "startTimeTBD": false,
+            "detailedState": "Scheduled"
+          },
+          "teams": {
+            "away": {
+              "team": {
+                "id": 137,
+                "name": "San Francisco Giants"
+              }
+            },
+            "home": {
+              "team": {
+                "id": 109,
+                "name": "Arizona Diamondbacks"
+              }
+            }
+          },
+          "broadcasts": [
+            {
+              "name": "KNBR 680",
+              "type": "AM",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "NBCS BA",
+              "type": "TV",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "Arizona Sports 98.7 FM",
+              "type": "FM",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "DBACKS.TV",
+              "type": "TV",
+              "homeAway": "home",
+              "isNational": false
+            },
+            {
+              "name": "1510 AM - KSFN",
+              "type": "AM",
+              "homeAway": "away",
+              "isNational": false
+            },
+            {
+              "name": "La Campesina 101.9 FM & 860 AM",
+              "type": "AM",
+              "homeAway": "home",
+              "isNational": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Candidate sources: WNBA, MLB, NHL
 
-Investigated October 20, 2026 for Tipoff. This is source research, not implemented sport support or a product commitment. The app remains NBA/NFL at version 0.3.2. Findings below come from direct HTTP/JSON probes and first-party website inspection; sample coverage is not a completeness guarantee.
+Investigated October 20, 2026 for Tipoff. This records the investigation before integration. Version 0.4.0 now implements WNBA (ESPN), NHL (league feed with ESPN fallback), and MLB (league feed with ESPN fallback), in that order. The Avalanche/Altitude supplement is still only a candidate; this document is not a product commitment. Findings below come from direct HTTP/JSON probes and first-party website inspection; sample coverage is not a completeness guarantee.
 
 ## Recommended starting points
 
@@ -56,12 +56,12 @@ The correct response contains a table with Date, Matchup, Home/Away, Pregame, Ga
 
 The [Avalanche's official viewing guide](https://www.nhl.com/avalanche/fans/how-to-watch) is another publisher-provided cross-check for regional and national broadcasts, including explicitly listed streaming platforms on selected dates.
 
-## Before implementation
+## Integration checklist from the research
 
 1. Generalize league identity validation and game-ID namespacing. The current ESPN decoder's NFL boolean must not cause WNBA/MLB/NHL events to be saved with NBA or NFL IDs.
 2. Capture minimal schedule/broadcast fixtures from the chosen sources, plus legitimate empty days, malformed/schema-change responses, source errors, missing networks, TBD times, doubleheaders/rescheduling, US/Canadian broadcast filtering, and time-zone/DST boundaries. No scores or visitor data in retained fixtures/models/caches.
 3. Keep sport/date/time-zone caches isolated and preserve good snapshots on source failures. Validate response day/league/count metadata before accepting an empty result or a truncated schedule.
 4. Keep teams inside their sports. Any future Avalanche/Rockies emphasis belongs within NHL/MLB. No favorite or team preference change is made by this research.
-5. For actual integration, run `scripts/test.sh`, `scripts/package-app.sh`, live `TipoffCheck` per new sport, and native 360-point renders. Current research changed documentation only; no app tests or rebuild were run for this pass. The last implementation run remains 39 tests passed.
+5. For actual integration, run `scripts/test.sh`, `scripts/package-app.sh`, live `TipoffCheck` per new sport, and native 360-point renders. The original research pass changed documentation only; see VALIDATION.md for subsequent executed integration tests and live checks.
 
-Suggested sequence: NHL (strong local relevance and first-party feed), WNBA (smallest decoder extension), then MLB (good feed, more date/doubleheader cases). This is an implementation recommendation, not a release commitment.
+The original recommendation was NHL, WNBA, then MLB. Implementation subsequently proceeded WNBA, NHL, then MLB; this is not a release-cadence commitment.

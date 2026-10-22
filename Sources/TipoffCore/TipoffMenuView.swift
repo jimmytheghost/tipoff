@@ -30,7 +30,7 @@ public struct TipoffMenuView: View {
                 .background(.mint.opacity(0.12), in: RoundedRectangle(cornerRadius: 8))
             VStack(alignment: .leading, spacing: 2) {
                 Text("Tipoff").font(.headline)
-                Text(store.guide == .nba ? "Your NBA viewing guide." : "Football, with Denver first.").font(.caption).foregroundStyle(.secondary)
+                Text(store.guide == .nfl ? "Football, with Denver first." : "Your \(store.guide.title) viewing guide.").font(.caption).foregroundStyle(.secondary)
             }
             Spacer()
             Button { showingSettings.toggle() } label: {
@@ -74,7 +74,7 @@ public struct TipoffMenuView: View {
                 message(error, symbol: "wifi.exclamationmark", color: .orange)
             }
             if store.snapshot?.limitedCoverage == true {
-                message("Using ESPN. Local and streaming listings may be incomplete.", symbol: "info.circle", color: .secondary)
+                message(store.snapshot?.source.hasPrefix("ESPN") == true ? "Using ESPN. Local and streaming listings may be incomplete." : "TV listings may omit streaming options. Check the broadcaster’s schedule.", symbol: "info.circle", color: .secondary)
             }
             if let warning = store.snapshot?.altitudeWarning {
                 message(warning, symbol: "info.circle", color: .orange)
@@ -140,11 +140,14 @@ public struct TipoffMenuView: View {
             }
             VStack(alignment: .leading, spacing: 6) {
                 Text("Broadcast listings").font(.callout.weight(.medium))
-                Text("NBA uses NBA.com with ESPN fallback and the Nuggets’ Altitude supplement. NFL uses ESPN. Nuggets and Broncos games appear first in their guides. Tipoff checks on opening, after wake, and every five minutes.")
+                Text("NBA uses NBA.com with ESPN fallback and the Nuggets’ Altitude supplement. NFL and WNBA use ESPN. NHL and MLB use league schedules with ESPN fallback. Nuggets and Broncos games appear first in their guides. Tipoff checks on opening, after wake, and every five minutes.")
                 Text("Listings reflect what the source provides. Local rights, subscriptions, and League Pass blackouts still affect availability.")
             }.font(.caption).foregroundStyle(.secondary)
             Text("No scores. Just where to watch.").font(.caption).foregroundStyle(.mint)
             Link("Open NBA schedule", destination: URL(string: "https://www.nba.com/schedule")!).font(.caption)
+            Link("Open NHL schedule", destination: URL(string: "https://www.nhl.com/schedule")!).font(.caption)
+            Link("Open MLB schedule", destination: URL(string: "https://www.mlb.com/schedule")!).font(.caption)
+            Link("Open WNBA schedule", destination: URL(string: "https://www.wnba.com/schedule")!).font(.caption)
             Link("Open Broncos schedule", destination: URL(string: "https://www.denverbroncos.com/schedule/")!).font(.caption)
         }.padding(14)
         .onAppear { loginEnabled = SMAppService.mainApp.status == .enabled }

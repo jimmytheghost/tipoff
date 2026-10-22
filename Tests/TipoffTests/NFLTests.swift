@@ -12,7 +12,7 @@ private func nflRoot(_ name: String = "nfl") throws -> [String: Any] {
 private func encoded(_ root: [String: Any]) throws -> Data { try JSONSerialization.data(withJSONObject: root) }
 
 @Test func nflFixturePreservesSuppliedNetworksAndDenverIdentity() throws {
-    let games = try FeedDecoder.espn(nflFixture("nfl"), nfl: true)
+    let games = try FeedDecoder.espn(nflFixture("nfl"), guide: .nfl)
     let denver = try #require(games.first(where: { $0.isBroncos }))
     #expect(denver.away == "Denver Broncos")
     #expect(denver.homeCode == "ARI")
@@ -25,25 +25,25 @@ private func encoded(_ root: [String: Any]) throws -> Data { try JSONSerializati
 @Test func nflRejectsSchemaChangesAndWrongLeague() throws {
     for replacement in ["NBA", ""] {
         var root = try nflRoot(); root["leagues"] = [["abbreviation": replacement]]
-        #expect(throws: (any Error).self) { try FeedDecoder.espn(encoded(root), nfl: true) }
+        #expect(throws: (any Error).self) { try FeedDecoder.espn(encoded(root), guide: .nfl) }
     }
     for field in ["competitors", "date", "broadcasts", "geoBroadcasts"] {
         var root = try nflRoot(); var events = root["events"] as! [[String: Any]]
         var competitions = events[0]["competitions"] as! [[String: Any]]
         competitions[0][field] = "schema changed"; events[0]["competitions"] = competitions; root["events"] = events
-        #expect(throws: (any Error).self) { try FeedDecoder.espn(encoded(root), nfl: true) }
+        #expect(throws: (any Error).self) { try FeedDecoder.espn(encoded(root), guide: .nfl) }
     }
     var root = try nflRoot(); root["events"] = Array(repeating: (root["events"] as! [[String: Any]])[0], count: 100)
-    #expect(throws: (any Error).self) { try FeedDecoder.espn(encoded(root), nfl: true) }
+    #expect(throws: (any Error).self) { try FeedDecoder.espn(encoded(root), guide: .nfl) }
 }
 
 @Test func nflValidEmptyAndUnknownTimeAreDistinct() throws {
     let empty = Data(#"{"leagues":[{"abbreviation":"NFL"}],"events":[]}"#.utf8)
-    #expect(try FeedDecoder.espn(empty, nfl: true).isEmpty)
+    #expect(try FeedDecoder.espn(empty, guide: .nfl).isEmpty)
     var root = try nflRoot(); var events = root["events"] as! [[String: Any]]
     var competitions = events[0]["competitions"] as! [[String: Any]]
     competitions[0]["timeValid"] = false; events[0]["competitions"] = competitions; root["events"] = events
-    let game = try FeedDecoder.espn(encoded(root), nfl: true)[0]
+    let game = try FeedDecoder.espn(encoded(root), guide: .nfl)[0]
     #expect(game.start == nil)
     #expect(game.timeLabel() == "Time TBD")
     #expect(game.scheduleDay == "2026-10-25")
@@ -60,7 +60,7 @@ private func encoded(_ root: [String: Any]) throws -> Data { try JSONSerializati
     competitions[0]["competitors"] = competitors
     competitions[0]["status"] = ["displayClock": "12:00", "period": 2, "type": ["name": "STATUS_IN_PROGRESS"]]
     events[0]["competitions"] = competitions; root["events"] = events
-    let games = try FeedDecoder.espn(encoded(root), nfl: true)
+    let games = try FeedDecoder.espn(encoded(root), guide: .nfl)
     #expect(games[0].notice == nil)
     for guide in ScheduleGuide.allCases {
         var snapshot = ScheduleSnapshot(games: guide == .nba ? [] : games, day: "2026-10-25", timeZone: nflZone.identifier, source: guide.title, limitedCoverage: true)
@@ -125,13 +125,13 @@ private actor GuideControlledProvider: ScheduleLoading {
     for _ in 0..<300 { if await condition() { return }; try await Task.sleep(for: .milliseconds(10)) }
     #expect(await condition())
 }
-@Test @MainActor func guideSwitchRejectsOldResponseAndRetainsCacheOnSchemaFailure() async throws {
+@Test(arguments: [ScheduleGuide.nfl, .wnba, .nhl, .mlb]) @MainActor func guideSwitchRejectsOldResponseAndRetainsCacheOnSchemaFailure(_ targetGuide: ScheduleGuide) async throws {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     defer { try? FileManager.default.removeItem(at: directory) }
     let cache = ScheduleCache(directory: directory), provider = GuideControlledProvider()
     let store = ScheduleStore(provider: provider, cache: cache, timeZone: nflZone)
     store.refresh(); try await nflWait { await provider.count == 1 }
-    store.selectGuide(.nfl); try await nflWait { await provider.count == 2 }
+    store.selectGuide(targetGuide); try await nflWait { await provider.count == 2 }
     await provider.finish(1); try await nflWait { !store.refreshing }
     let saved = store.snapshot
     await provider.finish(0)
@@ -139,14 +139,14 @@ private actor GuideControlledProvider: ScheduleLoading {
     #expect(store.snapshot == saved)
     store.selectGuide(.nba); try await nflWait { await provider.count == 3 }
     #expect(store.snapshot == nil)
-    store.selectGuide(.nfl); try await nflWait { await provider.count == 4 }
+    store.selectGuide(targetGuide); try await nflWait { await provider.count == 4 }
     #expect(store.snapshot == saved)
     await provider.finish(3, fail: true); try await nflWait { !store.refreshing }
     await provider.finish(2)
     #expect(store.isCached)
     #expect(store.error != nil)
     #expect(store.snapshot == saved)
-    #expect(cache.read(day: saved!.day, timeZone: nflZone.identifier, guide: .nfl) == saved)
+    #expect(cache.read(day: saved!.day, timeZone: nflZone.identifier, guide: targetGuide) == saved)
 }
 
 
@@ -158,7 +158,7 @@ private actor GuideControlledProvider: ScheduleLoading {
         ["media": ["shortName": "Denver Radio"], "region": "us", "type": ["shortName": "Radio"]]
     ]
     events[0]["competitions"] = competitions; root["events"] = events
-    let game = try FeedDecoder.espn(encoded(root), nfl: true)[0]
+    let game = try FeedDecoder.espn(encoded(root), guide: .nfl)[0]
     #expect(game.broadcasts.map(\.name) == ["Denver Radio"])
     #expect(game.broadcasts[0].category.lowercased().contains("radio"))
     #expect(!game.broadcasts.contains { $0.name == "Altitude" || $0.name == "Paramount+" })
@@ -168,11 +168,11 @@ private actor GuideControlledProvider: ScheduleLoading {
     var competitions = events[0]["competitions"] as! [[String: Any]]
     competitions[0]["geoBroadcasts"] = [["renamedMedia": ["name": "CBS"]]]
     events[0]["competitions"] = competitions; root["events"] = events
-    #expect(throws: (any Error).self) { try FeedDecoder.espn(encoded(root), nfl: true) }
+    #expect(throws: (any Error).self) { try FeedDecoder.espn(encoded(root), guide: .nfl) }
 }
 
 @Test func guidesContainOnlySports() {
-    #expect(ScheduleGuide.allCases == [.nba, .nfl])
+    #expect(ScheduleGuide.allCases == [.nba, .nfl, .wnba, .nhl, .mlb])
     #expect(ScheduleGuide(rawValue: "broncos") == nil)
 }
 

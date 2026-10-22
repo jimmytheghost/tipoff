@@ -1,13 +1,14 @@
 # Tipoff
 
-Native SwiftUI macOS 15+ NBA/NFL viewing guide, part of the Bug / Worklog menu bar suite.
+Native SwiftUI macOS 15+ NBA/NFL/WNBA/NHL/MLB viewing guide, part of the Bug / Worklog menu bar suite.
 
 - Keep the 360-point width, mint accent, system typography, and subtle rounded cards.
 - No scores, standings, game clocks, or live-game telemetry. The model and persisted cache must exclude them.
 - Use source-provided broadcasters. Never infer streaming availability, local rights, or League Pass eligibility.
 - Preserve working cached data on network/schema errors. Show source, freshness, and fallback limitations honestly.
 - Follow the Mac’s time zone and use calendar days rather than fixed 24-hour offsets.
-- NFL uses ESPN with an explicit coverage warning; put Denver first on NFL days. NBA and NFL are the only top-level guides; the Broncos belong within NFL. Never infer local affiliate or streaming access.
+- NFL uses ESPN with an explicit coverage warning; put Denver first on NFL days. Top-level guides represent sports (NBA, NFL, WNBA, NHL, MLB); the Broncos belong within NFL. Never infer local affiliate or streaming access.
+- WNBA uses ESPN; NHL and MLB use league schedules with ESPN fallback. Keep source/coverage warnings and isolated sport/date/time-zone caches.
 - Nuggets games have a personal Altitude schedule supplement. Require date/opponent/home-away/tipoff agreement; preserve regional footnotes and original freshness when using saved data.
 - Do not modify sibling projects.
 - Validate with `scripts/test.sh`, `scripts/package-app.sh`, and a live `TipoffCheck` when networking/source code changes. Record the actual executed test count.

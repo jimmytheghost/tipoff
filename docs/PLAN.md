@@ -20,9 +20,13 @@ Implemented: NBA / NFL selector and daily NFL listings with Denver first. Bronco
 
 ESPN supplies NFL daily schedules, including source-listed networks only. Unknown kickoff times remain TBD. NFL has a visible limited-coverage notice and no independent fallback source. Cache keys and stale-response guards separate NBA and NFL; existing daily cache files remain readable. Old Broncos-window caches are not used as daily NFL data. No scores or live telemetry enter models or caches.
 
-## Additional-sport source research
+## WNBA, then NHL, then MLB — version 0.4.0
 
-[WNBA / MLB / NHL research](SOURCE-RESEARCH.md) records direct endpoint probes and broadcaster coverage observations. Proposed starting points are ESPN for WNBA, MLB's schedule feed with broadcast hydration for baseball, and NHL's schedule feed with ESPN fallback and a possible Avalanche/Altitude supplement for hockey. These sports are not implemented. Keep teams inside their respective sport, with score-free caches and source-listed broadcasters only.
+Implemented in that order: WNBA daily listings from ESPN, NHL daily listings from NHL.com, and MLB daily listings from MLB.com, with ESPN fallback for NHL/MLB. The selector is NBA / NFL / WNBA / NHL / MLB, still within 360 points. Each sport keeps its own source/freshness label and cache key. WNBA/NHL/MLB use Today; NFL keeps Sunday. Nuggets/Broncos highlighting stays inside NBA/NFL.
+
+WNBA uses source-listed national/local/streaming names without inferring League Pass access. NHL filters country-tagged TV listings to US entries and warns that streaming options may be omitted. MLB retains source-provided regional/national broadcaster names, including streaming brands in its TV list, and labels doubleheader games. Unknown times stay TBD; postponed/cancelled/suspended notices do not expose game telemetry. Both league decoders validate source-day/count metadata and reject malformed formats, so a failed primary falls back to ESPN and a total failure retains saved data and its original freshness.
+
+[Source research](SOURCE-RESEARCH.md) records the earlier investigation and remaining gaps. An Avalanche/Altitude supplement remains a possible follow-up; it is not part of this version. This app remains a personal tool shared as-is, with no release cadence or support promise.
 
 ## Possible next steps (not commitments)
 

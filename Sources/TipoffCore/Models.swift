@@ -1,9 +1,25 @@
 import Foundation
 
 public enum ScheduleGuide: String, Codable, CaseIterable, Sendable {
-    case nba, nfl
-    public var title: String { self == .nba ? "NBA" : "NFL" }
-    public var symbol: String { self == .nba ? "basketball.fill" : "american.football.fill" }
+    case nba, nfl, wnba, nhl, mlb
+    public var title: String { rawValue.uppercased() }
+    public var symbol: String {
+        switch self {
+        case .nba, .wnba: return "basketball.fill"
+        case .nfl: return "american.football.fill"
+        case .nhl: return "hockey.puck.fill"
+        case .mlb: return "baseball.fill"
+        }
+    }
+    public var espnPath: String {
+        switch self {
+        case .nba: return "basketball/nba"
+        case .nfl: return "football/nfl"
+        case .wnba: return "basketball/wnba"
+        case .nhl: return "hockey/nhl"
+        case .mlb: return "baseball/mlb"
+        }
+    }
 }
 
 public struct Broadcast: Codable, Equatable, Hashable, Identifiable, Sendable {
@@ -30,7 +46,7 @@ public struct Game: Codable, Equatable, Identifiable, Sendable {
         self.start = start; self.scheduleDay = scheduleDay; self.notice = notice; self.broadcasts = broadcasts
     }
     public var isBroncos: Bool { id.hasPrefix("nfl-") && (awayCode == "DEN" || homeCode == "DEN") }
-    public var isNuggets: Bool { !id.hasPrefix("nfl-") && (awayCode == "DEN" || homeCode == "DEN") }
+    public var isNuggets: Bool { (id.hasPrefix("nba-") || id.hasPrefix("espn-")) && (awayCode == "DEN" || homeCode == "DEN") }
     public func falls(on date: Date, calendar: Calendar) -> Bool {
         if let start { return calendar.isDate(start, inSameDayAs: date) }
         return scheduleDay == Dates.key(date, timeZone: calendar.timeZone)

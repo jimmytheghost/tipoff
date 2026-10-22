@@ -1,0 +1,2017 @@
+{
+  "numberOfGames": 49,
+  "gameWeek": [
+    {
+      "date": "2026-10-22",
+      "games": [
+        {
+          "id": 2026020154,
+          "startTimeUTC": "2026-10-22T23:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Nashville"
+            },
+            "commonName": {
+              "default": "Predators"
+            },
+            "abbrev": "NSH"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Boston"
+            },
+            "commonName": {
+              "default": "Bruins"
+            },
+            "abbrev": "BOS"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "NESN",
+              "countryCode": "US",
+              "market": "H"
+            },
+            {
+              "network": "SCRIPPS",
+              "countryCode": "US",
+              "market": "A"
+            }
+          ]
+        },
+        {
+          "id": 2026020155,
+          "startTimeUTC": "2026-10-22T23:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "New York"
+            },
+            "commonName": {
+              "default": "Rangers"
+            },
+            "abbrev": "NYR"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Toronto"
+            },
+            "commonName": {
+              "default": "Maple Leafs"
+            },
+            "abbrev": "TOR"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "TSN4",
+              "countryCode": "CA",
+              "market": "H"
+            },
+            {
+              "network": "MSG",
+              "countryCode": "US",
+              "market": "A"
+            }
+          ]
+        },
+        {
+          "id": 2026020156,
+          "startTimeUTC": "2026-10-22T23:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "San Jose"
+            },
+            "commonName": {
+              "default": "Sharks"
+            },
+            "abbrev": "SJS"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Ottawa"
+            },
+            "commonName": {
+              "default": "Senators",
+              "fr": "S\u00e9nateurs"
+            },
+            "abbrev": "OTT"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "TSN5",
+              "countryCode": "CA",
+              "market": "H"
+            },
+            {
+              "network": "RDS",
+              "countryCode": "CA",
+              "market": "H"
+            },
+            {
+              "network": "NBCSCA",
+              "countryCode": "US",
+              "market": "A"
+            }
+          ]
+        },
+        {
+          "id": 2026020157,
+          "startTimeUTC": "2026-10-22T23:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Anaheim"
+            },
+            "commonName": {
+              "default": "Ducks"
+            },
+            "abbrev": "ANA"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "New Jersey"
+            },
+            "commonName": {
+              "default": "Devils"
+            },
+            "abbrev": "NJD"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "FOXLA+",
+              "countryCode": "US",
+              "market": "A"
+            },
+            {
+              "network": "Prime Video",
+              "countryCode": "US",
+              "market": "A"
+            },
+            {
+              "network": "MSGSN",
+              "countryCode": "US",
+              "market": "H"
+            }
+          ]
+        },
+        {
+          "id": 2026020158,
+          "startTimeUTC": "2026-10-22T23:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Florida",
+              "fr": "Floride"
+            },
+            "commonName": {
+              "default": "Panthers"
+            },
+            "abbrev": "FLA"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Pittsburgh"
+            },
+            "commonName": {
+              "default": "Penguins"
+            },
+            "abbrev": "PIT"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "SN",
+              "countryCode": "CA",
+              "market": "N"
+            },
+            {
+              "network": "TVAS",
+              "countryCode": "CA",
+              "market": "N"
+            },
+            {
+              "network": "SN-PIT",
+              "countryCode": "US",
+              "market": "H"
+            },
+            {
+              "network": "SCRIPPS",
+              "countryCode": "US",
+              "market": "A"
+            }
+          ]
+        },
+        {
+          "id": 2026020159,
+          "startTimeUTC": "2026-10-22T23:30:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Los Angeles"
+            },
+            "commonName": {
+              "default": "Kings"
+            },
+            "abbrev": "LAK"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "New York"
+            },
+            "commonName": {
+              "default": "Islanders"
+            },
+            "abbrev": "NYI"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "ESPN+",
+              "countryCode": "US",
+              "market": "N"
+            },
+            {
+              "network": "HULU",
+              "countryCode": "US",
+              "market": "N"
+            },
+            {
+              "network": "Disney+",
+              "countryCode": "US",
+              "market": "N"
+            },
+            {
+              "network": "SN+",
+              "countryCode": "CA",
+              "market": "N"
+            }
+          ]
+        },
+        {
+          "id": 2026020160,
+          "startTimeUTC": "2026-10-23T00:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Vegas"
+            },
+            "commonName": {
+              "default": "Golden Knights"
+            },
+            "abbrev": "VGK"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "St. Louis"
+            },
+            "commonName": {
+              "default": "Blues"
+            },
+            "abbrev": "STL"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "STLNHL",
+              "countryCode": "US",
+              "market": "H"
+            },
+            {
+              "network": "BN+",
+              "countryCode": "US",
+              "market": "H"
+            },
+            {
+              "network": "ABC32",
+              "countryCode": "US",
+              "market": "H"
+            },
+            {
+              "network": "SCRIPPS",
+              "countryCode": "US",
+              "market": "A"
+            }
+          ]
+        },
+        {
+          "id": 2026020161,
+          "startTimeUTC": "2026-10-23T00:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Winnipeg"
+            },
+            "commonName": {
+              "default": "Jets"
+            },
+            "abbrev": "WPG"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Dallas"
+            },
+            "commonName": {
+              "default": "Stars"
+            },
+            "abbrev": "DAL"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "KDFW 4",
+              "countryCode": "US",
+              "market": "H"
+            },
+            {
+              "network": "Prime Video",
+              "countryCode": "US",
+              "market": "H"
+            },
+            {
+              "network": "TSN3",
+              "countryCode": "CA",
+              "market": "A"
+            }
+          ]
+        },
+        {
+          "id": 2026020162,
+          "startTimeUTC": "2026-10-23T01:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Minnesota"
+            },
+            "commonName": {
+              "default": "Wild"
+            },
+            "abbrev": "MIN"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Calgary"
+            },
+            "commonName": {
+              "default": "Flames"
+            },
+            "abbrev": "CGY"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "MINNHL",
+              "countryCode": "US",
+              "market": "A"
+            },
+            {
+              "network": "Wild+",
+              "countryCode": "US",
+              "market": "A"
+            },
+            {
+              "network": "SN1",
+              "countryCode": "CA",
+              "market": "N"
+            }
+          ]
+        },
+        {
+          "id": 2026020163,
+          "startTimeUTC": "2026-10-23T01:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Carolina",
+              "fr": "Caroline"
+            },
+            "commonName": {
+              "default": "Hurricanes"
+            },
+            "abbrev": "CAR"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Edmonton"
+            },
+            "commonName": {
+              "default": "Oilers"
+            },
+            "abbrev": "EDM"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "CARNHL",
+              "countryCode": "US",
+              "market": "A"
+            },
+            {
+              "network": "HHN",
+              "countryCode": "US",
+              "market": "A"
+            },
+            {
+              "network": "SNW",
+              "countryCode": "CA",
+              "market": "H"
+            },
+            {
+              "network": "TVAS",
+              "countryCode": "CA",
+              "market": "N"
+            }
+          ]
+        },
+        {
+          "id": 2026020164,
+          "startTimeUTC": "2026-10-23T02:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Utah"
+            },
+            "commonName": {
+              "default": "Mammoth"
+            },
+            "abbrev": "UTA"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Seattle"
+            },
+            "commonName": {
+              "default": "Kraken"
+            },
+            "abbrev": "SEA"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "ESPN+",
+              "countryCode": "US",
+              "market": "N"
+            },
+            {
+              "network": "HULU",
+              "countryCode": "US",
+              "market": "N"
+            },
+            {
+              "network": "Disney+",
+              "countryCode": "US",
+              "market": "N"
+            },
+            {
+              "network": "SN+",
+              "countryCode": "CA",
+              "market": "N"
+            }
+          ]
+        },
+        {
+          "id": 2026020165,
+          "startTimeUTC": "2026-10-23T02:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Detroit"
+            },
+            "commonName": {
+              "default": "Red Wings"
+            },
+            "abbrev": "DET"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Vancouver"
+            },
+            "commonName": {
+              "default": "Canucks"
+            },
+            "abbrev": "VAN"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "DSN",
+              "countryCode": "US",
+              "market": "A"
+            },
+            {
+              "network": "SN",
+              "countryCode": "CA",
+              "market": "N"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-10-23",
+      "games": [
+        {
+          "id": 2026020166,
+          "startTimeUTC": "2026-10-24T00:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Montr\u00e9al"
+            },
+            "commonName": {
+              "default": "Canadiens"
+            },
+            "abbrev": "MTL"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Chicago"
+            },
+            "commonName": {
+              "default": "Blackhawks"
+            },
+            "abbrev": "CHI"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "NHLN",
+              "countryCode": "US",
+              "market": "N"
+            },
+            {
+              "network": "TSN2",
+              "countryCode": "CA",
+              "market": "A"
+            },
+            {
+              "network": "RDS",
+              "countryCode": "CA",
+              "market": "A"
+            },
+            {
+              "network": "CHSN",
+              "countryCode": "US",
+              "market": "H"
+            }
+          ]
+        },
+        {
+          "id": 2026020167,
+          "startTimeUTC": "2026-10-24T01:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Tampa Bay"
+            },
+            "commonName": {
+              "default": "Lightning"
+            },
+            "abbrev": "TBL"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Colorado"
+            },
+            "commonName": {
+              "default": "Avalanche"
+            },
+            "abbrev": "COL"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "SN360",
+              "countryCode": "CA",
+              "market": "N"
+            },
+            {
+              "network": "TVAS",
+              "countryCode": "CA",
+              "market": "N"
+            },
+            {
+              "network": "The Spot",
+              "countryCode": "US",
+              "market": "A"
+            },
+            {
+              "network": "ALT",
+              "countryCode": "US",
+              "market": "H"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-10-24",
+      "games": [
+        {
+          "id": 2026020168,
+          "startTimeUTC": "2026-10-24T17:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Anaheim"
+            },
+            "commonName": {
+              "default": "Ducks"
+            },
+            "abbrev": "ANA"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Philadelphia",
+              "fr": "Philadelphie"
+            },
+            "commonName": {
+              "default": "Flyers"
+            },
+            "abbrev": "PHI"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "FOXLA+",
+              "countryCode": "US",
+              "market": "A"
+            },
+            {
+              "network": "NHLN",
+              "countryCode": "US",
+              "market": "N"
+            },
+            {
+              "network": "SN",
+              "countryCode": "CA",
+              "market": "N"
+            },
+            {
+              "network": "Prime Video",
+              "countryCode": "US",
+              "market": "A"
+            },
+            {
+              "network": "NBCSP",
+              "countryCode": "US",
+              "market": "H"
+            }
+          ]
+        },
+        {
+          "id": 2026020169,
+          "startTimeUTC": "2026-10-24T19:30:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Los Angeles"
+            },
+            "commonName": {
+              "default": "Kings"
+            },
+            "abbrev": "LAK"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "New Jersey"
+            },
+            "commonName": {
+              "default": "Devils"
+            },
+            "abbrev": "NJD"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "ABTV ",
+              "countryCode": "US",
+              "market": "A"
+            },
+            {
+              "network": "SN",
+              "countryCode": "CA",
+              "market": "N"
+            },
+            {
+              "network": "MSGSN",
+              "countryCode": "US",
+              "market": "H"
+            }
+          ]
+        },
+        {
+          "id": 2026020170,
+          "startTimeUTC": "2026-10-24T23:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "San Jose"
+            },
+            "commonName": {
+              "default": "Sharks"
+            },
+            "abbrev": "SJS"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Boston"
+            },
+            "commonName": {
+              "default": "Bruins"
+            },
+            "abbrev": "BOS"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "NBCSCA",
+              "countryCode": "US",
+              "market": "A"
+            },
+            {
+              "network": "NESN",
+              "countryCode": "US",
+              "market": "H"
+            }
+          ]
+        },
+        {
+          "id": 2026020171,
+          "startTimeUTC": "2026-10-24T23:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "New York"
+            },
+            "commonName": {
+              "default": "Rangers"
+            },
+            "abbrev": "NYR"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Ottawa"
+            },
+            "commonName": {
+              "default": "Senators",
+              "fr": "S\u00e9nateurs"
+            },
+            "abbrev": "OTT"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "SNE",
+              "countryCode": "CA",
+              "market": "N"
+            },
+            {
+              "network": "NHLN",
+              "countryCode": "US",
+              "market": "N"
+            },
+            {
+              "network": "TVAS",
+              "countryCode": "CA",
+              "market": "N"
+            },
+            {
+              "network": "MSG",
+              "countryCode": "US",
+              "market": "A"
+            }
+          ]
+        },
+        {
+          "id": 2026020172,
+          "startTimeUTC": "2026-10-24T23:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Nashville"
+            },
+            "commonName": {
+              "default": "Predators"
+            },
+            "abbrev": "NSH"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Pittsburgh"
+            },
+            "commonName": {
+              "default": "Penguins"
+            },
+            "abbrev": "PIT"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "SN-PIT",
+              "countryCode": "US",
+              "market": "H"
+            },
+            {
+              "network": "SCRIPPS",
+              "countryCode": "US",
+              "market": "A"
+            }
+          ]
+        },
+        {
+          "id": 2026020173,
+          "startTimeUTC": "2026-10-24T23:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Buffalo"
+            },
+            "commonName": {
+              "default": "Sabres"
+            },
+            "abbrev": "BUF"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Washington"
+            },
+            "commonName": {
+              "default": "Capitals"
+            },
+            "abbrev": "WSH"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "MSG-B",
+              "countryCode": "US",
+              "market": "A"
+            },
+            {
+              "network": "MNMT",
+              "countryCode": "US",
+              "market": "H"
+            }
+          ]
+        },
+        {
+          "id": 2026020174,
+          "startTimeUTC": "2026-10-24T23:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Vegas"
+            },
+            "commonName": {
+              "default": "Golden Knights"
+            },
+            "abbrev": "VGK"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Columbus"
+            },
+            "commonName": {
+              "default": "Blue Jackets"
+            },
+            "abbrev": "CBJ"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "CBJNHL",
+              "countryCode": "US",
+              "market": "H"
+            },
+            {
+              "network": "CBJHN",
+              "countryCode": "US",
+              "market": "H"
+            },
+            {
+              "network": "SCRIPPS",
+              "countryCode": "US",
+              "market": "A"
+            }
+          ]
+        },
+        {
+          "id": 2026020175,
+          "startTimeUTC": "2026-10-24T23:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Carolina",
+              "fr": "Caroline"
+            },
+            "commonName": {
+              "default": "Hurricanes"
+            },
+            "abbrev": "CAR"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "St. Louis"
+            },
+            "commonName": {
+              "default": "Blues"
+            },
+            "abbrev": "STL"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "CARNHL",
+              "countryCode": "US",
+              "market": "A"
+            },
+            {
+              "network": "STLNHL",
+              "countryCode": "US",
+              "market": "H"
+            },
+            {
+              "network": "BN+",
+              "countryCode": "US",
+              "market": "H"
+            },
+            {
+              "network": "HHN",
+              "countryCode": "US",
+              "market": "A"
+            }
+          ]
+        },
+        {
+          "id": 2026020176,
+          "startTimeUTC": "2026-10-24T23:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Toronto"
+            },
+            "commonName": {
+              "default": "Maple Leafs"
+            },
+            "abbrev": "TOR"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Edmonton"
+            },
+            "commonName": {
+              "default": "Oilers"
+            },
+            "abbrev": "EDM"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "SN",
+              "countryCode": "CA",
+              "market": "N"
+            }
+          ]
+        },
+        {
+          "id": 2026020177,
+          "startTimeUTC": "2026-10-25T01:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Tampa Bay"
+            },
+            "commonName": {
+              "default": "Lightning"
+            },
+            "abbrev": "TBL"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Utah"
+            },
+            "commonName": {
+              "default": "Mammoth"
+            },
+            "abbrev": "UTA"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "Mammoth+",
+              "countryCode": "US",
+              "market": "H"
+            },
+            {
+              "network": "The Spot",
+              "countryCode": "US",
+              "market": "A"
+            },
+            {
+              "network": "Utah16",
+              "countryCode": "US",
+              "market": "H"
+            }
+          ]
+        },
+        {
+          "id": 2026020178,
+          "startTimeUTC": "2026-10-25T02:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Detroit"
+            },
+            "commonName": {
+              "default": "Red Wings"
+            },
+            "abbrev": "DET"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Calgary"
+            },
+            "commonName": {
+              "default": "Flames"
+            },
+            "abbrev": "CGY"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "DSN",
+              "countryCode": "US",
+              "market": "A"
+            },
+            {
+              "network": "SN",
+              "countryCode": "CA",
+              "market": "N"
+            },
+            {
+              "network": "TVAS",
+              "countryCode": "CA",
+              "market": "N"
+            }
+          ]
+        },
+        {
+          "id": 2026020179,
+          "startTimeUTC": "2026-10-25T02:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Minnesota"
+            },
+            "commonName": {
+              "default": "Wild"
+            },
+            "abbrev": "MIN"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Seattle"
+            },
+            "commonName": {
+              "default": "Kraken"
+            },
+            "abbrev": "SEA"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "MINNHL",
+              "countryCode": "US",
+              "market": "A"
+            },
+            {
+              "network": "Wild+",
+              "countryCode": "US",
+              "market": "A"
+            },
+            {
+              "network": "Prime Video",
+              "countryCode": "US",
+              "market": "H"
+            },
+            {
+              "network": "KONG",
+              "countryCode": "US",
+              "market": "H"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-10-25",
+      "games": [
+        {
+          "id": 2026020180,
+          "startTimeUTC": "2026-10-25T19:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Florida",
+              "fr": "Floride"
+            },
+            "commonName": {
+              "default": "Panthers"
+            },
+            "abbrev": "FLA"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Chicago"
+            },
+            "commonName": {
+              "default": "Blackhawks"
+            },
+            "abbrev": "CHI"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "SN",
+              "countryCode": "CA",
+              "market": "N"
+            },
+            {
+              "network": "TVAS",
+              "countryCode": "CA",
+              "market": "N"
+            },
+            {
+              "network": "CHSN",
+              "countryCode": "US",
+              "market": "H"
+            },
+            {
+              "network": "SCRIPPS",
+              "countryCode": "US",
+              "market": "A"
+            }
+          ]
+        },
+        {
+          "id": 2026020181,
+          "startTimeUTC": "2026-10-25T22:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "New York"
+            },
+            "commonName": {
+              "default": "Islanders"
+            },
+            "abbrev": "NYI"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Dallas"
+            },
+            "commonName": {
+              "default": "Stars"
+            },
+            "abbrev": "DAL"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "Prime Video",
+              "countryCode": "US",
+              "market": "H"
+            },
+            {
+              "network": "MSGSN",
+              "countryCode": "US",
+              "market": "A"
+            }
+          ]
+        },
+        {
+          "id": 2026020182,
+          "startTimeUTC": "2026-10-25T23:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Montr\u00e9al"
+            },
+            "commonName": {
+              "default": "Canadiens"
+            },
+            "abbrev": "MTL"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Winnipeg"
+            },
+            "commonName": {
+              "default": "Jets"
+            },
+            "abbrev": "WPG"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "TNT",
+              "countryCode": "US",
+              "market": "N"
+            },
+            {
+              "network": "truTV",
+              "countryCode": "US",
+              "market": "N"
+            },
+            {
+              "network": "HBO MAX",
+              "countryCode": "US",
+              "market": "N"
+            },
+            {
+              "network": "SN",
+              "countryCode": "CA",
+              "market": "N"
+            },
+            {
+              "network": "TVAS",
+              "countryCode": "CA",
+              "market": "N"
+            }
+          ]
+        },
+        {
+          "id": 2026020183,
+          "startTimeUTC": "2026-10-26T00:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Colorado"
+            },
+            "commonName": {
+              "default": "Avalanche"
+            },
+            "abbrev": "COL"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Nashville"
+            },
+            "commonName": {
+              "default": "Predators"
+            },
+            "abbrev": "NSH"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "ALT",
+              "countryCode": "US",
+              "market": "A"
+            },
+            {
+              "network": "SCRIPPS",
+              "countryCode": "US",
+              "market": "H"
+            }
+          ]
+        },
+        {
+          "id": 2026020184,
+          "startTimeUTC": "2026-10-26T02:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Minnesota"
+            },
+            "commonName": {
+              "default": "Wild"
+            },
+            "abbrev": "MIN"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Vancouver"
+            },
+            "commonName": {
+              "default": "Canucks"
+            },
+            "abbrev": "VAN"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "MINNHL",
+              "countryCode": "US",
+              "market": "A"
+            },
+            {
+              "network": "Wild+",
+              "countryCode": "US",
+              "market": "A"
+            },
+            {
+              "network": "SN",
+              "countryCode": "CA",
+              "market": "N"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-10-26",
+      "games": [
+        {
+          "id": 2026020185,
+          "startTimeUTC": "2026-10-26T23:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Los Angeles"
+            },
+            "commonName": {
+              "default": "Kings"
+            },
+            "abbrev": "LAK"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "New York"
+            },
+            "commonName": {
+              "default": "Rangers"
+            },
+            "abbrev": "NYR"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "ABTV ",
+              "countryCode": "US",
+              "market": "A"
+            },
+            {
+              "network": "NHLN",
+              "countryCode": "US",
+              "market": "N"
+            },
+            {
+              "network": "TVAS",
+              "countryCode": "CA",
+              "market": "N"
+            },
+            {
+              "network": "MSG",
+              "countryCode": "US",
+              "market": "H"
+            }
+          ]
+        },
+        {
+          "id": 2026020186,
+          "startTimeUTC": "2026-10-27T00:30:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Toronto"
+            },
+            "commonName": {
+              "default": "Maple Leafs"
+            },
+            "abbrev": "TOR"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Calgary"
+            },
+            "commonName": {
+              "default": "Flames"
+            },
+            "abbrev": "CGY"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "SN+",
+              "countryCode": "CA",
+              "market": "N"
+            }
+          ]
+        },
+        {
+          "id": 2026020187,
+          "startTimeUTC": "2026-10-27T01:30:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Detroit"
+            },
+            "commonName": {
+              "default": "Red Wings"
+            },
+            "abbrev": "DET"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Edmonton"
+            },
+            "commonName": {
+              "default": "Oilers"
+            },
+            "abbrev": "EDM"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "DSN",
+              "countryCode": "US",
+              "market": "A"
+            },
+            {
+              "network": "SN+",
+              "countryCode": "CA",
+              "market": "N"
+            },
+            {
+              "network": "TVAS",
+              "countryCode": "CA",
+              "market": "N"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-10-27",
+      "games": [
+        {
+          "id": 2026020188,
+          "startTimeUTC": "2026-10-27T23:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Columbus"
+            },
+            "commonName": {
+              "default": "Blue Jackets"
+            },
+            "abbrev": "CBJ"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Philadelphia",
+              "fr": "Philadelphie"
+            },
+            "commonName": {
+              "default": "Flyers"
+            },
+            "abbrev": "PHI"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "CBJNHL",
+              "countryCode": "US",
+              "market": "A"
+            },
+            {
+              "network": "CBJHN",
+              "countryCode": "US",
+              "market": "A"
+            },
+            {
+              "network": "SNP",
+              "countryCode": "CA",
+              "market": "N"
+            },
+            {
+              "network": "NBCSP",
+              "countryCode": "US",
+              "market": "H"
+            }
+          ]
+        },
+        {
+          "id": 2026020189,
+          "startTimeUTC": "2026-10-28T00:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Boston"
+            },
+            "commonName": {
+              "default": "Bruins"
+            },
+            "abbrev": "BOS"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Carolina",
+              "fr": "Caroline"
+            },
+            "commonName": {
+              "default": "Hurricanes"
+            },
+            "abbrev": "CAR"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "ESPN",
+              "countryCode": "US",
+              "market": "N"
+            },
+            {
+              "network": "SN360",
+              "countryCode": "CA",
+              "market": "N"
+            }
+          ]
+        },
+        {
+          "id": 2026020190,
+          "startTimeUTC": "2026-10-28T00:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Los Angeles"
+            },
+            "commonName": {
+              "default": "Kings"
+            },
+            "abbrev": "LAK"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Chicago"
+            },
+            "commonName": {
+              "default": "Blackhawks"
+            },
+            "abbrev": "CHI"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "ABTV ",
+              "countryCode": "US",
+              "market": "A"
+            },
+            {
+              "network": "CHSN",
+              "countryCode": "US",
+              "market": "H"
+            }
+          ]
+        },
+        {
+          "id": 2026020191,
+          "startTimeUTC": "2026-10-28T00:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Montr\u00e9al"
+            },
+            "commonName": {
+              "default": "Canadiens"
+            },
+            "abbrev": "MTL"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "St. Louis"
+            },
+            "commonName": {
+              "default": "Blues"
+            },
+            "abbrev": "STL"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "STLNHL",
+              "countryCode": "US",
+              "market": "H"
+            },
+            {
+              "network": "BN+",
+              "countryCode": "US",
+              "market": "H"
+            },
+            {
+              "network": "TSN2",
+              "countryCode": "CA",
+              "market": "A"
+            },
+            {
+              "network": "RDS",
+              "countryCode": "CA",
+              "market": "A"
+            }
+          ]
+        },
+        {
+          "id": 2026020192,
+          "startTimeUTC": "2026-10-28T00:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "New York"
+            },
+            "commonName": {
+              "default": "Islanders"
+            },
+            "abbrev": "NYI"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Nashville"
+            },
+            "commonName": {
+              "default": "Predators"
+            },
+            "abbrev": "NSH"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "SN+",
+              "countryCode": "CA",
+              "market": "N"
+            },
+            {
+              "network": "MSGSN2",
+              "countryCode": "US",
+              "market": "A"
+            },
+            {
+              "network": "SCRIPPS",
+              "countryCode": "US",
+              "market": "H"
+            }
+          ]
+        },
+        {
+          "id": 2026020193,
+          "startTimeUTC": "2026-10-28T00:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "New Jersey"
+            },
+            "commonName": {
+              "default": "Devils"
+            },
+            "abbrev": "NJD"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Dallas"
+            },
+            "commonName": {
+              "default": "Stars"
+            },
+            "abbrev": "DAL"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "Prime Video",
+              "countryCode": "US",
+              "market": "H"
+            },
+            {
+              "network": "MSGSN",
+              "countryCode": "US",
+              "market": "A"
+            }
+          ]
+        },
+        {
+          "id": 2026020194,
+          "startTimeUTC": "2026-10-28T00:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Florida",
+              "fr": "Floride"
+            },
+            "commonName": {
+              "default": "Panthers"
+            },
+            "abbrev": "FLA"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Winnipeg"
+            },
+            "commonName": {
+              "default": "Jets"
+            },
+            "abbrev": "WPG"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "TSN3",
+              "countryCode": "CA",
+              "market": "H"
+            },
+            {
+              "network": "SCRIPPS",
+              "countryCode": "US",
+              "market": "A"
+            }
+          ]
+        },
+        {
+          "id": 2026020195,
+          "startTimeUTC": "2026-10-28T01:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Minnesota"
+            },
+            "commonName": {
+              "default": "Wild"
+            },
+            "abbrev": "MIN"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Utah"
+            },
+            "commonName": {
+              "default": "Mammoth"
+            },
+            "abbrev": "UTA"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "MINNHL",
+              "countryCode": "US",
+              "market": "A"
+            },
+            {
+              "network": "Wild+",
+              "countryCode": "US",
+              "market": "A"
+            },
+            {
+              "network": "Mammoth+",
+              "countryCode": "US",
+              "market": "H"
+            },
+            {
+              "network": "Utah16",
+              "countryCode": "US",
+              "market": "H"
+            }
+          ]
+        },
+        {
+          "id": 2026020196,
+          "startTimeUTC": "2026-10-28T02:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Ottawa"
+            },
+            "commonName": {
+              "default": "Senators",
+              "fr": "S\u00e9nateurs"
+            },
+            "abbrev": "OTT"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Vegas"
+            },
+            "commonName": {
+              "default": "Golden Knights"
+            },
+            "abbrev": "VGK"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "TSN5",
+              "countryCode": "CA",
+              "market": "A"
+            },
+            {
+              "network": "RDSI",
+              "countryCode": "CA",
+              "market": "A"
+            },
+            {
+              "network": "SCRIPPS",
+              "countryCode": "US",
+              "market": "H"
+            }
+          ]
+        },
+        {
+          "id": 2026020197,
+          "startTimeUTC": "2026-10-28T02:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Vancouver"
+            },
+            "commonName": {
+              "default": "Canucks"
+            },
+            "abbrev": "VAN"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Anaheim"
+            },
+            "commonName": {
+              "default": "Ducks"
+            },
+            "abbrev": "ANA"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "FOXLA+",
+              "countryCode": "US",
+              "market": "H"
+            },
+            {
+              "network": "SNP",
+              "countryCode": "CA",
+              "market": "N"
+            },
+            {
+              "network": "Prime Video",
+              "countryCode": "US",
+              "market": "H"
+            }
+          ]
+        },
+        {
+          "id": 2026020198,
+          "startTimeUTC": "2026-10-28T02:30:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Buffalo"
+            },
+            "commonName": {
+              "default": "Sabres"
+            },
+            "abbrev": "BUF"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "San Jose"
+            },
+            "commonName": {
+              "default": "Sharks"
+            },
+            "abbrev": "SJS"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "ESPN",
+              "countryCode": "US",
+              "market": "N"
+            },
+            {
+              "network": "SN360",
+              "countryCode": "CA",
+              "market": "N"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-10-28",
+      "games": [
+        {
+          "id": 2026020199,
+          "startTimeUTC": "2026-10-28T23:30:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Philadelphia",
+              "fr": "Philadelphie"
+            },
+            "commonName": {
+              "default": "Flyers"
+            },
+            "abbrev": "PHI"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Washington"
+            },
+            "commonName": {
+              "default": "Capitals"
+            },
+            "abbrev": "WSH"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "TNT",
+              "countryCode": "US",
+              "market": "N"
+            },
+            {
+              "network": "truTV",
+              "countryCode": "US",
+              "market": "N"
+            },
+            {
+              "network": "HBO MAX",
+              "countryCode": "US",
+              "market": "N"
+            },
+            {
+              "network": "NBCSP+",
+              "countryCode": "US",
+              "market": "A"
+            }
+          ]
+        },
+        {
+          "id": 2026020200,
+          "startTimeUTC": "2026-10-29T00:30:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Calgary"
+            },
+            "commonName": {
+              "default": "Flames"
+            },
+            "abbrev": "CGY"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Edmonton"
+            },
+            "commonName": {
+              "default": "Oilers"
+            },
+            "abbrev": "EDM"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "Prime",
+              "countryCode": "CA",
+              "market": "N"
+            }
+          ]
+        },
+        {
+          "id": 2026020201,
+          "startTimeUTC": "2026-10-29T01:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "New Jersey"
+            },
+            "commonName": {
+              "default": "Devils"
+            },
+            "abbrev": "NJD"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Colorado"
+            },
+            "commonName": {
+              "default": "Avalanche"
+            },
+            "abbrev": "COL"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "ALT",
+              "countryCode": "US",
+              "market": "H"
+            },
+            {
+              "network": "MSGSN",
+              "countryCode": "US",
+              "market": "A"
+            }
+          ]
+        },
+        {
+          "id": 2026020202,
+          "startTimeUTC": "2026-10-29T02:00:00Z",
+          "gameScheduleState": "OK",
+          "awayTeam": {
+            "placeName": {
+              "default": "Toronto"
+            },
+            "commonName": {
+              "default": "Maple Leafs"
+            },
+            "abbrev": "TOR"
+          },
+          "homeTeam": {
+            "placeName": {
+              "default": "Seattle"
+            },
+            "commonName": {
+              "default": "Kraken"
+            },
+            "abbrev": "SEA"
+          },
+          "tvBroadcasts": [
+            {
+              "network": "SNO",
+              "countryCode": "CA",
+              "market": "A"
+            },
+            {
+              "network": "Prime Video",
+              "countryCode": "US",
+              "market": "H"
+            },
+            {
+              "network": "KING",
+              "countryCode": "US",
+              "market": "H"
+            },
+            {
+              "network": "KONG",
+              "countryCode": "US",
+              "market": "H"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
