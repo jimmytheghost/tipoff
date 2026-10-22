@@ -11,7 +11,7 @@ This is a personal tool I’m sharing as it stands. If it’s useful, take it. I
 ## What it does today
 
 - Switches between NBA and NFL in the same 360-point popover; no Dock window. The menu bar icon follows the selected sport.
-- NBA and NFL show the selected day, with previous/next day navigation. Denver appears first on NFL days.
+- NBA and NFL show the selected day, with 28×28-point clickable areas around the previous/next arrows. Denver appears first on NFL days.
 - NFL’s Sunday shortcut jumps to the upcoming Sunday (or today on Sunday); NBA keeps its Today shortcut. The Sunday shortcut is hidden while viewing a Sunday.
 - Highlights Broncos matchups within NFL; teams do not have separate sport tabs.
 - Keeps each game in three columns: stacked teams, local time, and TV/streaming listings.

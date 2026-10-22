@@ -48,7 +48,10 @@ public struct TipoffMenuView: View {
                 ForEach(ScheduleGuide.allCases, id: \.self) { Text($0.title).tag($0) }
             }.pickerStyle(.segmented).labelsHidden()
             HStack(spacing: 8) {
-                Button { store.moveDay(-1) } label: { Image(systemName: "chevron.left").frame(width: 22, height: 24) }
+                Button { store.moveDay(-1) } label: {
+                    Image(systemName: "chevron.left")
+                        .frame(width: 28, height: 28).contentShape(Rectangle())
+                }
                     .help("Previous day").accessibilityLabel("Previous day")
                 VStack(alignment: .leading, spacing: 2) {
                     Text(store.dateTitle).font(.subheadline.weight(.semibold))
@@ -61,7 +64,10 @@ public struct TipoffMenuView: View {
                             .help("Show the upcoming Sunday’s NFL games")
                     }
                 } else if !store.isToday { Button("Today") { store.today() }.font(.caption) }
-                Button { store.moveDay(1) } label: { Image(systemName: "chevron.right").frame(width: 22, height: 24) }
+                Button { store.moveDay(1) } label: {
+                    Image(systemName: "chevron.right")
+                        .frame(width: 28, height: 28).contentShape(Rectangle())
+                }
                     .help("Next day").accessibilityLabel("Next day")
             }.buttonStyle(.plain)
             if let error = store.error {

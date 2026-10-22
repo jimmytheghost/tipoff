@@ -1,6 +1,14 @@
-# Validation — October 20, 2026
+# Validation — October 21, 2026
 
 Environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Initial personal-use time zone: America/Denver.
+
+## Day navigation click targets
+
+- Previous/next day buttons now use 28×28-point label frames with rectangular content shapes, so the empty area around each chevron accepts clicks. Chevron styling and the 360-point popover width remain intact.
+- `scripts/test.sh`: **39 executed, 39 passed**. No new tests added for this small view-only change.
+- `scripts/package-app.sh`: **passed**, including release build and strict signature verification.
+- Live `TipoffCheck 2026-10-21`: **NBA.com, 11 games**. Inspected a native dark render of the updated view; date navigation and game layout fit without clipping. Interactive edge clicks remain a hands-on check.
+- README and plan updated; diff whitespace checked before commit.
 
 ## WNBA / MLB / NHL source research
 
