@@ -2,6 +2,12 @@
 
 Environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Initial personal-use time zone: America/Denver.
 
+## PNG icon export
+
+- Copied the highest-resolution existing icon asset to `img/Tipoff.png`; verified it matches the source byte-for-byte.
+- `sips` confirmed PNG format, 2048×2048 pixels, and an alpha channel; visually inspected the exported icon.
+- Diff/content checks passed. **0 tests executed** for this asset/documentation-only change; no app rebuild or live source check needed.
+
 ## Day navigation click targets
 
 - Previous/next day buttons now use 28×28-point label frames with rectangular content shapes, so the empty area around each chevron accepts clicks. Chevron styling and the 360-point popover width remain intact.

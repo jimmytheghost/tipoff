@@ -1,5 +1,7 @@
 # Product plan
 
+The existing app icon is exported to `img/Tipoff.png` as a reusable 2048×2048 PNG with transparency.
+
 ## First version
 
 Built for personal use in the United States and shared publicly as-is; initially NBA only. Match Bug and Worklog’s native menu bar design. Time follows the Mac (Mountain Time for the initial user). Prioritize broadcast information and suppress scores entirely.

@@ -35,6 +35,8 @@ The shared build is ad-hoc signed and **not notarized**. macOS may block a downl
 
 ## Build it yourself
 
+The app icon is also available as a 2048×2048 PNG with transparency at [`img/Tipoff.png`](img/Tipoff.png).
+
 Install Apple’s Xcode Command Line Tools first (`xcode-select --install` if needed). The current version was built with Swift 6.3.3. No third-party Swift packages are required.
 
 ```sh
