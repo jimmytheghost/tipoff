@@ -1,6 +1,14 @@
-# Validation — October 21, 2026
+# Validation — October 22, 2026
 
 Environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Initial personal-use time zone: America/Denver.
+
+## Nuggets first with Broncos-style emphasis
+
+- Nuggets games appear first in NBA with a mint outline and NUGGETS label matching the Broncos treatment. Other NBA games remain chronological. Display ordering also applies to existing saved snapshots without changing stored listings or freshness. NFL ordering remains unchanged.
+- `scripts/test.sh`: **40 executed, 40 passed**. One new regression covers home/away Nuggets games from both NBA.com and ESPN, saved snapshot round-trips, preserved freshness/data, chronological remaining games, NFL identity/order, and empty schedules.
+- `scripts/package-app.sh`: **passed**, including release build and strict signature verification.
+- Live `.build/debug/TipoffCheck 2026-10-24`: **NBA.com + Altitude, 8 games**. Production-view dark/light renders show Pelicans at Nuggets first, with supplied Altitude channels, Details, and freshness information intact at the existing 360-point width. Dark preview: `docs/nuggets-first-preview.png`. Interactive menu bar behavior remains a hands-on check.
+- README, plan, and settings text updated; diff whitespace checked before commit.
 
 ## PNG icon export
 

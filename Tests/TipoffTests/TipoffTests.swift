@@ -11,6 +11,31 @@ private func sample(day: String = "2026-10-20", source: String = "NBA.com") -> S
     ScheduleSnapshot(games: [], day: day, timeZone: mountain.identifier, source: source, limitedCoverage: false)
 }
 
+@Test func nuggetsAppearFirstForHomeAwayAndSavedSchedules() throws {
+    let others = try FeedDecoder.espn(fixture("espn.json"))
+    for home in [true, false] {
+        for prefix in ["nba-", "espn-"] {
+            let nuggets = Game(id: prefix + "denver", away: home ? "Pelicans" : "Nuggets",
+                home: home ? "Nuggets" : "Pelicans", awayCode: home ? "NOP" : "DEN",
+                homeCode: home ? "DEN" : "NOP", start: date("2026-10-21T05:00:00Z"),
+                scheduleDay: "2026-10-20", broadcasts: [])
+            var snapshot = sample()
+            snapshot.games = [others[2], nuggets, others[0], others[1]]
+            let saved = try JSONDecoder().decode(ScheduleSnapshot.self, from: JSONEncoder().encode(snapshot))
+            #expect(saved.displayGames.map(\.id) == [nuggets.id] + Dates.sorted(others).map(\.id))
+            #expect(saved.fetchedAt == snapshot.fetchedAt)
+            #expect(saved.games == snapshot.games)
+            #expect(nuggets.isNuggets && !nuggets.isBroncos)
+        }
+    }
+    var broncos = others[0]
+    broncos.id = "nfl-espn-denver"; broncos.homeCode = "DEN"
+    #expect(broncos.isBroncos && !broncos.isNuggets)
+    var nfl = sample(); nfl.guide = .nfl; nfl.games = [broncos] + others
+    #expect(nfl.displayGames == nfl.games)
+    #expect(sample().displayGames.isEmpty)
+}
+
 @Test func nbaPageIncludesStreamingAndRadio() throws {
     let games = try FeedDecoder.nbaPage(fixture("nba-page.html"), expectedDay: "2026-10-20")
     #expect(games.count == 3)

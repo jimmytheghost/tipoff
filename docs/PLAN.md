@@ -12,7 +12,7 @@ Previous/next day arrows have 28×28-point rectangular click targets, including 
 
 ## Personal Nuggets addition
 
-Implemented: Altitude’s official Nuggets table supplements matching games, including Altitude / Altitude 2 / Altitude+, channel 9/20 variants, all other source-listed networks, pregame/postgame times, and regional footnotes. Details are available without changing the three-column layout. Date/opponent/home-away/tipoff agreement is required; source failures use clearly labeled saved data when available. Radio remains hidden. No location or subscription eligibility is inferred.
+Implemented: Nuggets games appear first within NBA, with the same mint outline and team label used for Broncos games within NFL. The ordering also applies to saved schedules without changing their freshness; other NBA games remain in time order. Altitude’s official Nuggets table supplements matching games, including Altitude / Altitude 2 / Altitude+, channel 9/20 variants, all other source-listed networks, pregame/postgame times, and regional footnotes. Details are available without changing the three-column layout. Date/opponent/home-away/tipoff agreement is required; source failures use clearly labeled saved data when available. Radio remains hidden. No location or subscription eligibility is inferred.
 
 ## NFL with Broncos emphasis — version 0.3.2
 

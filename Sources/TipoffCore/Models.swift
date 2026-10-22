@@ -30,6 +30,7 @@ public struct Game: Codable, Equatable, Identifiable, Sendable {
         self.start = start; self.scheduleDay = scheduleDay; self.notice = notice; self.broadcasts = broadcasts
     }
     public var isBroncos: Bool { id.hasPrefix("nfl-") && (awayCode == "DEN" || homeCode == "DEN") }
+    public var isNuggets: Bool { !id.hasPrefix("nfl-") && (awayCode == "DEN" || homeCode == "DEN") }
     public func falls(on date: Date, calendar: Calendar) -> Bool {
         if let start { return calendar.isDate(start, inSameDayAs: date) }
         return scheduleDay == Dates.key(date, timeZone: calendar.timeZone)
@@ -54,6 +55,12 @@ public struct ScheduleSnapshot: Codable, Equatable, Sendable {
     // Missing on v0.2 snapshots: retain existing NBA caches unchanged.
     public var guide: ScheduleGuide?
     public var selectedGuide: ScheduleGuide { guide ?? .nba }
+    // Apply to saved snapshots too, without changing their data or freshness.
+    public var displayGames: [Game] {
+        guard selectedGuide == .nba else { return games }
+        let chronological = Dates.sorted(games)
+        return chronological.filter(\.isNuggets) + chronological.filter { !$0.isNuggets }
+    }
     public init(games: [Game], fetchedAt: Date = Date(), day: String, timeZone: String, source: String, limitedCoverage: Bool) {
         self.games = games; self.fetchedAt = fetchedAt; self.day = day; self.timeZone = timeZone
         self.source = source; self.limitedCoverage = limitedCoverage
