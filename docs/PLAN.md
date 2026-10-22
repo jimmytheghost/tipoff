@@ -1,5 +1,7 @@
 # Product plan
 
+The [current app screenshot](current-preview.png), captured October 22, 2026, shows the five-sport selector and Nuggets broadcast details in version 0.4.1. The README uses this capture; older sport-specific previews remain available.
+
 The existing app icon is exported to `img/Tipoff.png` as a reusable 2048×2048 PNG with transparency.
 
 ## First version

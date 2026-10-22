@@ -6,7 +6,9 @@ I built this because I was tired of checking the NBA schedule every day to figur
 
 This is a personal tool I’m sharing as it stands. If it’s useful, take it. If you want something different, fork it and have your agents—or yourself—make it work the way you want. There’s no product roadmap or promise of ongoing support. Bug reports and improvements are welcome, but you don’t need to wait on me to change your copy.
 
-<img src="docs/wnba-preview.png" alt="Tipoff WNBA guide with local start times, source-listed broadcasters, and five sport tabs" width="360">
+<img src="docs/current-preview.png" alt="Tipoff with five sport tabs, Nuggets first in the NBA guide, and the Nuggets broadcast details popover open" width="484">
+
+Tipoff 0.4.1, captured October 22, 2026, with Nuggets broadcast details open. Listings and check times reflect that capture.
 
 ## What it does today
 
@@ -29,7 +31,7 @@ Requires **macOS 15 or newer**. The downloadable build is **Apple Silicon (arm64
 
 [Download the published v0.2.0 (NBA-only)](https://github.com/jimmytheghost/tipoff/releases/tag/v0.2.0) · [All releases](https://github.com/jimmytheghost/tipoff/releases)
 
-Unzip `Tipoff.app`, move it to your Applications folder, and open it. Click the basketball in your menu bar. To update an existing copy, quit Tipoff before replacing it.
+Unzip `Tipoff.app`, move it to your Applications folder, and open it. Click the Tipoff icon in your menu bar (it follows the selected sport in current source builds). To update an existing copy, quit Tipoff before replacing it.
 
 The shared build is ad-hoc signed and **not notarized**. macOS may block a downloaded copy. Building locally is another option. There is no installer or update service, and no account or API key is required.
 
@@ -89,7 +91,7 @@ swift run TipoffCheck 2026-07-01 --mlb
 
 The check writes a snapshot to `/tmp/tipoff-preview.png.json`; the renderer uses it without another network request. Add `--light` before the image path for light mode, or `--altitude-details` to preview a matched Nuggets game’s details.
 
-[WNBA / MLB / NHL source research](docs/SOURCE-RESEARCH.md) · [What’s implemented / possible next steps](docs/PLAN.md) · [Validation and remaining manual checks](docs/VALIDATION.md) · [WNBA view](docs/wnba-preview.png) · [NHL view](docs/nhl-preview.png) · [MLB view](docs/mlb-preview.png) · [NFL view](docs/nfl-preview.png) · [Nuggets first](docs/nuggets-first-preview.png) · [Altitude details](docs/altitude-details.png)
+[WNBA / MLB / NHL source research](docs/SOURCE-RESEARCH.md) · [What’s implemented / possible next steps](docs/PLAN.md) · [Validation and remaining manual checks](docs/VALIDATION.md) · [Current app screenshot](docs/current-preview.png) · [WNBA view](docs/wnba-preview.png) · [NHL view](docs/nhl-preview.png) · [MLB view](docs/mlb-preview.png) · [NFL view](docs/nfl-preview.png) · [Nuggets first](docs/nuggets-first-preview.png) · [Altitude details](docs/altitude-details.png)
 
 ## License
 

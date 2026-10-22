@@ -26,7 +26,7 @@ The publisher’s clocks are interpreted as America/Denver, with daylight saving
 
 NFL uses ESPN’s public website JSON at `site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=YYYYMMDD&limit=100`. Tipoff requests the Eastern dates intersecting the selected local day, rejects wrong-date responses, filters to the local day, deduplicates events, and puts Denver first. The endpoint name does not change Tipoff’s scope: only schedule and broadcaster fields are decoded into the app’s model.
 
-NBA and NFL are the only top-level guides. Denver matchups are highlighted within NFL. Version 0.3.1 removes the separate Broncos window and its team-schedule requests; every visible game belongs to the selected local day.
+The top-level guides are NBA, NFL, WNBA, NHL, and MLB. Denver matchups are highlighted within NFL. Version 0.3.1 removed the separate Broncos window and its team-schedule requests; every visible game belongs to the selected local day.
 
 ESPN’s daily geo/legacy broadcast lists are supported. Only source-listed US/unspecified-region broadcasters are used. Radio stays hidden in the UI. CBS, Fox, or another listed network does not establish which local affiliate carries a game, reception in Denver, streaming access, or subscription eligibility. No Altitude supplement is applied to NFL. Flex scheduling may change kickoffs and networks; refresh before watching.
 

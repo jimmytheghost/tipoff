@@ -2,6 +2,13 @@
 
 Environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Initial personal-use time zone: America/Denver.
 
+## GitHub screenshot and documentation refresh
+
+- Copied the user-provided October 22 screenshot unchanged to `docs/current-preview.png` (PNG, 968×1044); the README displays it at 484 pixels wide with a dated caption and descriptive alternative text. It shows all five sport tabs, Nuggets emphasis, and the open broadcast details popover. Older previews remain available.
+- Reviewed README scope, source/coverage limitations, build instructions, version 0.4.1 packaging metadata, and GitHub release state. The latest published download remains NBA-only v0.2.0; current five-sport code is available from source. No new binary release is claimed. Corrected the obsolete two-guide statement in `docs/DATA.md` and clarified the menu bar icon instruction.
+- Updated the GitHub repository description to name NBA, NFL, WNBA, NHL, and MLB.
+- Image copy hash, PNG dimensions, local documentation/image links, and diff whitespace checked. **0 app tests executed** for this screenshot/documentation-only change; no app rebuild or live source check required. The prior implementation validation below remains the latest app test evidence.
+
 ## Rockies and Avalanche preference — version 0.4.1
 
 - Rockies games appear first within MLB and Avalanche games first within NHL, with mint outline and uppercase team label matching Nuggets/Broncos. Other games stay chronological; multiple preferred games retain their own time order. The display preference also applies to older saved snapshots without changing stored game arrays, broadcasters, source/coverage fields, or original freshness.
