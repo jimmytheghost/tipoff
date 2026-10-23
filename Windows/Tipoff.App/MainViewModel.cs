@@ -25,7 +25,6 @@ public sealed class MainViewModel : INotifyPropertyChanged, IDisposable
     public DateOnly SelectedDate { get; private set; } = DateOnly.FromDateTime(DateTime.Now);
     public TimeZoneInfo TimeZone { get; private set; } = TimeZoneInfo.Local;
 
-    public string Tagline => Guide == ScheduleGuide.Nfl ? "Football, with Denver first." : $"Your {Guide.Title()} viewing guide.";
     public string DateTitle => SelectedDate == DateOnly.FromDateTime(DateTime.Now) ? "Today" : SelectedDate.ToString("ddd, MMM d", CultureInfo.CurrentCulture);
     public string DateSubtitle => $"{SelectedDate:MMM d} · local time" + (snapshot is null ? "" : $" · {snapshot.Games.Count} {(snapshot.Games.Count == 1 ? "game" : "games")}");
     public string JumpLabel => Guide == ScheduleGuide.Nfl ? "Sunday" : "Today";
@@ -155,7 +154,7 @@ public sealed class MainViewModel : INotifyPropertyChanged, IDisposable
 
     private void NotifyAll()
     {
-        foreach (var name in new[] { nameof(Tagline), nameof(DateTitle), nameof(DateSubtitle), nameof(JumpLabel), nameof(JumpVisibility), nameof(Source), nameof(Freshness), nameof(FreshnessBrush), nameof(CanRefresh), nameof(EmptyMessage), nameof(EmptyVisibility), nameof(Message), nameof(MessageVisibility) }) OnPropertyChanged(name);
+        foreach (var name in new[] { nameof(DateTitle), nameof(DateSubtitle), nameof(JumpLabel), nameof(JumpVisibility), nameof(Source), nameof(Freshness), nameof(FreshnessBrush), nameof(CanRefresh), nameof(EmptyMessage), nameof(EmptyVisibility), nameof(Message), nameof(MessageVisibility) }) OnPropertyChanged(name);
     }
 
     private void OnPropertyChanged([CallerMemberName] string? name = null) => PropertyChanged?.Invoke(this, new(name));

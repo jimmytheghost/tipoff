@@ -19,13 +19,8 @@
 
       <Grid Margin="14">
         <Grid.ColumnDefinitions><ColumnDefinition Width="38" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
-        <Border Width="30" Height="30" Background="#DDF5ED" CornerRadius="8" Padding="3">
-          <Image Source="Tipoff.ico" Stretch="Uniform" />
-        </Border>
-        <StackPanel Grid.Column="1" Margin="4,0,0,0">
-          <TextBlock Text="Tipoff" FontWeight="SemiBold" FontSize="15" />
-          <TextBlock Text="{Binding Tagline}" Foreground="{StaticResource MutedBrush}" FontSize="11" />
-        </StackPanel>
+        <Image Width="30" Height="30" Source="Tipoff.ico" Stretch="Fill" />
+        <TextBlock Grid.Column="1" Text="Tipoff" FontWeight="SemiBold" FontSize="15" Margin="4,0,0,0" VerticalAlignment="Center" />
       </Grid>
 
       <Separator Grid.Row="1" Margin="0" />

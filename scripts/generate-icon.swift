@@ -9,14 +9,17 @@ for size in [16, 32, 128, 256, 512] {
         let image = NSImage(size: NSSize(width: pixels, height: pixels))
         image.lockFocus()
         let p = CGFloat(pixels)
-        NSColor(calibratedWhite: 0.13, alpha: 1).setFill()
-        NSBezierPath(roundedRect: NSRect(x: p * 0.05, y: p * 0.05, width: p * 0.9, height: p * 0.9), xRadius: p * 0.2, yRadius: p * 0.2).fill()
-        if let symbol = NSImage(systemSymbolName: "basketball.fill", accessibilityDescription: "Tipoff") {
-            let config = NSImage.SymbolConfiguration(pointSize: p * 0.57, weight: .medium)
-                .applying(NSImage.SymbolConfiguration(paletteColors: [.systemMint]))
-            let configured = symbol.withSymbolConfiguration(config)!
-            configured.draw(in: NSRect(x: p * 0.20, y: p * 0.20, width: p * 0.60, height: p * 0.60))
-        }
+        NSColor(calibratedRed: CGFloat(32) / 255, green: CGFloat(37) / 255, blue: CGFloat(38) / 255, alpha: 1).setFill()
+        NSBezierPath(ovalIn: NSRect(x: 0, y: 0, width: p, height: p)).fill()
+        NSGraphicsContext.current?.compositingOperation = .clear
+        let seam = NSBezierPath()
+        seam.lineWidth = max(1, p * 0.055)
+        seam.lineCapStyle = .round
+        seam.move(to: NSPoint(x: p * 0.5, y: 0)); seam.line(to: NSPoint(x: p * 0.5, y: p))
+        seam.move(to: NSPoint(x: p * 0.08, y: 0)); seam.curve(to: NSPoint(x: p, y: p * 0.59), controlPoint1: NSPoint(x: p * 0.06, y: p * 0.25), controlPoint2: NSPoint(x: p * 0.33, y: p * 0.49))
+        seam.move(to: NSPoint(x: p * 0.92, y: 0)); seam.curve(to: NSPoint(x: 0, y: p * 0.59), controlPoint1: NSPoint(x: p * 0.94, y: p * 0.25), controlPoint2: NSPoint(x: p * 0.67, y: p * 0.49))
+        seam.move(to: NSPoint(x: p * 0.06, y: p * 0.18)); seam.line(to: NSPoint(x: p * 0.94, y: p * 0.82))
+        seam.stroke()
         image.unlockFocus()
         let bitmap = NSBitmapImageRep(data: image.tiffRepresentation!)!
         let filename = "icon_\(size)x\(size)\(scale == 2 ? "@2x" : "").png"

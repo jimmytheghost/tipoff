@@ -27,7 +27,7 @@ public partial class App : System.Windows.Application
         trayIcon = new Forms.NotifyIcon
         {
             Icon = new Icon(System.IO.Path.Combine(AppContext.BaseDirectory, "Tipoff.ico")),
-            Text = "Tipoff — No scores. Just where to watch.",
+            Text = "Tipoff",
             Visible = true,
             ContextMenuStrip = BuildMenu()
         };

@@ -28,10 +28,7 @@ public struct TipoffMenuView: View {
                 .font(.system(size: 18, weight: .semibold)).foregroundStyle(.mint)
                 .frame(width: 30, height: 30)
                 .background(.mint.opacity(0.12), in: RoundedRectangle(cornerRadius: 8))
-            VStack(alignment: .leading, spacing: 2) {
-                Text("Tipoff").font(.headline)
-                Text(store.guide == .nfl ? "Football, with Denver first." : "Your \(store.guide.title) viewing guide.").font(.caption).foregroundStyle(.secondary)
-            }
+            Text("Tipoff").font(.headline)
             Spacer()
             Button { showingSettings.toggle() } label: {
                 Image(systemName: showingSettings ? "xmark" : "gearshape")
@@ -143,7 +140,6 @@ public struct TipoffMenuView: View {
                 Text("NBA uses NBA.com with ESPN fallback and the Nuggets’ Altitude supplement. NFL and WNBA use ESPN. NHL and MLB use league schedules with ESPN fallback. Nuggets, Broncos, Avalanche, and Rockies games appear first in their guides. Tipoff checks on opening, after wake, and every five minutes.")
                 Text("Listings reflect what the source provides. Local rights, subscriptions, and League Pass blackouts still affect availability.")
             }.font(.caption).foregroundStyle(.secondary)
-            Text("No scores. Just where to watch.").font(.caption).foregroundStyle(.mint)
             Link("Open NBA schedule", destination: URL(string: "https://www.nba.com/schedule")!).font(.caption)
             Link("Open NHL schedule", destination: URL(string: "https://www.nhl.com/schedule")!).font(.caption)
             Link("Open MLB schedule", destination: URL(string: "https://www.mlb.com/schedule")!).font(.caption)
