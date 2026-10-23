@@ -48,3 +48,52 @@ import Testing
         }
     }
 }
+
+@Test func nbaBroadcastPriorityUsesListingsWithoutInferringLeaguePassAccess() {
+    for (name, category) in [("Prime Video", "Streaming"), ("Peacock", "National"), ("ESPN", "national"),
+                             ("ABC", "TV / streaming"), ("NBC", "TV / streaming"),
+                             ("Amazon Prime Video", "TV / streaming"), ("Future network", "National")] {
+        let game = Game(id: "nba-test", away: "Away", home: "Home", awayCode: "A", homeCode: "B",
+            start: nil, scheduleDay: "2026-10-23", broadcasts: [Broadcast(name: name, category: category)])
+        #expect(game.hasNationalNBABroadcast)
+    }
+    for (name, category) in [("League Pass", "Subscription"), ("NBA League Pass", "National"),
+                             ("NBA TV", "National"), ("NBATV", "Streaming"), ("ESPN Radio", "National radio"),
+                             ("Altitude+", "Home streaming"), ("Peacock", "Away streaming"),
+                             ("Unknown", "TV / streaming"), ("", "National")] {
+        let game = Game(id: "nba-test", away: "Away", home: "Home", awayCode: "A", homeCode: "B",
+            start: nil, scheduleDay: "2026-10-23", broadcasts: [Broadcast(name: name, category: category)])
+        #expect(!game.hasNationalNBABroadcast)
+    }
+}
+
+@Test func nbaNationalListingsLeadSavedSchedulesBeforeLeaguePassAndRegionalGames() throws {
+    for prefix in ["nba-", "espn-"] {
+        func game(_ id: String, hour: String?, nuggets: Bool = false, broadcasts: [Broadcast]) -> Game {
+            Game(id: prefix + id, away: "Away", home: "Home", awayCode: "A", homeCode: nuggets ? "DEN" : "B",
+                start: hour.flatMap { Dates.parse("2026-10-23T\($0):00:00Z") }, scheduleDay: "2026-10-23", broadcasts: broadcasts)
+        }
+        let leaguePass = Broadcast(name: "League Pass", category: "Subscription")
+        let early = game("early", hour: "16", broadcasts: [leaguePass])
+        let denver = game("denver", hour: "22", nuggets: true, broadcasts: [leaguePass, Broadcast(name: "Altitude", category: "Home TV")])
+        let prime = game("prime", hour: "20", broadcasts: [Broadcast(name: "Prime Video", category: "Streaming"), leaguePass])
+        let peacock = game("peacock", hour: "19", broadcasts: [Broadcast(name: "Peacock", category: "National")])
+        let espn = game("espn", hour: "23", broadcasts: [Broadcast(name: "ESPN", category: "TV / streaming")])
+        let unknown = game("unknown", hour: nil, broadcasts: [])
+        let nbaTV = game("nbaTV", hour: "18", broadcasts: [Broadcast(name: "NBA TV", category: "National")])
+        let snapshot = ScheduleSnapshot(games: [unknown, denver, espn, early, prime, nbaTV, peacock],
+            fetchedAt: Dates.parse("2026-10-22T12:00:00Z")!, day: "2026-10-23", timeZone: "America/Denver",
+            source: prefix == "nba-" ? "NBA.com + Altitude" : "ESPN fallback", limitedCoverage: prefix == "espn-")
+        let saved = try JSONDecoder().decode(ScheduleSnapshot.self, from: JSONEncoder().encode(snapshot))
+        #expect(saved.displayGames.map(\.id) == [peacock, prime, espn, denver, early, nbaTV, unknown].map(\.id))
+        #expect(saved == snapshot)
+        var nationalDenver = denver
+        nationalDenver.broadcasts.append(Broadcast(name: "NBC", category: "National"))
+        var changed = saved
+        changed.games = changed.games.map { $0.id == denver.id ? nationalDenver : $0 }
+        #expect(changed.displayGames.first == nationalDenver)
+        // Other guides do not acquire the NBA broadcast preference.
+        var wnba = saved; wnba.guide = .wnba
+        #expect(wnba.displayGames == wnba.games)
+    }
+}

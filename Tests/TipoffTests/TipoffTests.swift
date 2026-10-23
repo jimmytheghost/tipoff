@@ -18,7 +18,7 @@ private func sample(day: String = "2026-10-20", source: String = "NBA.com") -> S
             let nuggets = Game(id: prefix + "denver", away: home ? "Pelicans" : "Nuggets",
                 home: home ? "Nuggets" : "Pelicans", awayCode: home ? "NOP" : "DEN",
                 homeCode: home ? "DEN" : "NOP", start: date("2026-10-21T05:00:00Z"),
-                scheduleDay: "2026-10-20", broadcasts: [])
+                scheduleDay: "2026-10-20", broadcasts: [Broadcast(name: "ESPN", category: "National")])
             var snapshot = sample()
             snapshot.games = [others[2], nuggets, others[0], others[1]]
             let saved = try JSONDecoder().decode(ScheduleSnapshot.self, from: JSONEncoder().encode(snapshot))

@@ -49,6 +49,21 @@ public struct Game: Codable, Equatable, Identifiable, Sendable {
     public var isNuggets: Bool { (id.hasPrefix("nba-") || id.hasPrefix("espn-")) && (awayCode == "DEN" || homeCode == "DEN") }
     public var isAvalanche: Bool { id.hasPrefix("nhl-") && (awayCode == "COL" || homeCode == "COL") }
     public var isRockies: Bool { id.hasPrefix("mlb-") && (["115", "COL"].contains(awayCode) || ["115", "COL"].contains(homeCode)) }
+    // A display preference based on listings, never a League Pass eligibility decision.
+    var hasNationalNBABroadcast: Bool {
+        broadcasts.contains { broadcast in
+            let category = broadcast.category.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+            let name = broadcast.name.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+            guard !category.contains("radio"), !name.isEmpty,
+                  !name.contains("league pass"), !["nba tv", "nbatv"].contains(name) else { return false }
+            if category == "national" || category == "streaming" { return true }
+            // ESPN's older fallback listings may omit the national market category.
+            return category == "tv / streaming" && [
+                "abc", "espn", "espn2", "espn deportes", "espn+", "nbc", "peacock",
+                "prime", "prime video", "amazon prime video", "amazon prime"
+            ].contains(name)
+        }
+    }
     public var preferredTeamLabel: String? {
         if isNuggets { return "NUGGETS" }
         if isBroncos { return "BRONCOS" }
@@ -82,12 +97,19 @@ public struct ScheduleSnapshot: Codable, Equatable, Sendable {
     public var selectedGuide: ScheduleGuide { guide ?? .nba }
     // Apply to saved snapshots too, without changing their data or freshness.
     public var displayGames: [Game] {
+        if selectedGuide == .nba {
+            func priority(_ game: Game) -> Int {
+                (game.hasNationalNBABroadcast ? 0 : 2) + (game.isNuggets ? 0 : 1)
+            }
+            // Start with deterministic time order, then keep it within each priority group.
+            let chronological = Dates.sorted(games)
+            return (0..<4).flatMap { rank in chronological.filter { priority($0) == rank } }
+        }
         let preferred: (Game) -> Bool
         switch selectedGuide {
-        case .nba: preferred = { $0.isNuggets }
         case .nhl: preferred = { $0.isAvalanche }
         case .mlb: preferred = { $0.isRockies }
-        case .nfl, .wnba: return games
+        case .nba, .nfl, .wnba: return games
         }
         let chronological = Dates.sorted(games)
         return chronological.filter(preferred) + chronological.filter { !preferred($0) }

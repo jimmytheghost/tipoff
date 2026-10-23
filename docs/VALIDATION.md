@@ -1,6 +1,15 @@
-# Validation — October 22, 2026
+# Validation — October 23, 2026
 
 Environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Initial personal-use time zone: America/Denver.
+
+## macOS NBA national broadcast ordering — October 23, 2026
+
+- NBA listings now put source-listed national TV/streaming games before League Pass, NBA TV, regional-only, and missing listings. Nuggets lead within each group; remaining games retain chronological order. ESPN fallback entries without a national category recognize ABC, ESPN variants, NBC, Peacock, and Prime variants. Radio does not affect priority. This does not determine actual League Pass eligibility or change source/coverage warnings.
+- Display-only ordering applies to saved snapshots, including older NBA snapshots without an explicit guide, without changing game arrays, broadcasters, source, coverage flags, or freshness. Other sports and the Windows app retain their existing ordering.
+- `scripts/test.sh`: **57 tests passed**, including four parameterized guide-switch cases (**60 individual test/case executions**). Added two regression tests covering national/streaming brands and categories, NBA TV/League Pass/radio/regional exclusions, primary and ESPN fallback identities, mixed national/League Pass listings, Nuggets priority within groups, chronological/TBD ordering, saved snapshot equality, and WNBA isolation. Updated the previous Nuggets-first test to exercise national Nuggets priority within the national group.
+- `scripts/package-app.sh`: **passed**, including release build and strict code-signature verification. Output: ignored `dist/Tipoff.app`.
+- Live `swift run TipoffCheck 2026-10-23`: **NBA.com, 12 games**, no limited-coverage flag. Knicks at Celtics (5:00 PM Mountain) and Rockets at Spurs (7:30 PM Mountain), both source-listed Prime Video games, appeared first; the ten League Pass listings followed, starting with Bulls at Bucks (2:00 PM). Fetching, decoding, and cache schema remain unchanged.
+- README, plan, data notes, and settings wording updated; diff whitespace checked. No new release published or Windows parity claimed.
 
 ## Windows system-tray app
 

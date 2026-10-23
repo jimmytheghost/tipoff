@@ -137,7 +137,7 @@ public struct TipoffMenuView: View {
             }
             VStack(alignment: .leading, spacing: 6) {
                 Text("Broadcast listings").font(.callout.weight(.medium))
-                Text("NBA uses NBA.com with ESPN fallback and the Nuggets’ Altitude supplement. NFL and WNBA use ESPN. NHL and MLB use league schedules with ESPN fallback. Nuggets, Broncos, Avalanche, and Rockies games appear first in their guides. Tipoff checks on opening, after wake, and every five minutes.")
+                Text("NBA uses NBA.com with ESPN fallback and the Nuggets’ Altitude supplement. National TV/streaming listings appear first in NBA, with Nuggets first within each group. NFL and WNBA use ESPN. NHL and MLB use league schedules with ESPN fallback. Broncos, Avalanche, and Rockies games lead their guides. Tipoff checks on opening, after wake, and every five minutes.")
                 Text("Listings reflect what the source provides. Local rights, subscriptions, and League Pass blackouts still affect availability.")
             }.font(.caption).foregroundStyle(.secondary)
             Link("Open NBA schedule", destination: URL(string: "https://www.nba.com/schedule")!).font(.caption)
