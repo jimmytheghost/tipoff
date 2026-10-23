@@ -8,9 +8,9 @@ The existing app icon is exported to `img/Tipoff.png` as a reusable 2048×2048 P
 
 Implemented in `Windows/` as a package-free C# / WPF companion, without changing the SwiftUI app. The Windows tray flyout keeps the 360-unit width, mint accent, rounded cards, five sport guides, local calendar-day navigation, NFL Sunday shortcut, Denver/Colorado display ordering, source/freshness labels, coverage warnings, and isolated saved snapshots. It ports the NBA.com / ESPN / NHL.com / MLB.com source hierarchy and projects only schedule and broadcaster fields into its model. Fixture tests explicitly verify that scores, clocks, periods, and standings do not enter serialized games.
 
-The first pass opens its flyout on launch, toggles from the notification-area icon, and has Open / Refresh / Quit tray actions. It includes a Windows `Tipoff.Check` and a PowerShell packaging script. The output is currently a framework-dependent x64 source build requiring the .NET 9 Desktop Runtime; no installer or published Windows release is claimed.
+The first pass opens its flyout on launch, toggles from the notification-area icon, and has Open / Refresh / Quit tray actions. It includes a Windows `Tipoff.Check` and a PowerShell packaging script. The output is currently a framework-dependent x64 source build requiring the .NET 9 Desktop Runtime; no installer or published Windows release is claimed. The Windows guide now also carries the Nuggets Altitude supplement, strict schedule agreement, separate saved-data fallback, and expandable details for source networks, show times, regional notes, and freshness.
 
-Deliberately deferred from the first Windows pass: the personal Altitude Nuggets supplement, launch at login, system dark-theme adaptation, Arm64 packaging, installer/signing, and automatic updates. Nuggets days show an explicit supplement limitation rather than guessing or silently adding coverage. Porting Altitude requires the same date/opponent/home-away/tipoff agreement and saved-data safeguards as macOS.
+Still deferred from the first Windows pass: launch at login, system dark-theme adaptation, Arm64 packaging, installer/signing, and automatic updates.
 
 ## First version
 
@@ -50,7 +50,7 @@ Implemented: Avalanche games lead the NHL list and Rockies games lead MLB, with 
 - Trial a licensed feed (Sportradar is the strongest documented candidate) if website-source reliability or coverage proves insufficient. Validate streaming coverage with actual samples first.
 - Global broadcaster regions, then additional professional sports and college sports.
 - Notarization, Intel validation, or an update workflow if someone wants to add them.
-- Bring the Windows preview to parity: Altitude supplement and details, launch at login, dark theme, Arm64, installer/signing, and a published artifact if desired.
+- Bring the remaining Windows preview pieces to parity: launch at login, dark theme, Arm64, installer/signing, and a published artifact if desired.
 
 The repository includes a basic downloadable Apple Silicon build. This is a shared personal project, not a supported product roadmap.
 

@@ -17,7 +17,7 @@ Tipoff 0.4.1, captured October 22, 2026, with Nuggets broadcast details open. Li
 - NFL’s Sunday shortcut jumps to the upcoming Sunday (or today on Sunday); the other sports keep their Today shortcut. The Sunday shortcut is hidden while viewing a Sunday.
 - Highlights Nuggets, Broncos, Avalanche, and Rockies matchups within their sports with a mint outline and team label; teams do not have separate sport tabs.
 - Keeps each game in three columns: stacked teams, local time, and TV/streaming listings.
-- Follows your Mac’s time zone, including daylight saving changes.
+- Follows your computer’s time zone, including daylight saving changes.
 - Adds source-listed Altitude, Altitude 2, Altitude+, and channel 9/20 information for Nuggets games. Details include pregame/postgame times and regional notes.
 - Refreshes when opened, after wake, and every five minutes while running.
 - Keeps an offline copy and shows source/freshness information.
@@ -29,7 +29,7 @@ Radio is hidden. There are no scores, standings, live game clocks, notifications
 
 The repository now includes a native C# / WPF system-tray preview under `Windows/`. Its 360-unit flyout includes the same five sport guides, local calendar-day navigation, NFL Sunday shortcut, Denver/Colorado display priority, source and freshness labels, limited-coverage warnings, and isolated offline snapshots. Left-click the tray icon to toggle the flyout; right-click for Open, Refresh, and Quit. The first launch opens the flyout so the tray behavior is discoverable.
 
-The Windows preview uses the same source hierarchy and keeps only schedule/broadcast fields, but the personal Altitude Nuggets supplement, launch-at-login setting, dark-theme adaptation, installer, and automatic updates are not included yet. A Nuggets day says so explicitly and leaves the primary source listings unchanged. This is a source build, not a published Windows release.
+The Windows preview uses the same source hierarchy and keeps only schedule/broadcast fields. It also applies the personal Altitude Nuggets supplement only when the date, opponent, home/away designation, and tipoff agree; expandable Details preserve Altitude’s network labels, pregame/postgame times, regional footnotes, and supplement freshness. A failed Altitude refresh uses its separately saved listings when available without replacing the primary NBA schedule. Launch at login, dark-theme adaptation, an installer, and automatic updates are not included yet. This is a source build, not a published Windows release.
 
 ## Try it
 
@@ -69,7 +69,7 @@ scripts/package-windows.ps1
 dist/windows/Tipoff.exe
 ```
 
-The framework-dependent x64 package requires the .NET 9 Desktop Runtime. It is intentionally package-free and does not contact NuGet. Local caches live under `%LOCALAPPDATA%\Tipoff\Schedules\Windows\`. `Tipoff.Check` provides a command-line live-source check, for example `dotnet run --project Windows/Tipoff.Check/Tipoff.Check.csproj -- nfl 2026-10-25`.
+The framework-dependent x64 package requires the .NET 9 Desktop Runtime. It is intentionally package-free and does not contact NuGet. Daily caches live under `%LOCALAPPDATA%\Tipoff\Schedules\Windows\`; the Altitude supplement uses `%LOCALAPPDATA%\Tipoff\Altitude.Windows.json`. `Tipoff.Check` provides command-line live-source checks, for example `dotnet run --project Windows/Tipoff.Check/Tipoff.Check.csproj -- nfl 2026-10-25` or `dotnet run --project Windows/Tipoff.Check/Tipoff.Check.csproj -- altitude`.
 
 ## Where it’s at
 
@@ -77,7 +77,7 @@ Version 0.4.1 includes NBA, NFL, WNBA, NHL, and MLB viewing guides, with Colorad
 
 NBA.com supplies NBA data, ESPN supplies NFL and WNBA listings, and NHL.com and MLB.com supply their league schedules. ESPN is the NBA/NHL/MLB fallback. Altitude’s schedule supplements matching Nuggets games. These are public website endpoints, not guaranteed APIs. They can change or stop working. Listings can be incomplete, and a listed channel or service does not mean your subscription or location can receive it. Altitude’s Denver/outer-market restrictions are preserved in Details.
 
-Tipoff doesn’t guess missing broadcasters or League Pass eligibility. Times come from the sources and use your Mac’s time zone. A failed refresh retains saved listings with a visible warning. “Checked” means the app retrieved the data, not that a broadcaster reconfirmed it.
+Tipoff doesn’t guess missing broadcasters or League Pass eligibility. Times come from the sources and use your computer’s time zone. A failed refresh retains saved listings with a visible warning. “Checked” means the app retrieved the data, not that a broadcaster reconfirmed it.
 
 No analytics or app account. Local schedule caches live under `~/Library/Application Support/Tipoff/`. The app makes network requests to its schedule sources. [Source details and cache behavior](docs/DATA.md).
 

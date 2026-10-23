@@ -11,13 +11,15 @@ public sealed class ScheduleProvider : IScheduleLoading, IDisposable
 {
     private readonly HttpClient client;
     private readonly bool ownsClient;
+    private readonly AltitudeProvider altitude;
 
     public ScheduleProvider(HttpClient? client = null)
     {
         ownsClient = client is null;
-        this.client = client ?? new HttpClient { Timeout = TimeSpan.FromSeconds(25) };
-        this.client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 Tipoff-Windows/0.1");
+        this.client = client ?? new HttpClient(new HttpClientHandler { AutomaticDecompression = DecompressionMethods.All }) { Timeout = TimeSpan.FromSeconds(25) };
+        this.client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36");
         this.client.DefaultRequestHeaders.AcceptLanguage.ParseAdd("en-US,en;q=0.9");
+        altitude = new AltitudeProvider(this.client);
     }
 
     public async Task<ScheduleSnapshot> LoadAsync(DateOnly day, TimeZoneInfo zone, ScheduleGuide guide, CancellationToken cancellationToken = default)
@@ -78,7 +80,25 @@ public sealed class ScheduleProvider : IScheduleLoading, IDisposable
         selected = (guide == ScheduleGuide.Nfl
             ? selected.OrderByDescending(game => game.IsBroncos).ThenBy(game => game.Start ?? DateTimeOffset.MaxValue)
             : selected.OrderBy(game => game.Start ?? DateTimeOffset.MaxValue)).ThenBy(game => game.Id).ToList();
-        return new ScheduleSnapshot(selected, DateTimeOffset.UtcNow, Dates.Key(day), zone.Id, source, limited, guide);
+        string? altitudeWarning = null;
+        var usedAltitude = false;
+        if (guide == ScheduleGuide.Nba && selected.Any(game => game.IsNuggets))
+        {
+            var supplement = await altitude.LoadAsync(cancellationToken);
+            altitudeWarning = supplement.Warning;
+            if (supplement.Schedule is not null)
+            {
+                selected = selected.Select(game =>
+                {
+                    var result = AltitudeDecoder.Enrich(game, supplement.Schedule, supplement.Saved);
+                    if (result.Warning is not null) altitudeWarning = string.Join(' ', new[] { altitudeWarning, result.Warning }.Where(value => !string.IsNullOrWhiteSpace(value)));
+                    if (result.Game.Altitude is not null) usedAltitude = true;
+                    return result.Game;
+                }).ToList();
+            }
+        }
+        if (usedAltitude) source += " + Altitude";
+        return new ScheduleSnapshot(selected, DateTimeOffset.UtcNow, Dates.Key(day), zone.Id, source, limited, guide, altitudeWarning);
     }
 
     private async Task<IReadOnlyList<Game>> FetchNbaDays(IEnumerable<string> days, CancellationToken cancellationToken)

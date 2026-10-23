@@ -34,7 +34,8 @@ public sealed record Game(
     DateTimeOffset? Start,
     string ScheduleDay,
     string? Notice,
-    IReadOnlyList<Broadcast> Broadcasts)
+    IReadOnlyList<Broadcast> Broadcasts,
+    AltitudeDetails? Altitude = null)
 {
     [JsonIgnore] public bool IsBroncos => Id.StartsWith("nfl-", StringComparison.Ordinal) && (AwayCode == "DEN" || HomeCode == "DEN");
     [JsonIgnore] public bool IsNuggets => (Id.StartsWith("nba-", StringComparison.Ordinal) || Id.StartsWith("espn-", StringComparison.Ordinal)) && (AwayCode == "DEN" || HomeCode == "DEN");
@@ -58,7 +59,8 @@ public sealed record ScheduleSnapshot(
     string TimeZone,
     string Source,
     bool LimitedCoverage,
-    ScheduleGuide Guide)
+    ScheduleGuide Guide,
+    string? AltitudeWarning = null)
 {
     [JsonIgnore]
     public IReadOnlyList<Game> DisplayGames

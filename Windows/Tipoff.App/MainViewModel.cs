@@ -139,8 +139,7 @@ public sealed class MainViewModel : INotifyPropertyChanged, IDisposable
         if (error is not null) messages.Add(error);
         if (snapshot?.LimitedCoverage == true)
             messages.Add(snapshot.Source.StartsWith("ESPN", StringComparison.Ordinal) ? "Using ESPN. Local and streaming listings may be incomplete." : "TV listings may omit streaming options. Check the broadcaster’s schedule.");
-        if (Guide == ScheduleGuide.Nba && snapshot?.Games.Any(game => game.IsNuggets) == true)
-            messages.Add("Altitude’s personal Nuggets supplement is not yet included in this Windows preview; source listings are shown unchanged.");
+        if (!string.IsNullOrWhiteSpace(snapshot?.AltitudeWarning)) messages.Add(snapshot.AltitudeWarning);
         return string.Join(" ", messages);
     }
 
@@ -169,12 +168,41 @@ public sealed class MainViewModel : INotifyPropertyChanged, IDisposable
     }
 }
 
-public sealed record GameCard(string Away, string HomeDisplay, string PreferredLabel, string Time, string Notice, string BroadcastText)
+public sealed record GameCard(
+    string Away,
+    string HomeDisplay,
+    string PreferredLabel,
+    string Time,
+    string Notice,
+    string BroadcastText,
+    Visibility DetailsVisibility,
+    string DetailsLabel,
+    string DetailsNetworks,
+    string DetailsTimes,
+    string DetailsNotes,
+    string DetailsFreshness)
 {
     public static GameCard From(Game game, TimeZoneInfo zone)
     {
         var video = game.Broadcasts.Where(item => !item.Category.Contains("radio", StringComparison.OrdinalIgnoreCase)).ToList();
         var broadcastText = video.Count == 0 ? "Not listed" : string.Join("\n", video.GroupBy(item => item.Category).Select(group => $"{group.Key.ToUpperInvariant()}\n{string.Join(" / ", group.Select(item => item.Name))}"));
-        return new(game.Away, "@ " + game.Home, game.PreferredTeamLabel ?? "", game.TimeLabel(zone), game.Notice ?? "", broadcastText);
+        if (game.Altitude is not { } details)
+            return new(game.Away, "@ " + game.Home, game.PreferredTeamLabel ?? "", game.TimeLabel(zone), game.Notice ?? "", broadcastText,
+                Visibility.Collapsed, "Details", "", "", "", "");
+
+        string Local(DateTimeOffset value) => TimeZoneInfo.ConvertTime(value, zone).ToString("h:mm tt", CultureInfo.InvariantCulture);
+        var times = new List<string>();
+        if (details.Pregame is { } pregame) times.Add($"Pregame {Local(pregame)}");
+        if (game.Start is { } start) times.Add($"Game {Local(start)}");
+        if (details.Postgame is { } postgame) times.Add($"Postgame {Local(postgame)}");
+        var age = DateTimeOffset.UtcNow - details.FetchedAt;
+        var ageText = age < TimeSpan.FromMinutes(1) ? "just now" : age < TimeSpan.FromHours(1) ? $"{(int)age.TotalMinutes}m ago" : age < TimeSpan.FromDays(1) ? $"{(int)age.TotalHours}h ago" : $"{(int)age.TotalDays}d ago";
+        return new(game.Away, "@ " + game.Home, game.PreferredTeamLabel ?? "", game.TimeLabel(zone), game.Notice ?? "", broadcastText,
+            Visibility.Visible,
+            details.Notes.Count == 0 ? "Details" : "Details*",
+            details.Networks.Count == 0 ? "No additional network listed" : string.Join(" / ", details.Networks),
+            string.Join("  ·  ", times),
+            string.Join("\n", details.Notes),
+            $"Altitude schedule · {(details.Saved ? "saved" : "checked")} {ageText}");
     }
 }
