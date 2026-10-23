@@ -2,6 +2,11 @@
 
 Environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Initial personal-use time zone: America/Denver.
 
+## PC ordering handoff note — October 23, 2026
+
+- Recorded the pending Windows port of macOS commit `ea9b6ce`, including implementation locations, ordering rules, saved-data requirements, and Windows validation commands. README links to the handoff; Windows behavior remains unchanged.
+- Documentation-only change: **0 app tests executed**; reviewed content, relative file links, and diff whitespace. No rebuild required.
+
 ## macOS NBA national broadcast ordering — October 23, 2026
 
 - NBA listings now put source-listed national TV/streaming games before League Pass, NBA TV, regional-only, and missing listings. Nuggets lead within each group; remaining games retain chronological order. ESPN fallback entries without a national category recognize ABC, ESPN variants, NBC, Peacock, and Prime variants. Radio does not affect priority. This does not determine actual League Pass eligibility or change source/coverage warnings.

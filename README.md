@@ -27,6 +27,8 @@ Radio is hidden. There are no scores, standings, live game clocks, notifications
 
 The repository includes a native C# / WPF system-tray app under `Windows/`. Its 360-unit flyout includes the same five sport guides, local calendar-day navigation, NFL Sunday shortcut, Denver/Colorado display priority, source and freshness labels, limited-coverage warnings, and isolated offline snapshots. The compact header is simply Tipoff beside a dark, full-bleed basketball icon. Left-click the tray icon to toggle the flyout; right-click for Open, Refresh, and Quit. The first launch opens the flyout so the tray behavior is discoverable.
 
+The macOS NBA national-broadcast ordering is a [pending PC follow-up](docs/PLAN.md#windows-nba-ordering-follow-up--october-23-2026); Windows currently retains Nuggets-first ordering.
+
 The Windows app uses the same source hierarchy and keeps only schedule/broadcast fields. It also applies the personal Altitude Nuggets supplement only when the date, opponent, home/away designation, and tipoff agree; expandable Details preserve Altitude’s network labels, pregame/postgame times, regional footnotes, and supplement freshness. A failed Altitude refresh uses its separately saved listings when available without replacing the primary NBA schedule. Launch at login, dark-theme adaptation, an installer, and automatic updates are not included yet. This is a source build, not a published Windows release.
 
 ## Try it

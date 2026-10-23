@@ -12,6 +12,16 @@ The Windows app opens its flyout on launch, toggles from the notification-area i
 
 Still deferred from the Windows build: launch at login, system dark-theme adaptation, Arm64 packaging, installer/signing, and automatic updates.
 
+## Windows NBA ordering follow-up — October 23, 2026
+
+Pending PC update: port macOS commit `ea9b6ce` to `Windows/Tipoff.Core/Models.cs` (`Game` and `ScheduleSnapshot.DisplayGames`) and add regressions in `Windows/Tipoff.Tests/Program.cs`.
+
+- Put source-listed National or Streaming video games (Prime, Peacock, ESPN, ABC, NBC, etc.) before League Pass, NBA TV, regional-only, and missing listings. Ignore radio. Match the macOS recognized-brand fallback for ESPN entries labeled only TV / streaming; see [display rules](DATA.md#macos-nba-display-order).
+- Keep Nuggets first within each group, then chronological order with TBD times last. Apply the preference to saved snapshots without changing contents, source, coverage flags, or freshness. Preserve other sports’ ordering and existing availability caveats; this preference does not determine League Pass eligibility.
+- Cover primary and ESPN fallback listings, mixed national/League Pass broadcasts, radio and regional exclusions, NBA TV, Nuggets in both groups, TBD times, and saved snapshot preservation. Run the Windows fixture runner and `scripts/package-windows.ps1`; use `Tipoff.Check` for a live NBA ordering check and record actual results in validation notes.
+
+The user plans to make this update on PC. Windows behavior is unchanged until that implementation lands.
+
 ## First version
 
 Built for personal use in the United States and shared publicly as-is; initially NBA only. Match Bug and Worklog’s native menu bar design. Time follows the Mac (Mountain Time for the initial user). Prioritize broadcast information and suppress scores entirely.
