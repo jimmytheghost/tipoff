@@ -2,6 +2,16 @@
 
 Environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Initial personal-use time zone: America/Denver.
 
+## Windows system-tray first pass
+
+- Built a native C# / WPF companion under `Windows/`, targeting .NET 9 on Windows x64. The packaged flyout is 360 logical units wide, uses the Tipoff icon and mint/rounded-card treatment, opens on first launch, toggles from the tray icon, and exposes Open / Refresh / Quit tray actions. The macOS source and packaging remain separate.
+- Ported strict schedule-only models and decoders for NBA.com, ESPN NBA fallback, ESPN NFL/WNBA, NHL.com and MLB.com with ESPN fallback. Caches are isolated by sport, calendar day, and Windows time-zone ID under `%LOCALAPPDATA%\Tipoff\Schedules\Windows\`; failed refreshes preserve saved data and original freshness. The Altitude Nuggets supplement is explicitly labeled as unavailable in this first preview and no replacement coverage is inferred.
+- Windows fixture runner: **20 tests executed, 20 passed**. Coverage includes NBA page parsing and rejection cases, ESPN parsing, source broadcaster preservation, no-score serialization, local/Eastern source dates, Nuggets/Broncos/Avalanche/Rockies identity and priority, NHL country filtering, MLB TV/streaming brands and radio exclusion, and cache isolation.
+- Live Windows `Tipoff.Check` results: NBA `2026-10-24` — **NBA.com, 8 games**; NFL `2026-10-25` — **ESPN, 12 games**; WNBA `2026-06-21` — **ESPN, 3 games**; NHL `2026-10-22` — **NHL.com, 12 games**; MLB `2026-07-01` — **MLB.com, 14 games**. Source-provided broadcasters were printed; NBA/NHL/MLB primary sources decoded successfully and ESPN-only guides retained their coverage warning.
+- `scripts/package-windows.ps1`: **passed** and produced the ignored framework-dependent x64 output at `dist/windows/Tipoff.exe`, including the MIT license and notice. The package requires the .NET 9 Desktop Runtime; no installer, signature, or public Windows release is claimed.
+- Hands-on Windows inspection exercised initial NBA rendering, sport selection, loading state, NFL coverage warning, Sunday shortcut, scrolling, Denver-first ordering, source/freshness footer, and Quit. It exposed and led to fixes for NFL display re-sorting, Quit being intercepted by the hide-on-close guard, and loaded content expanding below the taskbar. The final packaged check showed Broncos first, kept the full footer on-screen after async loading, and exited cleanly.
+- The existing macOS `scripts/test.sh` and `scripts/package-app.sh` require macOS/SwiftUI tooling and were not executable on this Windows host. No Swift networking/source code changed; the latest recorded macOS validation below remains applicable.
+
 ## GitHub screenshot and documentation refresh
 
 - Copied the user-provided October 22 screenshot unchanged to `docs/current-preview.png` (PNG, 968×1044); the README displays it at 484 pixels wide with a dated caption and descriptive alternative text. It shows all five sport tabs, Nuggets emphasis, and the open broadcast details popover. Older previews remain available.

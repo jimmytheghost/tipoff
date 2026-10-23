@@ -1,6 +1,6 @@
 # Tipoff 🏀 🏈
 
-**Who’s playing, when, and where can I watch?** A small native macOS menu bar app for NBA, NFL, WNBA, NHL, and MLB broadcast listings. No scores.
+**Who’s playing, when, and where can I watch?** A small native macOS menu bar and Windows system-tray app for NBA, NFL, WNBA, NHL, and MLB broadcast listings. No scores.
 
 I built this because I was tired of checking the NBA schedule every day to figure out which channel or streaming service had a game. I’m a Nuggets and Broncos fan in Mountain Time, so there’s an Altitude-specific supplement for Nuggets games and highlighted Denver matchups in both guides. The Rockies and Avalanche get the same treatment in MLB and NHL.
 
@@ -24,6 +24,12 @@ Tipoff 0.4.1, captured October 22, 2026, with Nuggets broadcast details open. Li
 - Offers launch at login, off by default.
 
 Radio is hidden. There are no scores, standings, live game clocks, notifications, or automatic updates. Broadcaster watch links are a future possibility.
+
+### Windows first pass
+
+The repository now includes a native C# / WPF system-tray preview under `Windows/`. Its 360-unit flyout includes the same five sport guides, local calendar-day navigation, NFL Sunday shortcut, Denver/Colorado display priority, source and freshness labels, limited-coverage warnings, and isolated offline snapshots. Left-click the tray icon to toggle the flyout; right-click for Open, Refresh, and Quit. The first launch opens the flyout so the tray behavior is discoverable.
+
+The Windows preview uses the same source hierarchy and keeps only schedule/broadcast fields, but the personal Altitude Nuggets supplement, launch-at-login setting, dark-theme adaptation, installer, and automatic updates are not included yet. A Nuggets day says so explicitly and leaves the primary source listings unchanged. This is a source build, not a published Windows release.
 
 ## Try it
 
@@ -53,6 +59,18 @@ open ~/Applications/Tipoff.app
 
 Quit an existing Tipoff instance before copying a replacement. `swift build` also builds the development tools. Packaging uses ad-hoc signing unless you set `TIPOFF_SIGNING_IDENTITY` to a signing certificate available on your machine.
 
+### Build the Windows preview
+
+Install the .NET 9 SDK, then run PowerShell from the repository root:
+
+```powershell
+dotnet run --project Windows/Tipoff.Tests/Tipoff.Tests.csproj --configfile Windows/NuGet.Config
+scripts/package-windows.ps1
+dist/windows/Tipoff.exe
+```
+
+The framework-dependent x64 package requires the .NET 9 Desktop Runtime. It is intentionally package-free and does not contact NuGet. Local caches live under `%LOCALAPPDATA%\Tipoff\Schedules\Windows\`. `Tipoff.Check` provides a command-line live-source check, for example `dotnet run --project Windows/Tipoff.Check/Tipoff.Check.csproj -- nfl 2026-10-25`.
+
 ## Where it’s at
 
 Version 0.4.1 includes NBA, NFL, WNBA, NHL, and MLB viewing guides, with Colorado team emphasis within the appropriate guides, focused on source-provided US broadcast listings. Build from source for this version; the linked v0.2.0 download is NBA-only. The Nuggets supplement and Denver team emphasis are deliberately built in for my own use, rather than a general favorites or location system. You can change that.
@@ -77,6 +95,9 @@ Start with [AGENTS.md](AGENTS.md). It describes the existing behavior, design ch
 - `Sources/TipoffCore/LeagueFeedDecoder.swift`: NHL and MLB schedule/broadcast decoding.
 - `Sources/TipoffCore/AltitudeSchedule.swift`: the personal Nuggets supplement.
 - `Tests/TipoffTests/`: source fixtures and tests for matching, time zones, failures, and caching.
+- `Windows/Tipoff.App/`: WPF tray icon and 360-unit flyout.
+- `Windows/Tipoff.Core/`: Windows models, strict source decoders, provider, and cache.
+- `Windows/Tipoff.Tests/` and `Windows/Tipoff.Check/`: fixture validation and live checks.
 
 For a live source check:
 

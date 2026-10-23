@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Tipoff.Core/Tipoff.Core.csproj" />
+  <Project Path="Tipoff.App/Tipoff.App.csproj" />
+  <Project Path="Tipoff.Check/Tipoff.Check.csproj" />
+  <Project Path="Tipoff.Tests/Tipoff.Tests.csproj" />
+</Solution>

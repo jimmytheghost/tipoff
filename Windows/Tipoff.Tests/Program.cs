@@ -1,0 +1,104 @@
+using System.Text.Json;
+using Tipoff.Core;
+
+var tests = new List<(string Name, Action Body)>
+{
+    ("NBA page decodes three games", () => Equal(3, Nba().Count)),
+    ("NBA page keeps streaming listings", () => True(Nba()[0].Broadcasts.Any(item => item.Name == "Peacock"))),
+    ("NBA page keeps source radio listings", () => True(Nba()[0].Broadcasts.Any(item => item.Category == "Home radio"))),
+    ("NBA rejects wrong selected date", () => Throws(() => FeedDecoder.NbaPage(Fixture("nba-page.html"), "2026-10-21"))),
+    ("NBA rejects challenge page", () => Throws(() => FeedDecoder.NbaPage("Access denied", "2026-10-20"))),
+    ("ESPN decodes NBA fixture", () => Equal(3, FeedDecoder.Espn(Fixture("espn.json"), ScheduleGuide.Nba).Count)),
+    ("ESPN rejects unknown feed", () => Throws(() => FeedDecoder.Espn("{}", ScheduleGuide.Nba))),
+    ("Scores never enter serialized game model", ScoresNeverEnterModel),
+    ("Mountain day spans two Eastern source dates", SourceDaysCoverLocalDay),
+    ("Preferred NBA team sorts first", PreferredTeamSortsFirst),
+    ("NHL fixture decodes expected day", () => Equal(12, LeagueFeedDecoder.Nhl(Fixture("nhl.json"), "2026-10-22").Count)),
+    ("NHL excludes Canadian-only network", () => Equal("MSG", LeagueFeedDecoder.Nhl(Fixture("nhl.json"), "2026-10-22")[1].Broadcasts.Single().Name)),
+    ("NHL rejects wrong day", () => Throws(() => LeagueFeedDecoder.Nhl(Fixture("nhl.json"), "2026-11-22"))),
+    ("MLB fixture decodes all games", () => Equal(14, LeagueFeedDecoder.Mlb(Fixture("mlb.json"), "2026-07-01").Count)),
+    ("MLB includes Rockies.TV source listing", () => True(LeagueFeedDecoder.Mlb(Fixture("mlb.json"), "2026-07-01").Any(game => game.Broadcasts.Any(item => item.Name == "Rockies.TV")))),
+    ("MLB excludes radio", () => True(LeagueFeedDecoder.Mlb(Fixture("mlb.json"), "2026-07-01").All(game => game.Broadcasts.All(item => item.Category is not ("AM" or "FM"))))),
+    ("WNBA preserves source networks", WnbaNetworks),
+    ("NFL puts Broncos first", BroncosFirst),
+    ("Sport identities stay scoped", SportIdentitiesAreScoped),
+    ("Cache round trip stays sport/date/zone isolated", CacheRoundTrip)
+};
+
+var failures = 0;
+foreach (var (name, body) in tests)
+{
+    try { body(); Console.WriteLine($"PASS  {name}"); }
+    catch (Exception error) { failures++; Console.Error.WriteLine($"FAIL  {name}: {error.Message}"); }
+}
+Console.WriteLine($"Executed {tests.Count} tests: {tests.Count - failures} passed, {failures} failed.");
+return failures == 0 ? 0 : 1;
+
+static string Fixture(string name) => File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Fixtures", name));
+static IReadOnlyList<Game> Nba() => FeedDecoder.NbaPage(Fixture("nba-page.html"), "2026-10-20");
+static void True(bool value) { if (!value) throw new Exception("Expected true."); }
+static void Equal<T>(T expected, T actual) where T : notnull { if (!EqualityComparer<T>.Default.Equals(expected, actual)) throw new Exception($"Expected {expected}; received {actual}."); }
+static void Throws(Action action) { try { action(); } catch { return; } throw new Exception("Expected an exception."); }
+
+static void ScoresNeverEnterModel()
+{
+    var json = JsonSerializer.Serialize(Nba()).ToLowerInvariant();
+    True(!json.Contains("score", StringComparison.Ordinal) && !json.Contains("period", StringComparison.Ordinal) && !json.Contains("clock", StringComparison.Ordinal));
+}
+
+static void SourceDaysCoverLocalDay()
+{
+    var mountain = Dates.FindZone("Mountain Standard Time", "America/Denver");
+    var days = Dates.SourceDays(new DateOnly(2026, 10, 20), mountain);
+    Equal("2026-10-20,2026-10-21", string.Join(',', days));
+}
+
+static void PreferredTeamSortsFirst()
+{
+    var others = FeedDecoder.Espn(Fixture("espn.json"), ScheduleGuide.Nba);
+    var nuggets = new Game("nba-denver", "Denver Nuggets", "New Orleans Pelicans", "DEN", "NOP", DateTimeOffset.Parse("2026-10-21T05:00:00Z"), "2026-10-20", null, []);
+    var snapshot = new ScheduleSnapshot([others[0], nuggets, others[1]], DateTimeOffset.UtcNow, "2026-10-20", "Mountain Standard Time", "test", false, ScheduleGuide.Nba);
+    Equal(nuggets.Id, snapshot.DisplayGames[0].Id);
+}
+
+static void WnbaNetworks()
+{
+    var games = FeedDecoder.Espn(Fixture("wnba.json"), ScheduleGuide.Wnba);
+    Equal(3, games.Count);
+    Equal("CBS,Paramount+", string.Join(',', games[0].Broadcasts.Select(item => item.Name)));
+}
+
+static void BroncosFirst()
+{
+    var games = FeedDecoder.Espn(Fixture("nfl.json"), ScheduleGuide.Nfl);
+    var snapshot = new ScheduleSnapshot(games, DateTimeOffset.UtcNow, "2026-10-25", "Mountain Standard Time", "ESPN", true, ScheduleGuide.Nfl);
+    True(snapshot.Games.Any(game => game.IsBroncos));
+    var ordered = snapshot.Games.OrderByDescending(game => game.IsBroncos).ThenBy(game => game.Start).ToList();
+    True(ordered[0].IsBroncos);
+    var displaySnapshot = snapshot with { Games = ordered };
+    True(displaySnapshot.DisplayGames[0].IsBroncos);
+}
+
+static void SportIdentitiesAreScoped()
+{
+    var nhl = new Game("nhl-1", "Away", "Home", "COL", "OTHER", null, "2026-10-22", null, []);
+    var nba = nhl with { Id = "nba-1" };
+    True(nhl.IsAvalanche && !nba.IsAvalanche && !nhl.IsNuggets);
+}
+
+static void CacheRoundTrip()
+{
+    var directory = Path.Combine(AppContext.BaseDirectory, "TestData", Guid.NewGuid().ToString("N"));
+    try
+    {
+        var cache = new ScheduleCache(directory);
+        var zone = TimeZoneInfo.Local;
+        var day = new DateOnly(2026, 10, 20);
+        var value = new ScheduleSnapshot([], DateTimeOffset.UtcNow, Dates.Key(day), zone.Id, "Test", false, ScheduleGuide.Nba);
+        cache.Write(value);
+        Equal("Test", cache.Read(day, zone, ScheduleGuide.Nba)!.Source);
+        True(cache.Read(day, zone, ScheduleGuide.Nfl) is null);
+        True(cache.Read(day.AddDays(1), zone, ScheduleGuide.Nba) is null);
+    }
+    finally { try { if (Directory.Exists(directory)) Directory.Delete(directory, true); } catch { } }
+}

@@ -8,7 +8,7 @@ These website endpoints are undocumented dependencies, with no availability guar
 
 Source dates use Eastern time. Tipoff fetches every source date intersecting the user’s local day, filters by local start time, and removes duplicates. An unknown tipoff time stays on the source’s named schedule date and displays `Time TBD`.
 
-Schedule caches live in `~/Library/Application Support/Tipoff/Schedules/` and contain only the app’s schedule/broadcast model, never scores. At most 45 snapshots are retained. No analytics, cloud account, or paid service is used.
+Schedule caches live in `~/Library/Application Support/Tipoff/Schedules/` on macOS and `%LOCALAPPDATA%\Tipoff\Schedules\Windows\` in the Windows preview. They contain only the app’s schedule/broadcast model, never scores. Each implementation retains at most 45 snapshots. No analytics, cloud account, or paid service is used.
 
 ## Nuggets / Altitude supplement
 
