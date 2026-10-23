@@ -6,9 +6,7 @@ I built this because I was tired of checking the NBA schedule every day to figur
 
 This is a personal tool I’m sharing as it stands. If it’s useful, take it. If you want something different, fork it and have your agents—or yourself—make it work the way you want. There’s no product roadmap or promise of ongoing support. Bug reports and improvements are welcome, but you don’t need to wait on me to change your copy.
 
-<img src="docs/current-preview.png" alt="Tipoff with five sport tabs, Nuggets first in the NBA guide, and the Nuggets broadcast details popover open" width="484">
-
-Tipoff 0.4.1, captured October 22, 2026, with Nuggets broadcast details open. Listings and check times reflect that capture.
+<img src="img/Tipoff.png" alt="Original Tipoff app icon" width="112">
 
 ## What it does today
 
@@ -25,11 +23,11 @@ Tipoff 0.4.1, captured October 22, 2026, with Nuggets broadcast details open. Li
 
 Radio is hidden. There are no scores, standings, live game clocks, notifications, or automatic updates. Broadcaster watch links are a future possibility.
 
-### Windows first pass
+### Windows system-tray app
 
-The repository now includes a native C# / WPF system-tray preview under `Windows/`. Its 360-unit flyout includes the same five sport guides, local calendar-day navigation, NFL Sunday shortcut, Denver/Colorado display priority, source and freshness labels, limited-coverage warnings, and isolated offline snapshots. Left-click the tray icon to toggle the flyout; right-click for Open, Refresh, and Quit. The first launch opens the flyout so the tray behavior is discoverable.
+The repository includes a native C# / WPF system-tray app under `Windows/`. Its 360-unit flyout includes the same five sport guides, local calendar-day navigation, NFL Sunday shortcut, Denver/Colorado display priority, source and freshness labels, limited-coverage warnings, and isolated offline snapshots. The compact header is simply Tipoff beside a dark, full-bleed basketball icon. Left-click the tray icon to toggle the flyout; right-click for Open, Refresh, and Quit. The first launch opens the flyout so the tray behavior is discoverable.
 
-The Windows preview uses the same source hierarchy and keeps only schedule/broadcast fields. It also applies the personal Altitude Nuggets supplement only when the date, opponent, home/away designation, and tipoff agree; expandable Details preserve Altitude’s network labels, pregame/postgame times, regional footnotes, and supplement freshness. A failed Altitude refresh uses its separately saved listings when available without replacing the primary NBA schedule. Launch at login, dark-theme adaptation, an installer, and automatic updates are not included yet. This is a source build, not a published Windows release.
+The Windows app uses the same source hierarchy and keeps only schedule/broadcast fields. It also applies the personal Altitude Nuggets supplement only when the date, opponent, home/away designation, and tipoff agree; expandable Details preserve Altitude’s network labels, pregame/postgame times, regional footnotes, and supplement freshness. A failed Altitude refresh uses its separately saved listings when available without replacing the primary NBA schedule. Launch at login, dark-theme adaptation, an installer, and automatic updates are not included yet. This is a source build, not a published Windows release.
 
 ## Try it
 
@@ -43,7 +41,7 @@ The shared build is ad-hoc signed and **not notarized**. macOS may block a downl
 
 ## Build it yourself
 
-The app icon is also available as a 2048×2048 PNG with transparency at [`img/Tipoff.png`](img/Tipoff.png).
+The original app icon remains available as a 2048×2048 PNG with transparency at [`img/Tipoff.png`](img/Tipoff.png). The current Windows tray icon is generated separately during packaging.
 
 Install Apple’s Xcode Command Line Tools first (`xcode-select --install` if needed). The current version was built with Swift 6.3.3. No third-party Swift packages are required.
 
@@ -59,7 +57,7 @@ open ~/Applications/Tipoff.app
 
 Quit an existing Tipoff instance before copying a replacement. `swift build` also builds the development tools. Packaging uses ad-hoc signing unless you set `TIPOFF_SIGNING_IDENTITY` to a signing certificate available on your machine.
 
-### Build the Windows preview
+### Build the Windows app
 
 Install the .NET 9 SDK, then run PowerShell from the repository root:
 
@@ -69,7 +67,7 @@ scripts/package-windows.ps1
 dist/windows/Tipoff.exe
 ```
 
-The framework-dependent x64 package requires the .NET 9 Desktop Runtime. It is intentionally package-free and does not contact NuGet. Daily caches live under `%LOCALAPPDATA%\Tipoff\Schedules\Windows\`; the Altitude supplement uses `%LOCALAPPDATA%\Tipoff\Altitude.Windows.json`. `Tipoff.Check` provides command-line live-source checks, for example `dotnet run --project Windows/Tipoff.Check/Tipoff.Check.csproj -- nfl 2026-10-25` or `dotnet run --project Windows/Tipoff.Check/Tipoff.Check.csproj -- altitude`.
+The framework-dependent x64 package requires the .NET 9 Desktop Runtime. It is intentionally package-free and does not contact NuGet. Packaging regenerates the multi-size basketball icon and bundles the project license, notice, and third-party icon license. Daily caches live under `%LOCALAPPDATA%\Tipoff\Schedules\Windows\`; the Altitude supplement uses `%LOCALAPPDATA%\Tipoff\Altitude.Windows.json`. `Tipoff.Check` provides command-line live-source checks, for example `dotnet run --project Windows/Tipoff.Check/Tipoff.Check.csproj -- nfl 2026-10-25` or `dotnet run --project Windows/Tipoff.Check/Tipoff.Check.csproj -- altitude`.
 
 ## Where it’s at
 
@@ -98,6 +96,7 @@ Start with [AGENTS.md](AGENTS.md). It describes the existing behavior, design ch
 - `Windows/Tipoff.App/`: WPF tray icon and 360-unit flyout.
 - `Windows/Tipoff.Core/`: Windows models, strict source decoders, provider, and cache.
 - `Windows/Tipoff.Tests/` and `Windows/Tipoff.Check/`: fixture validation and live checks.
+- `scripts/generate-windows-icon.ps1`: generates the PNG-backed, multi-size Windows basketball icon.
 
 For a live source check:
 
@@ -112,8 +111,8 @@ swift run TipoffCheck 2026-07-01 --mlb
 
 The check writes a snapshot to `/tmp/tipoff-preview.png.json`; the renderer uses it without another network request. Add `--light` before the image path for light mode, or `--altitude-details` to preview a matched Nuggets game’s details.
 
-[WNBA / MLB / NHL source research](docs/SOURCE-RESEARCH.md) · [What’s implemented / possible next steps](docs/PLAN.md) · [Validation and remaining manual checks](docs/VALIDATION.md) · [Current app screenshot](docs/current-preview.png) · [WNBA view](docs/wnba-preview.png) · [NHL view](docs/nhl-preview.png) · [MLB view](docs/mlb-preview.png) · [NFL view](docs/nfl-preview.png) · [Nuggets first](docs/nuggets-first-preview.png) · [Altitude details](docs/altitude-details.png)
+[WNBA / MLB / NHL source research](docs/SOURCE-RESEARCH.md) · [What’s implemented / possible next steps](docs/PLAN.md) · [Validation and remaining manual checks](docs/VALIDATION.md) · [macOS feature screenshot before the branding simplification](docs/current-preview.png) · [WNBA view](docs/wnba-preview.png) · [NHL view](docs/nhl-preview.png) · [MLB view](docs/mlb-preview.png) · [NFL view](docs/nfl-preview.png) · [Nuggets first](docs/nuggets-first-preview.png) · [Altitude details](docs/altitude-details.png)
 
 ## License
 
-The code is [MIT licensed](LICENSE): use it, change it, and share it. It’s provided as-is. Third-party schedule data, names, and marks remain with their respective owners; see [NOTICE](NOTICE). Tipoff is not affiliated with or endorsed by the NBA, NFL, WNBA, NHL, MLB, ESPN, Altitude, or any team or broadcaster.
+The code is [MIT licensed](LICENSE): use it, change it, and share it. It’s provided as-is. The basketball artwork uses Google Material Icons geometry under the [Apache License 2.0](LICENSES/Apache-2.0.txt). Third-party schedule data, names, and marks remain with their respective owners; see [NOTICE](NOTICE). Tipoff is not affiliated with or endorsed by the NBA, NFL, WNBA, NHL, MLB, ESPN, Altitude, or any team or broadcaster.

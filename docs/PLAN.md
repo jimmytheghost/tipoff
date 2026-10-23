@@ -1,16 +1,16 @@
 # Product plan
 
-The [current app screenshot](current-preview.png), captured October 22, 2026, shows the five-sport selector and Nuggets broadcast details in version 0.4.1. The README uses this capture; older sport-specific previews remain available.
+The [macOS feature screenshot](current-preview.png), captured October 22, 2026, shows the five-sport selector and Nuggets broadcast details in version 0.4.1 before the header branding was simplified. It is retained as a feature reference rather than presented as the current branding; older sport-specific previews remain available.
 
-The existing app icon is exported to `img/Tipoff.png` as a reusable 2048×2048 PNG with transparency.
+The original app icon remains exported to `img/Tipoff.png` as a reusable 2048×2048 PNG with transparency. Current platform-specific basketball icons are generated separately and do not replace that original asset.
 
-## Windows system-tray first pass — October 2026
+## Windows system-tray app — October 2026
 
-Implemented in `Windows/` as a package-free C# / WPF companion, without changing the SwiftUI app. The Windows tray flyout keeps the 360-unit width, mint accent, rounded cards, five sport guides, local calendar-day navigation, NFL Sunday shortcut, Denver/Colorado display ordering, source/freshness labels, coverage warnings, and isolated saved snapshots. It ports the NBA.com / ESPN / NHL.com / MLB.com source hierarchy and projects only schedule and broadcaster fields into its model. Fixture tests explicitly verify that scores, clocks, periods, and standings do not enter serialized games.
+Implemented in `Windows/` as a package-free C# / WPF companion alongside the SwiftUI app. The Windows tray flyout keeps the 360-unit width, mint accent, rounded cards, five sport guides, local calendar-day navigation, NFL Sunday shortcut, Denver/Colorado display ordering, source/freshness labels, coverage warnings, and isolated saved snapshots. Its shared branding is reduced to the Tipoff name and a dark, full-bleed basketball icon, without sport-specific subtitles or the former settings slogan. It ports the NBA.com / ESPN / NHL.com / MLB.com source hierarchy and projects only schedule and broadcaster fields into its model. Fixture tests explicitly verify that scores, clocks, periods, and standings do not enter serialized games.
 
-The first pass opens its flyout on launch, toggles from the notification-area icon, and has Open / Refresh / Quit tray actions. It includes a Windows `Tipoff.Check` and a PowerShell packaging script. The output is currently a framework-dependent x64 source build requiring the .NET 9 Desktop Runtime; no installer or published Windows release is claimed. The Windows guide now also carries the Nuggets Altitude supplement, strict schedule agreement, separate saved-data fallback, and expandable details for source networks, show times, regional notes, and freshness.
+The Windows app opens its flyout on launch, toggles from the notification-area icon, and has Open / Refresh / Quit tray actions. It includes a Windows `Tipoff.Check` and a PowerShell packaging script. The output is currently a framework-dependent x64 source build requiring the .NET 9 Desktop Runtime; no installer or published Windows release is claimed. The Windows guide also carries the Nuggets Altitude supplement, strict schedule agreement, separate saved-data fallback, and expandable details for source networks, show times, regional notes, and freshness.
 
-Still deferred from the first Windows pass: launch at login, system dark-theme adaptation, Arm64 packaging, installer/signing, and automatic updates.
+Still deferred from the Windows build: launch at login, system dark-theme adaptation, Arm64 packaging, installer/signing, and automatic updates.
 
 ## First version
 
@@ -50,7 +50,7 @@ Implemented: Avalanche games lead the NHL list and Rockies games lead MLB, with 
 - Trial a licensed feed (Sportradar is the strongest documented candidate) if website-source reliability or coverage proves insufficient. Validate streaming coverage with actual samples first.
 - Global broadcaster regions, then additional professional sports and college sports.
 - Notarization, Intel validation, or an update workflow if someone wants to add them.
-- Bring the remaining Windows preview pieces to parity: launch at login, dark theme, Arm64, installer/signing, and a published artifact if desired.
+- Bring the remaining Windows pieces to parity: launch at login, dark theme, Arm64, installer/signing, and a published artifact if desired.
 
 The repository includes a basic downloadable Apple Silicon build. This is a shared personal project, not a supported product roadmap.
 
