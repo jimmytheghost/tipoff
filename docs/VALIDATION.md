@@ -2,6 +2,11 @@
 
 Environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Initial personal-use time zone: America/Denver.
 
+## Windows game-card text contrast — October 23, 2026
+
+- Darkened the shared game-card text accent from bright mint `#19B98A` to deep teal `#087F5B` for broadcaster names, preferred-team labels, and the Altitude Details control. Selected-control borders retain the brighter mint, preserving the established palette without using it for small text.
+- Calculated contrast against the `#F3F6F5` card surface: **4.60:1**. Windows fixture runner: **29 tests executed, 29 passed**. `scripts/package-windows.ps1`: **passed**, including WPF compilation.
+
 ## Windows routine disclaimer removal — October 23, 2026
 
 - Removed the persistent limited-coverage banner from NFL, WNBA, NHL, and ESPN-fallback views. The footer still names the active source, including explicit ESPN fallback labels, without spending the compact content area on static caveats.
