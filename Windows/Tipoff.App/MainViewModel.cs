@@ -181,6 +181,9 @@ public sealed record GameCard(
     string DetailsNotes,
     string DetailsFreshness)
 {
+    public Visibility PreferredVisibility => PreferredLabel.Length == 0 ? Visibility.Collapsed : Visibility.Visible;
+    public Visibility NoticeVisibility => Notice.Length == 0 ? Visibility.Collapsed : Visibility.Visible;
+
     public static GameCard From(Game game, TimeZoneInfo zone)
     {
         var video = game.Broadcasts.Where(item => !item.Category.Contains("radio", StringComparison.OrdinalIgnoreCase)).ToList();

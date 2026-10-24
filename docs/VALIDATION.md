@@ -2,6 +2,12 @@
 
 Environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Initial personal-use time zone: America/Denver.
 
+## Windows compact game cards — October 23, 2026
+
+- Reduced game-card vertical padding from 10 to 3 logical units per side and inter-card spacing from 8 to 3. Team-line margins were removed, the preferred-team label moved into the time column, and empty preferred labels and game notices now collapse instead of reserving blank lines.
+- Preserved the existing three-column team / time / broadcaster structure, 360-unit flyout width, typography hierarchy, mint preferred-team treatment, source-provided broadcaster wrapping, notices, and expandable Altitude details. Long team or broadcaster text and real game notices can still increase a card's height rather than being clipped.
+- Windows fixture runner: **29 tests executed, 29 passed**. `scripts/package-windows.ps1`: **passed**, including WPF XAML compilation. The rebuilt packaged app launched and remained responsive; final density and wrapping across unusual long listings remain hands-on checks.
+
 ## Windows transparent basketball icon — October 23, 2026
 
 - Replaced the generated dark Material Icons basketball with a transparent-background teal-and-charcoal basketball derived from the original Tipoff artwork. The rounded-square tile is absent; the dark seams remain opaque. The original `img/Tipoff.png` and the separate macOS icon pipeline are unchanged.

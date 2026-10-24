@@ -56,24 +56,24 @@
           <ItemsControl ItemsSource="{Binding Games}">
             <ItemsControl.ItemTemplate>
               <DataTemplate>
-                <Border Background="{StaticResource CardBrush}" BorderBrush="#DCE5E2" BorderThickness="1" CornerRadius="9" Padding="10" Margin="0,0,0,8">
+                <Border Background="{StaticResource CardBrush}" BorderBrush="#DCE5E2" BorderThickness="1" CornerRadius="8" Padding="7,3" Margin="0,0,0,3">
                   <StackPanel>
-                    <Grid>
+                    <Grid VerticalAlignment="Center">
                       <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="68" /><ColumnDefinition Width="96" /></Grid.ColumnDefinitions>
-                      <StackPanel>
-                        <TextBlock Text="{Binding PreferredLabel}" Foreground="{StaticResource MintBrush}" FontWeight="Bold" FontSize="9" />
-                        <TextBlock Text="{Binding Away}" FontWeight="SemiBold" FontSize="12" TextWrapping="Wrap" Margin="0,3,0,0" />
-                        <TextBlock Text="{Binding HomeDisplay}" FontWeight="SemiBold" FontSize="12" TextWrapping="Wrap" Margin="0,3,0,0" />
+                      <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="{Binding Away}" FontWeight="SemiBold" FontSize="11" TextWrapping="Wrap" />
+                        <TextBlock Text="{Binding HomeDisplay}" FontWeight="SemiBold" FontSize="11" TextWrapping="Wrap" />
                       </StackPanel>
-                      <StackPanel Grid.Column="1" Margin="5,2">
-                        <TextBlock Text="{Binding Time}" FontWeight="SemiBold" FontSize="11" />
-                        <TextBlock Text="{Binding Notice}" Foreground="#B46B00" FontSize="9.5" TextWrapping="Wrap" Margin="0,4,0,0" />
+                      <StackPanel Grid.Column="1" Margin="6,0,0,0" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding PreferredLabel}" Visibility="{Binding PreferredVisibility}" Foreground="{StaticResource MintBrush}" FontWeight="Bold" FontSize="8.5" />
+                        <TextBlock Text="{Binding Time}" FontWeight="SemiBold" FontSize="10" />
+                        <TextBlock Text="{Binding Notice}" Visibility="{Binding NoticeVisibility}" Foreground="#B46B00" FontSize="9" TextWrapping="Wrap" Margin="0,1,0,0" />
                       </StackPanel>
-                      <StackPanel Grid.Column="2" Margin="4,0,0,0">
-                        <TextBlock Text="{Binding BroadcastText}" Foreground="{StaticResource MintBrush}" FontWeight="SemiBold" FontSize="10.5" TextWrapping="Wrap" />
+                      <StackPanel Grid.Column="2" Margin="4,0,0,0" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding BroadcastText}" Foreground="{StaticResource MintBrush}" FontWeight="SemiBold" FontSize="9.5" TextWrapping="Wrap" />
                       </StackPanel>
                     </Grid>
-                    <Expander Header="{Binding DetailsLabel}" Visibility="{Binding DetailsVisibility}" Margin="0,8,0,0" FontSize="10.5" Foreground="{StaticResource MintBrush}">
+                    <Expander Header="{Binding DetailsLabel}" Visibility="{Binding DetailsVisibility}" Margin="0,4,0,0" FontSize="10" Foreground="{StaticResource MintBrush}">
                       <Border BorderBrush="#DCE5E2" BorderThickness="0,1,0,0" Margin="0,5,0,0" Padding="0,8,0,0">
                         <StackPanel>
                           <TextBlock Text="ALTITUDE’S LISTINGS" FontWeight="Bold" FontSize="9" Foreground="{StaticResource MutedBrush}" />
