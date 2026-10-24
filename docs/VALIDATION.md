@@ -2,6 +2,13 @@
 
 Environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Initial personal-use time zone: America/Denver.
 
+## Agent-ready Windows installation — October 23, 2026
+
+- Added `scripts/install-windows.ps1` as the canonical current-user install path. It checks for the .NET 9 SDK, rejects a filesystem-root target, stops an existing copy from the exact target path, packages the current x64 app, creates a Start Menu shortcut, and launches Tipoff so its Start with Windows registration records the stable installed executable.
+- Added a concise `CLAUDE.md` that routes Claude to `AGENTS.md` and the installer without duplicating product rules. README now separates current Windows source installation from the older downloadable macOS `v0.2.0` release and includes a copyable agent instruction.
+- Verified through GitHub CLI that `v0.2.0` remains the only and latest published release; it is correctly described as the older macOS NBA-only build. No Windows binary release or conventional signed installer is claimed.
+- Windows fixture runner: **29 tests executed, 29 passed**. Ran the installer against isolated ignored paths with launch disabled; packaging and WPF compilation passed, the seven expected application/license files were present, and the generated Start Menu shortcut resolved to the isolated `Tipoff.exe`. The user's installed/running copy was not replaced during this check.
+
 ## Windows game-card text contrast — October 23, 2026
 
 - Darkened the shared game-card text accent from bright mint `#19B98A` to deep teal `#087F5B` for broadcaster names, preferred-team labels, and the Altitude Details control. Selected-control borders retain the brighter mint, preserving the established palette without using it for small text.

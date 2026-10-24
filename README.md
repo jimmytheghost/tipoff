@@ -27,9 +27,38 @@ Radio is hidden. There are no scores, standings, live game clocks, notifications
 
 The repository includes a native C# / WPF system-tray app under `Windows/`. Its 360-unit flyout includes the same five sport guides, compact game cards, local calendar-day navigation, NFL Sunday shortcut, Denver/Colorado display priority, source and freshness labels, explicit fallback labels, and isolated offline snapshots. Game-card broadcaster, preferred-team, and Details text uses a darker teal for legibility while bright mint remains an accent. Routine coverage disclaimers do not occupy the compact UI; actual refresh, saved-data, and Altitude problems remain visible. Empty preferred-team and game-notice fields do not reserve vertical space. The compact header is simply Tipoff beside a high-resolution rendering of the teal-and-charcoal basketball mark from the original artwork, without its rounded-square tile. Left-click the tray icon to toggle the flyout; right-click for Open, Refresh, and Quit. The first launch opens the flyout so the tray behavior is discoverable.
 
-The Windows app uses the same source hierarchy and keeps only schedule/broadcast fields. NBA games with source-listed national TV/streaming broadcasters appear before League Pass and regional-only listings; Nuggets lead within each group. It also applies the personal Altitude Nuggets supplement only when the date, opponent, home/away designation, and tipoff agree; expandable Details preserve Altitude’s network labels, pregame/postgame times, regional footnotes, and supplement freshness. A failed Altitude refresh uses its separately saved listings when available without replacing the primary NBA schedule. Dark-theme adaptation, an installer, and automatic updates are not included yet. This is a source build, not a published Windows release.
+The Windows app uses the same source hierarchy and keeps only schedule/broadcast fields. NBA games with source-listed national TV/streaming broadcasters appear before League Pass and regional-only listings; Nuggets lead within each group. It also applies the personal Altitude Nuggets supplement only when the date, opponent, home/away designation, and tipoff agree; expandable Details preserve Altitude’s network labels, pregame/postgame times, regional footnotes, and supplement freshness. A failed Altitude refresh uses its separately saved listings when available without replacing the primary NBA schedule. Dark-theme adaptation, a conventional signed installer, and automatic updates are not included yet. This is a source build, not a published Windows release.
 
-## Try it
+## Install on Windows
+
+The current Windows app is installed from source. It needs **64-bit Windows 10/11**, Git, and the **.NET 9 SDK**. If needed, install both from Windows Package Manager:
+
+```powershell
+winget install --id Git.Git -e
+winget install --id Microsoft.DotNet.SDK.9 -e
+```
+
+Then clone and install Tipoff from PowerShell:
+
+```powershell
+git clone https://github.com/jimmytheghost/tipoff.git
+Set-Location tipoff
+powershell -ExecutionPolicy Bypass -File .\scripts\install-windows.ps1
+```
+
+The script builds the current app, installs it to `%LOCALAPPDATA%\Programs\Tipoff`, adds a **Tipoff** shortcut to the Start Menu, and launches it. The first launch configures Start with Windows; this can be turned off from Tipoff’s tray menu. No administrator access, account, or API key is needed after the prerequisites are installed. To update later, run `git pull` in the clone and run the installer script again.
+
+There is no published or code-signed Windows binary yet. Do **not** install the GitHub `v0.2.0` release on Windows—it is the older macOS NBA-only build.
+
+### Hand this repository to an agent
+
+Give the agent the repository URL and this instruction:
+
+> Install the current Windows version of Tipoff from source. Follow the README and `AGENTS.md`, use `scripts/install-windows.ps1`, verify that Tipoff is running from its installed location, and do not modify the app’s source code.
+
+Claude Code also has a small [`CLAUDE.md`](CLAUDE.md) routing file; the canonical project constraints remain in [`AGENTS.md`](AGENTS.md).
+
+## Install on macOS
 
 Requires **macOS 15 or newer**. The downloadable build is **Apple Silicon (arm64)**, built and tested on my Mac. Intel Macs can try building from source; I haven’t tested them.
 
@@ -57,7 +86,7 @@ open ~/Applications/Tipoff.app
 
 Quit an existing Tipoff instance before copying a replacement. `swift build` also builds the development tools. Packaging uses ad-hoc signing unless you set `TIPOFF_SIGNING_IDENTITY` to a signing certificate available on your machine.
 
-### Build the Windows app
+### Build the Windows app without installing
 
 Install the .NET 9 SDK, then run PowerShell from the repository root:
 
@@ -97,6 +126,7 @@ Start with [AGENTS.md](AGENTS.md). It describes the existing behavior, design ch
 - `Windows/Tipoff.Core/`: Windows models, strict source decoders, provider, and cache.
 - `Windows/Tipoff.Tests/` and `Windows/Tipoff.Check/`: fixture validation and live checks.
 - `scripts/generate-windows-icon.ps1`: generates the PNG-backed, multi-size Windows basketball icon.
+- `scripts/install-windows.ps1`: builds and installs the current Windows app for the current user.
 
 For a live source check:
 

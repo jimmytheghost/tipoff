@@ -15,6 +15,7 @@ Native SwiftUI macOS 15+ NBA/NFL/WNBA/NHL/MLB viewing guide, part of the Bug / W
 - Validate with `scripts/test.sh`, `scripts/package-app.sh`, and a live `TipoffCheck` when networking/source code changes. Record the actual executed test count.
 - Public website sources are undocumented. Keep fixtures and malformed/schema-change cases in decoder tests.
 - Keep README, docs/PLAN.md, and docs/VALIDATION.md synchronized with implemented behavior and actual evidence.
+- For a current-user Windows installation, use `scripts/install-windows.ps1`; it packages to `%LOCALAPPDATA%\Programs\Tipoff`, creates a Start Menu shortcut, and launches the app so its Start with Windows registration uses a stable path. The GitHub `v0.2.0` release is an older macOS-only NBA build, not the current Windows app.
 
 ## GitHub delivery
 
