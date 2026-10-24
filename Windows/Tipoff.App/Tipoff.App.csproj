@@ -16,5 +16,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Tipoff.ico" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="Tipoff-header.png" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

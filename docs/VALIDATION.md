@@ -9,6 +9,7 @@ Environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Too
 - The obsolete Google Material Icons attribution and packaged Apache icon license were removed because the Windows icon no longer uses that geometry. The historical license file remains in the repository.
 - Inspected the actual 16, 32, and 256-pixel ICO frames: the smallest frame retains a recognizable teal basketball and dark seams; larger frames preserve the clean circular edge and transparent surround. Final notification-area appearance on the user's display remains a hands-on check.
 - Windows fixture runner: **29 tests executed, 29 passed**. `scripts/package-windows.ps1`: **passed** and produced the framework-dependent x64 package with the regenerated icon and without the obsolete packaged icon license. The final packaged app remained responsive in hidden startup mode with its existing Run registration.
+- The expanded flyout header now loads a dedicated 256×256 PNG instead of asking WPF to choose a frame from the ICO. High-quality downscaling renders it at the existing 30×30 layout size; the tray continues using the multi-frame ICO. The generator reproduces both assets from the same transparent source.
 
 ## Windows NBA ordering and launch at sign-in — October 23, 2026
 

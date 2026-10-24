@@ -2,7 +2,7 @@
 
 The [macOS feature screenshot](current-preview.png), captured October 22, 2026, shows the five-sport selector and Nuggets broadcast details in version 0.4.1 before the header branding was simplified. It is retained as a feature reference rather than presented as the current branding; older sport-specific previews remain available.
 
-The original app icon remains exported to `img/Tipoff.png` as a reusable 2048×2048 PNG with transparency. Windows uses the freestanding teal-and-charcoal basketball extracted to `img/Tipoff-transparent.png`; packaging generates its multi-size ICO without the original rounded-square tile. The macOS icon remains separate.
+The original app icon remains exported to `img/Tipoff.png` as a reusable 2048×2048 PNG with transparency. Windows uses the freestanding teal-and-charcoal basketball extracted to `img/Tipoff-transparent.png`; packaging generates its multi-size tray ICO and a dedicated 256-pixel flyout-header PNG without the original rounded-square tile. The macOS icon remains separate.
 
 ## Windows system-tray app — October 2026
 

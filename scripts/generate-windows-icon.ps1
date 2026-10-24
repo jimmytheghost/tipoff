@@ -1,6 +1,7 @@
 param(
     [string]$OutputPath = (Join-Path $PSScriptRoot '..\Windows\Tipoff.App\Tipoff.ico'),
-    [string]$SourcePath = (Join-Path $PSScriptRoot '..\img\Tipoff-transparent.png')
+    [string]$SourcePath = (Join-Path $PSScriptRoot '..\img\Tipoff-transparent.png'),
+    [string]$HeaderOutputPath = ''
 )
 
 $ErrorActionPreference = 'Stop'
@@ -78,4 +79,13 @@ try {
     $file.Dispose()
 }
 
+$headerOutput = if ($HeaderOutputPath) {
+    [System.IO.Path]::GetFullPath($HeaderOutputPath)
+} else {
+    Join-Path $directory 'Tipoff-header.png'
+}
+[System.IO.Directory]::CreateDirectory([System.IO.Path]::GetDirectoryName($headerOutput)) | Out-Null
+[System.IO.File]::WriteAllBytes($headerOutput, $images[$images.Count - 1])
+
 Write-Output "Generated $output"
+Write-Output "Generated $headerOutput"

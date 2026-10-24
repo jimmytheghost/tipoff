@@ -19,7 +19,8 @@
 
       <Grid Margin="14">
         <Grid.ColumnDefinitions><ColumnDefinition Width="38" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
-        <Image Width="30" Height="30" Source="Tipoff.ico" Stretch="Fill" />
+        <Image Width="30" Height="30" Source="Tipoff-header.png" Stretch="Uniform"
+               RenderOptions.BitmapScalingMode="HighQuality" SnapsToDevicePixels="True" />
         <TextBlock Grid.Column="1" Text="Tipoff" FontWeight="SemiBold" FontSize="15" Margin="4,0,0,0" VerticalAlignment="Center" />
       </Grid>
 
