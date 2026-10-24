@@ -136,8 +136,6 @@ public sealed class MainViewModel : INotifyPropertyChanged, IDisposable
     {
         var messages = new List<string>();
         if (error is not null) messages.Add(error);
-        if (snapshot?.LimitedCoverage == true)
-            messages.Add(snapshot.Source.StartsWith("ESPN", StringComparison.Ordinal) ? "Using ESPN. Local and streaming listings may be incomplete." : "TV listings may omit streaming options. Check the broadcaster’s schedule.");
         if (!string.IsNullOrWhiteSpace(snapshot?.AltitudeWarning)) messages.Add(snapshot.AltitudeWarning);
         return string.Join(" ", messages);
     }

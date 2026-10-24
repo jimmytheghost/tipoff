@@ -2,6 +2,12 @@
 
 Environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Initial personal-use time zone: America/Denver.
 
+## Windows routine disclaimer removal — October 23, 2026
+
+- Removed the persistent limited-coverage banner from NFL, WNBA, NHL, and ESPN-fallback views. The footer still names the active source, including explicit ESPN fallback labels, without spending the compact content area on static caveats.
+- Preserved visible messages for actual refresh failures, saved-data fallback, and Altitude supplement failures or mismatches. The snapshot's `LimitedCoverage` field remains intact for cache compatibility and command-line diagnostics; only the repetitive flyout presentation changed.
+- Updated `AGENTS.md` so future work preserves source/fallback labeling without reintroducing routine UI disclaimers. Windows fixture runner: **29 tests executed, 29 passed**. `scripts/package-windows.ps1`: **passed**, including WPF compilation.
+
 ## Windows compact game cards — October 23, 2026
 
 - Reduced game-card vertical padding from 10 to 3 logical units per side and inter-card spacing from 8 to 3. Team-line margins were removed, the preferred-team label moved into the time column, and empty preferred labels and game notices now collapse instead of reserving blank lines.
