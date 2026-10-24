@@ -2,6 +2,14 @@
 
 Environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Initial personal-use time zone: America/Denver.
 
+## Windows transparent basketball icon — October 23, 2026
+
+- Replaced the generated dark Material Icons basketball with a transparent-background teal-and-charcoal basketball derived from the original Tipoff artwork. The rounded-square tile is absent; the dark seams remain opaque. The original `img/Tipoff.png` and the separate macOS icon pipeline are unchanged.
+- `scripts/generate-windows-icon.ps1` now crops the source artwork's presentation padding, applies a circular edge clip, retains a small optical margin for the notification area, and emits the same nine PNG-backed ICO sizes from 16 through 256 pixels. `scripts/package-windows.ps1` reproduces the icon from `img/Tipoff-transparent.png`.
+- The obsolete Google Material Icons attribution and packaged Apache icon license were removed because the Windows icon no longer uses that geometry. The historical license file remains in the repository.
+- Inspected the actual 16, 32, and 256-pixel ICO frames: the smallest frame retains a recognizable teal basketball and dark seams; larger frames preserve the clean circular edge and transparent surround. Final notification-area appearance on the user's display remains a hands-on check.
+- Windows fixture runner: **29 tests executed, 29 passed**. `scripts/package-windows.ps1`: **passed** and produced the framework-dependent x64 package with the regenerated icon and without the obsolete packaged icon license. The final packaged app remained responsive in hidden startup mode with its existing Run registration.
+
 ## Windows NBA ordering and launch at sign-in — October 23, 2026
 
 - Ported the macOS national-broadcast-first NBA display ordering to Windows for both NBA.com and ESPN fallback identities. Source-listed National / Streaming video games lead; recognized national brands in ESPN's generic TV / streaming category also qualify. League Pass, NBA TV, radio, regional-only, and missing listings remain in the later group. Nuggets lead within each group, TBD games remain last within their group, and saved snapshots receive the display preference without changing serialized content, source, coverage, or freshness.
@@ -9,7 +17,7 @@ Environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Too
 - Windows fixture runner: **29 tests executed, 29 passed**. New coverage includes national classification, League Pass / NBA TV / radio / regional exclusions, primary and ESPN identities, Nuggets in national and non-national groups, time and TBD ordering, saved-snapshot serialization preservation, and WNBA isolation.
 - `scripts/package-windows.ps1`: **passed** and produced the framework-dependent x64 app at `dist/windows/Tipoff.exe`. Starting that executable with `--startup` left the tray process running and created the expected quoted current-user Run entry. A real sign-out/sign-in cycle remains a hands-on check.
 - Live Windows `Tipoff.Check nba 2026-10-23`: **NBA.com, 12 games**. Knicks at Celtics and Rockets at Spurs, both source-listed Prime Video games, appeared first at 5:00 PM and 7:30 PM Mountain; the ten League Pass games followed starting with Bulls at Bucks at 2:00 PM. Primary decoding succeeded. The initial sandboxed request could not resolve ESPN; the required unrestricted retry succeeded.
-- The app icon was intentionally left unchanged for separate follow-up work.
+- At that validation step, the app icon was intentionally left unchanged for separate follow-up work; the completed icon update is recorded above.
 
 ## PC ordering handoff note — October 23, 2026
 
@@ -19,7 +27,7 @@ Environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Too
 ## macOS NBA national broadcast ordering — October 23, 2026
 
 - NBA listings now put source-listed national TV/streaming games before League Pass, NBA TV, regional-only, and missing listings. Nuggets lead within each group; remaining games retain chronological order. ESPN fallback entries without a national category recognize ABC, ESPN variants, NBC, Peacock, and Prime variants. Radio does not affect priority. This does not determine actual League Pass eligibility or change source/coverage warnings.
-- Display-only ordering applies to saved snapshots, including older NBA snapshots without an explicit guide, without changing game arrays, broadcasters, source, coverage flags, or freshness. Other sports and the Windows app retain their existing ordering.
+- Display-only ordering applies to saved snapshots, including older NBA snapshots without an explicit guide, without changing game arrays, broadcasters, source, coverage flags, or freshness. At that validation step, other sports and the Windows app retained their existing ordering; Windows parity is recorded above.
 - `scripts/test.sh`: **57 tests passed**, including four parameterized guide-switch cases (**60 individual test/case executions**). Added two regression tests covering national/streaming brands and categories, NBA TV/League Pass/radio/regional exclusions, primary and ESPN fallback identities, mixed national/League Pass listings, Nuggets priority within groups, chronological/TBD ordering, saved snapshot equality, and WNBA isolation. Updated the previous Nuggets-first test to exercise national Nuggets priority within the national group.
 - `scripts/package-app.sh`: **passed**, including release build and strict code-signature verification. Output: ignored `dist/Tipoff.app`.
 - Live `swift run TipoffCheck 2026-10-23`: **NBA.com, 12 games**, no limited-coverage flag. Knicks at Celtics (5:00 PM Mountain) and Rockets at Spurs (7:30 PM Mountain), both source-listed Prime Video games, appeared first; the ten League Pass listings followed, starting with Bulls at Bucks (2:00 PM). Fetching, decoding, and cache schema remain unchanged.
@@ -40,7 +48,7 @@ Environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Too
 ## Windows documentation refresh
 
 - Updated the README, product plan, data notes, and current Windows validation summary to describe the system-tray app, simplified branding, Altitude supplement, source-build limitations, icon generation, and Apache 2.0 attribution consistently.
-- Preserved the original 2048×2048 app icon at `img/Tipoff.png`; the current dark, full-bleed Windows tray icon remains a separate generated platform asset. The older macOS screenshot is retained as a feature reference but removed from the README hero because it predates the simplified header.
+- Preserved the original 2048×2048 app icon at `img/Tipoff.png`; the then-current dark, full-bleed Windows tray icon remained a separate generated platform asset. Its later replacement is recorded above. The older macOS screenshot is retained as a feature reference but removed from the README hero because it predates the simplified header.
 - Markdown links, targeted wording, original PNG dimensions/transparency, and diff whitespace checked. **0 app tests executed** for this documentation-only change; no source, model, networking, cache, or packaging behavior changed.
 
 ## GitHub screenshot and documentation refresh

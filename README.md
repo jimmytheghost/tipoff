@@ -25,7 +25,7 @@ Radio is hidden. There are no scores, standings, live game clocks, notifications
 
 ### Windows system-tray app
 
-The repository includes a native C# / WPF system-tray app under `Windows/`. Its 360-unit flyout includes the same five sport guides, local calendar-day navigation, NFL Sunday shortcut, Denver/Colorado display priority, source and freshness labels, limited-coverage warnings, and isolated offline snapshots. The compact header is simply Tipoff beside a dark, full-bleed basketball icon. Left-click the tray icon to toggle the flyout; right-click for Open, Refresh, and Quit. The first launch opens the flyout so the tray behavior is discoverable.
+The repository includes a native C# / WPF system-tray app under `Windows/`. Its 360-unit flyout includes the same five sport guides, local calendar-day navigation, NFL Sunday shortcut, Denver/Colorado display priority, source and freshness labels, limited-coverage warnings, and isolated offline snapshots. The compact header is simply Tipoff beside the teal-and-charcoal basketball mark from the original artwork, without its rounded-square tile. Left-click the tray icon to toggle the flyout; right-click for Open, Refresh, and Quit. The first launch opens the flyout so the tray behavior is discoverable.
 
 The Windows app uses the same source hierarchy and keeps only schedule/broadcast fields. NBA games with source-listed national TV/streaming broadcasters appear before League Pass and regional-only listings; Nuggets lead within each group. It also applies the personal Altitude Nuggets supplement only when the date, opponent, home/away designation, and tipoff agree; expandable Details preserve Altitude’s network labels, pregame/postgame times, regional footnotes, and supplement freshness. A failed Altitude refresh uses its separately saved listings when available without replacing the primary NBA schedule. Dark-theme adaptation, an installer, and automatic updates are not included yet. This is a source build, not a published Windows release.
 
@@ -67,7 +67,7 @@ scripts/package-windows.ps1
 dist/windows/Tipoff.exe
 ```
 
-The framework-dependent x64 package requires the .NET 9 Desktop Runtime. It is intentionally package-free and does not contact NuGet. Packaging regenerates the multi-size basketball icon and bundles the project license, notice, and third-party icon license. Daily caches live under `%LOCALAPPDATA%\Tipoff\Schedules\Windows\`; the Altitude supplement uses `%LOCALAPPDATA%\Tipoff\Altitude.Windows.json`. `Tipoff.Check` provides command-line live-source checks, for example `dotnet run --project Windows/Tipoff.Check/Tipoff.Check.csproj -- nfl 2026-10-25` or `dotnet run --project Windows/Tipoff.Check/Tipoff.Check.csproj -- altitude`.
+The framework-dependent x64 package requires the .NET 9 Desktop Runtime. It is intentionally package-free and does not contact NuGet. Packaging regenerates the multi-size basketball icon from [`img/Tipoff-transparent.png`](img/Tipoff-transparent.png) and bundles the project license and notice. Daily caches live under `%LOCALAPPDATA%\Tipoff\Schedules\Windows\`; the Altitude supplement uses `%LOCALAPPDATA%\Tipoff\Altitude.Windows.json`. `Tipoff.Check` provides command-line live-source checks, for example `dotnet run --project Windows/Tipoff.Check/Tipoff.Check.csproj -- nfl 2026-10-25` or `dotnet run --project Windows/Tipoff.Check/Tipoff.Check.csproj -- altitude`.
 
 ## Where it’s at
 
@@ -115,4 +115,4 @@ The check writes a snapshot to `/tmp/tipoff-preview.png.json`; the renderer uses
 
 ## License
 
-The code is [MIT licensed](LICENSE): use it, change it, and share it. It’s provided as-is. The basketball artwork uses Google Material Icons geometry under the [Apache License 2.0](LICENSES/Apache-2.0.txt). Third-party schedule data, names, and marks remain with their respective owners; see [NOTICE](NOTICE). Tipoff is not affiliated with or endorsed by the NBA, NFL, WNBA, NHL, MLB, ESPN, Altitude, or any team or broadcaster.
+The code is [MIT licensed](LICENSE): use it, change it, and share it. It’s provided as-is. Third-party schedule data, names, and marks remain with their respective owners; see [NOTICE](NOTICE). Tipoff is not affiliated with or endorsed by the NBA, NFL, WNBA, NHL, MLB, ESPN, Altitude, or any team or broadcaster.
