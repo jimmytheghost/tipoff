@@ -8,6 +8,7 @@ public partial class App : System.Windows.Application
 {
     private Forms.NotifyIcon? trayIcon;
     private MainWindow? flyout;
+    private Forms.ToolStripMenuItem? startupItem;
 
     protected override void OnStartup(StartupEventArgs e)
     {
@@ -15,6 +16,13 @@ public partial class App : System.Windows.Application
         ShutdownMode = ShutdownMode.OnExplicitShutdown;
         flyout = new MainWindow();
         var inspect = e.Args.Contains("--inspect", StringComparer.OrdinalIgnoreCase);
+        var startedWithWindows = e.Args.Contains("--startup", StringComparer.OrdinalIgnoreCase);
+        string? startupError = null;
+        if (!inspect)
+        {
+            try { StartupRegistration.EnsureDefaultEnabled(); }
+            catch (Exception error) { startupError = error.Message; }
+        }
         flyout.AutoHide = !inspect;
         if (inspect)
         {
@@ -35,7 +43,11 @@ public partial class App : System.Windows.Application
         {
             if (args.Button == Forms.MouseButtons.Left) ToggleFlyout();
         };
-        ShowFlyout();
+        if (!startedWithWindows) ShowFlyout();
+        if (startupError is not null)
+        {
+            trayIcon.ShowBalloonTip(5000, "Tipoff", $"Could not configure Start with Windows: {startupError}", Forms.ToolTipIcon.Warning);
+        }
     }
 
     private Forms.ContextMenuStrip BuildMenu()
@@ -43,9 +55,30 @@ public partial class App : System.Windows.Application
         var menu = new Forms.ContextMenuStrip();
         menu.Items.Add("Open Tipoff", null, (_, _) => ShowFlyout());
         menu.Items.Add("Refresh", null, async (_, _) => { if (flyout is not null) await flyout.RefreshAsync(); });
+        startupItem = new Forms.ToolStripMenuItem("Start Tipoff with Windows")
+        {
+            Checked = StartupEnabledSafely(),
+            CheckOnClick = true
+        };
+        startupItem.Click += (_, _) =>
+        {
+            try { StartupRegistration.SetEnabled(startupItem.Checked); }
+            catch (Exception error)
+            {
+                startupItem.Checked = StartupEnabledSafely();
+                trayIcon?.ShowBalloonTip(5000, "Tipoff", $"Could not update Start with Windows: {error.Message}", Forms.ToolTipIcon.Warning);
+            }
+        };
+        menu.Items.Add(startupItem);
         menu.Items.Add(new Forms.ToolStripSeparator());
         menu.Items.Add("Quit", null, (_, _) => flyout?.RequestQuit());
         return menu;
+    }
+
+    private static bool StartupEnabledSafely()
+    {
+        try { return StartupRegistration.IsEnabled; }
+        catch { return false; }
     }
 
     private void ToggleFlyout()

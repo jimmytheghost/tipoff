@@ -12,7 +12,8 @@ var tests = new List<(string Name, Action Body)>
     ("ESPN rejects unknown feed", () => Throws(() => FeedDecoder.Espn("{}", ScheduleGuide.Nba))),
     ("Scores never enter serialized game model", ScoresNeverEnterModel),
     ("Mountain day spans two Eastern source dates", SourceDaysCoverLocalDay),
-    ("Preferred NBA team sorts first", PreferredTeamSortsFirst),
+    ("NBA national broadcast classification uses source listings", NbaNationalBroadcastClassification),
+    ("NBA national listings lead saved schedules", NbaNationalListingsLeadSavedSchedules),
     ("NHL fixture decodes expected day", () => Equal(12, LeagueFeedDecoder.Nhl(Fixture("nhl.json"), "2026-10-22").Count)),
     ("NHL excludes Canadian-only network", () => Equal("MSG", LeagueFeedDecoder.Nhl(Fixture("nhl.json"), "2026-10-22")[1].Broadcasts.Single().Name)),
     ("NHL rejects wrong day", () => Throws(() => LeagueFeedDecoder.Nhl(Fixture("nhl.json"), "2026-11-22"))),
@@ -66,13 +67,55 @@ static void SourceDaysCoverLocalDay()
     Equal("2026-10-20,2026-10-21", string.Join(',', days));
 }
 
-static void PreferredTeamSortsFirst()
+static void NbaNationalBroadcastClassification()
 {
-    var others = FeedDecoder.Espn(Fixture("espn.json"), ScheduleGuide.Nba);
-    var nuggets = new Game("nba-denver", "Denver Nuggets", "New Orleans Pelicans", "DEN", "NOP", DateTimeOffset.Parse("2026-10-21T05:00:00Z"), "2026-10-20", null, []);
-    var snapshot = new ScheduleSnapshot([others[0], nuggets, others[1]], DateTimeOffset.UtcNow, "2026-10-20", "Mountain Standard Time", "test", false, ScheduleGuide.Nba);
-    Equal(nuggets.Id, snapshot.DisplayGames[0].Id);
+    foreach (var (name, category) in new[]
+    {
+        ("Prime Video", "Streaming"), ("Peacock", "National"), ("ESPN", "national"),
+        ("ABC", "TV / streaming"), ("NBC", "TV / streaming"), ("Amazon Prime Video", "TV / streaming"),
+        ("Future network", "National")
+    }) True(NbaTestGame("listed", null, false, [new Broadcast(name, category)]).HasNationalNbaBroadcast);
+
+    foreach (var (name, category) in new[]
+    {
+        ("League Pass", "Subscription"), ("NBA League Pass", "National"), ("NBA TV", "National"),
+        ("NBATV", "Streaming"), ("ESPN Radio", "National radio"), ("Altitude+", "Home streaming"),
+        ("Peacock", "Away streaming"), ("Unknown", "TV / streaming"), ("", "National")
+    }) True(!NbaTestGame("unlisted", null, false, [new Broadcast(name, category)]).HasNationalNbaBroadcast);
 }
+
+static void NbaNationalListingsLeadSavedSchedules()
+{
+    foreach (var prefix in new[] { "nba-", "espn-" })
+    {
+        var leaguePass = new Broadcast("League Pass", "Subscription");
+        var early = NbaTestGame("early", "16", false, [leaguePass], prefix);
+        var denver = NbaTestGame("denver", "22", true, [leaguePass, new Broadcast("Altitude", "Home TV")], prefix);
+        var prime = NbaTestGame("prime", "20", false, [new Broadcast("Prime Video", "Streaming"), leaguePass], prefix);
+        var peacock = NbaTestGame("peacock", "19", false, [new Broadcast("Peacock", "National")], prefix);
+        var espn = NbaTestGame("espn", "23", false, [new Broadcast("ESPN", "TV / streaming")], prefix);
+        var unknown = NbaTestGame("unknown", null, false, [], prefix);
+        var nbaTv = NbaTestGame("nbaTV", "18", false, [new Broadcast("NBA TV", "National")], prefix);
+        var snapshot = new ScheduleSnapshot([unknown, denver, espn, early, prime, nbaTv, peacock],
+            DateTimeOffset.Parse("2026-10-22T12:00:00Z"), "2026-10-23", "Mountain Standard Time",
+            prefix == "nba-" ? "NBA.com + Altitude" : "ESPN fallback", prefix == "espn-", ScheduleGuide.Nba);
+        var json = JsonSerializer.Serialize(snapshot);
+        var saved = JsonSerializer.Deserialize<ScheduleSnapshot>(json)!;
+        Equal(string.Join(',', new[] { peacock, prime, espn, denver, early, nbaTv, unknown }.Select(game => game.Id)),
+            string.Join(',', saved.DisplayGames.Select(game => game.Id)));
+        Equal(json, JsonSerializer.Serialize(saved));
+
+        var nationalDenver = denver with { Broadcasts = denver.Broadcasts.Append(new Broadcast("NBC", "National")).ToList() };
+        var changed = saved with { Games = saved.Games.Select(game => game.Id == denver.Id ? nationalDenver : game).ToList() };
+        Equal(nationalDenver.Id, changed.DisplayGames[0].Id);
+        var wnba = saved with { Guide = ScheduleGuide.Wnba };
+        Equal(string.Join(',', wnba.Games.Select(game => game.Id)), string.Join(',', wnba.DisplayGames.Select(game => game.Id)));
+    }
+}
+
+static Game NbaTestGame(string id, string? hour, bool nuggets, IReadOnlyList<Broadcast> broadcasts, string prefix = "nba-") =>
+    new(prefix + id, "Away", "Home", "A", nuggets ? "DEN" : "B",
+        hour is null ? null : DateTimeOffset.Parse($"2026-10-23T{hour}:00:00Z"), "2026-10-23", null, broadcasts);
 
 static void WnbaNetworks()
 {

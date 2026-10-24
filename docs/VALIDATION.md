@@ -2,9 +2,18 @@
 
 Environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Initial personal-use time zone: America/Denver.
 
+## Windows NBA ordering and launch at sign-in — October 23, 2026
+
+- Ported the macOS national-broadcast-first NBA display ordering to Windows for both NBA.com and ESPN fallback identities. Source-listed National / Streaming video games lead; recognized national brands in ESPN's generic TV / streaming category also qualify. League Pass, NBA TV, radio, regional-only, and missing listings remain in the later group. Nuggets lead within each group, TBD games remain last within their group, and saved snapshots receive the display preference without changing serialized content, source, coverage, or freshness.
+- Added current-user launch at sign-in. First launch writes a quoted packaged-executable command with `--startup` to `HKCU\Software\Microsoft\Windows\CurrentVersion\Run`; startup launches remain hidden in the notification area. The checked `Start Tipoff with Windows` tray action supports an explicit opt-out and refreshes the executable path when enabled. Registration failures surface through a notification rather than preventing the schedule UI from opening.
+- Windows fixture runner: **29 tests executed, 29 passed**. New coverage includes national classification, League Pass / NBA TV / radio / regional exclusions, primary and ESPN identities, Nuggets in national and non-national groups, time and TBD ordering, saved-snapshot serialization preservation, and WNBA isolation.
+- `scripts/package-windows.ps1`: **passed** and produced the framework-dependent x64 app at `dist/windows/Tipoff.exe`. Starting that executable with `--startup` left the tray process running and created the expected quoted current-user Run entry. A real sign-out/sign-in cycle remains a hands-on check.
+- Live Windows `Tipoff.Check nba 2026-10-23`: **NBA.com, 12 games**. Knicks at Celtics and Rockets at Spurs, both source-listed Prime Video games, appeared first at 5:00 PM and 7:30 PM Mountain; the ten League Pass games followed starting with Bulls at Bucks at 2:00 PM. Primary decoding succeeded. The initial sandboxed request could not resolve ESPN; the required unrestricted retry succeeded.
+- The app icon was intentionally left unchanged for separate follow-up work.
+
 ## PC ordering handoff note — October 23, 2026
 
-- Recorded the pending Windows port of macOS commit `ea9b6ce`, including implementation locations, ordering rules, saved-data requirements, and Windows validation commands. README links to the handoff; Windows behavior remains unchanged.
+- Historical handoff record: documented the then-pending Windows port of macOS commit `ea9b6ce`, including implementation locations, ordering rules, saved-data requirements, and Windows validation commands. The completed port and current evidence are recorded above.
 - Documentation-only change: **0 app tests executed**; reviewed content, relative file links, and diff whitespace. No rebuild required.
 
 ## macOS NBA national broadcast ordering — October 23, 2026

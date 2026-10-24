@@ -11,7 +11,7 @@ This is a personal tool I’m sharing as it stands. If it’s useful, take it. I
 ## What it does today
 
 - Switches between NBA, NFL, WNBA, NHL, and MLB in the same 360-point popover; no Dock window. The menu bar icon follows the selected sport.
-- All five sports show the selected day, with 28×28-point clickable areas around the previous/next arrows. On macOS, NBA games with source-listed national TV/streaming broadcasters appear before League Pass and regional-only listings; Nuggets lead within each group. Broncos, Avalanche, and Rockies games lead NFL, NHL, and MLB respectively. The Windows NBA guide retains Nuggets-first ordering.
+- All five sports show the selected day, with 28×28-point clickable areas around the previous/next arrows. On macOS and Windows, NBA games with source-listed national TV/streaming broadcasters appear before League Pass and regional-only listings; Nuggets lead within each group. Broncos, Avalanche, and Rockies games lead NFL, NHL, and MLB respectively.
 - NFL’s Sunday shortcut jumps to the upcoming Sunday (or today on Sunday); the other sports keep their Today shortcut. The Sunday shortcut is hidden while viewing a Sunday.
 - Highlights Nuggets, Broncos, Avalanche, and Rockies matchups within their sports with a mint outline and team label; teams do not have separate sport tabs.
 - Keeps each game in three columns: stacked teams, local time, and TV/streaming listings.
@@ -19,7 +19,7 @@ This is a personal tool I’m sharing as it stands. If it’s useful, take it. I
 - Adds source-listed Altitude, Altitude 2, Altitude+, and channel 9/20 information for Nuggets games. Details include pregame/postgame times and regional notes.
 - Refreshes when opened, after wake, and every five minutes while running.
 - Keeps an offline copy and shows source/freshness information.
-- Offers launch at login, off by default.
+- On macOS, offers launch at login, off by default. On Windows, starts in the tray at sign-in after the first launch; the tray menu can turn this off.
 
 Radio is hidden. There are no scores, standings, live game clocks, notifications, or automatic updates. Broadcaster watch links are a future possibility.
 
@@ -27,9 +27,7 @@ Radio is hidden. There are no scores, standings, live game clocks, notifications
 
 The repository includes a native C# / WPF system-tray app under `Windows/`. Its 360-unit flyout includes the same five sport guides, local calendar-day navigation, NFL Sunday shortcut, Denver/Colorado display priority, source and freshness labels, limited-coverage warnings, and isolated offline snapshots. The compact header is simply Tipoff beside a dark, full-bleed basketball icon. Left-click the tray icon to toggle the flyout; right-click for Open, Refresh, and Quit. The first launch opens the flyout so the tray behavior is discoverable.
 
-The macOS NBA national-broadcast ordering is a [pending PC follow-up](docs/PLAN.md#windows-nba-ordering-follow-up--october-23-2026); Windows currently retains Nuggets-first ordering.
-
-The Windows app uses the same source hierarchy and keeps only schedule/broadcast fields. It also applies the personal Altitude Nuggets supplement only when the date, opponent, home/away designation, and tipoff agree; expandable Details preserve Altitude’s network labels, pregame/postgame times, regional footnotes, and supplement freshness. A failed Altitude refresh uses its separately saved listings when available without replacing the primary NBA schedule. Launch at login, dark-theme adaptation, an installer, and automatic updates are not included yet. This is a source build, not a published Windows release.
+The Windows app uses the same source hierarchy and keeps only schedule/broadcast fields. NBA games with source-listed national TV/streaming broadcasters appear before League Pass and regional-only listings; Nuggets lead within each group. It also applies the personal Altitude Nuggets supplement only when the date, opponent, home/away designation, and tipoff agree; expandable Details preserve Altitude’s network labels, pregame/postgame times, regional footnotes, and supplement freshness. A failed Altitude refresh uses its separately saved listings when available without replacing the primary NBA schedule. Dark-theme adaptation, an installer, and automatic updates are not included yet. This is a source build, not a published Windows release.
 
 ## Try it
 

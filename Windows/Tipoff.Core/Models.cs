@@ -41,6 +41,19 @@ public sealed record Game(
     [JsonIgnore] public bool IsNuggets => (Id.StartsWith("nba-", StringComparison.Ordinal) || Id.StartsWith("espn-", StringComparison.Ordinal)) && (AwayCode == "DEN" || HomeCode == "DEN");
     [JsonIgnore] public bool IsAvalanche => Id.StartsWith("nhl-", StringComparison.Ordinal) && (AwayCode == "COL" || HomeCode == "COL");
     [JsonIgnore] public bool IsRockies => Id.StartsWith("mlb-", StringComparison.Ordinal) && (AwayCode is "115" or "COL" || HomeCode is "115" or "COL");
+    // A display preference based on source listings, never a League Pass eligibility decision.
+    [JsonIgnore]
+    public bool HasNationalNbaBroadcast => Broadcasts.Any(broadcast =>
+    {
+        var category = broadcast.Category.Trim().ToLowerInvariant();
+        var name = broadcast.Name.Trim().ToLowerInvariant();
+        if (category.Contains("radio", StringComparison.Ordinal) || name.Length == 0 ||
+            name.Contains("league pass", StringComparison.Ordinal) || name is "nba tv" or "nbatv") return false;
+        if (category is "national" or "streaming") return true;
+        return category == "tv / streaming" && name is
+            "abc" or "espn" or "espn2" or "espn deportes" or "espn+" or "nbc" or "peacock" or
+            "prime" or "prime video" or "amazon prime video" or "amazon prime";
+    });
     [JsonIgnore] public string? PreferredTeamLabel => IsNuggets ? "NUGGETS" : IsBroncos ? "BRONCOS" : IsAvalanche ? "AVALANCHE" : IsRockies ? "ROCKIES" : null;
 
     public bool FallsOn(DateOnly day, TimeZoneInfo zone) => Start is { } start
@@ -67,10 +80,15 @@ public sealed record ScheduleSnapshot(
     {
         get
         {
+            if (Guide == ScheduleGuide.Nba)
+            {
+                var chronological = Games.OrderBy(game => game.Start ?? DateTimeOffset.MaxValue).ThenBy(game => game.Id).ToList();
+                static int Priority(Game game) => (game.HasNationalNbaBroadcast ? 0 : 2) + (game.IsNuggets ? 0 : 1);
+                return Enumerable.Range(0, 4).SelectMany(rank => chronological.Where(game => Priority(game) == rank)).ToList();
+            }
             if (Guide is ScheduleGuide.Nfl or ScheduleGuide.Wnba) return Games.ToList();
             Func<Game, bool>? preferred = Guide switch
             {
-                ScheduleGuide.Nba => game => game.IsNuggets,
                 ScheduleGuide.Nhl => game => game.IsAvalanche,
                 ScheduleGuide.Mlb => game => game.IsRockies,
                 _ => null
