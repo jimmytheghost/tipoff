@@ -2,6 +2,13 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Windows borderless date arrows — October 24, 2026
+
+- Matched the macOS `chevron.left` / `chevron.right` plain-button treatment with WPF vector paths and invisible 28×28 rectangular click targets. Removed text glyphs and visible fills/borders, including hover/press boxes. Hover and keyboard focus tint the icon; press feedback changes opacity. Previous/next tooltips and explicit accessible names are preserved.
+- Windows fixture runner: **29 tests executed, 29 passed**. `scripts/package-windows.ps1`: **passed** after closing a development copy that locked the initial publish output. `scripts/install-windows.ps1 -NoLaunch`: **passed**, updating the stable current-user installation and Start Menu shortcut.
+- Used Windows computer-use tools to inspect the installed app in inspection mode: both vector chevrons render without boxes. Clicking the invisible padding outside the left chevron moved October 24 to October 23; clicking Next day returned to October 24. The 360-unit guide and date/footer layout remain intact. No new automated tests added for this view-only styling change.
+- No networking, schedule, or cache changes; no live-source check needed. macOS scripts were not run because macOS/SwiftUI tooling is unavailable on this Windows host. Reopened the installed app in normal tray mode after inspection.
+
 ## Windows Settings and startup repair — October 24, 2026
 
 - Added a Settings button to the guide header and Settings / About Tipoff to the tray menu. Inspected the installed WPF screen using Windows computer-use tools: the 360-unit window fits the startup toggle, notification-area explanation, registration status, Windows Startup Apps shortcut, version 0.4.1, and personal-tool/MIT About text without clipping. Opened Settings through the guide's button.

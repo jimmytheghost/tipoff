@@ -13,6 +13,7 @@ This is a personal tool I’m sharing as it stands. If it’s useful, take it. I
 - Switches between NBA, NFL, WNBA, NHL, and MLB in the same 360-point popover; no Dock window. The menu bar icon follows the selected sport.
 - All five sports show the selected day, with 28×28-point clickable areas around the previous/next arrows. On macOS and Windows, NBA games with source-listed national TV/streaming broadcasters appear before League Pass and regional-only listings; Nuggets lead within each group. Broncos, Avalanche, and Rockies games lead NFL, NHL, and MLB respectively.
 - NFL’s Sunday shortcut jumps to the upcoming Sunday (or today on Sunday); the other sports keep their Today shortcut. The Sunday shortcut is hidden while viewing a Sunday.
+- Windows date arrows match macOS: borderless chevron icons with invisible 28×28 click targets, tooltips, and accessible names.
 - Highlights Nuggets, Broncos, Avalanche, and Rockies matchups within their sports with a mint outline and team label; teams do not have separate sport tabs.
 - Keeps each game in three columns: stacked teams, local time, and TV/streaming listings.
 - Follows your computer’s time zone, including daylight saving changes.

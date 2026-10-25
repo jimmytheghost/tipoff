@@ -14,6 +14,8 @@ Still deferred from the Windows build: system dark-theme adaptation, Arm64 packa
 
 ## Windows Settings and startup repair — October 24, 2026
 
+Windows date navigation now matches the macOS plain chevrons: vector icons with no visible button fill or border, centered in invisible 28×28 click targets. Hover and keyboard focus tint the chevron; pressing dims it. Previous/next tooltips and accessible names remain available.
+
 Implemented a visible Settings button in the guide header and a Settings / About Tipoff tray action. The 360-unit settings window exposes Start Tipoff with Windows, current-copy registration status, a shortcut to Windows Startup Apps, the app version, and the personal-tool/MIT framing. It explains that sign-in launches stay in the notification area, including Windows' hidden-icons area. The tray checkbox refreshes when its menu opens, and a Run entry for a different executable no longer counts as enabled for the current copy. Use the current-user installer to replace temporary development paths with the stable installed path; preserve explicit opt-outs. Windows may separately disable startup in its own settings, and an actual sign-in still requires hands-on validation.
 
 ## Windows NBA ordering and startup — October 23, 2026

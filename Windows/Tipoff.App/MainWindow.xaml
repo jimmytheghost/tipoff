@@ -5,6 +5,31 @@
         WindowStyle="None" ResizeMode="NoResize" ShowInTaskbar="False"
         AllowsTransparency="True" Background="Transparent" Topmost="True"
         FontFamily="Segoe UI" Deactivated="Window_Deactivated">
+  <Window.Resources>
+    <Style x:Key="DayNavigationButton" TargetType="Button">
+      <Setter Property="Width" Value="28" />
+      <Setter Property="Height" Value="28" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+      <Setter Property="Foreground" Value="#202526" />
+      <Setter Property="Cursor" Value="Hand" />
+      <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="Button">
+            <Border Background="Transparent">
+              <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Border>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+      <Style.Triggers>
+        <Trigger Property="IsMouseOver" Value="True"><Setter Property="Foreground" Value="{StaticResource MintBrush}" /></Trigger>
+        <Trigger Property="IsKeyboardFocused" Value="True"><Setter Property="Foreground" Value="{StaticResource MintBrush}" /></Trigger>
+        <Trigger Property="IsPressed" Value="True"><Setter Property="Opacity" Value="0.6" /></Trigger>
+        <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.45" /></Trigger>
+      </Style.Triggers>
+    </Style>
+  </Window.Resources>
   <Border Background="#FCFDFC" BorderBrush="#CDD6D3" BorderThickness="1" CornerRadius="12" SnapsToDevicePixels="True">
     <Border.Effect><DropShadowEffect BlurRadius="22" ShadowDepth="6" Opacity="0.28" /></Border.Effect>
     <Grid>
@@ -38,13 +63,21 @@
       <StackPanel Grid.Row="3" Margin="14,0,14,10">
         <Grid>
           <Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
-          <Button Content="‹" FontSize="17" Width="32" Padding="0,2" Click="Previous_Click" ToolTip="Previous day" />
+          <Button Style="{StaticResource DayNavigationButton}" Click="Previous_Click" ToolTip="Previous day" AutomationProperties.Name="Previous day">
+            <Path Data="M 6,1 L 1,6 L 6,11" Width="8" Height="12" Stretch="None"
+                  Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                  StrokeThickness="1.6" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" />
+          </Button>
           <StackPanel Grid.Column="1" Margin="10,0">
             <TextBlock Text="{Binding DateTitle}" FontWeight="SemiBold" FontSize="13" />
             <TextBlock Text="{Binding DateSubtitle}" Foreground="{StaticResource MutedBrush}" FontSize="10" />
           </StackPanel>
           <Button Grid.Column="2" Content="{Binding JumpLabel}" Visibility="{Binding JumpVisibility}" Click="Jump_Click" FontSize="10" Margin="0,0,6,0" />
-          <Button Grid.Column="3" Content="›" FontSize="17" Width="32" Padding="0,2" Click="Next_Click" ToolTip="Next day" />
+          <Button Grid.Column="3" Style="{StaticResource DayNavigationButton}" Click="Next_Click" ToolTip="Next day" AutomationProperties.Name="Next day">
+            <Path Data="M 1,1 L 6,6 L 1,11" Width="8" Height="12" Stretch="None"
+                  Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                  StrokeThickness="1.6" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" />
+          </Button>
         </Grid>
         <Border Background="#FFF4DE" CornerRadius="6" Padding="8,6" Margin="0,8,0,0" Visibility="{Binding MessageVisibility}">
           <TextBlock Text="{Binding Message}" Foreground="#8A5A00" FontSize="10.5" TextWrapping="Wrap" />
