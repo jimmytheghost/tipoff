@@ -2,26 +2,36 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Tipoff Settings" Width="360" SizeToContent="Height" ResizeMode="NoResize"
-        WindowStartupLocation="CenterScreen" Background="#FCFDFC" FontFamily="Segoe UI">
+        WindowStartupLocation="CenterScreen" Background="{DynamicResource WindowBrush}" Foreground="{DynamicResource TextBrush}" FontFamily="Segoe UI">
   <StackPanel Margin="20">
     <TextBlock Text="Settings" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,16" />
-    <Border Background="{StaticResource CardBrush}" CornerRadius="8" Padding="12">
+    <Border Background="{DynamicResource CardBrush}" CornerRadius="8" Padding="12" Margin="0,0,0,12">
+      <StackPanel>
+        <TextBlock Text="Appearance" FontSize="13" FontWeight="SemiBold" Margin="0,0,0,10" />
+        <StackPanel Orientation="Horizontal">
+          <RadioButton x:Name="LightOption" Content="Light" GroupName="Appearance" Checked="Appearance_Checked" Tag="Light" Margin="0,0,24,0" />
+          <RadioButton x:Name="DarkOption" Content="Dark" GroupName="Appearance" Checked="Appearance_Checked" Tag="Dark" />
+        </StackPanel>
+        <TextBlock x:Name="AppearanceError" Visibility="Collapsed" Foreground="{DynamicResource WarningBrush}" TextWrapping="Wrap" FontSize="11" Margin="0,8,0,0" />
+      </StackPanel>
+    </Border>
+    <Border Background="{DynamicResource CardBrush}" CornerRadius="8" Padding="12">
       <StackPanel>
         <CheckBox x:Name="StartupCheckBox" Content="Start Tipoff with Windows" FontSize="13"
                   Click="Startup_Click" />
         <TextBlock Text="Starts in the notification area at sign-in. Click the Tipoff tray icon to open the guide; it may be under the hidden-icons arrow."
-                   TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource MutedBrush}" Margin="0,8,0,0" />
+                   TextWrapping="Wrap" FontSize="11" Foreground="{DynamicResource MutedBrush}" Margin="0,8,0,0" />
         <TextBlock x:Name="StartupStatus" TextWrapping="Wrap" FontSize="11" Margin="0,8,0,0" />
         <TextBlock Text="Windows can also disable startup apps. If Tipoff does not start, check that Windows allows it here:"
-                   TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource MutedBrush}" Margin="0,10,0,6" />
+                   TextWrapping="Wrap" FontSize="11" Foreground="{DynamicResource MutedBrush}" Margin="0,10,0,6" />
         <Button Content="Windows Startup Apps…" Click="WindowsStartup_Click" HorizontalAlignment="Left" FontSize="11" />
       </StackPanel>
     </Border>
     <TextBlock Text="About Tipoff" FontSize="14" FontWeight="SemiBold" Margin="0,18,0,6" />
-    <TextBlock x:Name="VersionLabel" FontSize="11" Foreground="{StaticResource MutedBrush}" />
+    <TextBlock x:Name="VersionLabel" FontSize="11" Foreground="{DynamicResource MutedBrush}" />
     <TextBlock Text="NBA, NFL, WNBA, NHL, and MLB viewing guide. A personal tool, shared as-is under the MIT license."
                TextWrapping="Wrap" FontSize="12" Margin="0,8,0,0" />
-    <TextBlock Text="Source code: github.com/jimmytheghost/tipoff" FontSize="10" Foreground="{StaticResource MutedBrush}" Margin="0,8,0,0" />
+    <TextBlock Text="Source code: github.com/jimmytheghost/tipoff" FontSize="10" Foreground="{DynamicResource MutedBrush}" Margin="0,8,0,0" />
     <Button Content="Done" Click="Done_Click" HorizontalAlignment="Right" Margin="0,18,0,0" IsCancel="True" />
   </StackPanel>
 </Window>

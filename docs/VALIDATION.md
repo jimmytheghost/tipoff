@@ -2,6 +2,15 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Compact Windows header and Light / Dark appearance — October 24, 2026
+
+- Reduced the guide header from 58 to 36 logical units, with an 18-unit logo, 13-point title, and vector gear icon in a borderless 28×28 target. Gear retains the Settings tooltip and accessible name.
+- Added Light and Dark appearance options in Settings, immediate dynamic-resource updates, and current-user persistence in `HKCU\Software\Tipoff\Appearance`. Missing/invalid preferences use Light; save failures show an inline error. Read failures preserve the default and surface a warning. No automatic OS-theme matching is claimed.
+- Compared native macOS SwiftUI semantic colors with `docs/current-preview.png` and sampled its actual pixels: dark window `#1E1E1E`, cards `#252525`, primary text `#F4F4F4`, secondary text `#A5A5A5`, bright mint text `#40F3DF`, and selected-tab fill `#70DDCE`. Native Windows title bars and tray menus retain OS styling. Light preserves the established high-contrast teal palette.
+- Windows fixture runner: **29 tests executed, 29 passed**. Release WPF build passed with **0 warnings, 0 errors**. Final `scripts/package-windows.ps1` and current-user `scripts/install-windows.ps1 -NoLaunch` both passed. No new automated tests added for appearance-only changes; runtime UI and persistence checks exercise the production implementation.
+- Used Windows computer-use tools to open the gear, switch Light → Dark → Light, and inspect both Settings and the guide. Restarted the installed app with Dark saved and verified the dark palette restored. Corrected a selected-tab contrast issue found during inspection. Verified expanded Altitude text, regional notes, freshness, and the themed scrollbar; scrolling reached the remaining games. Both modes fit the existing 360-unit guide. Reopened the installed app normally with Dark selected after inspection.
+- No schedule/source/network/cache changes. macOS `scripts/test.sh` and `scripts/package-app.sh` require unavailable macOS/SwiftUI tooling and were not run here; no live-source check needed. Unrelated shell-script line-ending changes and the untracked banner remain outside this change.
+
 ## Windows borderless date arrows — October 24, 2026
 
 - Matched the macOS `chevron.left` / `chevron.right` plain-button treatment with WPF vector paths and invisible 28×28 rectangular click targets. Removed text glyphs and visible fills/borders, including hover/press boxes. Hover and keyboard focus tint the icon; press feedback changes opacity. Previous/next tooltips and explicit accessible names are preserved.

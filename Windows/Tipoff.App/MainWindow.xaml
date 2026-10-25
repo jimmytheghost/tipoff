@@ -4,13 +4,48 @@
         Title="Tipoff" Width="360" SizeToContent="Height" MaxHeight="680"
         WindowStyle="None" ResizeMode="NoResize" ShowInTaskbar="False"
         AllowsTransparency="True" Background="Transparent" Topmost="True"
-        FontFamily="Segoe UI" Deactivated="Window_Deactivated">
+        FontFamily="Segoe UI" Foreground="{DynamicResource TextBrush}" Deactivated="Window_Deactivated">
   <Window.Resources>
-    <Style x:Key="DayNavigationButton" TargetType="Button">
+    <Style TargetType="ScrollBar">
+      <Setter Property="Width" Value="8" />
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="ScrollBar">
+            <Border Background="{DynamicResource WindowBrush}" CornerRadius="4">
+              <Track x:Name="PART_Track" Orientation="{TemplateBinding Orientation}" IsDirectionReversed="True"
+                     Minimum="{TemplateBinding Minimum}" Maximum="{TemplateBinding Maximum}"
+                     Value="{Binding Value, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                     ViewportSize="{TemplateBinding ViewportSize}">
+                <Track.DecreaseRepeatButton>
+                  <RepeatButton Command="ScrollBar.PageUpCommand" Focusable="False">
+                    <RepeatButton.Template><ControlTemplate TargetType="RepeatButton"><Border Background="Transparent" /></ControlTemplate></RepeatButton.Template>
+                  </RepeatButton>
+                </Track.DecreaseRepeatButton>
+                <Track.Thumb>
+                  <Thumb MinHeight="20">
+                    <Thumb.Template>
+                      <ControlTemplate TargetType="Thumb">
+                        <Border Background="{DynamicResource MutedBrush}" CornerRadius="4" Opacity="0.5" />
+                      </ControlTemplate>
+                    </Thumb.Template>
+                  </Thumb>
+                </Track.Thumb>
+                <Track.IncreaseRepeatButton>
+                  <RepeatButton Command="ScrollBar.PageDownCommand" Focusable="False">
+                    <RepeatButton.Template><ControlTemplate TargetType="RepeatButton"><Border Background="Transparent" /></ControlTemplate></RepeatButton.Template>
+                  </RepeatButton>
+                </Track.IncreaseRepeatButton>
+              </Track>
+            </Border>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="PlainIconButton" TargetType="Button">
       <Setter Property="Width" Value="28" />
       <Setter Property="Height" Value="28" />
       <Setter Property="VerticalAlignment" Value="Center" />
-      <Setter Property="Foreground" Value="#202526" />
+      <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
       <Setter Property="Cursor" Value="Hand" />
       <Setter Property="FocusVisualStyle" Value="{x:Null}" />
       <Setter Property="Template">
@@ -23,14 +58,14 @@
         </Setter.Value>
       </Setter>
       <Style.Triggers>
-        <Trigger Property="IsMouseOver" Value="True"><Setter Property="Foreground" Value="{StaticResource MintBrush}" /></Trigger>
-        <Trigger Property="IsKeyboardFocused" Value="True"><Setter Property="Foreground" Value="{StaticResource MintBrush}" /></Trigger>
+        <Trigger Property="IsMouseOver" Value="True"><Setter Property="Foreground" Value="{DynamicResource MintBrush}" /></Trigger>
+        <Trigger Property="IsKeyboardFocused" Value="True"><Setter Property="Foreground" Value="{DynamicResource MintBrush}" /></Trigger>
         <Trigger Property="IsPressed" Value="True"><Setter Property="Opacity" Value="0.6" /></Trigger>
         <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.45" /></Trigger>
       </Style.Triggers>
     </Style>
   </Window.Resources>
-  <Border Background="#FCFDFC" BorderBrush="#CDD6D3" BorderThickness="1" CornerRadius="12" SnapsToDevicePixels="True">
+  <Border Background="{DynamicResource WindowBrush}" BorderBrush="{DynamicResource WindowBorderBrush}" BorderThickness="1" CornerRadius="12" SnapsToDevicePixels="True">
     <Border.Effect><DropShadowEffect BlurRadius="22" ShadowDepth="6" Opacity="0.28" /></Border.Effect>
     <Grid>
       <Grid.RowDefinitions>
@@ -42,12 +77,16 @@
         <RowDefinition Height="Auto" />
       </Grid.RowDefinitions>
 
-      <Grid Margin="14">
-        <Grid.ColumnDefinitions><ColumnDefinition Width="38" /><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
-        <Image Width="30" Height="30" Source="Tipoff-header.png" Stretch="Uniform"
+      <Grid Margin="14,4">
+        <Grid.ColumnDefinitions><ColumnDefinition Width="24" /><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+        <Image Width="18" Height="18" Source="Tipoff-header.png" Stretch="Uniform"
                RenderOptions.BitmapScalingMode="HighQuality" SnapsToDevicePixels="True" />
-        <TextBlock Grid.Column="1" Text="Tipoff" FontWeight="SemiBold" FontSize="15" Margin="4,0,0,0" VerticalAlignment="Center" />
-        <Button Grid.Column="2" Content="Settings" Click="Settings_Click" FontSize="10" ToolTip="Startup settings and About Tipoff" />
+        <TextBlock Grid.Column="1" Text="Tipoff" FontWeight="SemiBold" FontSize="13" VerticalAlignment="Center" />
+        <Button Grid.Column="2" Style="{StaticResource PlainIconButton}" Foreground="{DynamicResource MutedBrush}" Click="Settings_Click" ToolTip="Settings" AutomationProperties.Name="Settings">
+          <Viewbox Width="16" Height="16">
+            <Path Width="24" Height="24" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Data="M 19.76,8.79 L 20.15,9.97 L 23.23,10.02 L 23.23,13.98 L 20.15,14.03 L 19.76,15.21 L 19.20,16.33 L 21.34,18.54 L 18.54,21.34 L 16.33,19.20 L 15.21,19.76 L 14.03,20.15 L 13.98,23.23 L 10.02,23.23 L 9.97,20.15 L 8.79,19.76 L 7.67,19.20 L 5.46,21.34 L 2.66,18.54 L 4.80,16.33 L 4.24,15.21 L 3.85,14.03 L 0.77,13.98 L 0.77,10.02 L 3.85,9.97 L 4.24,8.79 L 4.80,7.67 L 2.66,5.46 L 5.46,2.66 L 7.67,4.80 L 8.79,4.24 L 9.97,3.85 L 10.02,0.77 L 13.98,0.77 L 14.03,3.85 L 15.21,4.24 L 16.33,4.80 L 18.54,2.66 L 21.34,5.46 L 19.20,7.67 Z M 16,12 A 4,4 0 1 0 8,12 A 4,4 0 1 0 16,12 Z" />
+          </Viewbox>
+        </Button>
       </Grid>
 
       <Separator Grid.Row="1" Margin="0" />
@@ -63,34 +102,34 @@
       <StackPanel Grid.Row="3" Margin="14,0,14,10">
         <Grid>
           <Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
-          <Button Style="{StaticResource DayNavigationButton}" Click="Previous_Click" ToolTip="Previous day" AutomationProperties.Name="Previous day">
+          <Button Style="{StaticResource PlainIconButton}" Click="Previous_Click" ToolTip="Previous day" AutomationProperties.Name="Previous day">
             <Path Data="M 6,1 L 1,6 L 6,11" Width="8" Height="12" Stretch="None"
                   Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
                   StrokeThickness="1.6" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" />
           </Button>
           <StackPanel Grid.Column="1" Margin="10,0">
             <TextBlock Text="{Binding DateTitle}" FontWeight="SemiBold" FontSize="13" />
-            <TextBlock Text="{Binding DateSubtitle}" Foreground="{StaticResource MutedBrush}" FontSize="10" />
+            <TextBlock Text="{Binding DateSubtitle}" Foreground="{DynamicResource MutedBrush}" FontSize="10" />
           </StackPanel>
           <Button Grid.Column="2" Content="{Binding JumpLabel}" Visibility="{Binding JumpVisibility}" Click="Jump_Click" FontSize="10" Margin="0,0,6,0" />
-          <Button Grid.Column="3" Style="{StaticResource DayNavigationButton}" Click="Next_Click" ToolTip="Next day" AutomationProperties.Name="Next day">
+          <Button Grid.Column="3" Style="{StaticResource PlainIconButton}" Click="Next_Click" ToolTip="Next day" AutomationProperties.Name="Next day">
             <Path Data="M 1,1 L 6,6 L 1,11" Width="8" Height="12" Stretch="None"
                   Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
                   StrokeThickness="1.6" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" />
           </Button>
         </Grid>
-        <Border Background="#FFF4DE" CornerRadius="6" Padding="8,6" Margin="0,8,0,0" Visibility="{Binding MessageVisibility}">
-          <TextBlock Text="{Binding Message}" Foreground="#8A5A00" FontSize="10.5" TextWrapping="Wrap" />
+        <Border Background="{DynamicResource WarningBackgroundBrush}" CornerRadius="6" Padding="8,6" Margin="0,8,0,0" Visibility="{Binding MessageVisibility}">
+          <TextBlock Text="{Binding Message}" Foreground="{DynamicResource WarningBrush}" FontSize="10.5" TextWrapping="Wrap" />
         </Border>
       </StackPanel>
 
       <ScrollViewer Grid.Row="4" MaxHeight="430" VerticalScrollBarVisibility="Auto" Margin="14,0">
         <Grid>
-          <TextBlock Text="{Binding EmptyMessage}" Visibility="{Binding EmptyVisibility}" HorizontalAlignment="Center" TextAlignment="Center" Foreground="{StaticResource MutedBrush}" Margin="20,28" TextWrapping="Wrap" />
+          <TextBlock Text="{Binding EmptyMessage}" Visibility="{Binding EmptyVisibility}" HorizontalAlignment="Center" TextAlignment="Center" Foreground="{DynamicResource MutedBrush}" Margin="20,28" TextWrapping="Wrap" />
           <ItemsControl ItemsSource="{Binding Games}">
             <ItemsControl.ItemTemplate>
               <DataTemplate>
-                <Border Background="{StaticResource CardBrush}" BorderBrush="#DCE5E2" BorderThickness="1" CornerRadius="8" Padding="7,3" Margin="0,0,0,3">
+                <Border Background="{DynamicResource CardBrush}" BorderBrush="{DynamicResource CardBorderBrush}" BorderThickness="1" CornerRadius="8" Padding="7,3" Margin="0,0,0,3">
                   <StackPanel>
                     <Grid VerticalAlignment="Center">
                       <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="68" /><ColumnDefinition Width="96" /></Grid.ColumnDefinitions>
@@ -99,22 +138,22 @@
                         <TextBlock Text="{Binding HomeDisplay}" FontWeight="SemiBold" FontSize="11" TextWrapping="Wrap" />
                       </StackPanel>
                       <StackPanel Grid.Column="1" Margin="6,0,0,0" VerticalAlignment="Center">
-                        <TextBlock Text="{Binding PreferredLabel}" Visibility="{Binding PreferredVisibility}" Foreground="{StaticResource MintBrush}" FontWeight="Bold" FontSize="8.5" />
+                        <TextBlock Text="{Binding PreferredLabel}" Visibility="{Binding PreferredVisibility}" Foreground="{DynamicResource MintBrush}" FontWeight="Bold" FontSize="8.5" />
                         <TextBlock Text="{Binding Time}" FontWeight="SemiBold" FontSize="10" />
-                        <TextBlock Text="{Binding Notice}" Visibility="{Binding NoticeVisibility}" Foreground="#B46B00" FontSize="9" TextWrapping="Wrap" Margin="0,1,0,0" />
+                        <TextBlock Text="{Binding Notice}" Visibility="{Binding NoticeVisibility}" Foreground="{DynamicResource WarningBrush}" FontSize="9" TextWrapping="Wrap" Margin="0,1,0,0" />
                       </StackPanel>
                       <StackPanel Grid.Column="2" Margin="4,0,0,0" VerticalAlignment="Center">
-                        <TextBlock Text="{Binding BroadcastText}" Foreground="{StaticResource MintBrush}" FontWeight="SemiBold" FontSize="9.5" TextWrapping="Wrap" />
+                        <TextBlock Text="{Binding BroadcastText}" Foreground="{DynamicResource MintBrush}" FontWeight="SemiBold" FontSize="9.5" TextWrapping="Wrap" />
                       </StackPanel>
                     </Grid>
-                    <Expander Header="{Binding DetailsLabel}" Visibility="{Binding DetailsVisibility}" Margin="0,4,0,0" FontSize="10" Foreground="{StaticResource MintBrush}">
-                      <Border BorderBrush="#DCE5E2" BorderThickness="0,1,0,0" Margin="0,5,0,0" Padding="0,8,0,0">
+                    <Expander Header="{Binding DetailsLabel}" Visibility="{Binding DetailsVisibility}" Margin="0,4,0,0" FontSize="10" Foreground="{DynamicResource MintBrush}">
+                      <Border BorderBrush="{DynamicResource CardBorderBrush}" BorderThickness="0,1,0,0" Margin="0,5,0,0" Padding="0,8,0,0">
                         <StackPanel>
-                          <TextBlock Text="ALTITUDE’S LISTINGS" FontWeight="Bold" FontSize="9" Foreground="{StaticResource MutedBrush}" />
+                          <TextBlock Text="ALTITUDE’S LISTINGS" FontWeight="Bold" FontSize="9" Foreground="{DynamicResource MutedBrush}" />
                           <TextBlock Text="{Binding DetailsNetworks}" FontWeight="SemiBold" FontSize="10.5" Margin="0,3,0,0" TextWrapping="Wrap" />
-                          <TextBlock Text="{Binding DetailsTimes}" FontSize="10" Margin="0,5,0,0" TextWrapping="Wrap" />
-                          <TextBlock Text="{Binding DetailsNotes}" Foreground="#8A5A00" FontSize="9.5" Margin="0,5,0,0" TextWrapping="Wrap" />
-                          <TextBlock Text="{Binding DetailsFreshness}" Foreground="{StaticResource MutedBrush}" FontSize="9.5" Margin="0,5,0,0" />
+                          <TextBlock Text="{Binding DetailsTimes}" Foreground="{DynamicResource TextBrush}" FontSize="10" Margin="0,5,0,0" TextWrapping="Wrap" />
+                          <TextBlock Text="{Binding DetailsNotes}" Foreground="{DynamicResource WarningBrush}" FontSize="9.5" Margin="0,5,0,0" TextWrapping="Wrap" />
+                          <TextBlock Text="{Binding DetailsFreshness}" Foreground="{DynamicResource MutedBrush}" FontSize="9.5" Margin="0,5,0,0" />
                         </StackPanel>
                       </Border>
                     </Expander>
@@ -126,12 +165,21 @@
         </Grid>
       </ScrollViewer>
 
-      <Border Grid.Row="5" BorderBrush="#E0E5E3" BorderThickness="0,1,0,0" Padding="14,10">
+      <Border Grid.Row="5" BorderBrush="{DynamicResource DividerBrush}" BorderThickness="0,1,0,0" Padding="14,10">
         <Grid>
           <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
           <StackPanel>
             <TextBlock Text="{Binding Source}" FontWeight="SemiBold" FontSize="10" />
-            <TextBlock Text="{Binding Freshness}" Foreground="{Binding FreshnessBrush}" FontSize="10" />
+            <TextBlock Text="{Binding Freshness}" FontSize="10">
+              <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                  <Setter Property="Foreground" Value="{DynamicResource MutedBrush}" />
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsFreshnessWarning}" Value="True"><Setter Property="Foreground" Value="{DynamicResource WarningBrush}" /></DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </TextBlock.Style>
+            </TextBlock>
           </StackPanel>
           <Button Grid.Column="1" Content="↻" FontSize="16" Width="32" Padding="0,2" Click="Refresh_Click" IsEnabled="{Binding CanRefresh}" ToolTip="Refresh schedule" />
           <Button Grid.Column="2" Content="Quit" Click="Quit_Click" FontSize="10" Margin="6,0,0,0" />

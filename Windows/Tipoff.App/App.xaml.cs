@@ -15,6 +15,7 @@ public partial class App : System.Windows.Application
     {
         base.OnStartup(e);
         ShutdownMode = ShutdownMode.OnExplicitShutdown;
+        var appearanceError = AppearanceSettings.Initialize();
         flyout = new MainWindow();
         var inspect = e.Args.Contains("--inspect", StringComparer.OrdinalIgnoreCase);
         var startedWithWindows = e.Args.Contains("--startup", StringComparer.OrdinalIgnoreCase);
@@ -31,7 +32,7 @@ public partial class App : System.Windows.Application
             flyout.WindowStyle = WindowStyle.SingleBorderWindow;
             flyout.ShowInTaskbar = true;
             flyout.Topmost = false;
-            flyout.Background = System.Windows.Media.Brushes.White;
+            flyout.SetResourceReference(Window.BackgroundProperty, "WindowBrush");
         }
         trayIcon = new Forms.NotifyIcon
         {
@@ -49,6 +50,8 @@ public partial class App : System.Windows.Application
         {
             trayIcon.ShowBalloonTip(5000, "Tipoff", $"Could not configure Start with Windows: {startupError}", Forms.ToolTipIcon.Warning);
         }
+        if (appearanceError is not null)
+            trayIcon.ShowBalloonTip(5000, "Tipoff", appearanceError, Forms.ToolTipIcon.Warning);
     }
 
     private Forms.ContextMenuStrip BuildMenu()

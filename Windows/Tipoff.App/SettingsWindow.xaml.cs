@@ -1,18 +1,20 @@
 using System.Diagnostics;
 using System.Reflection;
 using System.Windows;
-using System.Windows.Media;
-using Color = System.Windows.Media.Color;
 
 namespace Tipoff.App;
 
 public partial class SettingsWindow : Window
 {
+    private bool appearanceReady;
     public SettingsWindow()
     {
         InitializeComponent();
         var version = Assembly.GetExecutingAssembly().GetName().Version;
         VersionLabel.Text = $"Version {version?.ToString(3)} · Windows";
+        LightOption.IsChecked = AppearanceSettings.Current == "Light";
+        DarkOption.IsChecked = AppearanceSettings.Current == "Dark";
+        appearanceReady = true;
         Activated += (_, _) => ReadStartup();
         ReadStartup();
     }
@@ -57,7 +59,26 @@ public partial class SettingsWindow : Window
     private void SetStatus(string message, bool error = false)
     {
         StartupStatus.Text = message;
-        StartupStatus.Foreground = new SolidColorBrush(error ? Color.FromRgb(138, 90, 0) : Color.FromRgb(8, 127, 91));
+        StartupStatus.SetResourceReference(System.Windows.Controls.TextBlock.ForegroundProperty, error ? "WarningBrush" : "MintBrush");
+    }
+
+    private void Appearance_Checked(object sender, RoutedEventArgs e)
+    {
+        if (!appearanceReady || sender is not System.Windows.Controls.RadioButton { Tag: string appearance }) return;
+        try
+        {
+            AppearanceSettings.Set(appearance);
+            AppearanceError.Visibility = Visibility.Collapsed;
+        }
+        catch (Exception error)
+        {
+            appearanceReady = false;
+            LightOption.IsChecked = AppearanceSettings.Current == "Light";
+            DarkOption.IsChecked = AppearanceSettings.Current == "Dark";
+            appearanceReady = true;
+            AppearanceError.Text = $"Could not save appearance: {error.Message}";
+            AppearanceError.Visibility = Visibility.Visible;
+        }
     }
 
     private void Done_Click(object sender, RoutedEventArgs e) => Close();

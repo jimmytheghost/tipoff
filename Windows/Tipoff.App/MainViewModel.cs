@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Media;
 using Tipoff.Core;
 
 namespace Tipoff.App;
@@ -32,7 +31,7 @@ public sealed class MainViewModel : INotifyPropertyChanged, IDisposable
     private bool ShouldShowJump => Guide == ScheduleGuide.Nfl ? SelectedDate.DayOfWeek != DayOfWeek.Sunday : SelectedDate != DateOnly.FromDateTime(DateTime.Now);
     public string Source => snapshot?.Source ?? $"{Guide.Title()} broadcast listings";
     public string Freshness => snapshot is null ? (refreshing ? "Checking the latest listings…" : "Not checked yet") : FormatFreshness(snapshot.FetchedAt, cached);
-    public System.Windows.Media.Brush FreshnessBrush => cached || snapshot is { } value && DateTimeOffset.UtcNow - value.FetchedAt > TimeSpan.FromMinutes(10) ? System.Windows.Media.Brushes.DarkOrange : (System.Windows.Media.Brush)new BrushConverter().ConvertFromString("#667078")!;
+    public bool IsFreshnessWarning => cached || snapshot is { } value && DateTimeOffset.UtcNow - value.FetchedAt > TimeSpan.FromMinutes(10);
     public bool CanRefresh => !refreshing;
     public string EmptyMessage => refreshing && snapshot is null ? "Finding the lineup…" : $"No {Guide.Title()} games scheduled.\nCheck the next day’s lineup.";
     public Visibility EmptyVisibility => Games.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
@@ -122,7 +121,7 @@ public sealed class MainViewModel : INotifyPropertyChanged, IDisposable
     public void UpdateRelativeTime()
     {
         OnPropertyChanged(nameof(Freshness));
-        OnPropertyChanged(nameof(FreshnessBrush));
+        OnPropertyChanged(nameof(IsFreshnessWarning));
     }
 
     private void ApplySnapshot()
@@ -152,7 +151,7 @@ public sealed class MainViewModel : INotifyPropertyChanged, IDisposable
 
     private void NotifyAll()
     {
-        foreach (var name in new[] { nameof(DateTitle), nameof(DateSubtitle), nameof(JumpLabel), nameof(JumpVisibility), nameof(Source), nameof(Freshness), nameof(FreshnessBrush), nameof(CanRefresh), nameof(EmptyMessage), nameof(EmptyVisibility), nameof(Message), nameof(MessageVisibility) }) OnPropertyChanged(name);
+        foreach (var name in new[] { nameof(DateTitle), nameof(DateSubtitle), nameof(JumpLabel), nameof(JumpVisibility), nameof(Source), nameof(Freshness), nameof(IsFreshnessWarning), nameof(CanRefresh), nameof(EmptyMessage), nameof(EmptyVisibility), nameof(Message), nameof(MessageVisibility) }) OnPropertyChanged(name);
     }
 
     private void OnPropertyChanged([CallerMemberName] string? name = null) => PropertyChanged?.Invoke(this, new(name));

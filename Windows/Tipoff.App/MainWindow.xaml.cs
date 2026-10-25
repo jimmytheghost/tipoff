@@ -58,9 +58,9 @@ public partial class MainWindow : Window, IDisposable
         foreach (var button in new[] { NbaButton, NflButton, WnbaButton, NhlButton, MlbButton })
         {
             var selected = string.Equals(button.Tag?.ToString(), viewModel.Guide.ToString(), StringComparison.OrdinalIgnoreCase);
-            button.Background = (System.Windows.Media.Brush)new System.Windows.Media.BrushConverter().ConvertFromString(selected ? "#D5F3E9" : "#EDF1F0")!;
-            button.BorderBrush = (System.Windows.Media.Brush)new System.Windows.Media.BrushConverter().ConvertFromString(selected ? "#19B98A" : "#DCE3E1")!;
-            button.Foreground = (System.Windows.Media.Brush)new System.Windows.Media.BrushConverter().ConvertFromString(selected ? "#087F5B" : "#202526")!;
+            button.SetResourceReference(BackgroundProperty, selected ? "SelectedBrush" : "ButtonBrush");
+            button.SetResourceReference(BorderBrushProperty, selected ? "SelectedBorderBrush" : "ButtonBorderBrush");
+            button.SetResourceReference(ForegroundProperty, selected ? "SelectedTextBrush" : "TextBrush");
             button.FontWeight = selected ? FontWeights.SemiBold : FontWeights.Normal;
         }
     }
