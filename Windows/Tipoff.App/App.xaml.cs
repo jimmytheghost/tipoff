@@ -9,6 +9,7 @@ public partial class App : System.Windows.Application
     private Forms.NotifyIcon? trayIcon;
     private MainWindow? flyout;
     private Forms.ToolStripMenuItem? startupItem;
+    private SettingsWindow? settingsWindow;
 
     protected override void OnStartup(StartupEventArgs e)
     {
@@ -70,6 +71,8 @@ public partial class App : System.Windows.Application
             }
         };
         menu.Items.Add(startupItem);
+        menu.Items.Add("Settings / About Tipoff…", null, (_, _) => ShowSettings());
+        menu.Opening += (_, _) => startupItem.Checked = StartupEnabledSafely();
         menu.Items.Add(new Forms.ToolStripSeparator());
         menu.Items.Add("Quit", null, (_, _) => flyout?.RequestQuit());
         return menu;
@@ -79,6 +82,18 @@ public partial class App : System.Windows.Application
     {
         try { return StartupRegistration.IsEnabled; }
         catch { return false; }
+    }
+
+    public void ShowSettings()
+    {
+        if (settingsWindow is null)
+        {
+            settingsWindow = new SettingsWindow();
+            settingsWindow.Closed += (_, _) => settingsWindow = null;
+        }
+        settingsWindow.Show();
+        if (settingsWindow.WindowState == WindowState.Minimized) settingsWindow.WindowState = WindowState.Normal;
+        settingsWindow.Activate();
     }
 
     private void ToggleFlyout()

@@ -12,6 +12,10 @@ The Windows app opens its flyout on a normal launch, toggles from the notificati
 
 Still deferred from the Windows build: system dark-theme adaptation, Arm64 packaging, installer/signing, and automatic updates.
 
+## Windows Settings and startup repair — October 24, 2026
+
+Implemented a visible Settings button in the guide header and a Settings / About Tipoff tray action. The 360-unit settings window exposes Start Tipoff with Windows, current-copy registration status, a shortcut to Windows Startup Apps, the app version, and the personal-tool/MIT framing. It explains that sign-in launches stay in the notification area, including Windows' hidden-icons area. The tray checkbox refreshes when its menu opens, and a Run entry for a different executable no longer counts as enabled for the current copy. Use the current-user installer to replace temporary development paths with the stable installed path; preserve explicit opt-outs. Windows may separately disable startup in its own settings, and an actual sign-in still requires hands-on validation.
+
 ## Windows NBA ordering and startup — October 23, 2026
 
 Implemented: ported macOS commit `ea9b6ce` to `Windows/Tipoff.Core/Models.cs` (`Game` and `ScheduleSnapshot.DisplayGames`) with regressions in `Windows/Tipoff.Tests/Program.cs`.

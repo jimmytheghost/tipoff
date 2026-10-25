@@ -1,6 +1,14 @@
-# Validation — October 23, 2026
+# Validation — October 24, 2026
 
-Environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Initial personal-use time zone: America/Denver.
+Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
+
+## Windows Settings and startup repair — October 24, 2026
+
+- Added a Settings button to the guide header and Settings / About Tipoff to the tray menu. Inspected the installed WPF screen using Windows computer-use tools: the 360-unit window fits the startup toggle, notification-area explanation, registration status, Windows Startup Apps shortcut, version 0.4.1, and personal-tool/MIT About text without clipping. Opened Settings through the guide's button.
+- Startup status now compares the Run command with the current executable rather than accepting any nonempty Tipoff entry. The tray checkbox refreshes when opened. Startup read/write failures remain visible; Settings shows inline errors.
+- Windows fixture runner: **29 tests executed, 29 passed**. `scripts/package-windows.ps1`: **passed** after correcting a compile-time WPF/WinForms `Color` ambiguity. `scripts/install-windows.ps1`: **passed** at the default current-user location, including Start Menu shortcut creation and app launch. Replaced the running temporary `dist/windows-install-smoke` copy with `%LOCALAPPDATA%\Programs\Tipoff\Tipoff.exe`.
+- Exercised the actual Settings checkbox off and back on. Verified off removes the Run entry and stores preference 0; on stores preference 1 and the exact quoted installed-executable command with `--startup`. Left startup enabled. Restarted the installed executable with `--startup`; it remained responsive with no visible main window. Registration and this launch check are not proof of a successful boot/sign-in.
+- No schedule, source, networking, or cache changes. macOS `scripts/test.sh` and `scripts/package-app.sh` require unavailable macOS/SwiftUI tooling and were not run on this Windows host; no live-source check was needed. A real Windows sign-out/sign-in remains a hands-on check.
 
 ## Agent-ready Windows installation — October 23, 2026
 

@@ -70,6 +70,7 @@ public partial class MainWindow : Window, IDisposable
     private async void Jump_Click(object sender, RoutedEventArgs e) => await viewModel.JumpAsync();
     private async void Refresh_Click(object sender, RoutedEventArgs e) => await viewModel.RefreshAsync();
     private void Quit_Click(object sender, RoutedEventArgs e) => RequestQuit();
+    private void Settings_Click(object sender, RoutedEventArgs e) => ((App)System.Windows.Application.Current).ShowSettings();
     private void Window_Deactivated(object sender, EventArgs e)
     {
         if (AutoHide && DateTimeOffset.UtcNow >= ignoreDeactivationUntil) Hide();

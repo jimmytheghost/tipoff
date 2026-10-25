@@ -19,7 +19,7 @@ This is a personal tool I’m sharing as it stands. If it’s useful, take it. I
 - Adds source-listed Altitude, Altitude 2, Altitude+, and channel 9/20 information for Nuggets games. Details include pregame/postgame times and regional notes.
 - Refreshes when opened, after wake, and every five minutes while running.
 - Keeps an offline copy and shows source/freshness information.
-- On macOS, offers launch at login, off by default. On Windows, starts in the tray at sign-in after the first launch; the tray menu can turn this off.
+- On macOS, offers launch at login, off by default. On Windows, starts in the tray at sign-in after the first launch; Settings or the tray menu can turn this off.
 
 Radio is hidden. There are no scores, standings, live game clocks, notifications, or automatic updates. Broadcaster watch links are a future possibility.
 
@@ -46,7 +46,9 @@ Set-Location tipoff
 powershell -ExecutionPolicy Bypass -File .\scripts\install-windows.ps1
 ```
 
-The script builds the current app, installs it to `%LOCALAPPDATA%\Programs\Tipoff`, adds a **Tipoff** shortcut to the Start Menu, and launches it. The first launch configures Start with Windows; this can be turned off from Tipoff’s tray menu. No administrator access, account, or API key is needed after the prerequisites are installed. To update later, run `git pull` in the clone and run the installer script again.
+The script builds the current app, installs it to `%LOCALAPPDATA%\Programs\Tipoff`, adds a **Tipoff** shortcut to the Start Menu, and launches it. The first launch configures Start with Windows; an existing explicit opt-out is preserved. No administrator access, account, or API key is needed after the prerequisites are installed. To update later, run `git pull` in the clone and run the installer script again.
+
+Click **Settings** in the guide header for **Start Tipoff with Windows** and **About Tipoff**, or right-click the tray icon for **Settings / About Tipoff**. Settings reports whether the current executable is registered and includes a shortcut to Windows Startup Apps, where Windows may separately disable it. At sign-in, Tipoff starts in the notification area; click its icon to open the guide, checking the hidden-icons arrow if needed. If startup stops working after moving or deleting a development build, run the installer above and enable startup from the installed copy.
 
 There is no published or code-signed Windows binary yet. Do **not** install the GitHub `v0.2.0` release on Windows—it is the older macOS NBA-only build.
 

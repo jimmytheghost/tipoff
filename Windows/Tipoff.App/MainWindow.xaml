@@ -18,10 +18,11 @@
       </Grid.RowDefinitions>
 
       <Grid Margin="14">
-        <Grid.ColumnDefinitions><ColumnDefinition Width="38" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions><ColumnDefinition Width="38" /><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
         <Image Width="30" Height="30" Source="Tipoff-header.png" Stretch="Uniform"
                RenderOptions.BitmapScalingMode="HighQuality" SnapsToDevicePixels="True" />
         <TextBlock Grid.Column="1" Text="Tipoff" FontWeight="SemiBold" FontSize="15" Margin="4,0,0,0" VerticalAlignment="Center" />
+        <Button Grid.Column="2" Content="Settings" Click="Settings_Click" FontSize="10" ToolTip="Startup settings and About Tipoff" />
       </Grid>
 
       <Separator Grid.Row="1" Margin="0" />

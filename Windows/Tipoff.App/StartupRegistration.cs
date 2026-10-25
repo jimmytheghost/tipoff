@@ -14,7 +14,8 @@ internal static class StartupRegistration
         get
         {
             using var key = Registry.CurrentUser.OpenSubKey(RunKeyPath);
-            return key?.GetValue(ValueName) is string value && value.Length > 0;
+            return key?.GetValue(ValueName) is string value &&
+                string.Equals(value, StartupCommand, StringComparison.OrdinalIgnoreCase);
         }
     }
 
@@ -22,16 +23,18 @@ internal static class StartupRegistration
     {
         using var settings = Registry.CurrentUser.CreateSubKey(SettingsKeyPath);
         var configured = settings.GetValue(ConfiguredValueName);
-        if (configured is null || Convert.ToInt32(configured) == 1) SetEnabled(true);
+        if (configured is null || configured is int enabled && enabled == 1) SetEnabled(true);
     }
 
     public static void SetEnabled(bool enabled)
     {
         using var run = Registry.CurrentUser.CreateSubKey(RunKeyPath);
-        if (enabled) run.SetValue(ValueName, $"\"{Environment.ProcessPath ?? throw new InvalidOperationException("Tipoff could not locate its executable.")}\" --startup");
+        if (enabled) run.SetValue(ValueName, StartupCommand);
         else run.DeleteValue(ValueName, false);
 
         using var settings = Registry.CurrentUser.CreateSubKey(SettingsKeyPath);
         settings.SetValue(ConfiguredValueName, enabled ? 1 : 0, RegistryValueKind.DWord);
     }
+
+    private static string StartupCommand => $"\"{Environment.ProcessPath ?? throw new InvalidOperationException("Tipoff could not locate its executable.")}\" --startup";
 }
