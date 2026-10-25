@@ -22,6 +22,10 @@ Implemented a visible Settings button in the guide header and a Settings / About
 
 The header is now 36 logical units high (previously 58): an 18-unit basketball mark, 13-point title, and a 16-unit vector gear within a borderless 28-unit click target. The gear opens Settings, where Light and Dark options apply immediately to both windows and persist under `HKCU\Software\Tipoff\Appearance`. Light remains the default when no valid preference is saved. The dark palette follows the existing native macOS reference (`current-preview.png`): `#1E1E1E` window, `#252525` cards, `#F4F4F4` text, `#A5A5A5` secondary text, and bright mint. Shared dynamic brushes cover navigation, selection, buttons, details, warnings, freshness, and the slim guide scrollbar. Native Windows title bars and tray menus retain OS styling. Automatic system-theme matching remains deferred.
 
+## Inline Windows Altitude Details — October 24, 2026
+
+Moved the Details toggle into the time column of the main game row. Collapsed cards no longer reserve a separate full-width header row beneath the teams and broadcasters. A borderless chevron/label toggle opens full-width Altitude networks, show times, regional notes, and freshness within the same card; collapsing removes that entire area. The control retains its tooltip, accessible name, keyboard interaction, theme brushes, and Details* footnote label. Games without Altitude information hide the toggle.
+
 ## Windows NBA ordering and startup — October 23, 2026
 
 Implemented: ported macOS commit `ea9b6ce` to `Windows/Tipoff.Core/Models.cs` (`Game` and `ScheduleSnapshot.DisplayGames`) with regressions in `Windows/Tipoff.Tests/Program.cs`.

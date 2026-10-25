@@ -2,6 +2,13 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Inline Windows Altitude Details — October 24, 2026
+
+- Moved the Details toggle beneath the time in the existing middle column, removing the separate expander-header row and its empty full-width strip. The full-width detail content is collapsed until the inline toggle is checked. Existing labels, source networks, show times, notes, and freshness bindings remain intact; games without Altitude details keep their compact layout.
+- Windows fixture runner: **29 tests executed, 29 passed**. `scripts/package-windows.ps1` and `scripts/install-windows.ps1 -NoLaunch`: **passed**. No new automated tests added for this XAML-only layout change.
+- Used Windows computer-use tools to inspect the installed dark-mode guide for October 24 and the user's October 26 example. The October 26 Warriors / Nuggets row now fits the toggle beside the broadcasters with no separate bottom strip. Clicked Details to reveal full-width networks, times, and freshness; pressed Space to collapse it and verified the compact row returned. October 24's Details* label remains intact. Reopened the installed app normally after inspection.
+- No model, cache, source, or networking changes; no live-source check needed. macOS scripts require unavailable macOS/SwiftUI tooling and were not run on this Windows host. README, plan, and diff/content checks updated; unrelated shell-script line-ending changes and the untracked banner remain untouched.
+
 ## Compact Windows header and Light / Dark appearance — October 24, 2026
 
 - Reduced the guide header from 58 to 36 logical units, with an 18-unit logo, 13-point title, and vector gear icon in a borderless 28×28 target. Gear retains the Settings tooltip and accessible name.

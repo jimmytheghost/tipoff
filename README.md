@@ -15,7 +15,7 @@ This is a personal tool I’m sharing as it stands. If it’s useful, take it. I
 - NFL’s Sunday shortcut jumps to the upcoming Sunday (or today on Sunday); the other sports keep their Today shortcut. The Sunday shortcut is hidden while viewing a Sunday.
 - Windows date arrows match macOS: borderless chevron icons with invisible 28×28 click targets, tooltips, and accessible names.
 - Highlights Nuggets, Broncos, Avalanche, and Rockies matchups within their sports with a mint outline and team label; teams do not have separate sport tabs.
-- Keeps each game in three columns: stacked teams, local time, and TV/streaming listings.
+- Keeps each game in three columns: stacked teams, local time, and TV/streaming listings. On Windows, the Altitude Details toggle sits beneath the time inside the main row; expanded information fills the card below only when opened.
 - Follows your computer’s time zone, including daylight saving changes.
 - Adds source-listed Altitude, Altitude 2, Altitude+, and channel 9/20 information for Nuggets games. Details include pregame/postgame times and regional notes.
 - Refreshes when opened, after wake, and every five minutes while running.
