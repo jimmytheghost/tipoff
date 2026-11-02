@@ -1,6 +1,12 @@
-# Validation — October 24, 2026
+# Validation — November 1, 2026
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
+
+## GitHub platform documentation — November 1, 2026
+
+- Reviewed repository metadata, published releases, README, project instructions, plan, and data/source documentation against the Windows installer, packaging script, and WPF project. Updated the README's title, platform table, shared feature wording, build headings, and local-data paths; project instructions now identify both native apps and the computer's time zone.
+- Updated GitHub's About description and topics to include Windows and its system-tray app. Added a current-platform notice to the existing release page and labeled its title macOS / NBA-only; preserved the original build notes and assets. No new binary release was created.
+- Documentation-only change: **0 app tests executed**. Local Markdown file/anchor checks, diff whitespace checks, and read-back of GitHub metadata/release notes passed. Application builds and live-source checks were not needed; runtime, networking, and packaging code are unchanged. The pre-existing untracked `img/Tipoff-banner.png` is excluded.
 
 ## Inline Windows Altitude Details — October 24, 2026
 

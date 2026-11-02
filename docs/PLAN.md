@@ -1,5 +1,11 @@
 # Product plan
 
+## Current platform availability — November 1, 2026
+
+Tipoff includes native macOS menu bar and Windows system-tray apps, both with NBA, NFL, WNBA, NHL, and MLB guides. Current versions are built from source: SwiftUI on macOS 15+, and C# / WPF on Windows 10/11 x64 with the .NET 9 SDK. Windows installation uses `scripts/install-windows.ps1` for a stable current-user installation and Start Menu shortcut.
+
+The repository description, topics, README platform table, and latest release notes identify both apps. The existing `v0.2.0` download remains the older Apple Silicon macOS NBA-only build; its release page directs Windows users to the current source installation. No Windows binary release is published or implied.
+
 The [macOS feature screenshot](current-preview.png), captured October 22, 2026, shows the five-sport selector and Nuggets broadcast details in version 0.4.1 before the header branding was simplified. It is retained as a feature reference rather than presented as the current branding; older sport-specific previews remain available.
 
 The original app icon remains exported to `img/Tipoff.png` as a reusable 2048×2048 PNG with transparency. Windows uses the freestanding teal-and-charcoal basketball extracted to `img/Tipoff-transparent.png`; packaging generates its multi-size tray ICO and a dedicated 256-pixel flyout-header PNG without the original rounded-square tile. The macOS icon remains separate.
@@ -76,6 +82,6 @@ Implemented: Avalanche games lead the NHL list and Rockies games lead MLB, with 
 - Notarization, Intel validation, or an update workflow if someone wants to add them.
 - Bring the remaining Windows pieces to parity: automatic system-theme matching, Arm64, installer/signing, and a published artifact if desired.
 
-The repository includes a basic downloadable Apple Silicon build. This is a shared personal project, not a supported product roadmap.
+The repository includes source for both platforms and an older macOS-only, NBA-only Apple Silicon download (v0.2.0). This is a shared personal project, not a supported product roadmap.
 
 Do not add scores, standings, or live game telemetry to this product without an explicit change in direction.

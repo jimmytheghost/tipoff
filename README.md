@@ -1,4 +1,4 @@
-# Tipoff 🏀 🏈
+# Tipoff · macOS & Windows
 
 **Who’s playing, when, and where can I watch?** A small native macOS menu bar and Windows system-tray app for NBA, NFL, WNBA, NHL, and MLB broadcast listings. No scores.
 
@@ -8,9 +8,16 @@ This is a personal tool I’m sharing as it stands. If it’s useful, take it. I
 
 <img src="img/Tipoff.png" alt="Original Tipoff app icon" width="112">
 
+| Platform | App | Install the current version |
+| --- | --- | --- |
+| Windows 10/11 (x64) | Native C# / WPF system-tray app | [Install from source with PowerShell](#install-on-windows) (.NET 9 SDK required) |
+| macOS 15+ | Native SwiftUI menu bar app | [Build from source](#build-the-macos-app) (Apple Silicon tested) |
+
+The current source includes all five sports on both platforms. The only published download, [v0.2.0](https://github.com/jimmytheghost/tipoff/releases/tag/v0.2.0), is an older **macOS-only, NBA-only** build; there is no published Windows binary yet.
+
 ## What it does today
 
-- Switches between NBA, NFL, WNBA, NHL, and MLB in the same 360-point popover; no Dock window. The menu bar icon follows the selected sport.
+- Switches between NBA, NFL, WNBA, NHL, and MLB in a compact 360-unit guide, opened from the macOS menu bar or Windows system tray. On macOS, the menu bar icon follows the selected sport; Windows uses a basketball tray icon.
 - All five sports show the selected day, with 28×28-point clickable areas around the previous/next arrows. On macOS and Windows, NBA games with source-listed national TV/streaming broadcasters appear before League Pass and regional-only listings; Nuggets lead within each group. Broncos, Avalanche, and Rockies games lead NFL, NHL, and MLB respectively.
 - NFL’s Sunday shortcut jumps to the upcoming Sunday (or today on Sunday); the other sports keep their Today shortcut. The Sunday shortcut is hidden while viewing a Sunday.
 - Windows date arrows match macOS: borderless chevron icons with invisible 28×28 click targets, tooltips, and accessible names.
@@ -71,9 +78,11 @@ Unzip `Tipoff.app`, move it to your Applications folder, and open it. Click the 
 
 The shared build is ad-hoc signed and **not notarized**. macOS may block a downloaded copy. Building locally is another option. There is no installer or update service, and no account or API key is required.
 
-## Build it yourself
+## Build from source
 
 The original app icon remains available as a 2048×2048 PNG with transparency at [`img/Tipoff.png`](img/Tipoff.png). The current Windows tray icon is generated separately during packaging.
+
+### Build the macOS app
 
 Install Apple’s Xcode Command Line Tools first (`xcode-select --install` if needed). The current version was built with Swift 6.3.3. No third-party Swift packages are required.
 
@@ -103,13 +112,13 @@ The framework-dependent x64 package requires the .NET 9 Desktop Runtime. It is i
 
 ## Where it’s at
 
-Version 0.4.1 includes NBA, NFL, WNBA, NHL, and MLB viewing guides, with Colorado team emphasis within the appropriate guides, focused on source-provided US broadcast listings. Build from source for this version; the linked v0.2.0 download is NBA-only. The Nuggets supplement and Denver team emphasis are deliberately built in for my own use, rather than a general favorites or location system. You can change that.
+Version 0.4.1 includes NBA, NFL, WNBA, NHL, and MLB viewing guides, with Colorado team emphasis within the appropriate guides, focused on source-provided US broadcast listings. The current macOS and Windows apps are built from source; the linked v0.2.0 download is macOS-only and NBA-only. The Nuggets supplement and Denver team emphasis are deliberately built in for my own use, rather than a general favorites or location system. You can change that.
 
 NBA.com supplies NBA data, ESPN supplies NFL and WNBA listings, and NHL.com and MLB.com supply their league schedules. ESPN is the NBA/NHL/MLB fallback. Altitude’s schedule supplements matching Nuggets games. These are public website endpoints, not guaranteed APIs. They can change or stop working. Listings can be incomplete, and a listed channel or service does not mean your subscription or location can receive it. Altitude’s Denver/outer-market restrictions are preserved in Details.
 
 Tipoff doesn’t guess missing broadcasters or League Pass eligibility. Times come from the sources and use your computer’s time zone. A failed refresh retains saved listings with a visible warning. “Checked” means the app retrieved the data, not that a broadcaster reconfirmed it.
 
-No analytics or app account. Local schedule caches live under `~/Library/Application Support/Tipoff/`. The app makes network requests to its schedule sources. [Source details and cache behavior](docs/DATA.md).
+No analytics or app account. Local data lives under `~/Library/Application Support/Tipoff/` on macOS and `%LOCALAPPDATA%\Tipoff\` on Windows. The app makes network requests to its schedule sources. [Source details and cache behavior](docs/DATA.md).
 
 ## Known issues
 
@@ -131,7 +140,7 @@ Start with [AGENTS.md](AGENTS.md). It describes the existing behavior, design ch
 - `scripts/generate-windows-icon.ps1`: generates the PNG-backed, multi-size Windows basketball icon.
 - `scripts/install-windows.ps1`: builds and installs the current Windows app for the current user.
 
-For a live source check:
+For a macOS live source check (Windows examples are in [the Windows build instructions](#build-the-windows-app-without-installing)):
 
 ```sh
 swift run TipoffCheck 2026-10-24

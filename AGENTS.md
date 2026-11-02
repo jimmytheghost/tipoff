@@ -1,12 +1,12 @@
 # Tipoff
 
-Native SwiftUI macOS 15+ NBA/NFL/WNBA/NHL/MLB viewing guide, part of the Bug / Worklog menu bar suite.
+Native NBA/NFL/WNBA/NHL/MLB viewing guide for macOS 15+ (SwiftUI menu bar app, part of the Bug / Worklog suite) and Windows 10/11 x64 (C# / WPF system-tray app).
 
 - Keep the 360-point width, mint accent, system typography, and subtle rounded cards.
 - No scores, standings, game clocks, or live-game telemetry. The model and persisted cache must exclude them.
 - Use source-provided broadcasters. Never infer streaming availability, local rights, or League Pass eligibility.
 - Preserve working cached data on network/schema errors. Show source, freshness, and fallback limitations honestly.
-- Follow the Mac’s time zone and use calendar days rather than fixed 24-hour offsets.
+- Follow the computer’s time zone and use calendar days rather than fixed 24-hour offsets.
 - NFL uses ESPN; identify the source and put Denver first on NFL days. Top-level guides represent sports (NBA, NFL, WNBA, NHL, MLB); the Broncos belong within NFL. Never infer local affiliate or streaming access.
 - Prefer Avalanche games within NHL and Rockies games within MLB, including league and ESPN fallback identities. Apply priority to saved snapshots without changing their contents or freshness.
 - WNBA uses ESPN; NHL and MLB use league schedules with ESPN fallback. Keep source labels, explicit fallback labels, and isolated sport/date/time-zone caches. Do not show routine coverage disclaimers in the compact UI.
