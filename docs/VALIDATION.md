@@ -2,6 +2,10 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Single-line matchups
+
+- Verified horizontal alignment of both teams, the separator, and the start time on 13 rendered rows across the national summary and full schedule. JavaScript syntax and Git whitespace checks passed. **0 app tests executed**.
+
 ## Game row fills and logo outlines
 
 - Verified in the local browser that all broadcaster entries, including regional text labels, render without strokes. Full-schedule lime highlights remain visible. **0 app tests executed**.

@@ -94,7 +94,9 @@ function team(name, code, league) {
       : `https://a.espncdn.com/i/teamlogos/${league}/500/${slug}.png`;
     line.append(mark(url, "tipoff-team-logo"));
   }
-  line.append(name);
+  const label = element("span", name, "tipoff-team-name");
+  label.title = name;
+  line.append(label);
   return line;
 }
 
@@ -148,14 +150,15 @@ function gameRow(game, league, broadcasts, highlight = false) {
   const matchup = element("p", "", "tipoff-matchup");
   matchup.append(
     team(game.away, game.awayCode, league),
-    element("span", " at ", "tipoff-visually-hidden"),
+    element("span", " @ ", "tipoff-matchup-separator"),
     team(game.home, game.homeCode, league)
   );
   row.append(
     matchup,
-    element("p", game.notice ? `${start} · ${game.notice}` : start, "tipoff-start"),
-    broadcastList(broadcasts)
+    element("p", start, "tipoff-start")
   );
+  if (game.notice) row.append(element("p", game.notice, "tipoff-game-notice"));
+  row.append(broadcastList(broadcasts));
   if (game.altitude && broadcasts === game.broadcasts) {
     const details = element("details", "", "tipoff-altitude");
     const altitude = game.altitude;

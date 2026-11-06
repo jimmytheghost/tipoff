@@ -170,7 +170,7 @@ a { color: var(--accent); }
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 0.22rem 0.65rem;
-  align-items: baseline;
+  align-items: center;
   padding: 0.7rem 0.75rem;
 }
 
@@ -182,16 +182,16 @@ a { color: var(--accent); }
 
 .tipoff-game p { margin: 0; }
 
-.tipoff-matchup { font-weight: 700; }
-
 .tipoff-start {
   color: var(--accent);
   font: 700 1.1rem/1.2 var(--heading);
   text-align: right;
+  white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
 
 .tipoff-broadcasts,
+.tipoff-game-notice,
 .tipoff-altitude {
   grid-column: 1 / -1;
   color: var(--muted);
@@ -209,36 +209,41 @@ a { color: var(--accent); }
   .tipoff-filters { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
-@media (min-width: 44rem) {
-  .tipoff-game {
-    grid-template-columns: minmax(0, 1.3fr) minmax(6rem, 0.4fr) minmax(0, 1fr);
-    gap: 0.7rem 1.25rem;
-  }
-
-  .tipoff-start { text-align: left; }
-  .tipoff-broadcasts { grid-column: auto; }
-}
-
 .tipoff-footer {
   border-top: 1px solid var(--line);
   background: var(--surface);
 }
 
 .tipoff-matchup {
-  display: grid;
-  gap: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 0;
+  font-size: 0.875rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.tipoff-matchup-separator {
+  flex-shrink: 0;
+  color: var(--muted);
 }
 
 .tipoff-team {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  min-height: 1.75rem;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.tipoff-team-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .tipoff-team-logo {
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 1.4rem;
+  height: 1.4rem;
   object-fit: contain;
   flex-shrink: 0;
 }
@@ -322,12 +327,7 @@ ul.tipoff-broadcasts {
 }
 
 .tipoff-national .tipoff-game {
-  grid-template-columns: minmax(0, 1fr) auto;
   gap: 0.35rem 0.6rem;
-}
-
-.tipoff-national .tipoff-broadcasts {
-  grid-column: 1 / -1;
 }
 
 .tipoff-game.tipoff-game-national {
