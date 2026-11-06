@@ -2,6 +2,11 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## National broadcast section
+
+- Verified November 5 in the local browser. The summary showed NFL (one game) and NHL (two games), with the same three games outlined below. The NHL feed categorized Anaheim–Edmonton’s Prime Video listing as Away TV. Utah–Montréal, NBA TV, and the other regional listings stayed out of the summary.
+- Verified no horizontal overflow at the narrow browser width, previous-day and Today navigation, and that the NBA filter applies to the lower schedule only. JavaScript syntax and Git whitespace checks passed. Frontend-only change. **0 app tests executed**.
+
 ## Browser branding and homepage links
 
 - Verified both homepage links in the local browser and inspected the narrow layout without horizontal overflow. The Magic, Suns, Jaguars, and Ravens marks loaded, as did the Prime Video logo. The visible station names and distinct Radio, Regional, and League Pass labels matched the live feed.

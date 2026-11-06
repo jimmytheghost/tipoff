@@ -2,6 +2,8 @@ const buttons = [...document.querySelectorAll("[data-league]")];
 const zone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 const dateTitle = document.querySelector("#date");
 const leagues = document.querySelector("#leagues");
+const nationalLeagues = document.querySelector("#national-leagues");
+const nationalStatus = document.querySelector("#national-status");
 const dateFormat = new Intl.DateTimeFormat(undefined, { weekday: "short", month: "short", day: "numeric" });
 const timeFormat = new Intl.DateTimeFormat(undefined, { timeStyle: "short", timeZone: zone });
 const stampFormat = new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short", timeZone: zone });
@@ -33,7 +35,17 @@ const sections = new Map(buttons.slice(1).map(button => {
   const results = element("div");
   section.append(title, status, results);
   leagues.append(section);
-  return [id, { section, status, results }];
+  const nationalGroup = element("section", "", "tipoff-league");
+  const nationalTitle = element("h3", button.textContent);
+  nationalTitle.id = `national-${id}`;
+  nationalGroup.setAttribute("aria-labelledby", nationalTitle.id);
+  const nationalGames = element("ul", "", "tipoff-games");
+  const nationalFreshness = element("p", "", "tipoff-league-status");
+  nationalFreshness.hidden = true;
+  nationalGroup.append(nationalTitle, nationalFreshness, nationalGames);
+  nationalGroup.hidden = true;
+  nationalLeagues.append(nationalGroup);
+  return [id, { section, status, results, nationalGroup, nationalGames, nationalFreshness }];
 }));
 
 function select(league) {
@@ -113,8 +125,18 @@ function broadcastList(broadcasts) {
   return list.childElementCount ? list : element("p", "Broadcasters not listed", "tipoff-broadcasts");
 }
 
-function gameRow(game, league) {
+function isNationalBroadcast({ name, category }, league) {
+  const channel = name.trim().toLowerCase();
+  const market = category.trim().toLowerCase();
+  // NBA TV stays in the league schedule. Only the NBA feed uses Streaming for national OTT.
+  return channel !== "" && !channel.includes("league pass") &&
+    channel !== "nba tv" && channel !== "nbatv" &&
+    (market === "national" || (league === "nba" && market === "streaming"));
+}
+
+function gameRow(game, league, broadcasts, national) {
   const row = element("li", "", "tipoff-game");
+  row.classList.toggle("tipoff-game-national", national);
   const start = game.start ? timeFormat.format(new Date(game.start)) : "Time TBD";
   const matchup = element("p", "", "tipoff-matchup");
   matchup.append(
@@ -125,9 +147,9 @@ function gameRow(game, league) {
   row.append(
     matchup,
     element("p", game.notice ? `${start} · ${game.notice}` : start, "tipoff-start"),
-    broadcastList(game.broadcasts)
+    broadcastList(broadcasts)
   );
-  if (game.altitude) {
+  if (game.altitude && broadcasts === game.broadcasts) {
     const details = element("details", "", "tipoff-altitude");
     const altitude = game.altitude;
     details.append(element("summary", "Altitude details"));
@@ -142,7 +164,7 @@ function gameRow(game, league) {
 }
 
 async function loadLeague(id, day, signal) {
-  const { status, results } = sections.get(id);
+  const { status, results, nationalGroup, nationalGames, nationalFreshness } = sections.get(id);
   status.textContent = "Loading schedule…";
   results.replaceChildren();
   try {
@@ -158,25 +180,49 @@ async function loadLeague(id, day, signal) {
     const summary = count === 0 ? "No games scheduled" : `${count} ${count === 1 ? "game" : "games"}`;
     const updated = stampFormat.format(new Date(snapshot.fetchedAt));
     status.textContent = `${summary} · ${snapshot.source} · ${saved ? "Refresh failed, saved" : "Updated"} ${updated}`;
+    nationalFreshness.hidden = !saved;
+    nationalFreshness.textContent = saved ? `Saved listings · ${updated}` : "";
     if (count) {
       const list = element("ul", "", "tipoff-games");
-      list.append(...snapshot.games.map(game => gameRow(game, id)));
+      for (const game of snapshot.games) {
+        const national = game.broadcasts.filter(broadcast => isNationalBroadcast(broadcast, id));
+        list.append(gameRow(game, id, game.broadcasts, national.length > 0));
+        if (national.length) nationalGames.append(gameRow(game, id, national, true));
+      }
+      nationalGroup.hidden = !nationalGames.childElementCount;
       results.append(list);
     }
     if (snapshot.altitudeWarning) results.append(element("p", snapshot.altitudeWarning, "tipoff-meta"));
+    return true;
   } catch {
     if (signal.aborted) return;
     results.replaceChildren();
+    nationalGroup.hidden = true;
+    nationalGames.replaceChildren();
     status.textContent = "Schedule unavailable.";
+    return false;
   }
 }
 
-function loadDay() {
+async function loadDay() {
   request?.abort();
   request = new AbortController();
   const key = dayKey(date);
   dateTitle.textContent = dayKey(new Date()) === key ? `Today · ${dateFormat.format(date)}` : dateFormat.format(date);
-  for (const id of sections.keys()) loadLeague(id, key, request.signal);
+  const { signal } = request;
+  nationalStatus.textContent = "Checking national broadcasts…";
+  for (const { nationalGroup, nationalGames } of sections.values()) {
+    nationalGroup.hidden = true;
+    nationalGames.replaceChildren();
+  }
+  const loaded = await Promise.all([...sections.keys()].map(id => loadLeague(id, key, signal)));
+  if (signal.aborted) return;
+  if (loaded.some(result => !result)) {
+    nationalStatus.textContent = "Some league schedules are unavailable.";
+  } else {
+    nationalStatus.textContent = nationalLeagues.querySelector(".tipoff-game")
+      ? "" : "No national broadcasts listed.";
+  }
 }
 
 function moveDay(offset) {

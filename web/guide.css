@@ -290,3 +290,50 @@ ul.tipoff-broadcasts {
   clip-path: inset(50%);
   white-space: nowrap;
 }
+
+.tipoff-national {
+  margin-bottom: 1.25rem;
+}
+
+.tipoff-national h2 {
+  margin: 0;
+  font: 700 1.65rem/1.1 var(--heading);
+}
+
+.tipoff-national h3 {
+  margin: 0;
+  padding: 0.45rem 0.75rem;
+  background: var(--raised);
+  font: 700 1.35rem/1 var(--heading);
+}
+
+.tipoff-national-leagues {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.tipoff-national-leagues .tipoff-league {
+  margin: 0;
+}
+
+.tipoff-national .tipoff-game {
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.35rem 0.6rem;
+}
+
+.tipoff-national .tipoff-broadcasts {
+  grid-column: 1 / -1;
+}
+
+.tipoff-game.tipoff-game-national {
+  border: 1px solid var(--accent);
+  border-radius: 0.375rem;
+  margin: 0.4rem;
+}
+
+@media (min-width: 44rem) {
+  .tipoff-national-leagues {
+    grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+    align-items: start;
+  }
+}
