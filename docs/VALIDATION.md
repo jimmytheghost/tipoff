@@ -1,6 +1,12 @@
-# Validation — November 1, 2026
+# Validation
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
+
+## Local browser guide — November 5, 2026
+
+- `scripts/test.sh`: **57 tests executed, 57 passed**. `scripts/package-app.sh` built and verified the signed macOS app in a temporary directory.
+- Live `TipoffCheck` for November 5, 2026 in America/Denver loaded NBA (2), NFL (1), WNBA (0), NHL (11), and MLB (0). The local page displayed all five results, including valid empty leagues and the Avalanche first in NHL.
+- Local browser checks covered the `/sports` redirect, default All view, keyboard league filtering, previous-day navigation, and the portfolio preview link round trip. Verified layouts at 390 and 1280 pixels without horizontal overflow. Initial HTML included canonical and preview metadata. The existing banner decoded as a 1920 × 1080 PNG when fetched with a preview crawler user agent. Production guide routes and actual Messages rendering were outside this local check.
 
 ## Website preparation — November 5, 2026
 

@@ -1,8 +1,8 @@
 # Product plan
 
-## Browser guide preparation — November 5, 2026
+## Local browser guide — November 5, 2026
 
-Plan one mobile-first page at `/tip-off` on JimmyWeber.com, with `/sports` redirecting to it. The guide opens to today across all five leagues and can be filtered by league. See the [website handoff](../WEBSITE-HANDOFF.md) for the design, data contract, and pending integration.
+The local browser guide uses a dark sports scoreboard layout. It opens to today across all five leagues and supports league filtering and day navigation. `/sports` redirects to `/tip-off`. The preview reads live schedules through Tipoff’s Swift provider. Production routing, the portfolio registry link, and a production schedule endpoint are pending. See the [website handoff](../WEBSITE-HANDOFF.md).
 
 ## Current platform availability — November 1, 2026
 

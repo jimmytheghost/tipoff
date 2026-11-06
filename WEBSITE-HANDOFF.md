@@ -1,17 +1,21 @@
 # Tipoff website handoff
 
-Updated November 5, 2026. Status: preparation. The browser guide is planned. The current [Tipoff source](https://github.com/jimmytheghost/tipoff) ships native macOS and Windows apps.
+Updated November 5, 2026. Status: working local preview. The current [Tipoff source](https://github.com/jimmytheghost/tipoff) ships native macOS and Windows apps.
 
 ## Page and routes
 
 - Build one public viewing guide at `https://www.jimmyweber.com/tip-off`. Redirect `/sports` to it and use the main URL in the page metadata. Verify slash variants and the final host with the site's routing.
-- Keep the existing [Tipoff portfolio entry](https://www.jimmyweber.com/pages/projects/tipoff/) as the overview for the native apps.
+- Add **View the schedule** to the existing [Tipoff portfolio entry](https://www.jimmyweber.com/pages/projects/tipoff/) using the Tipoff registry entry’s `links` array in `includes/projects/data.php` (`["label" => "View the schedule", "url" => "/tip-off"]`). The guide’s **About Tipoff** link returns to that entry. The local portfolio preview exercises both links.
 - Open to **All** and show today’s schedule grouped by league. Keep an empty section visible for a league with a successfully fetched schedule and no games. Use **All**, **NBA**, **NFL**, **WNBA**, **NHL**, and **MLB** controls to narrow the view. Keep the date consistent when switching leagues.
-- Use the visitor’s time zone for the calendar date and game times. Provide Today and previous/next day controls. Show teams, scheduled start times, and source-listed broadcasters. Use existing JimmyWeber.com type, navigation, spacing, and controls, with readable stacked game details on phones. Use text labels for the controls and expose the selected state to assistive technology.
+- Use the visitor’s time zone for the calendar date and game times. Provide Today and previous/next day controls. Show teams, scheduled start times, and source-listed broadcasters. Use Tipoff’s own dark scoreboard layout, with start times in lime, stacked broadcast details on phones, and a three-column game row on desktop. Use text labels for the controls and expose the selected state to assistive technology.
 
 ## Schedule integration
 
-The current site workspace documents Apache and PHP 8.1 in its deployment guide. Confirm the production runtime, outbound requests, and writable cache location before settling on the data path. Use shared site includes and styles for the page and keep the schedule endpoint and cache separate from the site's templates and deployment payload. The source contracts and fixtures in this repository are the reference for any web adapter. Reusing a schedule producer is preferable if it can run in the target environment. No web runtime or refresh service has been selected.
+Run `scripts/preview-web.sh [port]` with the macOS Swift toolchain and Python 3.9 or newer. It builds `TipoffCheck` and listens on loopback (port 8765 by default). The frontend is `web/index.html`, `web/guide.css`, and `web/guide.js`. The preview server also serves `web/portfolio-preview.html` as a stand-in for the portfolio link. The heading font is Barlow Condensed with system fallbacks.
+
+The local `GET /tip-off/schedule?sport=nba&day=YYYY-MM-DD&zone=America%2FDenver` endpoint invokes `TipoffCheck --web <sport> <day> <zone> <cache-directory>`. It returns `{snapshot, saved}` with ISO 8601 dates and a null or absent snapshot when listings are unavailable. It reuses the native source and display logic. The preview cache is under `.build/web-cache`, with a five-minute freshness window and a separate Altitude cache.
+
+The site workspace documents Apache and PHP 8.1. Production integration still needs a supported schedule producer and cache location plus site routing and the portfolio registry link. The macOS preview server is for local use. The browser files can be deployed independently once the endpoint is implemented. Keep the runtime cache outside the deployment payload.
 
 - NBA.com with ESPN fallback for NBA, ESPN for NFL and WNBA, and the respective league feed with ESPN fallback for NHL and MLB. Carry the Nuggets Altitude supplement only with agreement on date, opponent, home/away, and tipoff. Keep regional footnotes and original freshness on saved results.
 - Keep saved schedules separate by sport, local date, and time zone. Preserve each sport’s working snapshot through upstream errors or malformed data. Show per-sport source, timestamp, fallback or saved state, and unavailable state as applicable. Only display “No games scheduled” after a valid empty result for the selected day. One league failure should leave other leagues usable.
@@ -19,8 +23,8 @@ The current site workspace documents Apache and PHP 8.1 in its deployment guide.
 
 ## Link preview and integration checks
 
-Use **Tipoff** as the preview title and “Game times and broadcast listings for the NBA, NFL, WNBA, NHL, and MLB” as the proposed description. The existing portfolio preview is a 1920 × 1080 Tipoff banner. Inspect its crop at phone-card size before reusing it. Include the canonical URL and an absolute image URL in the initial HTML’s Open Graph and Twitter metadata. See [link preview requirements](core/LINK-PREVIEWS.md).
+The local page uses **Tipoff** and “Game times and broadcast listings for the NBA, NFL, WNBA, NHL, and MLB” in its initial HTML metadata. The preview uses the existing 1920 × 1080 [Tipoff banner](https://www.jimmyweber.com/assets/img/projects/tipoff-banner.png) already hosted by JimmyWeber.com. The image was fetched with a preview crawler user agent. Inspect the final crop in Messages during live verification. See [link preview requirements](core/LINK-PREVIEWS.md).
 
 Before release, verify both shortcuts, direct visits and reloads, phone and desktop layouts, keyboard use, date navigation around midnight and daylight saving changes, and schedule behavior with fresh, empty, failed, and saved feeds. Check the actual preview image and crawler metadata on both URLs. Record the deployment file list, verification results, and rollback in the website workspace.
 
-The public homepage and Tipoff portfolio page returned HTTP 200 on November 5, 2026. Both proposed short URLs returned HTTP 404. The web guide, mobile layout, feed integration, and message preview are still pending.
+The public homepage and Tipoff portfolio page returned HTTP 200 on November 5, 2026. Both proposed short URLs returned HTTP 404. The local guide, both local routes, the portfolio preview link, and five live league results were verified. Production deployment and the Messages preview are pending.

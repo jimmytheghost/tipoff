@@ -4,6 +4,15 @@ import TipoffCore
 
 @main struct Check {
     @MainActor static func main() async throws {
+        if CommandLine.arguments.dropFirst().first == "--web" {
+            do {
+                try await writeWebSchedule(arguments: Array(CommandLine.arguments.dropFirst(2)))
+            } catch {
+                FileHandle.standardError.write(Data("Invalid schedule request.\n".utf8))
+                Foundation.exit(EXIT_FAILURE)
+            }
+            return
+        }
         if CommandLine.arguments.contains("--render") {
             _ = NSApplication.shared
             let path = CommandLine.arguments.last!

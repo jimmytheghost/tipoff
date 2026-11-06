@@ -13,9 +13,10 @@ public extension ScheduleLoading {
 }
 
 public actor ScheduleProvider: ScheduleLoading {
-    private let altitude = AltitudeProvider()
+    private let altitude: AltitudeProvider
     private let session: URLSession
-    public init(session: URLSession? = nil) {
+    public init(session: URLSession? = nil, altitude: AltitudeProvider = AltitudeProvider()) {
+        self.altitude = altitude
         let config = URLSessionConfiguration.ephemeral
         config.timeoutIntervalForRequest = 15
         config.timeoutIntervalForResource = 25

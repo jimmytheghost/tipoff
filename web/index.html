@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tipoff | JimmyWeber.com</title>
+  <meta name="description" content="Game times and broadcast listings for the NBA, NFL, WNBA, NHL, and MLB.">
+  <link rel="canonical" href="https://www.jimmyweber.com/tip-off">
+  <meta property="og:title" content="Tipoff">
+  <meta property="og:description" content="Game times and broadcast listings for the NBA, NFL, WNBA, NHL, and MLB.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.jimmyweber.com/tip-off">
+  <meta property="og:site_name" content="JimmyWeber.com">
+  <meta property="og:image" content="https://www.jimmyweber.com/assets/img/projects/tipoff-banner.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1920">
+  <meta property="og:image:height" content="1080">
+  <meta property="og:image:alt" content="The Tipoff name and basketball icon on a white background">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tipoff">
+  <meta name="twitter:description" content="Game times and broadcast listings for the NBA, NFL, WNBA, NHL, and MLB.">
+  <meta name="twitter:image" content="https://www.jimmyweber.com/assets/img/projects/tipoff-banner.png">
+  <meta name="twitter:image:alt" content="The Tipoff name and basketball icon on a white background">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;1,800&display=swap">
+  <link rel="stylesheet" href="/tip-off/guide.css">
+  <script type="module" src="/tip-off/guide.js"></script>
+</head>
+<body>
+  <header class="tipoff-header">
+    <div class="tipoff-header-inner">
+      <a class="tipoff-brand" href="/tip-off">Tipoff</a>
+      <nav aria-label="Tipoff navigation">
+        <a class="tipoff-about" href="/pages/projects/tipoff/">About Tipoff</a>
+      </nav>
+    </div>
+  </header>
+  <main class="tipoff-guide">
+    <h1>Game schedule</h1>
+    <p class="tipoff-intro">Start times and broadcast listings</p>
+    <div class="tipoff-date" role="group" aria-label="Schedule date">
+      <button class="button" id="previous" type="button" aria-label="Previous day">‹</button>
+      <h2 id="date" aria-live="polite"></h2>
+      <button class="button" id="next" type="button" aria-label="Next day">›</button>
+      <button class="button" id="today" type="button">Today</button>
+    </div>
+    <div class="tipoff-filters" role="group" aria-label="Filter by league">
+      <button class="button" type="button" data-league="all" aria-pressed="true">All</button>
+      <button class="button" type="button" data-league="nba" aria-pressed="false">NBA</button>
+      <button class="button" type="button" data-league="nfl" aria-pressed="false">NFL</button>
+      <button class="button" type="button" data-league="wnba" aria-pressed="false">WNBA</button>
+      <button class="button" type="button" data-league="nhl" aria-pressed="false">NHL</button>
+      <button class="button" type="button" data-league="mlb" aria-pressed="false">MLB</button>
+    </div>
+    <p id="zone" class="tipoff-meta"></p>
+    <noscript><p>Enable JavaScript to load schedules for your time zone.</p></noscript>
+    <div id="leagues" class="tipoff-leagues"></div>
+  </main>
+</body>
+</html>
