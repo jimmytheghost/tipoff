@@ -176,7 +176,7 @@ a { color: var(--accent); }
 
 .tipoff-game:nth-child(odd) { background: var(--surface-alternate); }
 
-.tipoff-game:last-child:not(.tipoff-game-national) {
+.tipoff-game:last-child:not(.tipoff-game-national, .tipoff-game-followed) {
   border-radius: 0 0 0.4375rem 0.4375rem;
 }
 
@@ -301,43 +301,48 @@ ul.tipoff-broadcasts {
   white-space: nowrap;
 }
 
-.tipoff-national {
+.tipoff-summary {
   margin-bottom: 1.25rem;
 }
 
-.tipoff-national h2 {
+.tipoff-summary h2 {
   margin: 0;
   font: 700 1.65rem/1.1 var(--heading);
 }
 
-.tipoff-national h3 {
+.tipoff-summary h3 {
   margin: 0;
   padding: 0.45rem 0.75rem;
   background: var(--raised);
   font: 700 1.35rem/1 var(--heading);
 }
 
-.tipoff-national-leagues {
+.tipoff-summary-groups {
   display: grid;
   gap: 0.75rem;
 }
 
-.tipoff-national-leagues .tipoff-league {
+.tipoff-summary-groups .tipoff-league {
   margin: 0;
 }
 
-.tipoff-national .tipoff-game {
+.tipoff-summary .tipoff-game {
   gap: 0.35rem 0.6rem;
 }
 
-.tipoff-game.tipoff-game-national {
+.tipoff-game.tipoff-game-national,
+.tipoff-game.tipoff-game-followed {
   border: 1px solid var(--accent);
   border-radius: 0.375rem;
   margin: 0.4rem;
 }
 
+.tipoff-game.tipoff-game-followed {
+  border-color: #72bdff;
+}
+
 @media (min-width: 44rem) {
-  .tipoff-national-leagues {
+  .tipoff-summary-groups {
     grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
     align-items: start;
   }

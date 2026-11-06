@@ -2,6 +2,10 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Teams Followed
+
+- Verified the November 5 local browser view. Predators–Avalanche appeared in both summaries and had a blue outline in the full schedule. The two other national games retained lime outlines. Neither summary had outlined game rows. JavaScript syntax and Git whitespace checks passed. **0 app tests executed**.
+
 ## Single-line matchups
 
 - Verified horizontal alignment of both teams, the separator, and the start time on 13 rendered rows across the national summary and full schedule. JavaScript syntax and Git whitespace checks passed. **0 app tests executed**.

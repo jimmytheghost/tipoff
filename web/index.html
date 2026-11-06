@@ -37,10 +37,15 @@
   <main class="tipoff-guide">
     <h1>Game schedule</h1>
     <p class="tipoff-intro">Start times and broadcast listings</p>
-    <section class="tipoff-national" aria-labelledby="national-title">
+    <section class="tipoff-summary" aria-labelledby="followed-title">
+      <h2 id="followed-title">Teams Followed</h2>
+      <p id="followed-status" class="tipoff-meta" role="status"></p>
+      <div id="followed-leagues" class="tipoff-summary-groups"></div>
+    </section>
+    <section class="tipoff-summary" aria-labelledby="national-title">
       <h2 id="national-title">National broadcasts</h2>
       <p id="national-status" class="tipoff-meta" role="status"></p>
-      <div id="national-leagues" class="tipoff-national-leagues"></div>
+      <div id="national-leagues" class="tipoff-summary-groups"></div>
     </section>
     <div class="tipoff-date" role="group" aria-label="Schedule date">
       <button class="button" id="previous" type="button" aria-label="Previous day">‹</button>

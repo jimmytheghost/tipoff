@@ -2,6 +2,14 @@ const buttons = [...document.querySelectorAll("[data-league]")];
 const zone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 const dateTitle = document.querySelector("#date");
 const leagues = document.querySelector("#leagues");
+const followedLeagues = document.querySelector("#followed-leagues");
+const followedStatus = document.querySelector("#followed-status");
+const followedTeams = new Map([
+  ["nba", { name: "Nuggets", codes: ["DEN"] }],
+  ["nfl", { name: "Broncos", codes: ["DEN"] }],
+  ["nhl", { name: "Avalanche", codes: ["COL"] }],
+  ["mlb", { name: "Rockies", codes: ["115", "COL"] }],
+]);
 const nationalLeagues = document.querySelector("#national-leagues");
 const nationalStatus = document.querySelector("#national-status");
 const dateFormat = new Intl.DateTimeFormat(undefined, { weekday: "short", month: "short", day: "numeric" });
@@ -24,6 +32,25 @@ function dayKey(day) {
   return [day.getFullYear(), month, number].join("-");
 }
 
+function summaryGroup(parent, id, name) {
+  const group = element("section", "", "tipoff-league");
+  const title = element("h3", name);
+  title.id = id;
+  group.setAttribute("aria-labelledby", id);
+  const games = element("ul", "", "tipoff-games");
+  const freshness = element("p", "", "tipoff-league-status");
+  freshness.hidden = true;
+  group.append(title, freshness, games);
+  group.hidden = true;
+  parent.append(group);
+  return { group, games, freshness };
+}
+
+function resetSummary({ group, games }) {
+  group.hidden = true;
+  games.replaceChildren();
+}
+
 const sections = new Map(buttons.slice(1).map(button => {
   const id = button.dataset.league;
   const section = element("section", "", "tipoff-league");
@@ -35,17 +62,10 @@ const sections = new Map(buttons.slice(1).map(button => {
   const results = element("div");
   section.append(title, status, results);
   leagues.append(section);
-  const nationalGroup = element("section", "", "tipoff-league");
-  const nationalTitle = element("h3", button.textContent);
-  nationalTitle.id = `national-${id}`;
-  nationalGroup.setAttribute("aria-labelledby", nationalTitle.id);
-  const nationalGames = element("ul", "", "tipoff-games");
-  const nationalFreshness = element("p", "", "tipoff-league-status");
-  nationalFreshness.hidden = true;
-  nationalGroup.append(nationalTitle, nationalFreshness, nationalGames);
-  nationalGroup.hidden = true;
-  nationalLeagues.append(nationalGroup);
-  return [id, { section, status, results, nationalGroup, nationalGames, nationalFreshness }];
+  const national = summaryGroup(nationalLeagues, `national-${id}`, button.textContent);
+  const followedTeam = followedTeams.get(id);
+  const followed = followedTeam && summaryGroup(followedLeagues, `followed-${id}`, followedTeam.name);
+  return [id, { section, status, results, national, followed }];
 }));
 
 function select(league) {
@@ -143,9 +163,9 @@ function isNationalBroadcast({ name, category }, league) {
     (market === "national" || (league === "nba" && market === "streaming"));
 }
 
-function gameRow(game, league, broadcasts, highlight = false) {
+function gameRow(game, league, broadcasts, highlight) {
   const row = element("li", "", "tipoff-game");
-  row.classList.toggle("tipoff-game-national", highlight);
+  if (highlight) row.classList.add(highlight);
   const start = game.start ? timeFormat.format(new Date(game.start)) : "Time TBD";
   const matchup = element("p", "", "tipoff-matchup");
   matchup.append(
@@ -174,7 +194,9 @@ function gameRow(game, league, broadcasts, highlight = false) {
 }
 
 async function loadLeague(id, day, signal) {
-  const { status, results, nationalGroup, nationalGames, nationalFreshness } = sections.get(id);
+  const { status, results, national, followed } = sections.get(id);
+  const summaries = followed ? [national, followed] : [national];
+  const followedTeam = followedTeams.get(id);
   status.textContent = "Loading schedule…";
   results.replaceChildren();
   try {
@@ -190,16 +212,24 @@ async function loadLeague(id, day, signal) {
     const summary = count === 0 ? "No games scheduled" : `${count} ${count === 1 ? "game" : "games"}`;
     const updated = stampFormat.format(new Date(snapshot.fetchedAt));
     status.textContent = `${summary} · ${snapshot.source} · ${saved ? "Refresh failed, saved" : "Updated"} ${updated}`;
-    nationalFreshness.hidden = !saved;
-    nationalFreshness.textContent = saved ? `Saved listings · ${updated}` : "";
+    for (const { freshness } of summaries) {
+      freshness.hidden = !saved;
+      freshness.textContent = saved ? `Saved listings · ${updated}` : "";
+    }
     if (count) {
       const list = element("ul", "", "tipoff-games");
       for (const game of snapshot.games) {
-        const national = game.broadcasts.filter(broadcast => isNationalBroadcast(broadcast, id));
-        list.append(gameRow(game, id, game.broadcasts, national.length > 0));
-        if (national.length) nationalGames.append(gameRow(game, id, national));
+        const nationalBroadcasts = game.broadcasts.filter(broadcast => isNationalBroadcast(broadcast, id));
+        const isFollowed = followedTeam && [game.awayCode, game.homeCode]
+          .some(code => followedTeam.codes.includes(code.toUpperCase()));
+        let highlight;
+        if (isFollowed) highlight = "tipoff-game-followed";
+        else if (nationalBroadcasts.length) highlight = "tipoff-game-national";
+        list.append(gameRow(game, id, game.broadcasts, highlight));
+        if (nationalBroadcasts.length) national.games.append(gameRow(game, id, nationalBroadcasts));
+        if (isFollowed) followed.games.append(gameRow(game, id, game.broadcasts));
       }
-      nationalGroup.hidden = !nationalGames.childElementCount;
+      for (const { group, games } of summaries) group.hidden = !games.childElementCount;
       results.append(list);
     }
     if (snapshot.altitudeWarning) results.append(element("p", snapshot.altitudeWarning, "tipoff-meta"));
@@ -207,8 +237,7 @@ async function loadLeague(id, day, signal) {
   } catch {
     if (signal.aborted) return;
     results.replaceChildren();
-    nationalGroup.hidden = true;
-    nationalGames.replaceChildren();
+    summaries.forEach(resetSummary);
     status.textContent = "Schedule unavailable.";
     return false;
   }
@@ -220,13 +249,18 @@ async function loadDay() {
   const key = dayKey(date);
   dateTitle.textContent = dayKey(new Date()) === key ? `Today · ${dateFormat.format(date)}` : dateFormat.format(date);
   const { signal } = request;
+  followedStatus.textContent = "Checking followed teams…";
   nationalStatus.textContent = "Checking national broadcasts…";
-  for (const { nationalGroup, nationalGames } of sections.values()) {
-    nationalGroup.hidden = true;
-    nationalGames.replaceChildren();
+  for (const { national, followed } of sections.values()) {
+    resetSummary(national);
+    if (followed) resetSummary(followed);
   }
-  const loaded = await Promise.all([...sections.keys()].map(id => loadLeague(id, key, signal)));
+  const ids = [...sections.keys()];
+  const loaded = await Promise.all(ids.map(id => loadLeague(id, key, signal)));
   if (signal.aborted) return;
+  const missingFollowed = loaded.some((result, index) => !result && followedTeams.has(ids[index]));
+  followedStatus.textContent = missingFollowed ? "Some followed team schedules are unavailable."
+    : followedLeagues.querySelector(".tipoff-game") ? "" : "No followed teams scheduled.";
   if (loaded.some(result => !result)) {
     nationalStatus.textContent = "Some league schedules are unavailable.";
   } else {
