@@ -134,9 +134,9 @@ function isNationalBroadcast({ name, category }, league) {
     (market === "national" || (league === "nba" && market === "streaming"));
 }
 
-function gameRow(game, league, broadcasts, national) {
+function gameRow(game, league, broadcasts, highlight = false) {
   const row = element("li", "", "tipoff-game");
-  row.classList.toggle("tipoff-game-national", national);
+  row.classList.toggle("tipoff-game-national", highlight);
   const start = game.start ? timeFormat.format(new Date(game.start)) : "Time TBD";
   const matchup = element("p", "", "tipoff-matchup");
   matchup.append(
@@ -187,7 +187,7 @@ async function loadLeague(id, day, signal) {
       for (const game of snapshot.games) {
         const national = game.broadcasts.filter(broadcast => isNationalBroadcast(broadcast, id));
         list.append(gameRow(game, id, game.broadcasts, national.length > 0));
-        if (national.length) nationalGames.append(gameRow(game, id, national, true));
+        if (national.length) nationalGames.append(gameRow(game, id, national));
       }
       nationalGroup.hidden = !nationalGames.childElementCount;
       results.append(list);

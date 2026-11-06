@@ -4,6 +4,8 @@ Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone C
 
 ## National broadcast section
 
+- Verified the border refinement in the local browser. All three summary rows had standard dividers, and the corresponding three rows in the full schedule retained their lime outlines. JavaScript syntax and Git whitespace checks passed. **0 app tests executed**.
+
 - Verified November 5 in the local browser. The summary showed NFL (one game) and NHL (two games), with the same three games outlined below. The NHL feed categorized Anaheim–Edmonton’s Prime Video listing as Away TV. Utah–Montréal, NBA TV, and the other regional listings stayed out of the summary.
 - Verified no horizontal overflow at the narrow browser width, previous-day and Today navigation, and that the NBA filter applies to the lower schedule only. JavaScript syntax and Git whitespace checks passed. Frontend-only change. **0 app tests executed**.
 

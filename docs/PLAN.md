@@ -2,7 +2,7 @@
 
 ## Local browser guide — November 5, 2026
 
-The local browser guide uses a dark sports scoreboard layout. It opens to today across all five leagues and supports league filtering and day navigation. The national broadcast section follows the selected date and keeps all qualifying leagues visible while the lower schedule is filtered. The same games are outlined below. The header and footer link to JimmyWeber.com. The schedule uses team and selected network logos with visible names and distinct labels for radio, regional, and explicitly listed League Pass broadcasts. `/sports` redirects to `/tip-off`. The preview reads live schedules through Tipoff’s Swift provider. Production routing, the portfolio registry link, and a production schedule endpoint are pending. See the [website handoff](../WEBSITE-HANDOFF.md).
+The local browser guide uses a dark sports scoreboard layout. It opens to today across all five leagues and supports league filtering and day navigation. The national broadcast section follows the selected date and keeps all qualifying leagues visible while the lower schedule is filtered. Only the full schedule outlines qualifying games. The header and footer link to JimmyWeber.com. The schedule uses team and selected network logos with visible names and distinct labels for radio, regional, and explicitly listed League Pass broadcasts. `/sports` redirects to `/tip-off`. The preview reads live schedules through Tipoff’s Swift provider. Production routing, the portfolio registry link, and a production schedule endpoint are pending. See the [website handoff](../WEBSITE-HANDOFF.md).
 
 ## Current platform availability — November 1, 2026
 
