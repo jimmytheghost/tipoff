@@ -53,7 +53,7 @@ a { color: var(--accent); }
   text-transform: uppercase;
 }
 
-.tipoff-about {
+.tipoff-back {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
@@ -62,7 +62,7 @@ a { color: var(--accent); }
   text-decoration: none;
 }
 
-.tipoff-about:hover { text-decoration: underline; }
+.tipoff-back:hover { text-decoration: underline; }
 
 .tipoff-guide { padding-block: clamp(1.3rem, 4vw, 2.5rem) 3rem; }
 
@@ -211,4 +211,82 @@ a { color: var(--accent); }
 
   .tipoff-start { text-align: left; }
   .tipoff-broadcasts { grid-column: auto; }
+}
+
+.tipoff-footer {
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.tipoff-matchup {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.tipoff-team {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 1.75rem;
+}
+
+.tipoff-team-logo {
+  width: 1.75rem;
+  height: 1.75rem;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+ul.tipoff-broadcasts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tipoff-broadcast {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+  max-width: 100%;
+  padding: 0.2rem 0.45rem;
+  border: 1px solid var(--line);
+  border-radius: 0.3rem;
+}
+
+.tipoff-network-logo {
+  width: 2.9rem;
+  height: 1.4rem;
+  object-fit: contain;
+  flex-shrink: 0;
+  padding: 0.12rem;
+  border-radius: 0.15rem;
+  background: #fff;
+}
+
+.tipoff-station-tag {
+  flex-shrink: 0;
+  white-space: nowrap;
+  color: var(--ink);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.tipoff-pass .tipoff-station-tag {
+  padding-inline: 0.25rem;
+  border-radius: 0.15rem;
+  background: var(--accent);
+  color: var(--canvas);
+}
+
+.tipoff-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }

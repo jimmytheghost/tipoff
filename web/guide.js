@@ -42,14 +42,90 @@ function select(league) {
   for (const [id, { section }] of sections) section.hidden = active !== "all" && active !== id;
 }
 
-function gameRow(game) {
+// League-native codes differ from ESPN's logo filenames for these clubs.
+const logoAliases = {
+  nba: { BRK: "bkn", GSW: "gs", NOP: "no", NYK: "ny", SAS: "sa", UTA: "utah", WAS: "wsh" },
+  nfl: { JAC: "jax", WAS: "wsh" },
+  wnba: { GSV: "gs", LAS: "la", LVA: "lv", NYL: "ny", PHO: "phx", WAS: "wsh" },
+  nhl: { LAK: "la", NJD: "nj", SJS: "sj", TBL: "tb", UTA: "utah", WSH: "wsh" },
+  mlb: { CWS: "chw", OAK: "ath", WSN: "wsh" },
+};
+
+const networkLogos = new Map([
+  ["prime video", "https://upload.wikimedia.org/wikipedia/commons/9/90/Prime_Video_logo_%282024%29.svg"],
+  ["espn", "https://a.espncdn.com/i/espn/espn_logos/espn_red.png"],
+  ["hulu", "https://upload.wikimedia.org/wikipedia/commons/f/f9/Hulu_logo_%282018%29.svg"],
+  ["disney+", "https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg"],
+  ["nbc", "https://upload.wikimedia.org/wikipedia/commons/0/0b/NBC_logo_2022.svg"],
+  ["abc", "https://upload.wikimedia.org/wikipedia/commons/2/2f/ABC-2021-LOGO.svg"],
+  ["cbs", "https://upload.wikimedia.org/wikipedia/commons/4/4e/CBS_logo.svg"],
+]);
+
+function mark(url, className) {
+  const image = element("img", "", className);
+  image.alt = "";
+  image.referrerPolicy = "no-referrer";
+  image.loading = "lazy";
+  image.addEventListener("error", () => image.remove(), { once: true });
+  image.src = url;
+  return image;
+}
+
+function team(name, code, league) {
+  const line = element("span", "", "tipoff-team");
+  if (/^[A-Z0-9]{2,5}$/i.test(code)) {
+    const key = code.toUpperCase();
+    const slug = logoAliases[league][key] ?? key.toLowerCase();
+    const url = league === "mlb" && /^\d+$/.test(key)
+      ? `https://www.mlbstatic.com/team-logos/${key}.svg`
+      : `https://a.espncdn.com/i/teamlogos/${league}/500/${slug}.png`;
+    line.append(mark(url, "tipoff-team-logo"));
+  }
+  line.append(name);
+  return line;
+}
+
+function broadcastList(broadcasts) {
+  const list = element("ul", "", "tipoff-broadcasts");
+  const byName = new Map();
+  for (const { name, category } of broadcasts) {
+    const key = name.trim().toLowerCase();
+    if (!key) continue;
+    if (!byName.has(key)) byName.set(key, { name, categories: [] });
+    byName.get(key).categories.push(category.toLowerCase());
+  }
+  for (const [key, { name, categories }] of byName) {
+    const item = element("li", "", "tipoff-broadcast");
+    const logo = networkLogos.get(key);
+    if (key === "league pass" || key === "nba league pass") {
+      item.classList.add("tipoff-pass");
+      item.append(element("span", "LP", "tipoff-station-tag"));
+      item.firstChild.setAttribute("aria-hidden", "true");
+    } else if (categories.some(category => category.includes("radio"))) {
+      item.append(element("span", "Radio", "tipoff-station-tag"));
+    } else if (categories.some(category => /^(home|away|local|regional)\b/.test(category))) {
+      item.append(element("span", "Regional", "tipoff-station-tag"));
+    }
+    if (logo) item.append(mark(logo, "tipoff-network-logo"));
+    item.append(element("span", name));
+    list.append(item);
+  }
+  return list.childElementCount ? list : element("p", "Broadcasters not listed", "tipoff-broadcasts");
+}
+
+function gameRow(game, league) {
   const row = element("li", "", "tipoff-game");
   const start = game.start ? timeFormat.format(new Date(game.start)) : "Time TBD";
-  const names = [...new Set(game.broadcasts.map(item => item.name))];
+  const matchup = element("p", "", "tipoff-matchup");
+  matchup.append(
+    team(game.away, game.awayCode, league),
+    element("span", " at ", "tipoff-visually-hidden"),
+    team(game.home, game.homeCode, league)
+  );
   row.append(
-    element("p", `${game.away} at ${game.home}`, "tipoff-matchup"),
+    matchup,
     element("p", game.notice ? `${start} · ${game.notice}` : start, "tipoff-start"),
-    element("p", names.join(", ") || "Broadcasters not listed", "tipoff-broadcasts")
+    broadcastList(game.broadcasts)
   );
   if (game.altitude) {
     const details = element("details", "", "tipoff-altitude");
@@ -84,7 +160,7 @@ async function loadLeague(id, day, signal) {
     status.textContent = `${summary} · ${snapshot.source} · ${saved ? "Refresh failed, saved" : "Updated"} ${updated}`;
     if (count) {
       const list = element("ul", "", "tipoff-games");
-      list.append(...snapshot.games.map(gameRow));
+      list.append(...snapshot.games.map(game => gameRow(game, id)));
       results.append(list);
     }
     if (snapshot.altitudeWarning) results.append(element("p", snapshot.altitudeWarning, "tipoff-meta"));
