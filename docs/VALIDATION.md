@@ -2,6 +2,10 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Dark broadcaster logos
+
+- Verified Prime Video, ESPN+, Hulu, and Disney+ in the local browser. All four loaded on transparent backgrounds and retained their names in visually hidden text. JavaScript syntax and Git whitespace checks passed. **0 app tests executed**.
+
 ## National broadcast section
 
 - Verified the border refinement in the local browser. All three summary rows had standard dividers, and the corresponding three rows in the full schedule retained their lime outlines. JavaScript syntax and Git whitespace checks passed. **0 app tests executed**.

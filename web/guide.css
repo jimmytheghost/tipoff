@@ -258,13 +258,14 @@ ul.tipoff-broadcasts {
 }
 
 .tipoff-network-logo {
-  width: 2.9rem;
-  height: 1.4rem;
+  width: 4.25rem;
+  height: 1.5rem;
   object-fit: contain;
   flex-shrink: 0;
-  padding: 0.12rem;
-  border-radius: 0.15rem;
-  background: #fff;
+}
+
+.tipoff-network-logo-light {
+  filter: brightness(0) invert(1);
 }
 
 .tipoff-station-tag {

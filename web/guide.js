@@ -66,8 +66,9 @@ const logoAliases = {
 const networkLogos = new Map([
   ["prime video", "https://upload.wikimedia.org/wikipedia/commons/9/90/Prime_Video_logo_%282024%29.svg"],
   ["espn", "https://a.espncdn.com/i/espn/espn_logos/espn_red.png"],
+  ["espn+", "https://upload.wikimedia.org/wikipedia/commons/8/80/ESPN_Plus.svg"],
   ["hulu", "https://upload.wikimedia.org/wikipedia/commons/f/f9/Hulu_logo_%282018%29.svg"],
-  ["disney+", "https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg"],
+  ["disney+", "https://upload.wikimedia.org/wikipedia/commons/7/77/Disney_Plus_logo.svg"],
   ["nbc", "https://upload.wikimedia.org/wikipedia/commons/0/0b/NBC_logo_2022.svg"],
   ["abc", "https://upload.wikimedia.org/wikipedia/commons/2/2f/ABC-2021-LOGO.svg"],
   ["cbs", "https://upload.wikimedia.org/wikipedia/commons/4/4e/CBS_logo.svg"],
@@ -118,8 +119,14 @@ function broadcastList(broadcasts) {
     } else if (categories.some(category => /^(home|away|local|regional)\b/.test(category))) {
       item.append(element("span", "Regional", "tipoff-station-tag"));
     }
-    if (logo) item.append(mark(logo, "tipoff-network-logo"));
-    item.append(element("span", name));
+    const label = element("span", name);
+    if (logo) {
+      const image = mark(logo, "tipoff-network-logo");
+      if (key === "espn+" || key === "cbs") image.classList.add("tipoff-network-logo-light");
+      image.addEventListener("load", () => label.classList.add("tipoff-visually-hidden"), { once: true });
+      item.append(image);
+    }
+    item.append(label);
     list.append(item);
   }
   return list.childElementCount ? list : element("p", "Broadcasters not listed", "tipoff-broadcasts");
