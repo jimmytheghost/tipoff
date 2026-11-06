@@ -1,5 +1,9 @@
 # Product plan
 
+## Browser guide preparation — November 5, 2026
+
+Plan one mobile-first page at `/tip-off` on JimmyWeber.com, with `/sports` redirecting to it. The guide opens to today across all five leagues and can be filtered by league. See the [website handoff](../WEBSITE-HANDOFF.md) for the design, data contract, and pending integration.
+
 ## Current platform availability — November 1, 2026
 
 Tipoff includes native macOS menu bar and Windows system-tray apps, both with NBA, NFL, WNBA, NHL, and MLB guides. Current versions are built from source: SwiftUI on macOS 15+, and C# / WPF on Windows 10/11 x64 with the .NET 9 SDK. Windows installation uses `scripts/install-windows.ps1` for a stable current-user installation and Start Menu shortcut.

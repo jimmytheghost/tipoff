@@ -15,6 +15,8 @@ This is a personal tool I’m sharing as it stands. If it’s useful, take it. I
 
 The current source includes all five sports on both platforms. The only published download, [v0.2.0](https://github.com/jimmytheghost/tipoff/releases/tag/v0.2.0), is an older **macOS-only, NBA-only** build; there is no published Windows binary yet.
 
+A browser guide for JimmyWeber.com is in preparation. See the [website handoff](WEBSITE-HANDOFF.md) for the proposed routes and behavior.
+
 ## What it does today
 
 - Switches between NBA, NFL, WNBA, NHL, and MLB in a compact 360-unit guide, opened from the macOS menu bar or Windows system tray. On macOS, the menu bar icon follows the selected sport; Windows uses a basketball tray icon.

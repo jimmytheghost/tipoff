@@ -22,3 +22,7 @@ Native NBA/NFL/WNBA/NHL/MLB viewing guide for macOS 15+ (SwiftUI menu bar app, p
 - The repository is public at `https://github.com/jimmytheghost/tipoff`. It is an MIT-licensed personal tool shared as-is; keep that framing in documentation. Do not promise product support or a release cadence.
 - After each completed change, run relevant validation, update affected documentation, commit, and push the current branch before reporting completion. Preserve unrelated work and report commit or push failures.
 - Keep generated builds, local caches, credentials, and user data out of Git. Documentation-only changes need diff/content checks rather than an app rebuild.
+
+## JimmyWeber.com
+
+For work on the browser guide, read [website publishing](core/WEBSITE-PUBLISHING.md), [website copy and layout](core/WEBSITE-COPY-AND-LAYOUT.md), and [link previews](core/LINK-PREVIEWS.md). Maintain [the handoff](WEBSITE-HANDOFF.md) and track imported guidance in [TOOLKIT_IMPORTS.md](TOOLKIT_IMPORTS.md).

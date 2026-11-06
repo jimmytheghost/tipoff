@@ -2,6 +2,11 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Website preparation — November 5, 2026
+
+- Reviewed Agentic Toolkit publishing, layout, and link preview guidance and the website’s existing deployment and project notes. The public homepage and Tipoff portfolio page returned HTTP 200. The proposed `/sports` and `/tip-off` paths returned HTTP 404.
+- Documentation-only change. **0 app tests executed**. Checked Markdown references and diff whitespace.
+
 ## GitHub platform documentation — November 1, 2026
 
 - Reviewed repository metadata, published releases, README, project instructions, plan, and data/source documentation against the Windows installer, packaging script, and WPF project. Updated the README's title, platform table, shared feature wording, build headings, and local-data paths; project instructions now identify both native apps and the computer's time zone.
