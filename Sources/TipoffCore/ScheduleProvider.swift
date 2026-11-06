@@ -1,4 +1,7 @@
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 public protocol ScheduleLoading: Sendable {
     func load(day: Date, timeZone: TimeZone) async throws -> ScheduleSnapshot

@@ -1,5 +1,8 @@
+import Foundation
+#if os(macOS)
 import AppKit
 import SwiftUI
+#endif
 import TipoffCore
 
 @main struct Check {
@@ -13,6 +16,7 @@ import TipoffCore
             }
             return
         }
+        #if os(macOS)
         if CommandLine.arguments.contains("--render") {
             _ = NSApplication.shared
             let path = CommandLine.arguments.last!
@@ -44,6 +48,7 @@ import TipoffCore
             print("Rendered \(path)")
             return
         }
+        #endif
         let zone = TimeZone(identifier: "America/Denver")!
         let f = DateFormatter(); f.timeZone = zone; f.dateFormat = "yyyy-MM-dd"
         let date = CommandLine.arguments.dropFirst().first(where: { !$0.hasPrefix("--") }).flatMap { f.date(from: $0) } ?? Date()

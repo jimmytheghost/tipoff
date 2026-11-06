@@ -4,11 +4,16 @@ import Foundation
 let frameworks = "/Library/Developer/CommandLineTools/Library/Developer/Frameworks"
 let libraries = "/Library/Developer/CommandLineTools/Library/Developer/usr/lib"
 let clt = FileManager.default.fileExists(atPath: frameworks + "/Testing.framework")
+#if os(macOS)
+let platformExclusions: [String] = []
+#else
+let platformExclusions = ["ScheduleStore.swift", "TipoffMenuView.swift"]
+#endif
 let package = Package(name: "Tipoff", platforms: [.macOS("15.0")], products: [
     .executable(name: "Tipoff", targets: ["Tipoff"]),
     .executable(name: "TipoffCheck", targets: ["TipoffCheck"])
 ], targets: [
-    .target(name: "TipoffCore"),
+    .target(name: "TipoffCore", exclude: platformExclusions),
     .executableTarget(name: "Tipoff", dependencies: ["TipoffCore"]),
     .executableTarget(name: "TipoffCheck", dependencies: ["TipoffCore"]),
     .testTarget(name: "TipoffTests", dependencies: ["TipoffCore"], resources: [.copy("Fixtures")],

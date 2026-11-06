@@ -2,6 +2,12 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Production web deployment
+
+- `scripts/test.sh` passed **57 of 57 tests**. `scripts/package-app.sh` built and verified the macOS app. A live macOS `TipoffCheck` returned 11 NHL games for November 5 in America/Denver.
+- Built the x86-64 Linux executable in the Swift Jammy container and verified it on the production host as the web user. Live November 5 results through the public endpoint were NBA 2, NFL 1, WNBA 0, NHL 11, and MLB 0. The production origin received NBA HTTP 403 and MLB HTTP 406. Both guides showed ESPN fallback.
+- Release `tipoff-web-20261105-01` passed all eight configured HTTP checks. The public alias and trailing slash routes reached the canonical URL, the endpoint rejected an invalid date with HTTP 400, and a preview crawler fetched the metadata and 1920 × 1080 image. The live browser showed Jaguars @ Ravens once on the NFL tab without horizontal overflow. Messages rendering remains untested.
+
 ## Roboto typography
 
 - Verified the compact uppercase return links, subtitle, time zone label, and source label at 664 px in the local browser. The update time remains on its own line and the page had no horizontal overflow. JavaScript syntax and Git whitespace checks passed. **0 app tests executed**.
