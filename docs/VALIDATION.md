@@ -4,6 +4,8 @@ Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone C
 
 ## Roboto typography
 
+- Verified the compact uppercase return links, subtitle, time zone label, and source label at 664 px in the local browser. The update time remains on its own line and the page had no horizontal overflow. JavaScript syntax and Git whitespace checks passed. **0 app tests executed**.
+
 - Verified the font stylesheet includes Roboto weights 400–800. Browser computed styles showed Roboto for the intro, back link, freshness, broadcast list, and team names. Git whitespace checks passed. **0 app tests executed**.
 
 ## Teams Followed

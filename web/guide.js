@@ -227,7 +227,10 @@ async function loadLeague(id, day, signal) {
     const count = snapshot.games.length;
     gameCount.textContent = `${count} ${count === 1 ? "game" : "games"}`;
     const updated = stampFormat.format(new Date(snapshot.fetchedAt));
-    status.textContent = `${snapshot.source} · ${saved ? "Refresh failed, saved" : "Updated"} ${updated}`;
+    status.replaceChildren(
+      element("span", snapshot.source, "tipoff-league-source"),
+      element("span", `${saved ? "Refresh failed, saved" : "Updated"} ${updated}`)
+    );
     for (const { freshness } of summaries) {
       freshness.hidden = !saved;
       freshness.textContent = saved ? `Saved listings · ${updated}` : "";
@@ -308,7 +311,7 @@ function moveDay(offset) {
   loadDay();
 }
 
-document.querySelector("#zone").textContent = `Times shown in ${zone.replaceAll("_", " ")}.`;
+document.querySelector("#zone").textContent = zone.replaceAll("_", " ");
 for (const button of buttons.slice(1)) {
   const label = button.querySelector("span");
   const logo = mark(
