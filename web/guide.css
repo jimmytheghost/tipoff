@@ -2,6 +2,7 @@
   color-scheme: dark;
   --canvas: #0b111c;
   --surface: #141f30;
+  --surface-alternate: #182538;
   --raised: #1c2a40;
   --line: #304158;
   --ink: #f5f7fc;
@@ -171,7 +172,12 @@ a { color: var(--accent); }
   gap: 0.22rem 0.65rem;
   align-items: baseline;
   padding: 0.7rem 0.75rem;
-  border-top: 1px solid var(--line);
+}
+
+.tipoff-game:nth-child(odd) { background: var(--surface-alternate); }
+
+.tipoff-game:last-child:not(.tipoff-game-national) {
+  border-radius: 0 0 0.4375rem 0.4375rem;
 }
 
 .tipoff-game p { margin: 0; }
@@ -255,6 +261,10 @@ ul.tipoff-broadcasts {
   padding: 0.2rem 0.45rem;
   border: 1px solid var(--line);
   border-radius: 0.3rem;
+}
+
+.tipoff-broadcast:has(.tipoff-network-logo + .tipoff-visually-hidden) {
+  border-color: transparent;
 }
 
 .tipoff-network-logo {

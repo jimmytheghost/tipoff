@@ -2,6 +2,10 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Game row fills and logo outlines
+
+- Verified in the local browser that loaded broadcaster logos have no visible outline, adjacent NBA rows alternate fills without divider strokes, and qualifying games retain their lime outline in the full schedule. Git whitespace checks passed. **0 app tests executed**.
+
 ## Dark broadcaster logos
 
 - Verified Prime Video, ESPN+, Hulu, and Disney+ in the local browser. All four loaded on transparent backgrounds and retained their names in visually hidden text. JavaScript syntax and Git whitespace checks passed. **0 app tests executed**.
