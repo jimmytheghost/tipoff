@@ -15,7 +15,7 @@ This is a personal tool I’m sharing as it stands. If it’s useful, take it. I
 
 The current source includes all five sports on both platforms. The only published download, [v0.2.0](https://github.com/jimmytheghost/tipoff/releases/tag/v0.2.0), is an older **macOS-only, NBA-only** build; there is no published Windows binary yet.
 
-To try the browser guide locally on macOS, run `scripts/preview-web.sh` with Python 3.9 or newer and open [the local schedule](http://127.0.0.1:8765/tip-off). The guide opens to today across all five leagues and uses the browser’s time zone. Teams Followed and National broadcasts sit above the date controls. In the full schedule, followed games have blue outlines and other national games have lime outlines. The guide shows team logos and dark-background broadcaster logos with accessible names and text fallback. See the [website handoff](WEBSITE-HANDOFF.md) for production integration.
+To try the browser guide locally on macOS, run `scripts/preview-web.sh` with Python 3.9 or newer and open [the local schedule](http://127.0.0.1:8765/tip-off). The guide opens to today across all five leagues and uses the browser’s time zone. Following & National Broadcasts sits above the date controls. Select any other game to reveal its broadcast details. In the full schedule, followed games have blue outlines and other national games have lime outlines. The guide shows team logos and dark-background broadcaster logos with accessible names and text fallback. See the [website handoff](WEBSITE-HANDOFF.md) for production integration.
 
 ## What it does today
 

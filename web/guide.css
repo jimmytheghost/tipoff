@@ -166,11 +166,15 @@ a { color: var(--accent); }
   margin: 0;
 }
 
-.tipoff-game {
+.tipoff-game,
+.tipoff-game-toggle {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 0.22rem 0.65rem;
   align-items: center;
+}
+
+.tipoff-game {
   padding: 0.7rem 0.75rem;
 }
 
@@ -348,4 +352,38 @@ ul.tipoff-broadcasts {
     grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
     align-items: start;
   }
+}
+
+.tipoff-summary-divider {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 0 0 0.75rem;
+}
+
+.tipoff-game-details {
+  grid-column: 1 / -1;
+}
+
+.tipoff-game-toggle {
+  cursor: pointer;
+  list-style: none;
+}
+
+.tipoff-game-toggle::-webkit-details-marker {
+  display: none;
+}
+
+.tipoff-game-toggle .tipoff-start::after {
+  content: "▸" / "";
+  display: inline-block;
+  margin-left: 0.4rem;
+  color: var(--muted);
+}
+
+.tipoff-game-details[open] .tipoff-start::after {
+  transform: rotate(90deg);
+}
+
+.tipoff-game-details[open] > .tipoff-broadcasts {
+  margin-top: 0.35rem;
 }

@@ -163,20 +163,25 @@ function isNationalBroadcast({ name, category }, league) {
     (market === "national" || (league === "nba" && market === "streaming"));
 }
 
-function gameRow(game, league, broadcasts, highlight) {
+function gameRow(game, league, broadcasts, highlight, collapseBroadcasts = false) {
   const row = element("li", "", "tipoff-game");
   if (highlight) row.classList.add(highlight);
   const start = game.start ? timeFormat.format(new Date(game.start)) : "Time TBD";
-  const matchup = element("p", "", "tipoff-matchup");
+  const matchup = element("span", "", "tipoff-matchup");
   const home = element("span", "", "tipoff-matchup-home");
   home.append(element("span", " @ ", "tipoff-matchup-separator"), team(game.home, game.homeCode, league));
   matchup.append(team(game.away, game.awayCode, league), home);
-  row.append(
-    matchup,
-    element("p", start, "tipoff-start")
-  );
-  if (game.notice) row.append(element("p", game.notice, "tipoff-game-notice"));
-  row.append(broadcastList(broadcasts));
+  let heading = row;
+  let content = row;
+  if (collapseBroadcasts) {
+    content = element("details", "", "tipoff-game-details");
+    heading = element("summary", "", "tipoff-game-toggle");
+    content.append(heading);
+    row.append(content);
+  }
+  heading.append(matchup, element("span", start, "tipoff-start"));
+  if (game.notice) heading.append(element("span", game.notice, "tipoff-game-notice"));
+  content.append(broadcastList(broadcasts));
   if (game.altitude && broadcasts === game.broadcasts) {
     const details = element("details", "", "tipoff-altitude");
     const altitude = game.altitude;
@@ -186,7 +191,7 @@ function gameRow(game, league, broadcasts, highlight) {
     if (altitude.postgame) details.append(element("p", `Postgame ${timeFormat.format(new Date(altitude.postgame))}`));
     for (const note of altitude.notes) details.append(element("p", note));
     details.append(element("p", `${altitude.saved ? "Saved Altitude data" : "Altitude updated"} ${stampFormat.format(new Date(altitude.fetchedAt))}`, "tipoff-meta"));
-    row.append(details);
+    content.append(details);
   }
   return row;
 }
@@ -223,7 +228,7 @@ async function loadLeague(id, day, signal) {
         let highlight;
         if (isFollowed) highlight = "tipoff-game-followed";
         else if (nationalBroadcasts.length) highlight = "tipoff-game-national";
-        list.append(gameRow(game, id, game.broadcasts, highlight));
+        list.append(gameRow(game, id, game.broadcasts, highlight, !highlight));
         if (nationalBroadcasts.length) national.games.append(gameRow(game, id, nationalBroadcasts));
         if (isFollowed) followed.games.append(gameRow(game, id, game.broadcasts));
       }
