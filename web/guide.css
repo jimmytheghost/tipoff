@@ -111,7 +111,27 @@ a { color: var(--accent); }
 .button:hover { background: var(--raised); }
 
 #previous,
-#next { font-size: 1.5rem; }
+#next,
+#today {
+  border: 0;
+  background: transparent;
+}
+
+#previous:hover,
+#next:hover,
+#today:hover {
+  background: var(--raised);
+}
+
+.tipoff-date svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 
 .tipoff-filters {
   display: grid;
@@ -122,15 +142,28 @@ a { color: var(--accent); }
 }
 
 .tipoff-filters .button {
+  position: relative;
+  min-height: 3rem;
   padding-inline: 0.2rem;
+  border: 0;
+  background: transparent;
   font: 700 1.1rem/1 var(--heading);
   text-transform: uppercase;
 }
 
+.tipoff-filters .button:hover {
+  background: var(--raised);
+}
+
 .tipoff-filters [aria-pressed="true"] {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: var(--canvas);
+  box-shadow: inset 0 -2px var(--accent);
+  color: var(--accent);
+}
+
+.tipoff-league-logo {
+  width: 2.1rem;
+  height: 2.1rem;
+  object-fit: contain;
 }
 
 .tipoff-meta,

@@ -37,6 +37,21 @@
   <main class="tipoff-guide">
     <h1>Game schedule</h1>
     <p class="tipoff-intro">Start times and broadcast listings</p>
+    <div class="tipoff-date" role="group" aria-label="Schedule date">
+      <button class="button" id="previous" type="button" aria-label="Previous day"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <h2 id="date" aria-live="polite"></h2>
+      <button class="button" id="next" type="button" aria-label="Next day"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+      <button class="button" id="today" type="button">Today</button>
+    </div>
+    <div class="tipoff-filters" role="group" aria-label="Filter by league">
+      <button class="button" type="button" data-league="all" aria-pressed="true">All</button>
+      <button class="button" type="button" data-league="nba" aria-pressed="false"><span>NBA</span></button>
+      <button class="button" type="button" data-league="nfl" aria-pressed="false"><span>NFL</span></button>
+      <button class="button" type="button" data-league="wnba" aria-pressed="false"><span>WNBA</span></button>
+      <button class="button" type="button" data-league="nhl" aria-pressed="false"><span>NHL</span></button>
+      <button class="button" type="button" data-league="mlb" aria-pressed="false"><span>MLB</span></button>
+    </div>
+    <p id="zone" class="tipoff-meta"></p>
     <section class="tipoff-summary" aria-labelledby="followed-title">
       <h2 id="followed-title">Following &amp; National Broadcasts</h2>
       <p id="followed-status" class="tipoff-meta" role="status"></p>
@@ -48,21 +63,6 @@
       <p id="national-status" class="tipoff-meta" role="status"></p>
       <div id="national-leagues" class="tipoff-summary-groups"></div>
     </section>
-    <div class="tipoff-date" role="group" aria-label="Schedule date">
-      <button class="button" id="previous" type="button" aria-label="Previous day">‹</button>
-      <h2 id="date" aria-live="polite"></h2>
-      <button class="button" id="next" type="button" aria-label="Next day">›</button>
-      <button class="button" id="today" type="button">Today</button>
-    </div>
-    <div class="tipoff-filters" role="group" aria-label="Filter by league">
-      <button class="button" type="button" data-league="all" aria-pressed="true">All</button>
-      <button class="button" type="button" data-league="nba" aria-pressed="false">NBA</button>
-      <button class="button" type="button" data-league="nfl" aria-pressed="false">NFL</button>
-      <button class="button" type="button" data-league="wnba" aria-pressed="false">WNBA</button>
-      <button class="button" type="button" data-league="nhl" aria-pressed="false">NHL</button>
-      <button class="button" type="button" data-league="mlb" aria-pressed="false">MLB</button>
-    </div>
-    <p id="zone" class="tipoff-meta"></p>
     <noscript><p>Enable JavaScript to load schedules for your time zone.</p></noscript>
     <div id="leagues" class="tipoff-leagues"></div>
   </main>

@@ -305,6 +305,15 @@ function moveDay(offset) {
 }
 
 document.querySelector("#zone").textContent = `Times shown in ${zone.replaceAll("_", " ")}.`;
+for (const button of buttons.slice(1)) {
+  const label = button.querySelector("span");
+  const logo = mark(
+    `https://a.espncdn.com/i/teamlogos/leagues/500/${button.dataset.league}.png`,
+    "tipoff-league-logo"
+  );
+  logo.addEventListener("load", () => label.classList.add("tipoff-visually-hidden"), { once: true });
+  button.prepend(logo);
+}
 buttons.forEach(button => button.addEventListener("click", () => select(button.dataset.league)));
 document.querySelector("#previous").addEventListener("click", () => moveDay(-1));
 document.querySelector("#next").addEventListener("click", () => moveDay(1));

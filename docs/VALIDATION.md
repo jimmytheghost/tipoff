@@ -6,6 +6,10 @@ Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone C
 
 - Verified the November 5 local browser view. Predators–Avalanche appeared in both summaries and had a blue outline in the full schedule. The two other national games retained lime outlines. Neither summary had outlined game rows. JavaScript syntax and Git whitespace checks passed. **0 app tests executed**.
 
+## Schedule controls
+
+- Verified that the date controls and filters appear above the summaries, all five ESPN CDN league logos load, and the filter buttons have no borders. The NHL filter and date navigation responded in the local browser. JavaScript syntax and Git whitespace checks passed. **0 app tests executed**.
+
 ## Web TV and streaming listings
 
 - Verified that NHL.com marks NHLN as National for Sharks @ Wild on November 6. The web guide now keeps the listing in the expandable full schedule without highlighting the game. Verified that Prime Video games remain highlighted and radio labels are absent. JavaScript syntax and Git whitespace checks passed. **0 app tests executed**.
