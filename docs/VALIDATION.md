@@ -6,6 +6,10 @@ Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone C
 
 - Verified the November 5 local browser view. Predators–Avalanche appeared in both summaries and had a blue outline in the full schedule. The two other national games retained lime outlines. Neither summary had outlined game rows. JavaScript syntax and Git whitespace checks passed. **0 app tests executed**.
 
+## Compact headers and deduplicated broadcasts
+
+- Verified in the local browser that Predators @ Avalanche appears only under the followed summary, with a National marker. The NBA header shows the game count beside the name and right-aligned source and freshness. JavaScript syntax and Git whitespace checks passed. **0 app tests executed**.
+
 ## Inactive leagues
 
 - Verified the local November 5 view with NBA, NFL, and NHL above the collapsed WNBA and MLB sections. MLB opened on click and collapsed on Space, returning to 50% brightness. JavaScript syntax and Git whitespace checks passed. **0 app tests executed**.

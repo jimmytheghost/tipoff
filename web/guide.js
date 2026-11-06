@@ -43,10 +43,11 @@ function summaryGroup(parent, id, name) {
   group.append(title, freshness, games);
   group.hidden = true;
   parent.append(group);
-  return { group, games, freshness };
+  return { group, title, games, freshness };
 }
 
-function resetSummary({ group, games }) {
+function resetSummary({ group, title, games }) {
+  title.querySelector(".tipoff-national-marker")?.remove();
   group.hidden = true;
   games.replaceChildren();
 }
@@ -54,18 +55,22 @@ function resetSummary({ group, games }) {
 const sections = new Map(buttons.slice(1).map(button => {
   const id = button.dataset.league;
   const section = element("section", "", "tipoff-league");
-  const title = element("h2", button.textContent);
+  const title = element("h2", "", "tipoff-league-header");
   title.id = `league-${id}`;
-  section.setAttribute("aria-labelledby", title.id);
-  const status = element("p", "", "tipoff-league-status");
+  const name = element("span", button.textContent);
+  name.id = `${title.id}-name`;
+  section.setAttribute("aria-labelledby", name.id);
+  const gameCount = element("span", "", "tipoff-league-count");
+  const status = element("span", "", "tipoff-league-freshness");
+  title.append(name, gameCount, status);
   status.setAttribute("role", "status");
   const results = element("div");
-  section.append(title, status, results);
+  section.append(title, results);
   leagues.append(section);
   const national = summaryGroup(nationalLeagues, `national-${id}`, button.textContent);
   const followedTeam = followedTeams.get(id);
   const followed = followedTeam && summaryGroup(followedLeagues, `followed-${id}`, followedTeam.name);
-  return [id, { section, title, status, results, national, followed }];
+  return [id, { section, title, gameCount, status, results, national, followed }];
 }));
 
 function select(league) {
@@ -197,8 +202,9 @@ function gameRow(game, league, broadcasts, highlight, collapseBroadcasts = false
 }
 
 async function loadLeague(id, day, signal) {
-  const { section, title, status, results, national, followed } = sections.get(id);
-  section.replaceChildren(title, status, results);
+  const { section, title, gameCount, status, results, national, followed } = sections.get(id);
+  section.replaceChildren(title, results);
+  gameCount.textContent = "";
   const summaries = followed ? [national, followed] : [national];
   const followedTeam = followedTeams.get(id);
   status.textContent = "Loading schedule…";
@@ -213,9 +219,9 @@ async function loadLeague(id, day, signal) {
       throw new Error("Schedule unavailable");
     }
     const count = snapshot.games.length;
-    const summary = count === 0 ? "No games scheduled" : `${count} ${count === 1 ? "game" : "games"}`;
+    gameCount.textContent = `${count} ${count === 1 ? "game" : "games"}`;
     const updated = stampFormat.format(new Date(snapshot.fetchedAt));
-    status.textContent = `${summary} · ${snapshot.source} · ${saved ? "Refresh failed, saved" : "Updated"} ${updated}`;
+    status.textContent = `${snapshot.source} · ${saved ? "Refresh failed, saved" : "Updated"} ${updated}`;
     for (const { freshness } of summaries) {
       freshness.hidden = !saved;
       freshness.textContent = saved ? `Saved listings · ${updated}` : "";
@@ -230,8 +236,14 @@ async function loadLeague(id, day, signal) {
         if (isFollowed) highlight = "tipoff-game-followed";
         else if (nationalBroadcasts.length) highlight = "tipoff-game-national";
         list.append(gameRow(game, id, game.broadcasts, highlight, !highlight));
-        if (nationalBroadcasts.length) national.games.append(gameRow(game, id, nationalBroadcasts));
-        if (isFollowed) followed.games.append(gameRow(game, id, game.broadcasts));
+        if (isFollowed) {
+          followed.games.append(gameRow(game, id, game.broadcasts));
+          if (nationalBroadcasts.length && !followed.title.querySelector(".tipoff-national-marker")) {
+            followed.title.append(element("span", "National", "tipoff-national-marker"));
+          }
+        } else if (nationalBroadcasts.length) {
+          national.games.append(gameRow(game, id, nationalBroadcasts));
+        }
       }
       for (const { group, games } of summaries) group.hidden = !games.childElementCount;
       results.append(list);
@@ -241,7 +253,7 @@ async function loadLeague(id, day, signal) {
       const details = element("details", "", "tipoff-inactive-league");
       const toggle = element("summary");
       toggle.append(title);
-      details.append(toggle, status, results);
+      details.append(toggle, results);
       section.replaceChildren(details);
     }
     return true;
@@ -249,6 +261,7 @@ async function loadLeague(id, day, signal) {
     if (signal.aborted) return;
     results.replaceChildren();
     summaries.forEach(resetSummary);
+    gameCount.textContent = "";
     status.textContent = "Schedule unavailable.";
     return false;
   }
@@ -280,7 +293,7 @@ async function loadDay() {
     nationalStatus.textContent = "Some league schedules are unavailable.";
   } else {
     nationalStatus.textContent = nationalLeagues.querySelector(".tipoff-game")
-      ? "" : "No national broadcasts listed.";
+      ? "" : "No other national broadcasts listed.";
   }
 }
 

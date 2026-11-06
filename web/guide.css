@@ -407,7 +407,7 @@ ul.tipoff-broadcasts {
 
 .tipoff-inactive-league h2::after {
   content: "▸" / "";
-  float: right;
+  flex-shrink: 0;
   color: var(--muted);
 }
 
@@ -417,4 +417,35 @@ ul.tipoff-broadcasts {
 
 .tipoff-inactive-league:not([open]) h2 {
   border-radius: 0.4375rem;
+}
+
+.tipoff-league-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tipoff-league-count,
+.tipoff-national-marker {
+  color: var(--muted);
+  font: 800 0.65rem/1.2 system-ui, sans-serif;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.tipoff-league-freshness {
+  margin-inline-start: auto;
+  color: var(--muted);
+  font: 400 0.625rem/1.25 system-ui, sans-serif;
+  text-align: right;
+  letter-spacing: normal;
+}
+
+.tipoff-national-marker {
+  margin-inline-start: 0.5rem;
+  color: var(--accent);
+}
+
+.tipoff-inactive-league:not([open]) .tipoff-league-freshness {
+  visibility: hidden;
 }
