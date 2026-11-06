@@ -4,6 +4,8 @@ Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone C
 
 ## Game row fills and logo outlines
 
+- Verified in the local browser that all broadcaster entries, including regional text labels, render without strokes. Full-schedule lime highlights remain visible. **0 app tests executed**.
+
 - Verified in the local browser that loaded broadcaster logos have no visible outline, adjacent NBA rows alternate fills without divider strokes, and qualifying games retain their lime outline in the full schedule. Git whitespace checks passed. **0 app tests executed**.
 
 ## Dark broadcaster logos
