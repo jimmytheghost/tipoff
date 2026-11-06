@@ -6,6 +6,10 @@ Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone C
 
 - Verified the November 5 local browser view. Predators–Avalanche appeared in both summaries and had a blue outline in the full schedule. The two other national games retained lime outlines. Neither summary had outlined game rows. JavaScript syntax and Git whitespace checks passed. **0 app tests executed**.
 
+## Responsive matchup wrapping
+
+- Verified Predators @ Avalanche at 634px and 320px in the local browser. Both names fit on one line at 634px and wrap without clipping or page overflow at 320px. JavaScript syntax and Git whitespace checks passed. **0 app tests executed**.
+
 ## Single-line matchups
 
 - Verified horizontal alignment of both teams, the separator, and the start time on 13 rendered rows across the national summary and full schedule. JavaScript syntax and Git whitespace checks passed. **0 app tests executed**.

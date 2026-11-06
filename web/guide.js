@@ -168,11 +168,9 @@ function gameRow(game, league, broadcasts, highlight) {
   if (highlight) row.classList.add(highlight);
   const start = game.start ? timeFormat.format(new Date(game.start)) : "Time TBD";
   const matchup = element("p", "", "tipoff-matchup");
-  matchup.append(
-    team(game.away, game.awayCode, league),
-    element("span", " @ ", "tipoff-matchup-separator"),
-    team(game.home, game.homeCode, league)
-  );
+  const home = element("span", "", "tipoff-matchup-home");
+  home.append(element("span", " @ ", "tipoff-matchup-separator"), team(game.home, game.homeCode, league));
+  matchup.append(team(game.away, game.awayCode, league), home);
   row.append(
     matchup,
     element("p", start, "tipoff-start")

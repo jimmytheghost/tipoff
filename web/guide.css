@@ -216,12 +216,19 @@ a { color: var(--accent); }
 
 .tipoff-matchup {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.35rem;
   min-width: 0;
   font-size: 0.875rem;
   font-weight: 700;
-  white-space: nowrap;
+}
+
+.tipoff-matchup-home {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 0;
 }
 
 .tipoff-matchup-separator {
@@ -234,11 +241,6 @@ a { color: var(--accent); }
   align-items: center;
   gap: 0.3rem;
   min-width: 0;
-}
-
-.tipoff-team-name {
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .tipoff-team-logo {
