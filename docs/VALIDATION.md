@@ -6,6 +6,10 @@ Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone C
 
 - Verified the November 5 local browser view. Predators–Avalanche appeared in both summaries and had a blue outline in the full schedule. The two other national games retained lime outlines. Neither summary had outlined game rows. JavaScript syntax and Git whitespace checks passed. **0 app tests executed**.
 
+## League filters and highlights
+
+- Verified in the local browser that WNBA hides Avalanche and NFL highlights, NHL restores the Avalanche without NFL, and All restores the cross-league summary. JavaScript syntax and Git whitespace checks passed. **0 app tests executed**.
+
 ## Schedule controls
 
 - Verified that the date controls and filters appear above the summaries, all five ESPN CDN league logos load, and the filter buttons have no borders. The NHL filter and date navigation responded in the local browser. JavaScript syntax and Git whitespace checks passed. **0 app tests executed**.

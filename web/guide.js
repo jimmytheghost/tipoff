@@ -17,6 +17,7 @@ const timeFormat = new Intl.DateTimeFormat(undefined, { timeStyle: "short", time
 const stampFormat = new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short", timeZone: zone });
 let date = new Date();
 let active = "all";
+let loadedSchedules;
 let request;
 
 function element(tag, text, className) {
@@ -76,7 +77,12 @@ const sections = new Map(buttons.slice(1).map(button => {
 function select(league) {
   active = league;
   buttons.forEach(button => button.setAttribute("aria-pressed", button.dataset.league === active));
-  for (const [id, { section }] of sections) section.hidden = active !== "all" && active !== id;
+  for (const [id, { section, national, followed }] of sections) {
+    section.hidden = active !== "all" && active !== id;
+    national.group.hidden = section.hidden || !national.games.childElementCount;
+    if (followed) followed.group.hidden = section.hidden || !followed.games.childElementCount;
+  }
+  updateSummaryStatus();
 }
 
 // League-native codes differ from ESPN's logo filenames for these clubs.
@@ -247,7 +253,7 @@ async function loadLeague(id, day, signal) {
           national.games.append(gameRow(game, id, nationalBroadcasts));
         }
       }
-      for (const { group, games } of summaries) group.hidden = !games.childElementCount;
+      for (const { group, games } of summaries) group.hidden = section.hidden || !games.childElementCount;
       results.append(list);
     }
     if (snapshot.altitudeWarning) results.append(element("p", snapshot.altitudeWarning, "tipoff-meta"));
@@ -272,6 +278,7 @@ async function loadLeague(id, day, signal) {
 async function loadDay() {
   request?.abort();
   request = new AbortController();
+  loadedSchedules = undefined;
   const key = dayKey(date);
   dateTitle.textContent = dayKey(new Date()) === key ? `Today · ${dateFormat.format(date)}` : dateFormat.format(date);
   const { signal } = request;
@@ -288,13 +295,20 @@ async function loadDay() {
   for (const { section } of sections.values()) {
     if (section.firstElementChild.matches(".tipoff-inactive-league")) leagues.append(section);
   }
-  const missingFollowed = loaded.some((result, index) => !result && followedTeams.has(ids[index]));
+  loadedSchedules = new Map(ids.map((id, index) => [id, loaded[index]]));
+  updateSummaryStatus();
+}
+
+function updateSummaryStatus() {
+  if (!loadedSchedules) return;
+  const visibleLeagues = [...loadedSchedules].filter(([id]) => active === "all" || id === active);
+  const missingFollowed = visibleLeagues.some(([id, loaded]) => !loaded && followedTeams.has(id));
   followedStatus.textContent = missingFollowed ? "Some followed team schedules are unavailable."
-    : followedLeagues.querySelector(".tipoff-game") ? "" : "No followed teams scheduled.";
-  if (loaded.some(result => !result)) {
-    nationalStatus.textContent = "Some league schedules are unavailable.";
+    : followedLeagues.querySelector("section:not([hidden])") ? "" : "No followed teams scheduled.";
+  if (visibleLeagues.some(([, loaded]) => !loaded)) {
+    nationalStatus.textContent = "Schedule data is unavailable for one or more leagues in this view.";
   } else {
-    nationalStatus.textContent = nationalLeagues.querySelector(".tipoff-game")
+    nationalStatus.textContent = nationalLeagues.querySelector("section:not([hidden])")
       ? "" : "No other national broadcasts listed.";
   }
 }
