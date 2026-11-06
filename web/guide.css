@@ -391,3 +391,30 @@ ul.tipoff-broadcasts {
 .tipoff-game:has(> .tipoff-game-details:not([open])) {
   filter: brightness(50%);
 }
+
+.tipoff-inactive-league:not([open]) {
+  filter: brightness(50%);
+}
+
+.tipoff-inactive-league summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+.tipoff-inactive-league summary::-webkit-details-marker {
+  display: none;
+}
+
+.tipoff-inactive-league h2::after {
+  content: "▸" / "";
+  float: right;
+  color: var(--muted);
+}
+
+.tipoff-inactive-league[open] h2::after {
+  transform: rotate(90deg);
+}
+
+.tipoff-inactive-league:not([open]) h2 {
+  border-radius: 0.4375rem;
+}

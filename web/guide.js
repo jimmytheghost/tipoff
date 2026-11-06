@@ -65,7 +65,7 @@ const sections = new Map(buttons.slice(1).map(button => {
   const national = summaryGroup(nationalLeagues, `national-${id}`, button.textContent);
   const followedTeam = followedTeams.get(id);
   const followed = followedTeam && summaryGroup(followedLeagues, `followed-${id}`, followedTeam.name);
-  return [id, { section, status, results, national, followed }];
+  return [id, { section, title, status, results, national, followed }];
 }));
 
 function select(league) {
@@ -197,7 +197,8 @@ function gameRow(game, league, broadcasts, highlight, collapseBroadcasts = false
 }
 
 async function loadLeague(id, day, signal) {
-  const { status, results, national, followed } = sections.get(id);
+  const { section, title, status, results, national, followed } = sections.get(id);
+  section.replaceChildren(title, status, results);
   const summaries = followed ? [national, followed] : [national];
   const followedTeam = followedTeams.get(id);
   status.textContent = "Loading schedule…";
@@ -236,6 +237,13 @@ async function loadLeague(id, day, signal) {
       results.append(list);
     }
     if (snapshot.altitudeWarning) results.append(element("p", snapshot.altitudeWarning, "tipoff-meta"));
+    if (count === 0) {
+      const details = element("details", "", "tipoff-inactive-league");
+      const toggle = element("summary");
+      toggle.append(title);
+      details.append(toggle, status, results);
+      section.replaceChildren(details);
+    }
     return true;
   } catch {
     if (signal.aborted) return;
@@ -254,13 +262,17 @@ async function loadDay() {
   const { signal } = request;
   followedStatus.textContent = "Checking followed teams…";
   nationalStatus.textContent = "Checking national broadcasts…";
-  for (const { national, followed } of sections.values()) {
+  for (const { section, national, followed } of sections.values()) {
+    leagues.append(section);
     resetSummary(national);
     if (followed) resetSummary(followed);
   }
   const ids = [...sections.keys()];
   const loaded = await Promise.all(ids.map(id => loadLeague(id, key, signal)));
   if (signal.aborted) return;
+  for (const { section } of sections.values()) {
+    if (section.firstElementChild.matches(".tipoff-inactive-league")) leagues.append(section);
+  }
   const missingFollowed = loaded.some((result, index) => !result && followedTeams.has(ids[index]));
   followedStatus.textContent = missingFollowed ? "Some followed team schedules are unavailable."
     : followedLeagues.querySelector(".tipoff-game") ? "" : "No followed teams scheduled.";
