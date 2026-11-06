@@ -8,6 +8,8 @@ Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone C
 
 ## Compact broadcast listings
 
+- Verified in the local browser that Utah @ Montréal starts at 50% brightness, returns to full brightness on click, and dims again when collapsed with Space. Git whitespace checks passed. **0 app tests executed**.
+
 - Verified the combined heading and thin divider in the local browser. Boston @ Pittsburgh started collapsed, expanded on click, and collapsed on Space. Both summaries retained visible broadcasters. JavaScript syntax and Git whitespace checks passed. **0 app tests executed**.
 
 ## Responsive matchup wrapping

@@ -387,3 +387,7 @@ ul.tipoff-broadcasts {
 .tipoff-game-details[open] > .tipoff-broadcasts {
   margin-top: 0.35rem;
 }
+
+.tipoff-game:has(> .tipoff-game-details:not([open])) {
+  filter: brightness(50%);
+}
