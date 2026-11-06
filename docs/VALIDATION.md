@@ -2,6 +2,10 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Roboto typography
+
+- Verified the font stylesheet includes Roboto weights 400–800. Browser computed styles showed Roboto for the intro, back link, freshness, broadcast list, and team names. Git whitespace checks passed. **0 app tests executed**.
+
 ## Teams Followed
 
 - Verified the November 5 local browser view. Predators–Avalanche appeared in both summaries and had a blue outline in the full schedule. The two other national games retained lime outlines. Neither summary had outlined game rows. JavaScript syntax and Git whitespace checks passed. **0 app tests executed**.

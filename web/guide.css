@@ -8,7 +8,8 @@
   --ink: #f5f7fc;
   --muted: #aebbd0;
   --accent: #c8fa54;
-  --heading: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif;
+  --text: "Roboto", system-ui, sans-serif;
+  --heading: "Barlow Condensed", var(--text);
 }
 
 * { box-sizing: border-box; }
@@ -17,7 +18,7 @@ body {
   margin: 0;
   background: var(--canvas);
   color: var(--ink);
-  font: 1rem/1.5 system-ui, sans-serif;
+  font: 1rem/1.5 var(--text);
 }
 
 a { color: var(--accent); }
@@ -63,6 +64,8 @@ a { color: var(--accent); }
   text-decoration: none;
 }
 
+.tipoff-back { font-weight: 500; }
+
 .tipoff-back:hover { text-decoration: underline; }
 
 .tipoff-guide { padding-block: clamp(1.3rem, 4vw, 2.5rem) 3rem; }
@@ -77,6 +80,7 @@ a { color: var(--accent); }
   margin: 0.5rem 0 1.25rem;
   color: var(--muted);
   font-size: 0.9375rem;
+  font-weight: 400;
 }
 
 .tipoff-date {
@@ -89,7 +93,7 @@ a { color: var(--accent); }
 
 .tipoff-date h2 {
   margin: 0;
-  font: 600 1rem/1.15 system-ui, sans-serif;
+  font: 600 1rem/1.15 var(--text);
   text-align: center;
 }
 
@@ -103,7 +107,7 @@ a { color: var(--accent); }
   border-radius: 0.375rem;
   background: var(--surface);
   color: var(--ink);
-  font: 700 0.875rem/1 system-ui, sans-serif;
+  font: 700 0.875rem/1 var(--text);
   text-decoration: none;
   cursor: pointer;
 }
@@ -461,7 +465,7 @@ ul.tipoff-broadcasts {
 .tipoff-league-count,
 .tipoff-national-marker {
   color: var(--muted);
-  font: 800 0.65rem/1.2 system-ui, sans-serif;
+  font: 800 0.65rem/1.2 var(--text);
   text-transform: uppercase;
   white-space: nowrap;
 }
@@ -469,7 +473,7 @@ ul.tipoff-broadcasts {
 .tipoff-league-freshness {
   margin-inline-start: auto;
   color: var(--muted);
-  font: 400 0.625rem/1.25 system-ui, sans-serif;
+  font: 400 0.625rem/1.25 var(--text);
   text-align: right;
   letter-spacing: normal;
 }
