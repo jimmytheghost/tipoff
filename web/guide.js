@@ -130,7 +130,7 @@ function broadcastList(broadcasts) {
   const byName = new Map();
   for (const { name, category } of broadcasts) {
     const key = name.trim().toLowerCase();
-    if (!key) continue;
+    if (!key || category.toLowerCase().includes("radio")) continue;
     if (!byName.has(key)) byName.set(key, { name, categories: [] });
     byName.get(key).categories.push(category.toLowerCase());
   }
@@ -141,8 +141,6 @@ function broadcastList(broadcasts) {
       item.classList.add("tipoff-pass");
       item.append(element("span", "LP", "tipoff-station-tag"));
       item.firstChild.setAttribute("aria-hidden", "true");
-    } else if (categories.some(category => category.includes("radio"))) {
-      item.append(element("span", "Radio", "tipoff-station-tag"));
     } else if (categories.some(category => /^(home|away|local|regional)\b/.test(category))) {
       item.append(element("span", "Regional", "tipoff-station-tag"));
     }
@@ -159,12 +157,16 @@ function broadcastList(broadcasts) {
   return list.childElementCount ? list : element("p", "Broadcasters not listed", "tipoff-broadcasts");
 }
 
+const nonFeaturedNetworks = new Set([
+  "nbatv", "nhln", "nhlnetwork", "mlbtv", "nhlcenterice", "centerice",
+  "nflsundayticket", "sundayticket", "mlbextrainnings", "extrainnings",
+]);
+
 function isNationalBroadcast({ name, category }, league) {
-  const channel = name.trim().toLowerCase();
+  const channel = name.toLowerCase().replace(/[^a-z0-9+]/g, "");
   const market = category.trim().toLowerCase();
-  // NBA TV stays in the league schedule. Only the NBA feed uses Streaming for national OTT.
-  return channel !== "" && !channel.includes("league pass") &&
-    channel !== "nba tv" && channel !== "nbatv" &&
+  // Only the NBA feed uses Streaming for national OTT.
+  return channel !== "" && !channel.includes("leaguepass") && !nonFeaturedNetworks.has(channel) &&
     (market === "national" || (league === "nba" && market === "streaming"));
 }
 
