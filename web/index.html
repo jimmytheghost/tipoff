@@ -36,21 +36,21 @@
   </header>
   <main class="tipoff-guide">
     <h1 class="tipoff-visually-hidden">Game schedule</h1>
-    <section class="tipoff-summary" id="following" aria-labelledby="followed-title">
-      <div class="tipoff-summary-heading">
-        <h2 id="followed-title">Following</h2>
-        <div class="tipoff-date" role="group" aria-label="Schedule date">
-          <button class="button" id="previous" type="button" aria-label="Previous day"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
-          <p id="date" aria-live="polite"></p>
-          <button class="button" id="next" type="button" aria-label="Next day"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
-          <button class="button" id="today" type="button">Today</button>
-        </div>
+    <div class="tipoff-summary-heading">
+      <h2 id="highlights-title">National Broadcasts</h2>
+      <div class="tipoff-date" role="group" aria-label="Schedule date">
+        <button class="button" id="previous" type="button" aria-label="Previous day"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <p id="date" aria-live="polite"></p>
+        <button class="button" id="next" type="button" aria-label="Next day"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+        <button class="button" id="today" type="button">Today</button>
       </div>
+    </div>
+    <section class="tipoff-summary" id="following" aria-label="Following" hidden>
       <p id="followed-status" class="tipoff-meta" role="status"></p>
       <div id="followed-leagues" class="tipoff-summary-groups"></div>
     </section>
     <section class="tipoff-summary" aria-labelledby="national-title">
-      <h2 id="national-title">National Broadcasts</h2>
+      <h2 id="national-title" hidden>National Broadcasts</h2>
       <p id="national-status" class="tipoff-meta" role="status"></p>
       <div id="national-leagues" class="tipoff-summary-groups"></div>
     </section>

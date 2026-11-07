@@ -4,6 +4,9 @@ const dateTitle = document.querySelector("#date");
 const leagues = document.querySelector("#leagues");
 const followedLeagues = document.querySelector("#followed-leagues");
 const followedStatus = document.querySelector("#followed-status");
+const following = document.querySelector("#following");
+const highlightsTitle = document.querySelector("#highlights-title");
+const nationalTitle = document.querySelector("#national-title");
 const followedTeams = new Map([
   ["nba", { name: "Nuggets", codes: ["DEN"] }],
   ["nfl", { name: "Broncos", codes: ["DEN"] }],
@@ -290,6 +293,9 @@ async function loadDay() {
   const key = dayKey(date);
   dateTitle.textContent = dayKey(new Date()) === key ? `Today · ${dateFormat.format(date)}` : dateFormat.format(date);
   const { signal } = request;
+  following.hidden = true;
+  highlightsTitle.textContent = "National Broadcasts";
+  nationalTitle.hidden = true;
   followedStatus.textContent = "";
   nationalStatus.textContent = "Checking national broadcasts…";
   for (const { section, national, followed } of sections.values()) {
@@ -304,6 +310,10 @@ async function loadDay() {
     if (section.firstElementChild.matches(".tipoff-inactive-league")) leagues.append(section);
   }
   const missingFollowed = loaded.some((result, index) => !result && followedTeams.has(ids[index]));
+  const hasFollowedGames = Boolean(followedLeagues.querySelector("section:not([hidden])"));
+  following.hidden = !hasFollowedGames && !missingFollowed;
+  highlightsTitle.textContent = hasFollowedGames ? "Following" : "National Broadcasts";
+  nationalTitle.hidden = !hasFollowedGames;
   followedStatus.textContent = missingFollowed ? "Some followed team schedules are unavailable." : "";
   if (loaded.some(result => !result)) {
     nationalStatus.textContent = "Some league schedules are unavailable.";

@@ -2,6 +2,12 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Conditional landing heading — November 6, 2026
+
+- Following appears as the top heading only when followed games are listed. Otherwise National Broadcasts occupies that row beside the date controls, without a duplicate heading or empty Following section. Followed schedule errors remain visible independently of the heading.
+- Verified November 6 shows National Broadcasts, two NBA games, and no Following heading or duplicate national heading. Next-day navigation showed Following with Nuggets and Avalanche on November 7, followed by the separate National Broadcasts section. Today restored the national-only heading. At 599 px the heading and date controls stayed inline without horizontal overflow.
+- `node --check web/guide.js` and `git diff --check` passed. **0 app tests executed**; frontend-only change. Local preview updated; not deployed.
+
 ## Inline date navigation — November 6, 2026
 
 - Moved the existing date controls beside Following, with wrapping below the heading on narrow screens. The heading and controls remain available on empty days; no empty-team message was added. Time zone and league filters remain inside All Games.
