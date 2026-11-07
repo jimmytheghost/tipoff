@@ -94,3 +94,10 @@ Ten compact-selection cases and four existing client-loading tests passed. Brows
 ## Shared header separator — November 7, 2026
 
 Published `tipoff-web-divider-20261107-01`, CSS and HTML only (asset version `20261107-05`). A faint one-pixel bottom stroke separates the shared Following / National / All Games headers from their rows without changing layout dimensions or flat fills. Local and live November 8 Broncos/NFL views were checked. All nine release assertions, two installed hashes, and four browser/crawler preview checks passed. The isolated deployment workspace retains the frozen release, backup, guarded rollback command, and screenshot evidence.
+
+
+## Date navigation component and footer — November 7, 2026
+
+Published `tipoff-web-navigation-20261107-01`: CSS and HTML only, asset version `20261107-06`. The date selector now has a bordered solid container, visible previous/next button surfaces, and lime Today text. Existing 44 px button targets, accessible labels, keyboard focus, and calendar-day behavior remain. A viewport-height flex layout places the footer at the bottom of short pages and after expanded content on long pages, with no trailing gap or fixed overlay.
+
+Local checks covered short pages, expanded All Games, next-day/Today interaction, and 325 px layout without horizontal overflow. Live date controls and footer placement passed. All nine deployment assertions, two installed hashes, and four canonical/alias browser/crawler preview checks passed. Backup, frozen payload, guarded rollback command, and screenshot evidence remain in the isolated deployment workspace.

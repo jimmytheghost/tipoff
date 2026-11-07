@@ -2,6 +2,12 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Date component and bottom footer — November 7, 2026
+
+- Grouped date navigation in a solid, bordered container. Previous/next and Today have visible button borders/backgrounds, 44 px minimum targets, existing keyboard focus styling, and lime Today text. Date updates and calendar-day behavior are unchanged.
+- The page uses a minimum viewport-height flex column with a growing main area; header/footer do not shrink. The footer remains in document flow. Local short-page footer bottom **745.00 px** matched the **745 px** viewport. With All Games expanded, main bottom and footer top matched at **1985.03 px**; footer bottom **2045.86 px** matched document height **2046 px**. No footer overlap or trailing gap. At 325 px the date component fit without horizontal overflow; its long Today label wrapped within the date cell.
+- Local next-day/Today interactions and live date controls/footer were checked. CSS/HTML-only release `tipoff-web-navigation-20261107-01`, asset version `20261107-06`. All **9 deployment assertions**, **2 installed hashes**, and **4 browser/crawler preview checks** passed. JavaScript syntax and Git whitespace checks passed; **0 app tests executed**. Schedule providers/runtime/caches unchanged. Actual Messages rendering remains untested. Frozen payload, backups, rollback command, and screenshots remain in the ignored deployment workspace.
+
 ## Shared header separator — November 7, 2026
 
 - Added a faint one-pixel inset bottom stroke to the shared league/card header, using muted text color at 16% opacity. Applies to Following, National Broadcasts, and All Games without changing header height or row alignment. Flat fills and the rollback switch remain intact.

@@ -16,6 +16,10 @@
 * { box-sizing: border-box; }
 
 body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
   margin: 0;
   background: var(--canvas);
   color: var(--ink);
@@ -79,7 +83,13 @@ a { color: var(--accent); }
 
 .tipoff-back:hover { color: var(--ink); }
 
-.tipoff-guide { padding-block: clamp(1.3rem, 4vw, 2.5rem) 3rem; }
+.tipoff-guide {
+  flex: 1 0 auto;
+  padding-block: clamp(1.3rem, 4vw, 2.5rem) 3rem;
+}
+
+.tipoff-header,
+.tipoff-footer { flex-shrink: 0; }
 
 .tipoff-date {
   display: grid;
@@ -87,6 +97,10 @@ a { color: var(--accent); }
   align-items: center;
   gap: 0.375rem;
   max-width: 26rem;
+  padding: 0.375rem;
+  border: 1px solid var(--line);
+  border-radius: 0.625rem;
+  background: var(--surface);
 }
 
 .tipoff-date #date {
@@ -115,9 +129,11 @@ a { color: var(--accent); }
 #previous,
 #next,
 #today {
-  border: 0;
-  background: transparent;
+  border: 1px solid var(--line);
+  background: var(--canvas);
 }
+
+#today { color: var(--accent); }
 
 #previous:hover,
 #next:hover,
