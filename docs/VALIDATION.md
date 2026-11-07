@@ -2,6 +2,12 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Heading-free show times — November 7, 2026
+
+- Removed the Altitude heading/disclosure wrapper; show times sit directly below broadcast listings. They share game-count styles: **9 px / 500 / RGB(135,148,167) / 0.72 px tracking / uppercase**. Notes remain readable below, with footer freshness unchanged.
+- Local expanded Nuggets verified no Altitude h4/summary, exact computed-style equality between counts/times, and both timing labels at y=**334.30 px**. JavaScript syntax, formatting, and Git whitespace passed. **0 web unit tests / 0 native app tests executed** for the presentation change.
+- Published `tipoff-web-altitude-inline-20261107-01`, frontend `20261107-32`: **3 files, 9 release assertions, 3 installed hashes, 6 browser/crawler preview checks passed**. Live expanded Nuggets confirmed no Altitude heading and exact count/time style equality, with no horizontal overflow. Screenshot `/tmp/tipoff-inline-show-times-live.jpg`. No provider/runtime/cache changes. Messages rendering remains untested.
+
 ## Altitude details limited to times and notes — November 7, 2026
 
 - Removed the repeated network-name paragraph; broadcast listings above remain intact. Shared Altitude details now contain only provided pregame/postgame times and notes, omitting the subsection if both are absent. Footer freshness and original source data are unchanged.

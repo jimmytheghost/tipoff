@@ -641,10 +641,12 @@ ul.tipoff-broadcasts {
   white-space: nowrap;
 }
 
-.tipoff-league-count {
+.tipoff-league-count,
+.tipoff-altitude-times {
   color: #8794a7;
   font: 500 0.5625rem/1.2 var(--text);
   letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .tipoff-national-marker {
@@ -777,6 +779,7 @@ ul.tipoff-inline-broadcasts {
   font-variant-numeric: tabular-nums;
 }
 .tipoff-altitude-times > span { white-space: nowrap; }
+.tipoff-followed-body .tipoff-altitude-times { margin: 0; }
 
 /* Source/freshness details open upward from the footer. */
 .tipoff-schedule-status {

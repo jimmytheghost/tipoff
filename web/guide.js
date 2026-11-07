@@ -424,9 +424,8 @@ function gameRow(game, league, broadcasts, highlight, { collapseBroadcasts = fal
     if (!nationalBroadcasts.length || otherBroadcasts.length) content.append(broadcastList(otherBroadcasts));
   }
   if (game.altitude && broadcasts === game.broadcasts) {
-    const details = element(compact ? "section" : "details", "", "tipoff-altitude");
+    const details = element("div", "", "tipoff-altitude");
     const altitude = game.altitude;
-    details.append(element(compact ? "h4" : "summary", "Altitude details"));
     const showTimes = element("p", "", "tipoff-altitude-times");
     if (altitude.pregame) showTimes.append(element("span", `Pregame ${timeFormat.format(new Date(altitude.pregame))}`));
     if (altitude.postgame) showTimes.append(element("span", `Postgame ${timeFormat.format(new Date(altitude.postgame))}`));

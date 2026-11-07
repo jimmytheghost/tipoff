@@ -306,3 +306,12 @@ Published `tipoff-web-altitude-times-notes-20261107-01`, frontend `20261107-31`:
 JavaScript syntax, formatting, and Git whitespace passed; no unit/native tests executed for this small rendering change. Nine release assertions, two installed hashes, and six browser/crawler preview checks passed. Frozen release/guarded rollback remain in ignored publication operations notes. Messages rendering remains untested.
 
 Live expanded Nuggets confirmed only show times under Altitude details, with all network listings retained above. Screenshot: `/tmp/tipoff-altitude-times-notes-live.jpg`.
+
+
+## Heading-free show times — November 7, 2026
+
+Published `tipoff-web-altitude-inline-20261107-01`, frontend `20261107-32`: HTML/CSS/JS only. Removed “Altitude details” and its separate disclosure heading from the shared renderer. Pregame/postgame times now sit directly below the broadcast listings in the same typography as game counts: 9 px / weight 500 / #8794a7 / 0.08 em / uppercase. Notes remain below in their readable body style. Networks stay above and supplement freshness stays in the footer; original source content is unchanged.
+
+JavaScript syntax, formatting, and Git whitespace passed; no unit/native tests executed for this presentation change. Local expanded Nuggets confirmed no Altitude heading, identical count/time computed styles, and both show times on one row. Nine release assertions, three installed hashes, and six browser/crawler preview checks passed. Frozen release/guarded rollback remain in ignored publication operations notes. Messages rendering remains untested.
+
+Live expanded Nuggets confirmed heading-free show times matching game counts exactly, without horizontal overflow. Screenshot: `/tmp/tipoff-inline-show-times-live.jpg`.
