@@ -88,7 +88,7 @@ a { color: var(--accent); }
   max-width: 26rem;
 }
 
-.tipoff-date h2 {
+.tipoff-date #date {
   margin: 0;
   font: 600 1rem/1.15 var(--text);
   text-align: center;
@@ -528,3 +528,17 @@ ul.tipoff-broadcasts {
 .tipoff-meta:empty { display: none; }
 
 .tipoff-summary-groups { margin-top: 0.75rem; }
+
+
+.tipoff-summary-heading {
+  display: grid;
+  grid-template-columns: auto minmax(0, 26rem);
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+}
+
+@media (max-width: 32rem) {
+  .tipoff-summary-heading { grid-template-columns: 1fr; }
+  .tipoff-summary-heading .tipoff-date { width: 100%; }
+}

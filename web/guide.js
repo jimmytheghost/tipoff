@@ -2,7 +2,6 @@ const buttons = [...document.querySelectorAll("[data-league]")];
 const zone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 const dateTitle = document.querySelector("#date");
 const leagues = document.querySelector("#leagues");
-const following = document.querySelector("#following");
 const followedLeagues = document.querySelector("#followed-leagues");
 const followedStatus = document.querySelector("#followed-status");
 const followedTeams = new Map([
@@ -250,7 +249,6 @@ async function loadLeague(id, day, signal) {
         else if (nationalBroadcasts.length) highlight = "tipoff-game-national";
         list.append(gameRow(game, id, game.broadcasts, highlight, !highlight));
         if (isFollowed) {
-          following.hidden = false;
           followed.games.append(gameRow(game, id, game.broadcasts));
           if (nationalBroadcasts.length && !followed.title.querySelector(".tipoff-national-marker")) {
             followed.title.querySelector(".tipoff-header-name").append(element("span", "National", "tipoff-national-marker"));
@@ -292,7 +290,6 @@ async function loadDay() {
   const key = dayKey(date);
   dateTitle.textContent = dayKey(new Date()) === key ? `Today · ${dateFormat.format(date)}` : dateFormat.format(date);
   const { signal } = request;
-  following.hidden = true;
   followedStatus.textContent = "";
   nationalStatus.textContent = "Checking national broadcasts…";
   for (const { section, national, followed } of sections.values()) {
@@ -307,7 +304,6 @@ async function loadDay() {
     if (section.firstElementChild.matches(".tipoff-inactive-league")) leagues.append(section);
   }
   const missingFollowed = loaded.some((result, index) => !result && followedTeams.has(ids[index]));
-  following.hidden = !missingFollowed && !followedLeagues.querySelector("section:not([hidden])");
   followedStatus.textContent = missingFollowed ? "Some followed team schedules are unavailable." : "";
   if (loaded.some(result => !result)) {
     nationalStatus.textContent = "Some league schedules are unavailable.";

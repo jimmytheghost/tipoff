@@ -2,6 +2,12 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Inline date navigation — November 6, 2026
+
+- Moved the existing date controls beside Following, with wrapping below the heading on narrow screens. The heading and controls remain available on empty days; no empty-team message was added. Time zone and league filters remain inside All Games.
+- Verified November 6 to November 7 navigation with All Games closed. Nuggets and Avalanche listings appeared for November 7. Verified inline placement at 599 px and no horizontal overflow at 599 px or the narrow 325 px content viewport.
+- `node --check web/guide.js` and `git diff --check` passed. **0 app tests executed**; frontend-only change. Local preview updated; not deployed.
+
 ## Shared browser card headers — November 6, 2026
 
 - Following, National Broadcasts, and All Games now use the same header builder and CSS. Summary counts reflect only their displayed games. Source and freshness move into the approved right-aligned header layout; the accent, typography, padding, and background match All Games.

@@ -36,8 +36,16 @@
   </header>
   <main class="tipoff-guide">
     <h1 class="tipoff-visually-hidden">Game schedule</h1>
-    <section class="tipoff-summary" id="following" aria-labelledby="followed-title" hidden>
-      <h2 id="followed-title">Following</h2>
+    <section class="tipoff-summary" id="following" aria-labelledby="followed-title">
+      <div class="tipoff-summary-heading">
+        <h2 id="followed-title">Following</h2>
+        <div class="tipoff-date" role="group" aria-label="Schedule date">
+          <button class="button" id="previous" type="button" aria-label="Previous day"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+          <p id="date" aria-live="polite"></p>
+          <button class="button" id="next" type="button" aria-label="Next day"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+          <button class="button" id="today" type="button">Today</button>
+        </div>
+      </div>
       <p id="followed-status" class="tipoff-meta" role="status"></p>
       <div id="followed-leagues" class="tipoff-summary-groups"></div>
     </section>
@@ -49,12 +57,6 @@
     <noscript><p>Enable JavaScript to load schedules for your time zone.</p></noscript>
     <details class="tipoff-all-games" id="all-games">
       <summary>All Games</summary>
-      <div class="tipoff-date" role="group" aria-label="Schedule date">
-        <button class="button" id="previous" type="button" aria-label="Previous day"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
-        <h2 id="date" aria-live="polite"></h2>
-        <button class="button" id="next" type="button" aria-label="Next day"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
-        <button class="button" id="today" type="button">Today</button>
-      </div>
       <p class="tipoff-zone"><span class="tipoff-zone-label">Time zone</span> <span id="zone"></span></p>
       <div class="tipoff-filters" role="group" aria-label="Filter by league">
         <button class="button" type="button" data-league="all" aria-pressed="true">All</button>
