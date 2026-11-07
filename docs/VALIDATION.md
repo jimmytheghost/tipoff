@@ -2,6 +2,13 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Mobile typography and home branding — November 7, 2026
+
+- Enlarged logo-only team marks to **1.8 rem** (normal rows remain 1.4 rem), measuring the normal text layout before resizing artwork to prevent fit-state hysteresis. At up to **24 rem**, Today stacks above the unbroken date and its separator is omitted; wide layouts remain inline. Date/calendar accessible labels remain intact.
+- Replaced header/footer back text and chevrons with the supplied skull SVG tinted **#c8fa54**, with accessible back-link labels and 44 px targets. Source vector paths are unchanged; sibling website files are untouched. Status summary uses **0.625 rem / 700 / uppercase / 0.08 em**; the empty national message matches it with faint **#727f91**. Collapsed status centering remains.
+- **90 existing web unit cases**, collapsed-status markup check, and **16 existing local route checks passed**. JavaScript syntax/Git whitespace passed. **0 native app tests executed**. Local **319 px**: Today/date stacked, two skull assets loaded, no overflow. Local **1261 px**: date inline with separator and both skull marks present.
+- Published `tipoff-web-mobile-polish-20261107-01`, frontend `20261107-21`: **4 files, 9 release assertions, 4 installed hashes, 6 browser/crawler preview checks passed**. No provider/runtime/cache changes. Live 319 px verified Today on its own line, four 28.8 px team marks, both accessible skull links, faint uppercase empty text, and no horizontal overflow. Screenshot `/tmp/tipoff-mobile-polish-live.jpg`. Actual Messages rendering remains untested.
+
 ## Logo-only matchups when names do not fit — November 7, 2026
 
 - Shared per-row fitting measures full names, then shortened names, then hides visual text only when both logos are successfully loaded and shortened names still overflow. The logos keep their existing size and separator. Full names remain accessible and on hover; missing/loading/failed artwork retains text. Image load/failure, font loading, resizing, and hidden schedules opening recheck fitting. Source snapshots remain unchanged.

@@ -71,30 +71,17 @@ a { color: var(--accent); }
 }
 
 .tipoff-header nav { min-width: 0; }
-.tipoff-header nav .tipoff-back { text-align: right; }
-
 .tipoff-back {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
+  justify-content: center;
+  min-width: 44px;
   min-height: 44px;
-  color: var(--muted);
-  font: 700 0.6875rem/1.25 var(--text);
-  letter-spacing: 0.08em;
   text-decoration: none;
-  text-transform: uppercase;
 }
 
-.tipoff-back::before {
-  content: "";
-  width: 0.4rem;
-  height: 0.4rem;
-  border: solid currentColor;
-  border-width: 0 0 2px 2px;
-  transform: rotate(45deg);
-}
-
-.tipoff-back:hover { color: var(--ink); }
+.tipoff-home-mark { display: block; width: auto; height: 2rem; }
+.tipoff-back:hover { opacity: 0.8; }
 
 .tipoff-guide {
   flex: 1 0 auto;
@@ -464,6 +451,7 @@ a { color: var(--accent); }
 /* Keep both name variants measurable when only the artwork fits. */
 .tipoff-matchup-logos .tipoff-team-name { position: absolute; opacity: 0; pointer-events: none; }
 .tipoff-matchup-logos .tipoff-team { flex-shrink: 0; }
+.tipoff-matchup-logos .tipoff-team-logo { width: 1.8rem; height: 1.8rem; }
 
 .tipoff-team-logo {
   width: 1.4rem;
@@ -783,7 +771,30 @@ ul.tipoff-inline-broadcasts {
 .tipoff-schedule-status > summary::-webkit-details-marker { display: none; }
 .tipoff-schedule-status > summary::after { content: "+" / ""; margin-left: auto; }
 .tipoff-schedule-status[open] > summary::after { content: "−" / ""; }
-#schedule-status-summary { font-size: 0.6875rem; }
+#schedule-status-summary {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.tipoff-schedule-status > summary { flex-wrap: nowrap; }
+.tipoff-schedule-status > summary::after { flex-shrink: 0; }
+#national-status {
+  color: #727f91;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.tipoff-date-label { white-space: nowrap; }
+.tipoff-date-today::after { content: " · "; }
+@media (max-width: 24rem) {
+  .tipoff-date-today { display: block; }
+  .tipoff-date-today::after { content: none; }
+  .tipoff-date #date { font-size: 0.9375rem; }
+}
 .tipoff-schedule-status dl { margin: 0; padding: 0 0.875rem 0.75rem; }
 .tipoff-schedule-status dl > div {
   display: grid;

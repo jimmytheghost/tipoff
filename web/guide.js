@@ -266,6 +266,8 @@ function team(name, code, league) {
 
 function fitMatchupNames(matchup) {
   if (!matchup?.isConnected || !matchup.getBoundingClientRect().width) return;
+  // Measure name layouts with their normal logo size before enlarging logo-only rows.
+  matchup.classList.remove("tipoff-matchup-logos");
   const gap = node => Number.parseFloat(getComputedStyle(node).columnGap) || 0;
   const teams = [...matchup.querySelectorAll(".tipoff-team")];
   const required = variant => teams.reduce((total, node) => {
@@ -525,7 +527,9 @@ async function loadDay() {
   request = new AbortController();
   const key = dayKey(date);
   dateTitle.setAttribute("aria-label", `Choose schedule date, ${date.toLocaleDateString(undefined, { dateStyle: "full" })}`);
-  dateTitle.textContent = dayKey(new Date()) === key ? `Today · ${dateFormat.format(date)}` : dateFormat.format(date);
+  dateTitle.replaceChildren();
+  if (dayKey(new Date()) === key) dateTitle.append(element("span", "Today", "tipoff-date-today"));
+  dateTitle.append(element("span", dateFormat.format(date), "tipoff-date-label"));
   const { signal } = request;
   following.hidden = true;
   highlightsTitle.textContent = "National Broadcasts";

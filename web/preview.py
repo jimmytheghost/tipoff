@@ -20,6 +20,7 @@ PAGE_ASSETS = {
     "/tip-off/guide.css": "guide.css",
     "/assets/img/projects/tipoff-header-mark.png": "brand-mark.png",
     "/assets/img/projects/tipoff-favicon.svg": "favicon.svg",
+    "/assets/img/projects/tipoff-home-mark.svg": "home-mark.svg",
     "/pages/projects/tipoff/": "portfolio-preview.html",
 }
 

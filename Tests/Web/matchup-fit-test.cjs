@@ -11,7 +11,7 @@ const teams = [0,1].map(i => ({querySelector: selector => selector === '.tipoff-
 const classes = new Set();
 const row = {isConnected:true, getBoundingClientRect:()=>({width}), querySelectorAll:()=>teams,
  querySelector: selector=>rect(selector === '.tipoff-matchup-separator' ? 14 : 0),
- classList:{toggle:(name,on)=>on?classes.add(name):classes.delete(name)}};
+ classList:{remove:name=>classes.delete(name),toggle:(name,on)=>on?classes.add(name):classes.delete(name)}};
 let count=0;
 function expect(short, icons) {context.fitMatchupNames(row); assert.equal(classes.has('tipoff-matchup-short'),short);assert.equal(classes.has('tipoff-matchup-logos'),icons);count++;}
 expect(false,false);
