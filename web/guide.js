@@ -427,13 +427,12 @@ function gameRow(game, league, broadcasts, highlight, { collapseBroadcasts = fal
     const details = element(compact ? "section" : "details", "", "tipoff-altitude");
     const altitude = game.altitude;
     details.append(element(compact ? "h4" : "summary", "Altitude details"));
-    details.append(element("p", altitude.networks.join(", ")));
     const showTimes = element("p", "", "tipoff-altitude-times");
     if (altitude.pregame) showTimes.append(element("span", `Pregame ${timeFormat.format(new Date(altitude.pregame))}`));
     if (altitude.postgame) showTimes.append(element("span", `Postgame ${timeFormat.format(new Date(altitude.postgame))}`));
     if (showTimes.childElementCount) details.append(showTimes);
     for (const note of altitude.notes) details.append(element("p", note));
-    content.append(details);
+    if (showTimes.childElementCount || altitude.notes.length) content.append(details);
   }
   matchupSizes.observe(matchup);
   return row;

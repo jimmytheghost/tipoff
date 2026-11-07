@@ -297,3 +297,12 @@ Published `tipoff-web-altitude-status-20261107-01`, frontend `20261107-30`: Java
 Seven existing status-summary cases and collapsed-default markup check passed, plus 16 existing route checks. JavaScript syntax/Git whitespace passed; native app tests executed: 0. Local November 7 verified no freshness timestamp in main content and six footer rows (five sports plus Altitude), with the supplement’s original fetched time. November 8 removed the optional row and left the five sport rows. Nine release assertions, two installed hashes, and six browser/crawler preview checks passed. Frozen release/guarded rollback remain in ignored publication operations notes. Messages rendering remains untested.
 
 Live verification confirmed Altitude freshness appears only in the footer panel, preserving the original 3:38 PM value separately from the current load completion time. Screenshot: `/tmp/tipoff-altitude-footer-status-live.jpg`.
+
+
+## Altitude details limited to times and notes — November 7, 2026
+
+Published `tipoff-web-altitude-times-notes-20261107-01`, frontend `20261107-31`: JavaScript/HTML only. Removed the repeated Altitude network-name paragraph from the shared details renderer. Networks remain in the broadcast list above; Altitude details contain only source-provided pregame/postgame times and notes. When neither is provided, the empty Altitude subsection is omitted. Footer freshness and original source data are unchanged.
+
+JavaScript syntax, formatting, and Git whitespace passed; no unit/native tests executed for this small rendering change. Nine release assertions, two installed hashes, and six browser/crawler preview checks passed. Frozen release/guarded rollback remain in ignored publication operations notes. Messages rendering remains untested.
+
+Live expanded Nuggets confirmed only show times under Altitude details, with all network listings retained above. Screenshot: `/tmp/tipoff-altitude-times-notes-live.jpg`.

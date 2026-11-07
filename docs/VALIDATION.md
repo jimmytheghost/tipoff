@@ -2,6 +2,11 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Altitude details limited to times and notes — November 7, 2026
+
+- Removed the repeated network-name paragraph; broadcast listings above remain intact. Shared Altitude details now contain only provided pregame/postgame times and notes, omitting the subsection if both are absent. Footer freshness and original source data are unchanged.
+- JavaScript syntax, formatting, and Git whitespace passed. **0 web unit tests / 0 native app tests executed** for the small rendering change. Published `tipoff-web-altitude-times-notes-20261107-01`, frontend `20261107-31`: **2 files, 9 release assertions, 2 installed hashes, 6 browser/crawler preview checks passed**. Live expanded Nuggets showed only the Altitude heading and pregame/postgame times in that subsection; the broadcast list retained Altitude 2, Altitude+, NBA TV, and regional DAZN IND. No horizontal overflow. Screenshot `/tmp/tipoff-altitude-times-notes-live.jpg`. Messages rendering remains untested.
+
 ## Altitude freshness in footer status — November 7, 2026
 
 - Removed Altitude freshness from shared game details. An optional footer Altitude row follows NBA and preserves the supplement’s original timestamp and “Altitude updated” / “Saved Altitude data” label. Duplicate labels are merged; date changes remove the prior row before loading. The loaded/error summary still counts five sports.
