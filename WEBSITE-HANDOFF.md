@@ -227,3 +227,12 @@ Published `tipoff-web-empty-national-20261107-01`, frontend `20261107-22`: JavaS
 Four existing client-loading cases and 16 existing route checks passed; JavaScript syntax/Git whitespace passed. Native app tests executed: 0; no new unit tests. Local November 7 verified hidden national heading and revised message; November 8 restored the national heading beside Following and cleared the message. Nine release assertions, two installed hashes, and six browser/crawler preview checks passed. Frozen release/guarded rollback remain in ignored publication operations notes. Messages rendering remains untested.
 
 Live verification repeated both November 7 (national headline hidden, revised empty message) and November 8 (national headline restored with games). Screenshot: `/tmp/tipoff-empty-national-live.jpg`.
+
+
+## Empty-message spacing — November 7, 2026
+
+Published `tipoff-web-empty-spacing-20261107-01`, frontend `20261107-23`: CSS/HTML only. Empty national groups no longer leave a blank grid margin. The empty-message section has no bottom margin, and All Games uses a 0.75 rem top margin / 0.5 rem top padding only when that message is present. Local measured message-to-divider gap reduced from 44 px to 12 px. Populated national sections retain existing spacing.
+
+Formatting/Git whitespace passed; no unit or native app tests executed for this CSS-only adjustment. Nine release assertions, two installed hashes, and six browser/crawler preview checks passed. Frozen release and guarded rollback remain in ignored publication operations notes. Messages rendering remains untested.
+
+Live empty-state gap verified at 12 px, with the original 32 px All Games margin preserved on November 8 with national games. Screenshot: `/tmp/tipoff-tighter-empty-spacing-live.jpg`.

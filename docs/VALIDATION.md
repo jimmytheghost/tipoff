@@ -2,6 +2,12 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Empty-message spacing — November 7, 2026
+
+- Removed empty national grid spacing and tightened only the empty-message-to-All-Games transition: 0.75 rem top margin / 0.5 rem divider padding. Populated sections retain their existing margins.
+- Local geometry: message-to-divider gap reduced from **44.00 px to 12.00 px**. Formatting/Git whitespace passed. **0 web unit tests / 0 native app tests executed** for the CSS-only change.
+- Published `tipoff-web-empty-spacing-20261107-01`, frontend `20261107-23`: **2 files, 9 release assertions, 2 installed hashes, 6 browser/crawler preview checks passed**. Live empty-state gap measured 12.00 px; November 8 with a national group retained the original 32 px All Games margin. Screenshot `/tmp/tipoff-tighter-empty-spacing-live.jpg`. No JavaScript/provider/runtime/cache changes. Messages rendering remains untested.
+
 ## Empty national heading — November 7, 2026
 
 - Highlight headings now reflect rendered groups during incremental loading and after completion. Empty national sections hide their large heading and show the faint “No national broadcasts listed.” message after successful loading. A followed national game suppresses a false no-national message; source errors remain in the status disclosure.
