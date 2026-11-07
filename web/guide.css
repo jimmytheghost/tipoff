@@ -378,7 +378,8 @@ ul.tipoff-broadcasts {
   margin: 0;
 }
 
-.tipoff-summary .tipoff-game {
+.tipoff-summary .tipoff-game,
+.tipoff-summary .tipoff-game-toggle {
   gap: 0.35rem 0.6rem;
 }
 
@@ -400,7 +401,8 @@ ul.tipoff-broadcasts {
   }
 }
 
-.tipoff-game-details {
+.tipoff-game-details,
+.tipoff-followed-details {
   grid-column: 1 / -1;
 }
 
@@ -420,7 +422,8 @@ ul.tipoff-broadcasts {
   color: var(--muted);
 }
 
-.tipoff-game-details[open] .tipoff-start::after {
+.tipoff-game-details[open] .tipoff-start::after,
+.tipoff-followed-details[open] > summary .tipoff-start::after {
   transform: rotate(90deg);
 }
 
@@ -595,3 +598,19 @@ ul.tipoff-inline-broadcasts {
   filter: none;
   color: var(--muted);
 }
+
+
+.tipoff-followed-body {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.tipoff-followed-body h4 {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.tipoff-followed-body > h4 { margin-bottom: -0.5rem; }
+.tipoff-followed-body .tipoff-altitude p { margin-top: 0.35rem; }

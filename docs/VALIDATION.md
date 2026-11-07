@@ -2,6 +2,14 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Compact Following broadcast rows — November 7, 2026
+
+- Following rows now share the national layout: fixed broadcaster column, short matchup, and start time. Source-listed national networks take priority; otherwise the compact row uses a listed Altitude / Altitude 2 network (preferring the matched Altitude guide), or the first listed video broadcaster. No rights or streaming availability is inferred. Full-schedule behavior is retained.
+- One disclosure reveals all original video listings and regional labels, plus Altitude networks, pre/postgame times, footnotes, and original freshness. Simple national-only rows need no disclosure. Footnoted network names retain their labels while using the corresponding brand mark.
+- **10 compact-selection cases passed**, including national priority, Altitude 2, NHL ALT, footnotes, composite names, unknown networks, empty/radio-only inventories, and unchanged input data. **4 existing client-loading tests passed**. JavaScript syntax and Git whitespace checks passed. **0 native app tests executed** for this frontend-only change; providers, models, caches, and runtime were unchanged.
+- Local browser checks covered November 7 Altitude 2 / Avalanche, November 8 Broncos (no empty disclosure), and November 9 Nuggets. Mouse expansion and keyboard collapse passed; all Altitude notes/show times remained available. At 325 px there was no horizontal overflow. On production November 9, Following and national matchup columns all began at **109.55 px** in the 498 px view. Expanded live data retained ALT2/KTVD, KUSA-TV (9NEWS), KTVD-20^, the regional footnote, show times, and the original 9:35 AM Altitude timestamp.
+- Published `tipoff-web-following-20261107-01`: only guide CSS, JavaScript, and HTML, asset version `20261107-04`. All **9 deployment assertions**, **3 installed hashes**, and **4 canonical/alias browser/crawler link-preview checks** passed. Actual Messages rendering was not tested. Frozen payload, backup/rollback information, and screenshot evidence are in the ignored deployment workspace.
+
 ## Inline header game counts — November 7, 2026
 
 - Grouped the shared header name and game count with baseline alignment, keeping the optional National marker on that same line. Source/freshness remains right-aligned and may wrap below the intact left group on narrow screens. Applies to Following, National Broadcasts, and All Games; flat-mode rollback remains intact.

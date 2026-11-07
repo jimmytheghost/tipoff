@@ -168,7 +168,7 @@ function team(name, code, league) {
   return line;
 }
 
-function broadcastList(broadcasts) {
+function broadcastList(broadcasts, { showMarketLabels = true } = {}) {
   const list = element("ul", "", "tipoff-broadcasts");
   const byName = new Map();
   for (const { name, category } of broadcasts) {
@@ -179,18 +179,19 @@ function broadcastList(broadcasts) {
   }
   for (const [key, { name, categories }] of byName) {
     const item = element("li", "", "tipoff-broadcast");
-    const logo = networkLogos.get(key);
+    const logoKey = key.replace(/[*^]+$/, "");
+    const logo = networkLogos.get(logoKey);
     if (key === "league pass" || key === "nba league pass") {
       item.classList.add("tipoff-pass");
       item.append(element("span", "LP", "tipoff-station-tag"));
       item.firstChild.setAttribute("aria-hidden", "true");
-    } else if (categories.some(category => /^(home|away|local|regional)\b/.test(category))) {
+    } else if (showMarketLabels && categories.some(category => /^(home|away|local|regional)\b/.test(category))) {
       item.append(element("span", "Regional", "tipoff-station-tag"));
     }
     const label = element("span", name);
     if (logo) {
       const image = mark(logo, "tipoff-network-logo");
-      if (["espn+", "cbs", "fox", "peacock", "tnt", "hbo max", "trutv", "altitude", "alt", "altitude 2", "alt2"].includes(key)) image.classList.add("tipoff-network-logo-light");
+      if (["espn+", "cbs", "fox", "peacock", "tnt", "hbo max", "trutv", "altitude", "alt", "altitude 2", "alt2"].includes(logoKey)) image.classList.add("tipoff-network-logo-light");
       image.addEventListener("load", () => {
         image.style.setProperty("--network-ratio", image.naturalWidth / image.naturalHeight);
         label.classList.add("tipoff-visually-hidden");
@@ -216,7 +217,18 @@ function isNationalBroadcast({ name, category }, league) {
     (market === "national" || (league === "nba" && market === "streaming"));
 }
 
-function gameRow(game, league, broadcasts, highlight, collapseBroadcasts = false) {
+function compactBroadcasts(broadcasts, league) {
+  const video = broadcasts.filter(({ name, category }) => name.trim() && !category.toLowerCase().includes("radio"));
+  const national = video.filter(broadcast => isNationalBroadcast(broadcast, league));
+  if (national.length) return national;
+  const isAltitude = ({ name }) => ["alt", "altitude", "alt2", "altitude2"]
+    .includes(name.toLowerCase().replace(/[^a-z0-9]/g, ""));
+  const altitude = video.find(broadcast => broadcast.category === "Altitude guide" && isAltitude(broadcast))
+    ?? video.find(isAltitude);
+  return altitude ? [altitude] : video.slice(0, 1);
+}
+
+function gameRow(game, league, broadcasts, highlight, { collapseBroadcasts = false, compact = false } = {}) {
   const row = element("li", "", "tipoff-game");
   if (highlight) row.classList.add(highlight);
   const start = game.start ? timeFormat.format(new Date(game.start)) : "Time TBD";
@@ -224,31 +236,45 @@ function gameRow(game, league, broadcasts, highlight, collapseBroadcasts = false
   const home = element("span", "", "tipoff-matchup-home");
   home.append(element("span", " @ ", "tipoff-matchup-separator"), team(game.home, game.homeCode, league));
   matchup.append(team(game.away, game.awayCode, league), home);
+  const nationalBroadcasts = broadcasts.filter(broadcast => isNationalBroadcast(broadcast, league));
+  const leadingBroadcasts = compact ? compactBroadcasts(broadcasts, league) : nationalBroadcasts;
+  const visibleBroadcasts = broadcasts.filter(broadcast => broadcast.name.trim() && !broadcast.category.toLowerCase().includes("radio"));
+  const hasCompactDetails = compact && (game.altitude || visibleBroadcasts.length > leadingBroadcasts.length ||
+    visibleBroadcasts.some(broadcast => /^(home|away|local|regional)\b/i.test(broadcast.category)));
   let heading = row;
   let content = row;
-  if (collapseBroadcasts) {
-    content = element("details", "", "tipoff-game-details");
+  if (collapseBroadcasts || hasCompactDetails) {
+    content = element("details", "", hasCompactDetails ? "tipoff-followed-details" : "tipoff-game-details");
     heading = element("summary", "", "tipoff-game-toggle");
+    if (hasCompactDetails) heading.title = "Broadcast details";
     content.append(heading);
     row.append(content);
   }
-  const nationalBroadcasts = broadcasts.filter(broadcast => isNationalBroadcast(broadcast, league));
-  if (nationalBroadcasts.length) {
+  if (leadingBroadcasts.length || compact) {
     heading.classList.add("tipoff-game-inline");
-    const logos = broadcastList(nationalBroadcasts);
+    const logos = leadingBroadcasts.length ? broadcastList(leadingBroadcasts, { showMarketLabels: !compact })
+      : element("span", "—", "tipoff-meta");
+    if (!leadingBroadcasts.length) logos.setAttribute("aria-label", "Broadcasters not listed");
     logos.classList.add("tipoff-inline-broadcasts");
     heading.append(logos);
   }
   heading.append(matchup, element("span", start, "tipoff-start"));
   if (game.notice) heading.append(element("span", game.notice, "tipoff-game-notice"));
-  const nationalNames = new Set(nationalBroadcasts.map(broadcast => broadcast.name.trim().toLowerCase()));
-  const otherBroadcasts = broadcasts.filter(broadcast =>
-    !nationalNames.has(broadcast.name.trim().toLowerCase()) && !broadcast.category.toLowerCase().includes("radio"));
-  if (!nationalBroadcasts.length || otherBroadcasts.length) content.append(broadcastList(otherBroadcasts));
+  if (hasCompactDetails) {
+    const body = element("div", "", "tipoff-followed-body");
+    body.append(element("h4", "Broadcast listings"), broadcastList(broadcasts));
+    content.append(body);
+    content = body;
+  } else if (!compact) {
+    const nationalNames = new Set(nationalBroadcasts.map(broadcast => broadcast.name.trim().toLowerCase()));
+    const otherBroadcasts = broadcasts.filter(broadcast =>
+      !nationalNames.has(broadcast.name.trim().toLowerCase()) && !broadcast.category.toLowerCase().includes("radio"));
+    if (!nationalBroadcasts.length || otherBroadcasts.length) content.append(broadcastList(otherBroadcasts));
+  }
   if (game.altitude && broadcasts === game.broadcasts) {
-    const details = element("details", "", "tipoff-altitude");
+    const details = element(compact ? "section" : "details", "", "tipoff-altitude");
     const altitude = game.altitude;
-    details.append(element("summary", "Altitude details"));
+    details.append(element(compact ? "h4" : "summary", "Altitude details"));
     details.append(element("p", altitude.networks.join(", ")));
     if (altitude.pregame) details.append(element("p", `Pregame ${timeFormat.format(new Date(altitude.pregame))}`));
     if (altitude.postgame) details.append(element("p", `Postgame ${timeFormat.format(new Date(altitude.postgame))}`));
@@ -337,12 +363,12 @@ async function loadLeague(id, day, signal) {
         let highlight;
         if (isFollowed) highlight = "tipoff-game-followed";
         else if (nationalBroadcasts.length) highlight = "tipoff-game-national";
-        list.append(gameRow(game, id, game.broadcasts, highlight, !highlight));
+        list.append(gameRow(game, id, game.broadcasts, highlight, { collapseBroadcasts: !highlight }));
         if (isFollowed) {
           following.hidden = false;
           highlightsTitle.textContent = "Following";
           nationalTitle.hidden = false;
-          followed.games.append(gameRow(game, id, game.broadcasts));
+          followed.games.append(gameRow(game, id, game.broadcasts, undefined, { compact: true }));
           if (nationalBroadcasts.length && !followed.title.querySelector(".tipoff-national-marker")) {
             followed.title.querySelector(".tipoff-header-name").append(element("span", "National", "tipoff-national-marker"));
           }
