@@ -2,6 +2,12 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Reduced landing controls — November 6, 2026
+
+- Removed the visible page title and subtitle. Moved date navigation and the time zone into All Games. Following is hidden when there are no games, while schedule failures still receive a visible status.
+- Verified the local November 6 landing view starts with National Broadcasts, with date controls and empty Following hidden. Expanded All Games exposes the date controls, time zone, filters, and full schedule. Previous-day navigation showed the November 5 Avalanche listing; Today restored the empty Following state. Space collapsed All Games. No horizontal overflow at the tested 599 px content viewport.
+- `node --check web/guide.js` and `git diff --check` passed. **0 app tests executed**; frontend-only change. Not deployed.
+
 ## Simplified browser landing view — November 6, 2026
 
 - Local frontend change only; not deployed. Following and National Broadcasts appear on arrival; All Games and its league filters start collapsed. Kept the current four followed teams.

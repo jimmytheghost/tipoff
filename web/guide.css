@@ -80,20 +80,6 @@ a { color: var(--accent); }
 
 .tipoff-guide { padding-block: clamp(1.3rem, 4vw, 2.5rem) 3rem; }
 
-.tipoff-guide h1 {
-  margin: 0;
-  font: italic 800 clamp(2.4rem, 8vw, 4.2rem)/0.95 var(--heading);
-  text-transform: uppercase;
-}
-
-.tipoff-intro {
-  margin: 0.5rem 0 1.25rem;
-  color: var(--muted);
-  font: 600 0.75rem/1.4 var(--text);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
 .tipoff-date {
   display: grid;
   grid-template-columns: 44px minmax(0, 1fr) 44px auto;
@@ -416,12 +402,6 @@ ul.tipoff-broadcasts {
     grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
     align-items: start;
   }
-}
-
-.tipoff-summary-divider {
-  border: 0;
-  border-top: 1px solid var(--line);
-  margin: 0 0 0.75rem;
 }
 
 .tipoff-game-details {

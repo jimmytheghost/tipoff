@@ -35,22 +35,13 @@
     </div>
   </header>
   <main class="tipoff-guide">
-    <h1>Game schedule</h1>
-    <p class="tipoff-intro">Start times and broadcast listings</p>
-    <div class="tipoff-date" role="group" aria-label="Schedule date">
-      <button class="button" id="previous" type="button" aria-label="Previous day"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
-      <h2 id="date" aria-live="polite"></h2>
-      <button class="button" id="next" type="button" aria-label="Next day"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
-      <button class="button" id="today" type="button">Today</button>
-    </div>
-    <p class="tipoff-zone"><span class="tipoff-zone-label">Time zone</span> <span id="zone"></span></p>
-    <section class="tipoff-summary" aria-labelledby="followed-title">
+    <h1 class="tipoff-visually-hidden">Game schedule</h1>
+    <section class="tipoff-summary" id="following" aria-labelledby="followed-title" hidden>
       <h2 id="followed-title">Following</h2>
       <p id="followed-status" class="tipoff-meta" role="status"></p>
       <div id="followed-leagues" class="tipoff-summary-groups"></div>
     </section>
     <section class="tipoff-summary" aria-labelledby="national-title">
-      <hr class="tipoff-summary-divider">
       <h2 id="national-title">National Broadcasts</h2>
       <p id="national-status" class="tipoff-meta" role="status"></p>
       <div id="national-leagues" class="tipoff-summary-groups"></div>
@@ -58,6 +49,13 @@
     <noscript><p>Enable JavaScript to load schedules for your time zone.</p></noscript>
     <details class="tipoff-all-games" id="all-games">
       <summary>All Games</summary>
+      <div class="tipoff-date" role="group" aria-label="Schedule date">
+        <button class="button" id="previous" type="button" aria-label="Previous day"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <h2 id="date" aria-live="polite"></h2>
+        <button class="button" id="next" type="button" aria-label="Next day"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+        <button class="button" id="today" type="button">Today</button>
+      </div>
+      <p class="tipoff-zone"><span class="tipoff-zone-label">Time zone</span> <span id="zone"></span></p>
       <div class="tipoff-filters" role="group" aria-label="Filter by league">
         <button class="button" type="button" data-league="all" aria-pressed="true">All</button>
         <button class="button" type="button" data-league="nba" aria-pressed="false"><span>NBA</span></button>
