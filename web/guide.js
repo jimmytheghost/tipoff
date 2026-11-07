@@ -35,6 +35,15 @@ function dayKey(day) {
   return [day.getFullYear(), month, number].join("-");
 }
 
+function dateFromDayKey(value) {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) return null;
+  const selected = new Date(0);
+  selected.setFullYear(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+  selected.setHours(12, 0, 0, 0);
+  return dayKey(selected) === value ? selected : null;
+}
+
 function leagueHeader(tag, id, label) {
   const title = element(tag, "", "tipoff-league-header");
   title.id = id;
@@ -117,6 +126,8 @@ const networkLogos = new Map([
   ["hulu", "https://upload.wikimedia.org/wikipedia/commons/f/f9/Hulu_logo_%282018%29.svg"],
   ["disney+", "https://upload.wikimedia.org/wikipedia/commons/7/77/Disney_Plus_logo.svg"],
   ["nbc", "https://upload.wikimedia.org/wikipedia/commons/9/90/NBC_2023_white_logo.svg"],
+  ["nbcsn", "https://upload.wikimedia.org/wikipedia/commons/3/36/NBCSN_Logo_2025.svg"],
+  ["nbc sports network", "https://upload.wikimedia.org/wikipedia/commons/3/36/NBCSN_Logo_2025.svg"],
   ["abc", "https://upload.wikimedia.org/wikipedia/commons/2/2f/ABC-2021-LOGO.svg"],
   ["cbs", "https://upload.wikimedia.org/wikipedia/commons/4/4e/CBS_logo.svg"],
 ]);
@@ -231,7 +242,7 @@ function broadcastList(broadcasts, { showMarketLabels = true } = {}) {
     const label = element("span", name);
     if (logo) {
       const image = mark(logo, "tipoff-network-logo");
-      if (["espn", "espn+", "cbs", "fox", "peacock", "tnt", "hbo max", "trutv", "altitude", "alt", "altitude 2", "alt2"].includes(logoKey)) image.classList.add("tipoff-network-logo-light");
+      if (["nbcsn", "nbc sports network", "espn", "espn+", "cbs", "fox", "peacock", "tnt", "hbo max", "trutv", "altitude", "alt", "altitude 2", "alt2"].includes(logoKey)) image.classList.add("tipoff-network-logo-light");
       image.addEventListener("load", () => {
         image.style.setProperty("--network-ratio", image.naturalWidth / image.naturalHeight);
         label.classList.add("tipoff-visually-hidden");
@@ -449,6 +460,8 @@ async function loadDay() {
   request?.abort();
   request = new AbortController();
   const key = dayKey(date);
+  datePicker.value = key;
+  dateTitle.setAttribute("aria-label", `Choose schedule date, ${date.toLocaleDateString(undefined, { dateStyle: "full" })}`);
   dateTitle.textContent = dayKey(new Date()) === key ? `Today · ${dateFormat.format(date)}` : dateFormat.format(date);
   const { signal } = request;
   following.hidden = true;
@@ -497,6 +510,23 @@ function placeDateControls() {
 }
 desktopLayout.addEventListener("change", placeDateControls);
 placeDateControls();
+
+const datePicker = document.querySelector("#date-picker");
+dateTitle.addEventListener("click", () => {
+  if (typeof datePicker.showPicker === "function") {
+    try { datePicker.showPicker(); return; } catch { /* Show a visible native field below. */ }
+  }
+  datePicker.parentElement.setAttribute("data-native-fallback", "");
+  datePicker.tabIndex = 0;
+  datePicker.focus();
+});
+datePicker.addEventListener("change", () => {
+  const selected = dateFromDayKey(datePicker.value);
+  if (!selected) { datePicker.value = dayKey(date); return; }
+  date = selected;
+  loadDay();
+  if (!datePicker.parentElement.hasAttribute("data-native-fallback")) dateTitle.focus();
+});
 
 document.querySelector("#zone").textContent = zone.replaceAll("_", " ");
 for (const button of buttons.slice(1)) {

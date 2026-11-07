@@ -16,6 +16,7 @@ PAGE_ASSETS = {
     "/tip-off": "index.html",
     "/tip-off/guide.js": "guide.js",
     "/tip-off/guide.css": "guide.css",
+    "/assets/img/projects/tipoff-header-mark.png": "brand-mark.png",
     "/pages/projects/tipoff/": "portfolio-preview.html",
 }
 
