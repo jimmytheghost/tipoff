@@ -169,3 +169,10 @@ Published `tipoff-web-url-20261107-01`, frontend `20261107-16`: canonical and Op
 The protected routing block was installed separately with exact before/after hash guards, an unchanged-file check, ownership/mode preservation, backup, atomic replacement, and Apache syntax validation. The normal unmodified publisher installed five files, including the regenerated sitemap. Rollback restores the web release first, then the routing block; exact commands and backups remain in the ignored publication operations log. No sibling workspace, native provider, runtime, or cache changes.
 
 Validation: 91 web checks/cases (16 local route checks plus 75 existing cases), 17 release assertions, six query-preserving redirect checks, and 14 browser/crawler metadata/image checks passed. The sitemap retains 407 URLs with only Tipoff's URL replaced. Live browser navigation from `/tip-off` reached `/tipoff`; next-day listings and the calendar loaded. Screenshot: `/tmp/tipoff-canonical-url-live.jpg`. Messages rendering remains untested. Native app tests executed: 0 for this website routing change.
+
+
+## Lime basketball favicon — November 7, 2026
+
+Published `tipoff-web-favicon-20261107-01`: `tip-off.html` plus `assets/img/projects/tipoff-favicon.svg`. Source [web/favicon.svg](web/favicon.svg) embeds the existing supplied `web/brand-mark.png` without external dependencies, reusing the header’s crop and transparency filter with explicit lime `#c8fa54`. The guide declares the SVG favicon with a versioned asset URL; local preview serves it too. No global site favicon, routing, schedules, or native app changes. Rollback uses the normal publisher’s frozen backup.
+
+All 5 release assertions, both installed hashes, 16 existing local route checks, and 6 browser/crawler preview checks passed. Live browser verified the declared favicon URL and visibly rendered the lime basketball asset. Screenshot: `/tmp/tipoff-lime-favicon-live.jpg`. Browser tab icon caching can delay an existing tab’s update; actual Messages rendering remains untested. Native app tests executed: 0 for this asset/HTML-only release.

@@ -2,6 +2,12 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Lime basketball favicon — November 7, 2026
+
+- Added a self-contained SVG favicon embedding the supplied basketball PNG, preserving the header crop/transparency mask and setting explicit lime `#c8fa54`. Versioned `rel=icon` applies only to the guide; local preview serves the asset. The original brand PNG is unchanged.
+- Published `tipoff-web-favicon-20261107-01`: **2 files, 5 HTTP assertions, 2 installed hashes passed**. **16 existing local route checks** and Git whitespace passed. **0 native app tests / 0 new web unit tests executed** for the favicon change. Six browser/crawler metadata/image checks passed with the existing social image unchanged; actual Messages rendering remains untested.
+- Live browser confirmed the favicon declaration at `/tipoff` and rendered the asset visibly as the lime basketball with transparent seams. Screenshot `/tmp/tipoff-lime-favicon-live.jpg`; frozen payload and guarded rollback retained in the ignored publication workspace. Existing browser icon caches may require a refresh.
+
 ## Canonical URL rename — November 7, 2026
 
 - Canonical `/tipoff` replaces `/tip-off` in HTML/Open Graph metadata, header and portfolio links, frontend assets/API, project registry, and sitemap policy. Local preview supports the new route and old aliases; cached clients retain both asset/API prefixes. Physical `tip-off.html` remains internal. No native providers, persisted data, runtime, or sibling project changes.
