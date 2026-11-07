@@ -2,6 +2,13 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Altitude 2, Altitude+, and NBA TV logos — November 6, 2026
+
+- Added distinct Altitude 2 / ALT2, Altitude+, and NBA TV logos. Kept accessible broadcaster names and text fallback. Altitude 2 renders white; Altitude+ uses its official white mark; NBA TV retains its colors and remains excluded from national highlights.
+- Both PNGs and the NBA TV SVG returned HTTP 200 with the expected MIME types; PNG alpha checks confirmed transparency. Local and live November 7 Nuggets listings loaded all three marks successfully.
+- Published `tipoff-web-20261106-03`: only JavaScript and HTML changed; CSS was unchanged and omitted. All **8 deployment HTTP assertions** and **2 installed-file checksums** passed. Link-preview checks passed for canonical and alias URLs with browser/crawler agents (**4 page/image checks**).
+- JavaScript syntax and Git whitespace checks passed. **0 app tests executed**; logo-only frontend change. Backend, source data, caches, and routing were unchanged. Asset provenance is in the website handoff.
+
 ## Approved web redesign deployment — November 6, 2026
 
 - Published `tipoff-web-20261106-02`: only guide HTML, CSS, and JavaScript. Versioned CSS/JS URLs avoid stale frontend assets. The staged files were formatted with Prettier 3.6.2. No backend, runtime, cache, route, or sitemap changes.
