@@ -3,7 +3,6 @@ const zone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 const dateTitle = document.querySelector("#date");
 const leagues = document.querySelector("#leagues");
 const followedLeagues = document.querySelector("#followed-leagues");
-const followedStatus = document.querySelector("#followed-status");
 const following = document.querySelector("#following");
 const highlightsTitle = document.querySelector("#highlights-title");
 const nationalTitle = document.querySelector("#national-title");
@@ -15,6 +14,24 @@ const followedTeams = new Map([
 ]);
 const nationalLeagues = document.querySelector("#national-leagues");
 const nationalStatus = document.querySelector("#national-status");
+const scheduleStatuses = document.querySelector("#schedule-statuses");
+const scheduleStatusSummary = document.querySelector("#schedule-status-summary");
+const sourceStates = new Map();
+
+function updateSourceStatus(id, node, state, text) {
+  sourceStates.set(id, state);
+  node.textContent = text;
+  const states = [...sourceStates.values()];
+  const loading = states.filter(value => value === "loading").length;
+  const unavailable = states.filter(value => value === "unavailable").length;
+  const saved = states.filter(value => value === "saved").length;
+  const loaded = states.filter(value => value === "updated" || value === "saved").length;
+  scheduleStatusSummary.textContent = [
+    loading ? `${loading} loading` : `${loaded} loaded`,
+    saved ? `${saved} saved` : "",
+    unavailable ? `${unavailable} unavailable` : "",
+  ].filter(Boolean).join(" · ");
+}
 const dateFormat = new Intl.DateTimeFormat(undefined, { weekday: "short", month: "short", day: "numeric" });
 const timeFormat = new Intl.DateTimeFormat(undefined, { timeStyle: "short", timeZone: zone });
 const stampFormat = new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short", timeZone: zone });
@@ -62,25 +79,21 @@ function leagueHeader(tag, id, label) {
   const name = element("span", label, "tipoff-header-name");
   name.id = `${id}-name`;
   const gameCount = element("span", "", "tipoff-league-count");
-  const status = element("span", "", "tipoff-league-freshness");
-  status.setAttribute("role", "status");
   const identity = element("span", "", "tipoff-header-identity");
   identity.append(name, gameCount);
-  title.append(identity, status);
-  return { title, name, gameCount, status };
+  title.append(identity);
+  return { title, name, gameCount };
 }
 
 function summaryGroup(parent, id, label) {
   const group = element("section", "", "tipoff-league");
-  const { title, name, gameCount, status } = leagueHeader("h3", id, label);
+  const { title, name, gameCount } = leagueHeader("h3", id, label);
   group.setAttribute("aria-labelledby", name.id);
   const games = element("ul", "", "tipoff-games");
-  const warning = element("p", "", "tipoff-league-status");
-  warning.hidden = true;
-  group.append(title, warning, games);
+  group.append(title, games);
   group.hidden = true;
   parent.append(group);
-  return { group, title, games, gameCount, status, warning };
+  return { group, title, games, gameCount };
 }
 
 function resetSummary({ group, title, games }) {
@@ -92,7 +105,7 @@ function resetSummary({ group, title, games }) {
 const sections = new Map(buttons.slice(1).map(button => {
   const id = button.dataset.league;
   const section = element("section", "", "tipoff-league");
-  const { title, name, gameCount, status } = leagueHeader("h2", `league-${id}`, button.textContent);
+  const { title, name, gameCount } = leagueHeader("h2", `league-${id}`, button.textContent);
   section.setAttribute("aria-labelledby", name.id);
   const results = element("div");
   section.append(title, results);
@@ -100,6 +113,10 @@ const sections = new Map(buttons.slice(1).map(button => {
   const national = summaryGroup(nationalLeagues, `national-${id}`, button.textContent);
   const followedTeam = followedTeams.get(id);
   const followed = followedTeam && summaryGroup(followedLeagues, `followed-${id}`, followedTeam.name);
+  const status = element("dd");
+  const sourceRow = element("div");
+  sourceRow.append(element("dt", button.textContent), status);
+  scheduleStatuses.append(sourceRow);
   return [id, { section, title, gameCount, status, results, national, followed }];
 }));
 
@@ -420,7 +437,7 @@ async function loadLeague(id, day, signal) {
   gameCount.textContent = "";
   const summaries = followed ? [national, followed] : [national];
   const followedTeam = followedTeams.get(id);
-  status.textContent = "Loading schedule…";
+  updateSourceStatus(id, status, "loading", "Loading schedule…");
   results.replaceChildren();
   try {
     const params = new URLSearchParams({ sport: id, day, zone });
@@ -432,15 +449,8 @@ async function loadLeague(id, day, signal) {
     const count = snapshot.games.length;
     gameCount.textContent = `${count} ${count === 1 ? "game" : "games"}`;
     const updated = stampFormat.format(new Date(snapshot.fetchedAt));
-    status.replaceChildren(
-      element("span", snapshot.source, "tipoff-league-source"),
-      element("span", `${saved ? "Saved listings" : "Updated"} ${updated}`)
-    );
-    for (const summary of summaries) {
-      summary.status.replaceChildren(...[...status.children].map(node => node.cloneNode(true)));
-      summary.warning.hidden = !(id === "nba" && snapshot.altitudeWarning);
-      summary.warning.textContent = id === "nba" ? snapshot.altitudeWarning ?? "" : "";
-    }
+    updateSourceStatus(id, status, saved ? "saved" : "updated",
+      `${snapshot.source} · ${saved ? "Saved listings" : "Updated"} ${updated}${snapshot.altitudeWarning ? ` · ${snapshot.altitudeWarning}` : ""}`);
     if (count) {
       const list = element("ul", "", "tipoff-games");
       for (const game of snapshot.games) {
@@ -470,7 +480,6 @@ async function loadLeague(id, day, signal) {
       }
       results.append(list);
     }
-    if (snapshot.altitudeWarning) results.append(element("p", snapshot.altitudeWarning, "tipoff-meta"));
     if (count === 0) {
       results.append(element("p", "No games scheduled.", "tipoff-meta"));
       const details = element("details", "", "tipoff-inactive-league");
@@ -485,7 +494,7 @@ async function loadLeague(id, day, signal) {
     results.replaceChildren();
     summaries.forEach(resetSummary);
     gameCount.textContent = "";
-    status.textContent = "Schedule unavailable.";
+    updateSourceStatus(id, status, "unavailable", "Schedule unavailable.");
     return false;
   }
 }
@@ -501,8 +510,8 @@ async function loadDay() {
   following.hidden = true;
   highlightsTitle.textContent = "National Broadcasts";
   nationalTitle.hidden = true;
-  followedStatus.textContent = "";
-  nationalStatus.textContent = "Checking national broadcasts…";
+  sourceStates.clear();
+  nationalStatus.textContent = "";
   for (const { section, national, followed } of sections.values()) {
     leagues.append(section);
     resetSummary(national);
@@ -514,14 +523,12 @@ async function loadDay() {
   for (const { section } of sections.values()) {
     if (section.firstElementChild.matches(".tipoff-inactive-league")) leagues.append(section);
   }
-  const missingFollowed = loaded.some((result, index) => !result && followedTeams.has(ids[index]));
   const hasFollowedGames = Boolean(followedLeagues.querySelector("section:not([hidden])"));
-  following.hidden = !hasFollowedGames && !missingFollowed;
+  following.hidden = !hasFollowedGames;
   highlightsTitle.textContent = hasFollowedGames ? "Following" : "National Broadcasts";
   nationalTitle.hidden = !hasFollowedGames;
-  followedStatus.textContent = missingFollowed ? "Some followed team schedules are unavailable." : "";
   if (loaded.some(result => !result)) {
-    nationalStatus.textContent = "Some league schedules are unavailable.";
+    nationalStatus.textContent = "";
   } else {
     nationalStatus.textContent = nationalLeagues.querySelector("section:not([hidden])")
       ? "" : "No other national broadcasts listed.";

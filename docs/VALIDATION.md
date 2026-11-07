@@ -2,6 +2,13 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Consolidated schedule status — November 7, 2026
+
+- Moved source/freshness out of all card headers into a single initially closed disclosure below All Games, with loading/loaded, saved, and unavailable counts and five per-sport source/timestamp rows. Preserved saved timestamps, explicit fallback identities, and Altitude supplement warnings. Date changes reset loading states and aborted older requests cannot replace current results. Game-specific broadcast listings/notes remain in their disclosures.
+- **75 existing web unit cases passed**, plus **16 existing local route checks**: **91 total**. JavaScript syntax and Git whitespace passed. **0 new unit tests / 0 native app tests executed** for this frontend presentation change.
+- Published `tipoff-web-status-20261107-01`, frontend `20261107-17`: **3 files, 8 release assertions, 3 installed hashes**, and **6 browser/crawler metadata/image checks passed**. No source/runtime/cache/routing changes. Actual Messages rendering remains untested.
+- Local panel expanded to five rows; live November 9 showed “5 loaded · 5 saved”, preserved the original timestamps and fallback identities, and kept card headers clear. All Games opened/closed with **0 card freshness nodes, 5 source rows, no horizontal overflow**. Screenshot `/tmp/tipoff-bottom-status-live.jpg`; guarded release rollback retained in the ignored publication workspace.
+
 ## Lime basketball favicon — November 7, 2026
 
 - Added a self-contained SVG favicon embedding the supplied basketball PNG, preserving the header crop/transparency mask and setting explicit lime `#c8fa54`. Versioned `rel=icon` applies only to the guide; local preview serves the asset. The original brand PNG is unchanged.
