@@ -213,3 +213,8 @@ Logo-only matchups use 1.8 rem team marks (text-bearing rows retain 1.4 rem); fi
 All 90 existing web unit cases, the collapsed-status markup check, and 16 existing local route checks passed. JavaScript syntax/Git whitespace passed; native app tests executed: 0. Nine release assertions, four installed hashes, and six browser/crawler preview checks passed. Local 319 px verified stacked Today/date, two loaded skull marks, larger logo-only matchups, and no horizontal overflow; 1261 px verified inline date labels and both home marks. Frozen release and rollback remain in ignored publication operations notes. Messages rendering remains untested.
 
 Live 319 px verification confirmed Today above the date, four 28.8 px team marks, both accessible skull links, faint uppercase empty text, and no horizontal overflow. Screenshot `/tmp/tipoff-mobile-polish-live.jpg`.
+
+
+## Mobile viewport audit — November 7, 2026
+
+The reported right-edge cutoff was traced to the earlier full-page screenshot capture. Live page geometry fits without horizontal scrolling: loaded landing and expanded All Games at 319 px, expanded All Games at 369 and 390 px, and the calendar and expanded status at 319 px. Calendar bounds were x=7.99–311.16 px. Corrected viewport capture: `/tmp/tipoff-mobile-fits-screen.jpg`. No frontend edits or deployment; `tipoff-web-mobile-polish-20261107-01` remains current. See the validation log for exact measurements.

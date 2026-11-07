@@ -2,6 +2,13 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Mobile viewport audit after cropped capture — November 7, 2026
+
+- Investigated the reported right-edge cutoff on the live guide. The earlier full-page screenshot clipped the capture; the live document had no horizontal overflow. No frontend code change or deployment was needed.
+- At **319 px**, `documentElement.clientWidth` and `scrollWidth` were both **319 px** after schedules loaded. Header, footer, date controls, cards, inline game rows, and status container stayed within the viewport; the two team logos fit before the start-time column without overlapping it.
+- Expanded All Games retained matching viewport/scroll widths at **319, 369, and 390 px**. At **319 px**, the calendar stayed within x=**7.99–311.16 px**, and expanding the five-source status panel kept `scrollWidth=319`.
+- Saved the complete visible right edge using the browser's viewport screenshot capture: `/tmp/tipoff-mobile-fits-screen.jpg`. Temporary viewport override reset. **0 native app tests / 0 web unit tests executed** for this browser-only audit; existing release `tipoff-web-mobile-polish-20261107-01` remains live.
+
 ## Mobile typography and home branding — November 7, 2026
 
 - Enlarged logo-only team marks to **1.8 rem** (normal rows remain 1.4 rem), measuring the normal text layout before resizing artwork to prevent fit-state hysteresis. At up to **24 rem**, Today stacks above the unbroken date and its separator is omitted; wide layouts remain inline. Date/calendar accessible labels remain intact.
