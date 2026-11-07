@@ -2,7 +2,6 @@ const buttons = [...document.querySelectorAll("[data-league]")];
 const zone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 const dateTitle = document.querySelector("#date");
 const leagues = document.querySelector("#leagues");
-const summarySections = document.querySelectorAll(".tipoff-summary");
 const followedLeagues = document.querySelector("#followed-leagues");
 const followedStatus = document.querySelector("#followed-status");
 const followedTeams = new Map([
@@ -80,7 +79,6 @@ function select(league) {
   for (const [id, { section }] of sections) {
     section.hidden = active !== "all" && id !== active;
   }
-  for (const summary of summarySections) summary.hidden = active !== "all";
 }
 
 // League-native codes differ from ESPN's logo filenames for these clubs.
@@ -232,8 +230,9 @@ async function loadLeague(id, day, signal) {
       element("span", `${saved ? "Refresh failed, saved" : "Updated"} ${updated}`)
     );
     for (const { freshness } of summaries) {
-      freshness.hidden = !saved;
-      freshness.textContent = saved ? `Saved listings · ${updated}` : "";
+      freshness.hidden = false;
+      freshness.textContent = `${snapshot.source} · ${saved ? "Refresh failed, saved" : "Updated"} ${updated}`;
+      if (id === "nba" && snapshot.altitudeWarning) freshness.textContent += ` · ${snapshot.altitudeWarning}`;
     }
     if (count) {
       const list = element("ul", "", "tipoff-games");
@@ -259,6 +258,7 @@ async function loadLeague(id, day, signal) {
     }
     if (snapshot.altitudeWarning) results.append(element("p", snapshot.altitudeWarning, "tipoff-meta"));
     if (count === 0) {
+      results.append(element("p", "No games scheduled.", "tipoff-meta"));
       const details = element("details", "", "tipoff-inactive-league");
       const toggle = element("summary");
       toggle.append(title);

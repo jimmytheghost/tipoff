@@ -2,6 +2,13 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Simplified browser landing view — November 6, 2026
+
+- Local frontend change only; not deployed. Following and National Broadcasts appear on arrival; All Games and its league filters start collapsed. Kept the current four followed teams.
+- Verified with live local schedules for November 6 and November 5 in America/Denver. Today showed two national NBA games and no followed games. November 5 showed Avalanche once in the highlights with its National marker, alongside the other NFL/NHL national games. Sources and freshness remained visible.
+- Mouse expansion and Space collapse worked. Selecting NHL filtered only All Games while retaining cross-league highlights. Previous-day and Today controls refreshed both views. No horizontal overflow in the tested browser at 528 px or the narrow 300 px content viewport, with All Games both collapsed and expanded.
+- Local page returned HTTP 200. `node --check web/guide.js` and `git diff --check` passed. Preview built TipoffCheck successfully and used the unchanged live provider. **0 app tests executed**; no native or schedule-source code changed. Production and Messages checks were not repeated for this local preview.
+
 ## Production web deployment
 
 - `scripts/test.sh` passed **57 of 57 tests**. `scripts/package-app.sh` built and verified the macOS app. A live macOS `TipoffCheck` returned 11 NHL games for November 5 in America/Denver.

@@ -525,3 +525,33 @@ ul.tipoff-broadcasts {
 .tipoff-inactive-league:not([open]) .tipoff-league-freshness {
   visibility: hidden;
 }
+
+.tipoff-all-games {
+  margin-top: 2rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--line);
+}
+
+.tipoff-all-games > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 48px;
+  padding-block: 0.5rem;
+  font: 700 1.65rem/1.1 var(--heading);
+  cursor: pointer;
+  list-style: none;
+}
+
+.tipoff-all-games > summary::-webkit-details-marker { display: none; }
+
+.tipoff-all-games > summary::after {
+  content: "＋" / "";
+  color: var(--accent);
+}
+
+.tipoff-all-games[open] > summary::after { content: "−" / ""; }
+
+.tipoff-meta:empty { display: none; }
+
+.tipoff-summary-groups { margin-top: 0.75rem; }
