@@ -11,9 +11,11 @@ function context(fetch) {
 (async () => {
   let count = 0;
   const cached = {snapshot: {day: '2026-11-06'}, saved: true};
-  let ctx = context(async () => {count++; return {status:200, ok:true, json:async()=>cached};});
+  let requested;
+  let ctx = context(async url => {requested=url; count++; return {status:200, ok:true, json:async()=>cached};});
   assert.equal(await ctx.fetchSchedule('',new AbortController().signal),cached);
   assert.equal(count,1);
+  assert.equal(requested,"/tipoff/schedule?");
   count=0;
   ctx = context(async () => ++count===1 ? {status:202,ok:true,json:async()=>({refreshing:true})} : {status:200,ok:true,json:async()=>cached});
   ctx.schedulePause=async()=>{};

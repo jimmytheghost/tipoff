@@ -13,7 +13,9 @@ WEB = Path(__file__).resolve().parent
 CACHE = WEB.parent / ".build" / "web-cache"
 LOCKS = {sport: Lock() for sport in ("nba", "nfl", "wnba", "nhl", "mlb")}
 PAGE_ASSETS = {
-    "/tip-off": "index.html",
+    "/tipoff": "index.html",
+    "/tipoff/guide.js": "guide.js",
+    "/tipoff/guide.css": "guide.css",
     "/tip-off/guide.js": "guide.js",
     "/tip-off/guide.css": "guide.css",
     "/assets/img/projects/tipoff-header-mark.png": "brand-mark.png",
@@ -24,11 +26,11 @@ PAGE_ASSETS = {
 class Preview(BaseHTTPRequestHandler):
     def do_GET(self):
         url = urlsplit(self.path)
-        if url.path in {"/", "/sports", "/sports/", "/tip-off/"}:
+        if url.path in {"/", "/sports", "/sports/", "/tip-off", "/tip-off/", "/tip-off.html", "/tipoff/"}:
             self.send_response(308)
-            self.send_header("Location", "/tip-off")
+            self.send_header("Location", "/tipoff" + ("?" + url.query if url.query else ""))
             self.end_headers()
-        elif url.path == "/tip-off/schedule":
+        elif url.path in {"/tipoff/schedule", "/tip-off/schedule"}:
             self.schedule(parse_qs(url.query))
         elif url.path in PAGE_ASSETS:
             self.file(WEB / PAGE_ASSETS[url.path])
@@ -82,5 +84,5 @@ class Preview(BaseHTTPRequestHandler):
 if __name__ == "__main__":
     BINARY, port = sys.argv[1:]
     with ThreadingHTTPServer(("127.0.0.1", int(port)), Preview) as server:
-        print(f"Local: http://127.0.0.1:{server.server_port}/tip-off", flush=True)
+        print(f"Local: http://127.0.0.1:{server.server_port}/tipoff", flush=True)
         server.serve_forever()

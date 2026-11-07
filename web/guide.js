@@ -398,7 +398,7 @@ async function fetchSchedule(params, signal) {
     let data;
     try {
       if (signal.aborted) attempt.abort();
-      response = await fetch(`/tip-off/schedule?${params}`, { signal: attempt.signal });
+      response = await fetch(`/tipoff/schedule?${params}`, { signal: attempt.signal });
       data = await response.json();
     } finally {
       clearTimeout(timer);
