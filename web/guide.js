@@ -421,8 +421,10 @@ function gameRow(game, league, broadcasts, highlight, { collapseBroadcasts = fal
     const altitude = game.altitude;
     details.append(element(compact ? "h4" : "summary", "Altitude details"));
     details.append(element("p", altitude.networks.join(", ")));
-    if (altitude.pregame) details.append(element("p", `Pregame ${timeFormat.format(new Date(altitude.pregame))}`));
-    if (altitude.postgame) details.append(element("p", `Postgame ${timeFormat.format(new Date(altitude.postgame))}`));
+    const showTimes = element("p", "", "tipoff-altitude-times");
+    if (altitude.pregame) showTimes.append(element("span", `Pregame ${timeFormat.format(new Date(altitude.pregame))}`));
+    if (altitude.postgame) showTimes.append(element("span", `Postgame ${timeFormat.format(new Date(altitude.postgame))}`));
+    if (showTimes.childElementCount) details.append(showTimes);
     for (const note of altitude.notes) details.append(element("p", note));
     details.append(element("p", `${altitude.saved ? "Saved Altitude data" : "Altitude updated"} ${stampFormat.format(new Date(altitude.fetchedAt))}`, "tipoff-meta"));
     content.append(details);

@@ -279,3 +279,12 @@ Published `tipoff-web-detail-labels-20261107-01`, frontend `20261107-28`: CSS/HT
 Formatting/Git whitespace passed; no unit/native app tests executed for this CSS-only adjustment. Local expanded Nuggets verified both styled headings, softer counts, and no overflow down to the browser’s reported 266 px viewport. Nine release assertions, two installed hashes, and six browser/crawler preview checks passed. Frozen release/guarded rollback remain in ignored publication operations notes. Messages rendering remains untested.
 
 Live expanded Nuggets verified both heading styles and softer counts without horizontal overflow. Screenshot: `/tmp/tipoff-detail-labels-live.jpg`.
+
+
+## Compact Altitude information — November 7, 2026
+
+Published `tipoff-web-altitude-compact-20261107-01`, frontend `20261107-29`: HTML/CSS/JS only. Altitude information now uses 12 px text, tighter paragraph margins, and 10 px freshness text. Source-provided pregame/postgame times share one flex row, each retaining its label; missing times are omitted, and extreme narrow widths can wrap whole timing labels. This shared renderer applies to Following and full-schedule Altitude details. Original networks, footnotes, show times, saved state, and freshness content remain unchanged.
+
+JavaScript syntax, formatting, and Git whitespace passed; no unit/native app tests executed for this presentation change. Local expanded Nuggets verified 12/10 px text and identical pregame/postgame row positions at regular and 319 px widths, with no horizontal overflow. Nine release assertions, three installed hashes, and six browser/crawler preview checks passed. Frozen release/guarded rollback remain in ignored publication operations notes. Messages rendering remains untested.
+
+Live expanded Nuggets verified smaller text and both show times on one row, without horizontal overflow. Screenshot: `/tmp/tipoff-compact-altitude-live.jpg`.

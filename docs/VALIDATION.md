@@ -2,6 +2,12 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Compact Altitude information — November 7, 2026
+
+- Altitude information uses **12 px** type, tighter **0.3 rem** paragraph margins, and **10 px** freshness text. Pregame/postgame labels share one flex row; missing times are omitted, with whole-label wrapping only if needed at extreme narrow widths. Original source fields/notes/saved timestamps are unchanged.
+- Local Nuggets: both show-time labels shared y=**375.29 px** at the regular width and y=**383.18 px** at **319 px**; `scrollWidth=319`. Computed detail text **12 px**, freshness text **10 px**. JavaScript syntax, formatting, and Git whitespace passed. **0 web unit tests / 0 native app tests executed** for the presentation change.
+- Published `tipoff-web-altitude-compact-20261107-01`, frontend `20261107-29`: **3 files, 9 release assertions, 3 installed hashes, 6 browser/crawler preview checks passed**. Live expanded Nuggets confirmed **12 px** detail text, both show-time labels at y=**375.29 px**, and no horizontal overflow. Screenshot `/tmp/tipoff-compact-altitude-live.jpg`. No provider/runtime/cache changes. Messages rendering remains untested.
+
 ## Softer game counts and styled detail labels — November 7, 2026
 
 - Game counts now match the footer timestamp’s hierarchy: **9 px / 500 / #8794a7**, retaining right alignment/vertical centering. National markers remain lime. Expanded Following headings use **10 px / 700 / lime / uppercase / 0.12 em tracking**, with faint trailing rules. Broadcast data, notes, times, and freshness are unchanged.

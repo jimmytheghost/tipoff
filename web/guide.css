@@ -766,7 +766,17 @@ ul.tipoff-inline-broadcasts {
 }
 
 .tipoff-followed-body > h4 { margin-bottom: -0.5rem; }
-.tipoff-followed-body .tipoff-altitude p { margin-top: 0.35rem; }
+.tipoff-altitude { font-size: 0.75rem; line-height: 1.45; }
+.tipoff-altitude p { margin: 0.3rem 0; }
+.tipoff-altitude .tipoff-meta { font-size: 0.625rem; }
+.tipoff-altitude-times {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 1rem;
+  font-variant-numeric: tabular-nums;
+}
+.tipoff-altitude-times > span { white-space: nowrap; }
 
 /* Source/freshness details open upward from the footer. */
 .tipoff-schedule-status {
