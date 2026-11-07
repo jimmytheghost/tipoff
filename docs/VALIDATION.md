@@ -2,6 +2,11 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Date chevron removal — November 7, 2026
+
+- Removed the date button’s decorative ::after arrow. Date text, previous/next day arrows, and calendar behavior remain intact. JavaScript syntax and Git whitespace checks passed; **0 app tests / 0 web unit tests executed** for this CSS-only removal.
+- Published `tipoff-web-date-arrow-20261107-01`, CSS/HTML only, frontend `20261107-14`. All **10 release assertions**, **2 installed hashes**, and **4 browser/crawler preview checks** passed. Live date text had no ::after content and the calendar still opened/selected a day. Frozen release, backup/rollback records, and screenshot remain in the ignored deployment workspace.
+
 ## Site-themed calendar popover — November 7, 2026
 
 - Replaced the browser-native date field/popup with an HTML popover using the guide’s solid surface, thin border, Roboto text, lime selected-day fill, lime today outline, and visible keyboard focus. Month arrows, six weeks of date cells, adjacent-month dates, and a Today shortcut are included. The panel anchors to the date button and clamps within the viewport; overflow scrolls on short screens.
