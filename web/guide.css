@@ -382,7 +382,7 @@ ul.tipoff-broadcasts {
 }
 
 .tipoff-network-logo {
-  width: min(var(--network-max-width, 4.25rem), calc(var(--network-height, 1.5rem) * var(--network-ratio, 2)));
+  width: min(var(--network-max-width, 3rem), calc(var(--network-height, 1.4rem) * var(--network-ratio, 2)));
   height: auto;
   aspect-ratio: var(--network-ratio, 2);
   object-fit: contain;
@@ -621,11 +621,6 @@ ul.tipoff-inline-broadcasts {
 .tipoff-inline-broadcasts .tipoff-broadcast {
   padding: 0;
   font-size: 0.7rem;
-}
-
-.tipoff-inline-broadcasts .tipoff-network-logo {
-  --network-max-width: 1.8rem;
-  --network-height: 1rem;
 }
 
 @media (max-width: 32rem) {
