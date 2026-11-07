@@ -342,6 +342,20 @@ a { color: var(--accent); }
   min-width: 0;
 }
 
+.tipoff-team-name { position: relative; }
+
+.tipoff-team-full { display: inline-block; white-space: nowrap; }
+.tipoff-team-short { display: none; }
+
+/* Keep the full label measurable while the shorter name is visible. */
+.tipoff-matchup-short .tipoff-team-full {
+  position: absolute;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.tipoff-matchup-short .tipoff-team-short { display: inline; }
+
 .tipoff-team-logo {
   width: 1.4rem;
   height: 1.4rem;

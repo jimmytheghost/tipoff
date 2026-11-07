@@ -2,6 +2,14 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Adaptive team display names — November 7, 2026
+
+- Shared matchup rendering now measures both full names, logos, separator, and gaps against the actual matchup column. Full names appear when both fit; otherwise both use the existing city/state-prefix removal. ResizeObserver handles container changes/hidden sections opening, font loading rechecks metrics, and day changes disconnect obsolete observations. Remaining very long nicknames retain existing inline ellipsis behavior. Full display names remain available on hover; snapshots are untouched.
+- NBA.com cards can omit teamCity. Added an NBA-only display lookup verified against https://www.nba.com/teams on November 7, 2026, without overriding existing full or unknown names. The lookup does not affect broadcaster/source/cache fields.
+- **6 display-name cases**, **10 compact Following cases**, and **4 client-loading cases passed** (**20 web tests**). JavaScript syntax and Git whitespace checks passed. **0 native app tests executed**; native providers/runtime/cache code was unchanged.
+- Local November 8 desktop (1261 px) showed Denver Broncos @ Carolina Panthers in a **781.60 px** matchup column and full NFL names in national rows. At 540 px it switched to Broncos @ Panthers; at 325 px, expanded All Games also used shorter names without horizontal overflow. Resizing wide restored full NFL/NHL names. November 7 desktop All Games showed Denver Nuggets @ Indiana Pacers and full NBA/NHL names while smaller side-by-side Following cards independently kept shorter names.
+- Published `tipoff-web-adaptive-names-20261107-02`, HTML/CSS/JS, frontend version `20261107-09`. Read-only preparation 01 was superseded to include NBA display expansion and was never published. All **9 release assertions**, **3 installed hashes**, and **4 browser/crawler preview checks** passed. Live desktop/narrow fitting verified. Actual Messages rendering remains untested; frozen payload, backup/rollback records, and screenshots remain in the ignored deployment workspace.
+
 ## Responsive date placement — November 7, 2026
 
 - The single date-control group moves into a centered header slot at **64 rem / 1024 px** and wider, between the brand and back link. Below that breakpoint it stays in main above the section heading and spans the full content width. Header placement removes the redundant bottom rule; the body toolbar keeps its thin baseline. Date/listener state and keyboard focus are retained when moving the original node.

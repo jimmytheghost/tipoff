@@ -152,6 +152,23 @@ function shortTeamName(name) {
   return location ? trimmed.slice(location.length).trim() || trimmed : trimmed;
 }
 
+// NBA.com game cards sometimes omit teamCity. Display names checked against
+// https://www.nba.com/teams on November 7, 2026; stored source names stay intact.
+const nbaFullNames = new Map([
+  "Atlanta Hawks", "Boston Celtics", "Brooklyn Nets", "Charlotte Hornets",
+  "Chicago Bulls", "Cleveland Cavaliers", "Dallas Mavericks", "Denver Nuggets",
+  "Detroit Pistons", "Golden State Warriors", "Houston Rockets", "Indiana Pacers",
+  "LA Clippers", "Los Angeles Lakers", "Memphis Grizzlies", "Miami Heat",
+  "Milwaukee Bucks", "Minnesota Timberwolves", "New Orleans Pelicans", "New York Knicks",
+  "Oklahoma City Thunder", "Orlando Magic", "Philadelphia 76ers", "Phoenix Suns",
+  "Portland Trail Blazers", "Sacramento Kings", "San Antonio Spurs", "Toronto Raptors",
+  "Utah Jazz", "Washington Wizards",
+].map(name => [shortTeamName(name).toLowerCase(), name]));
+
+function fullTeamName(name, league) {
+  return league === "nba" ? nbaFullNames.get(name.trim().toLowerCase()) ?? name : name;
+}
+
 function team(name, code, league) {
   const line = element("span", "", "tipoff-team");
   if (/^[A-Z0-9]{2,5}$/i.test(code)) {
@@ -162,11 +179,34 @@ function team(name, code, league) {
       : `https://a.espncdn.com/i/teamlogos/${league}/500/${slug}.png`;
     line.append(mark(url, "tipoff-team-logo"));
   }
-  const label = element("span", shortTeamName(name), "tipoff-team-name");
-  label.title = name;
+  const displayName = fullTeamName(name, league);
+  const label = element("span", "", "tipoff-team-name");
+  label.append(element("span", displayName, "tipoff-team-full"), element("span", shortTeamName(displayName), "tipoff-team-short"));
+  label.title = displayName;
   line.append(label);
   return line;
 }
+
+function fitMatchupNames(matchup) {
+  if (!matchup.isConnected || !matchup.getBoundingClientRect().width) return;
+  const gap = node => Number.parseFloat(getComputedStyle(node).columnGap) || 0;
+  const teams = [...matchup.querySelectorAll(".tipoff-team")];
+  const teamWidth = teams.reduce((total, node) => {
+    const logo = node.querySelector(".tipoff-team-logo");
+    return total + node.querySelector(".tipoff-team-full").getBoundingClientRect().width +
+      (logo ? logo.getBoundingClientRect().width + gap(node) : 0);
+  }, 0);
+  const required = teamWidth + matchup.querySelector(".tipoff-matchup-separator").getBoundingClientRect().width +
+    gap(matchup) + gap(matchup.querySelector(".tipoff-matchup-home"));
+  matchup.classList.toggle("tipoff-matchup-short", Math.ceil(required) > Math.floor(matchup.getBoundingClientRect().width));
+}
+
+const matchupSizes = new ResizeObserver(entries => {
+  for (const { target } of entries) fitMatchupNames(target);
+});
+// Font metrics may change without changing the grid column width.
+document.fonts.ready.then(() => document.querySelectorAll(".tipoff-matchup").forEach(fitMatchupNames));
+document.fonts.addEventListener("loadingdone", () => document.querySelectorAll(".tipoff-matchup").forEach(fitMatchupNames));
 
 function broadcastList(broadcasts, { showMarketLabels = true } = {}) {
   const list = element("ul", "", "tipoff-broadcasts");
@@ -282,6 +322,7 @@ function gameRow(game, league, broadcasts, highlight, { collapseBroadcasts = fal
     details.append(element("p", `${altitude.saved ? "Saved Altitude data" : "Altitude updated"} ${stampFormat.format(new Date(altitude.fetchedAt))}`, "tipoff-meta"));
     content.append(details);
   }
+  matchupSizes.observe(matchup);
   return row;
 }
 
@@ -404,6 +445,7 @@ async function loadLeague(id, day, signal) {
 }
 
 async function loadDay() {
+  matchupSizes.disconnect();
   request?.abort();
   request = new AbortController();
   const key = dayKey(date);
