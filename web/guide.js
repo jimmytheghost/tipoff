@@ -98,6 +98,11 @@ const logoAliases = {
 };
 
 const networkLogos = new Map([
+  ["tnt", "https://upload.wikimedia.org/wikipedia/commons/2/24/TNT_Logo_2016.svg"],
+  ["hbo max", "https://upload.wikimedia.org/wikipedia/commons/7/7e/HBO_Max_May_2025_%28Horizontal%29.svg"],
+  ["trutv", "https://upload.wikimedia.org/wikipedia/commons/3/36/TruTV_2014.svg"],
+  ["altitude", "https://upload.wikimedia.org/wikipedia/en/e/e2/Altitude_Sports_logo.svg"],
+  ["alt", "https://upload.wikimedia.org/wikipedia/en/e/e2/Altitude_Sports_logo.svg"],
   ["peacock", "https://upload.wikimedia.org/wikipedia/commons/2/20/NBCUniversal_Peacock_Logo_%282026%29.svg"],
   ["fox", "https://upload.wikimedia.org/wikipedia/commons/f/f7/FOX_wordmark-black.svg"],
   ["prime video", "https://upload.wikimedia.org/wikipedia/commons/9/90/Prime_Video_logo_%282024%29.svg"],
@@ -158,7 +163,7 @@ function broadcastList(broadcasts) {
     const label = element("span", name);
     if (logo) {
       const image = mark(logo, "tipoff-network-logo");
-      if (["espn+", "cbs", "fox", "peacock"].includes(key)) image.classList.add("tipoff-network-logo-light");
+      if (["espn+", "cbs", "fox", "peacock", "tnt", "hbo max", "trutv", "altitude", "alt"].includes(key)) image.classList.add("tipoff-network-logo-light");
       image.addEventListener("load", () => label.classList.add("tipoff-visually-hidden"), { once: true });
       item.append(image);
     }

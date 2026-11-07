@@ -2,6 +2,12 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## TNT, HBO Max, Altitude, and truTV logos — November 6, 2026
+
+- Added the four requested broadcaster marks. Altitude and ALT map to the same logo; Altitude 2 and Altitude+ keep their distinct text. All four render white on the dark background and retain existing accessible source names, text fallback, and regional tags.
+- All four SVG URLs returned HTTP 200 with image/svg+xml. Browser checks confirmed loaded Altitude / ALT on the November 10 Avalanche listing, TNT and HBO Max on November 10 NHL listings, and truTV on November 11 NHL listings. Visually inspected all four marks in the local browser.
+- `node --check web/guide.js` and `git diff --check` passed. **0 app tests executed**; logo-only frontend change. No schedule or cache changes. Local preview updated; not deployed. Asset provenance is recorded in the website handoff.
+
 ## Peacock / FOX logos and NFL Network exclusion — November 6, 2026
 
 - Added Wikimedia Commons Peacock and FOX wordmarks using the existing accessible-name and text-fallback behavior, with white rendering for the dark background. Both SVG URLs returned HTTP 200 with image/svg+xml; browser checks confirmed successful image loads.
