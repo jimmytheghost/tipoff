@@ -450,7 +450,7 @@ a { color: var(--accent); }
 .tipoff-team-name { position: relative; }
 
 .tipoff-team-full { display: inline-block; white-space: nowrap; }
-.tipoff-team-short { display: none; }
+.tipoff-team-short { display: inline-block; position: absolute; visibility: hidden; white-space: nowrap; }
 
 /* Keep the full label measurable while the shorter name is visible. */
 .tipoff-matchup-short .tipoff-team-full {
@@ -459,7 +459,11 @@ a { color: var(--accent); }
   pointer-events: none;
 }
 
-.tipoff-matchup-short .tipoff-team-short { display: inline; }
+.tipoff-matchup-short .tipoff-team-short { position: static; visibility: visible; }
+
+/* Keep both name variants measurable when only the artwork fits. */
+.tipoff-matchup-logos .tipoff-team-name { position: absolute; opacity: 0; pointer-events: none; }
+.tipoff-matchup-logos .tipoff-team { flex-shrink: 0; }
 
 .tipoff-team-logo {
   width: 1.4rem;

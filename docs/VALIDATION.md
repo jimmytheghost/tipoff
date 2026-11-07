@@ -2,6 +2,12 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Logo-only matchups when names do not fit — November 7, 2026
+
+- Shared per-row fitting measures full names, then shortened names, then hides visual text only when both logos are successfully loaded and shortened names still overflow. The logos keep their existing size and separator. Full names remain accessible and on hover; missing/loading/failed artwork retains text. Image load/failure, font loading, resizing, and hidden schedules opening recheck fitting. Source snapshots remain unchanged.
+- **8 new sizing/resize/logo-fallback cases passed**, including wide/full, medium/short, narrow/logos, restoration, pending/failed/missing artwork. **82 existing web unit cases passed**: **90 unit cases total**. **16 route checks** and the existing collapsed-status markup check passed. JavaScript syntax and Git whitespace passed. **0 native app tests executed**.
+- Local browser at **369 px** showed both Following rows as logo @ logo, with hidden text and full accessible team names; at **1261 px**, wider columns restored shortened names. Published `tipoff-web-compact-matchups-20261107-01`, frontend `20261107-20`: **3 files, 8 release assertions, 3 installed hashes, 6 browser/crawler preview checks passed**. Messages rendering remains untested. No provider/runtime/cache changes. Live 369 px verification showed both Following rows in logo-only mode with no horizontal overflow; wider live columns restored names. Screenshot `/tmp/tipoff-logo-only-matchups-live.jpg`.
+
 ## Status message alignment — November 7, 2026
 
 - Removed the static summary label and vertically centered the remaining status text with equal padding and the existing 44 px target. Initial markup says “Loading schedules…”; completed messages and expanded source details remain unchanged. The disclosure stays collapsed by default.

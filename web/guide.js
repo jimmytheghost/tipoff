@@ -245,9 +245,19 @@ function fullTeamName(name, league) {
 function team(name, code, league) {
   const line = element("span", "", "tipoff-team");
   const [url, ...fallbacks] = teamLogoSources(code, league);
-  if (url) line.append(mark(url, "tipoff-team-logo", fallbacks));
+  if (url) {
+    const logo = mark(url, "tipoff-team-logo", fallbacks);
+    const refit = () => fitMatchupNames(line.closest(".tipoff-matchup"));
+    logo.addEventListener("load", refit);
+    logo.addEventListener("error", refit);
+    line.append(logo);
+  }
   const displayName = fullTeamName(name, league);
+  line.setAttribute("role", "img");
+  line.setAttribute("aria-label", displayName);
+  line.title = displayName;
   const label = element("span", "", "tipoff-team-name");
+  label.setAttribute("aria-hidden", "true");
   label.append(element("span", displayName, "tipoff-team-full"), element("span", shortTeamName(displayName), "tipoff-team-short"));
   label.title = displayName;
   line.append(label);
@@ -255,17 +265,23 @@ function team(name, code, league) {
 }
 
 function fitMatchupNames(matchup) {
-  if (!matchup.isConnected || !matchup.getBoundingClientRect().width) return;
+  if (!matchup?.isConnected || !matchup.getBoundingClientRect().width) return;
   const gap = node => Number.parseFloat(getComputedStyle(node).columnGap) || 0;
   const teams = [...matchup.querySelectorAll(".tipoff-team")];
-  const teamWidth = teams.reduce((total, node) => {
+  const required = variant => teams.reduce((total, node) => {
     const logo = node.querySelector(".tipoff-team-logo");
-    return total + node.querySelector(".tipoff-team-full").getBoundingClientRect().width +
+    return total + node.querySelector(`.tipoff-team-${variant}`).getBoundingClientRect().width +
       (logo ? logo.getBoundingClientRect().width + gap(node) : 0);
-  }, 0);
-  const required = teamWidth + matchup.querySelector(".tipoff-matchup-separator").getBoundingClientRect().width +
-    gap(matchup) + gap(matchup.querySelector(".tipoff-matchup-home"));
-  matchup.classList.toggle("tipoff-matchup-short", Math.ceil(required) > Math.floor(matchup.getBoundingClientRect().width));
+  }, matchup.querySelector(".tipoff-matchup-separator").getBoundingClientRect().width +
+    gap(matchup) + gap(matchup.querySelector(".tipoff-matchup-home")));
+  const available = Math.floor(matchup.getBoundingClientRect().width);
+  const short = Math.ceil(required("full")) > available;
+  const logosReady = teams.length === 2 && teams.every(node => {
+    const logo = node.querySelector(".tipoff-team-logo");
+    return logo?.complete && logo.naturalWidth > 0;
+  });
+  matchup.classList.toggle("tipoff-matchup-short", short);
+  matchup.classList.toggle("tipoff-matchup-logos", short && Math.ceil(required("short")) > available && logosReady);
 }
 
 const matchupSizes = new ResizeObserver(entries => {
