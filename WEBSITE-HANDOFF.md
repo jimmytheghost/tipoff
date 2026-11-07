@@ -245,3 +245,12 @@ Published `tipoff-web-footer-status-20261107-01`, frontend `20261107-24`: HTML/C
 Seven existing status-summary cases and the collapsed-default markup check passed, plus 16 existing local route checks. JavaScript syntax/Git whitespace passed; native app tests executed: 0. Local checks at 319/513/1261 px confirmed upward placement, zero border, no horizontal overflow, Escape and outside dismissal. Nine release assertions, three installed hashes, and six browser/crawler preview checks passed. Frozen release and guarded rollback remain in ignored publication operations notes. Messages rendering remains untested.
 
 Live 513 px verified footer placement, border 0, five details rows opening upward, and no horizontal overflow. Closed/open captures: `/tmp/tipoff-footer-status-closed-live.jpg`, `/tmp/tipoff-footer-status-open-live.jpg`.
+
+
+## Two-line mobile footer status — November 7, 2026
+
+Published `tipoff-web-footer-status-lines-20261107-01`, frontend `20261107-25`: HTML/CSS/JS only. Successful-load status renders a separate label and semantic time element. At up to 32 rem wide, “All schedules loaded” is the first line and the unbroken date/time is the second; larger widths keep both inline with a space. Loading/error count wording, original per-source freshness, the collapsed default, + control, and upward panel behavior are unchanged.
+
+Seven existing status-summary cases and collapsed-default markup check passed, plus 16 existing route checks. JavaScript syntax/Git whitespace passed; native app tests executed: 0. Local 319 px verified label y=700 px and single-line timestamp y=715 px, height=15 px; `scrollWidth=319`. At 1261 px the timestamp is inline. Nine release assertions, three installed hashes, and six browser/crawler preview checks passed. Frozen release/guarded rollback remain in ignored publication operations notes. Messages rendering remains untested.
+
+Live 383 px verified the two-line footer with a single-line timestamp, collapsed disclosure, and no horizontal overflow. Screenshot: `/tmp/tipoff-footer-two-lines-live.jpg`.

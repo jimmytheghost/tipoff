@@ -2,6 +2,12 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Two-line mobile footer status — November 7, 2026
+
+- Successful status now renders separate label and semantic time nodes. At **up to 32 rem**, the label is line one and the unbroken date/time is line two; wider layouts retain inline text. Error/loading counts, source freshness, collapsed state, and upward panel remain unchanged.
+- **7 existing summary cases, collapsed-default markup check, and 16 existing route checks passed**. JavaScript syntax/Git whitespace passed. **0 new unit tests / 0 native app tests executed**. Local **319 px**: label y=**700 px**, timestamp y=**715 px**, timestamp height/line-height **15 px**, `scrollWidth=319`. At **1261 px**, timestamp remains inline.
+- Published `tipoff-web-footer-status-lines-20261107-01`, frontend `20261107-25`: **3 files, 9 release assertions, 3 installed hashes, 6 browser/crawler preview checks passed**. Live **383 px** verified two stacked lines (y=849/864 px), timestamp height **15 px**, closed disclosure, and `scrollWidth=383`. Screenshot `/tmp/tipoff-footer-two-lines-live.jpg`. No provider/runtime/cache changes. Messages rendering remains untested.
+
 ## Footer status disclosure — November 7, 2026
 
 - Moved the existing collapsed status disclosure into the footer beside the skull link, aligned right without a border. The + control opens a viewport-bounded, scrollable, borderless source-details container upward without shifting page/footer layout. Escape closes and focuses the summary; outside-click closes it. Original messages, timestamps, saved/fallback/error labels remain unchanged.

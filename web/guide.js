@@ -43,8 +43,18 @@ function scheduleStatusText(states, completedAt, total = 5) {
 function updateSourceStatus(id, node, state, text) {
   sourceStates.set(id, state);
   node.textContent = text;
-  scheduleStatusSummary.textContent = scheduleStatusText(
-    [...sourceStates.values()], stampFormat.format(new Date()));
+  const completedAt = new Date();
+  const stamp = stampFormat.format(completedAt);
+  const message = scheduleStatusText([...sourceStates.values()], stamp);
+  if (message === `All schedules loaded ${stamp}`) {
+    const timestamp = element("time", stamp, "tipoff-status-loaded-time");
+    timestamp.dateTime = completedAt.toISOString();
+    scheduleStatusSummary.replaceChildren(
+      element("span", "All schedules loaded", "tipoff-status-loaded-label"),
+      document.createTextNode(" "), timestamp);
+  } else {
+    scheduleStatusSummary.textContent = message;
+  }
 }
 const dateFormat = new Intl.DateTimeFormat(undefined, { weekday: "short", month: "short", day: "numeric" });
 const timeFormat = new Intl.DateTimeFormat(undefined, { timeStyle: "short", timeZone: zone });

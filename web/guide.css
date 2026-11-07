@@ -829,3 +829,11 @@ ul.tipoff-inline-broadcasts {
   margin-top: 0.75rem;
   padding-top: 0.5rem;
 }
+
+@media (max-width: 32rem) {
+  .tipoff-status-loaded-label,
+  .tipoff-status-loaded-time {
+    display: block;
+    white-space: nowrap;
+  }
+}
