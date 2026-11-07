@@ -2,6 +2,12 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Shared browser card headers — November 6, 2026
+
+- Following, National Broadcasts, and All Games now use the same header builder and CSS. Summary counts reflect only their displayed games. Source and freshness move into the approved right-aligned header layout; the accent, typography, padding, and background match All Games.
+- Browser verification confirmed identical computed font, padding, left border, and background for the national NBA and All Games NBA headers. November 6 showed 2 national NBA games and 9 total NBA games. November 5 showed Avalanche with a National marker, 1 game, and source/freshness in its header. Today restored the correct national count and hidden empty Following section.
+- `node --check web/guide.js` and `git diff --check` passed. **0 app tests executed**; frontend-only change. Local preview updated; not deployed.
+
 ## Reduced landing controls — November 6, 2026
 
 - Removed the visible page title and subtitle. Moved date navigation and the time zone into All Games. Following is hidden when there are no games, while schedule failures still receive a visible status.

@@ -197,7 +197,7 @@ a { color: var(--accent); }
   background: var(--surface);
 }
 
-.tipoff-league h2 {
+.tipoff-league .tipoff-league-header {
   margin: 0;
   padding: 0.4rem 0.75rem;
   border-left: 4px solid var(--accent);
@@ -364,13 +364,6 @@ ul.tipoff-broadcasts {
 .tipoff-summary h2 {
   margin: 0;
   font: 700 1.65rem/1.1 var(--heading);
-}
-
-.tipoff-summary h3 {
-  margin: 0;
-  padding: 0.45rem 0.75rem;
-  background: var(--raised);
-  font: 700 1.35rem/1 var(--heading);
 }
 
 .tipoff-summary-groups {

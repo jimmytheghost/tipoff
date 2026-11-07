@@ -33,18 +33,29 @@ function dayKey(day) {
   return [day.getFullYear(), month, number].join("-");
 }
 
-function summaryGroup(parent, id, name) {
-  const group = element("section", "", "tipoff-league");
-  const title = element("h3", name);
+function leagueHeader(tag, id, label) {
+  const title = element(tag, "", "tipoff-league-header");
   title.id = id;
-  group.setAttribute("aria-labelledby", id);
+  const name = element("span", label, "tipoff-header-name");
+  name.id = `${id}-name`;
+  const gameCount = element("span", "", "tipoff-league-count");
+  const status = element("span", "", "tipoff-league-freshness");
+  status.setAttribute("role", "status");
+  title.append(name, gameCount, status);
+  return { title, name, gameCount, status };
+}
+
+function summaryGroup(parent, id, label) {
+  const group = element("section", "", "tipoff-league");
+  const { title, name, gameCount, status } = leagueHeader("h3", id, label);
+  group.setAttribute("aria-labelledby", name.id);
   const games = element("ul", "", "tipoff-games");
-  const freshness = element("p", "", "tipoff-league-status");
-  freshness.hidden = true;
-  group.append(title, freshness, games);
+  const warning = element("p", "", "tipoff-league-status");
+  warning.hidden = true;
+  group.append(title, warning, games);
   group.hidden = true;
   parent.append(group);
-  return { group, title, games, freshness };
+  return { group, title, games, gameCount, status, warning };
 }
 
 function resetSummary({ group, title, games }) {
@@ -56,15 +67,8 @@ function resetSummary({ group, title, games }) {
 const sections = new Map(buttons.slice(1).map(button => {
   const id = button.dataset.league;
   const section = element("section", "", "tipoff-league");
-  const title = element("h2", "", "tipoff-league-header");
-  title.id = `league-${id}`;
-  const name = element("span", button.textContent);
-  name.id = `${title.id}-name`;
+  const { title, name, gameCount, status } = leagueHeader("h2", `league-${id}`, button.textContent);
   section.setAttribute("aria-labelledby", name.id);
-  const gameCount = element("span", "", "tipoff-league-count");
-  const status = element("span", "", "tipoff-league-freshness");
-  title.append(name, gameCount, status);
-  status.setAttribute("role", "status");
   const results = element("div");
   section.append(title, results);
   leagues.append(section);
@@ -230,10 +234,10 @@ async function loadLeague(id, day, signal) {
       element("span", snapshot.source, "tipoff-league-source"),
       element("span", `${saved ? "Refresh failed, saved" : "Updated"} ${updated}`)
     );
-    for (const { freshness } of summaries) {
-      freshness.hidden = false;
-      freshness.textContent = `${snapshot.source} · ${saved ? "Refresh failed, saved" : "Updated"} ${updated}`;
-      if (id === "nba" && snapshot.altitudeWarning) freshness.textContent += ` · ${snapshot.altitudeWarning}`;
+    for (const summary of summaries) {
+      summary.status.replaceChildren(...[...status.children].map(node => node.cloneNode(true)));
+      summary.warning.hidden = !(id === "nba" && snapshot.altitudeWarning);
+      summary.warning.textContent = id === "nba" ? snapshot.altitudeWarning ?? "" : "";
     }
     if (count) {
       const list = element("ul", "", "tipoff-games");
@@ -249,13 +253,17 @@ async function loadLeague(id, day, signal) {
           following.hidden = false;
           followed.games.append(gameRow(game, id, game.broadcasts));
           if (nationalBroadcasts.length && !followed.title.querySelector(".tipoff-national-marker")) {
-            followed.title.append(element("span", "National", "tipoff-national-marker"));
+            followed.title.querySelector(".tipoff-header-name").append(element("span", "National", "tipoff-national-marker"));
           }
         } else if (nationalBroadcasts.length) {
           national.games.append(gameRow(game, id, nationalBroadcasts));
         }
       }
-      for (const { group, games } of summaries) group.hidden = !games.childElementCount;
+      for (const { group, games, gameCount } of summaries) {
+        const count = games.childElementCount;
+        gameCount.textContent = `${count} ${count === 1 ? "game" : "games"}`;
+        group.hidden = !count;
+      }
       results.append(list);
     }
     if (snapshot.altitudeWarning) results.append(element("p", snapshot.altitudeWarning, "tipoff-meta"));
