@@ -2,6 +2,13 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Footer status disclosure — November 7, 2026
+
+- Moved the existing collapsed status disclosure into the footer beside the skull link, aligned right without a border. The + control opens a viewport-bounded, scrollable, borderless source-details container upward without shifting page/footer layout. Escape closes and focuses the summary; outside-click closes it. Original messages, timestamps, saved/fallback/error labels remain unchanged.
+- **7 existing summary cases, collapsed-default markup check, and 16 existing route checks passed**. JavaScript syntax/Git whitespace passed. **0 new unit tests / 0 native app tests executed** for this frontend layout change.
+- Local **513 px**: panel bottom **681.00 px**, summary top **693.00 px**, container border **0 px**. At **319 px**, panel x=**18.01–305.17 px**, footer y=**684.17 px**, panel bottom **680.01 px**, `scrollWidth=319`. At **1261 px**, panel right-aligned within the footer, panel bottom **681.00 px** above summary top **693.00 px**. Escape focus return and outside-click dismissal verified.
+- Published `tipoff-web-footer-status-20261107-01`, frontend `20261107-24`: **3 files, 9 release assertions, 3 installed hashes, 6 browser/crawler preview checks passed**. Live 513 px verified footer ownership, 0 px border, five detail rows above the summary, and `scrollWidth=513`; Escape restored the collapsed state. Screenshots `/tmp/tipoff-footer-status-closed-live.jpg` and `/tmp/tipoff-footer-status-open-live.jpg`. No provider/runtime/cache changes. Messages rendering remains untested.
+
 ## Empty-message spacing — November 7, 2026
 
 - Removed empty national grid spacing and tightened only the empty-message-to-All-Games transition: 0.75 rem top margin / 0.5 rem divider padding. Populated sections retain their existing margins.

@@ -17,6 +17,16 @@ const nationalStatus = document.querySelector("#national-status");
 const scheduleStatuses = document.querySelector("#schedule-statuses");
 const scheduleStatusSummary = document.querySelector("#schedule-status-summary");
 const sourceStates = new Map();
+const scheduleStatusContainer = scheduleStatuses.closest("details");
+document.addEventListener("pointerdown", event => {
+  if (scheduleStatusContainer.open && !scheduleStatusContainer.contains(event.target)) scheduleStatusContainer.open = false;
+});
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape" && scheduleStatusContainer.open) {
+    scheduleStatusContainer.open = false;
+    scheduleStatusContainer.querySelector("summary").focus();
+  }
+});
 
 function scheduleStatusText(states, completedAt, total = 5) {
   const loaded = states.filter(value => value === "updated" || value === "saved").length;
