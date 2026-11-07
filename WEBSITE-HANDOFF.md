@@ -254,3 +254,10 @@ Published `tipoff-web-footer-status-lines-20261107-01`, frontend `20261107-25`: 
 Seven existing status-summary cases and collapsed-default markup check passed, plus 16 existing route checks. JavaScript syntax/Git whitespace passed; native app tests executed: 0. Local 319 px verified label y=700 px and single-line timestamp y=715 px, height=15 px; `scrollWidth=319`. At 1261 px the timestamp is inline. Nine release assertions, three installed hashes, and six browser/crawler preview checks passed. Frozen release/guarded rollback remain in ignored publication operations notes. Messages rendering remains untested.
 
 Live 383 px verified the two-line footer with a single-line timestamp, collapsed disclosure, and no horizontal overflow. Screenshot: `/tmp/tipoff-footer-two-lines-live.jpg`.
+
+
+## Quieter footer timestamp — November 7, 2026
+
+Published `tipoff-web-footer-timestamp-20261107-01`, frontend `20261107-26`: CSS/HTML only. The successful-load timestamp uses 0.9 em (9 px), weight 500, and muted #8794a7; its label retains 10 px, weight 700, and the existing brighter muted color. Mobile two-line layout, wider inline layout, status wording, and panel behavior are unchanged. Formatting/Git whitespace passed; no unit/native tests executed for this CSS-only adjustment. Nine release assertions, two installed hashes, and six browser/crawler preview checks passed. Frozen release/guarded rollback remain in ignored publication operations notes. Messages rendering remains untested.
+
+Live computed styles confirmed the timestamp is 9 px / 500 / RGB(135,148,167), against the label’s 10 px / 700 / RGB(174,187,208). Screenshot: `/tmp/tipoff-quieter-footer-timestamp-live.jpg`.

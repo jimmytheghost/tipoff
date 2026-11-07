@@ -2,6 +2,11 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Quieter footer timestamp — November 7, 2026
+
+- Footer successful-load time uses **0.9 em / 500 / #8794a7** beneath the stronger label, preserving mobile stacking and desktop inline layout. No JavaScript or message/data changes. Live computed styles confirmed label **10 px / 700 / RGB(174,187,208)** versus timestamp **9 px / 500 / RGB(135,148,167)**, with no horizontal overflow at 513 px. Screenshot `/tmp/tipoff-quieter-footer-timestamp-live.jpg`.
+- Formatting/Git whitespace passed. **0 web unit tests / 0 native app tests executed** for the CSS-only change. Published `tipoff-web-footer-timestamp-20261107-01`, frontend `20261107-26`: **2 files, 9 release assertions, 2 installed hashes, 6 browser/crawler preview checks passed**. Messages rendering remains untested.
+
 ## Two-line mobile footer status — November 7, 2026
 
 - Successful status now renders separate label and semantic time nodes. At **up to 32 rem**, the label is line one and the unbroken date/time is line two; wider layouts retain inline text. Error/loading counts, source freshness, collapsed state, and upward panel remain unchanged.
