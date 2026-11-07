@@ -2,6 +2,12 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Shared header separator — November 7, 2026
+
+- Added a faint one-pixel inset bottom stroke to the shared league/card header, using muted text color at 16% opacity. Applies to Following, National Broadcasts, and All Games without changing header height or row alignment. Flat fills and the rollback switch remain intact.
+- Local and live November 8 browser checks confirmed the separator below the Broncos and NFL headers; computed style was `rgba(174, 187, 208, 0.16) 0px -1px 0px 0px inset`. JavaScript syntax and Git whitespace checks passed. **0 app tests executed** for this CSS-only adjustment.
+- Published `tipoff-web-divider-20261107-01`: CSS and HTML asset version `20261107-05`. All **9 release assertions**, **2 installed hashes**, and **4 browser/crawler link-preview checks** passed. Backups and guarded rollback are retained in the ignored deployment workspace. Actual Messages rendering remains untested.
+
 ## Compact Following broadcast rows — November 7, 2026
 
 - Following rows now share the national layout: fixed broadcaster column, short matchup, and start time. Source-listed national networks take priority; otherwise the compact row uses a listed Altitude / Altitude 2 network (preferring the matched Altitude guide), or the first listed video broadcaster. No rights or streaming availability is inferred. Full-schedule behavior is retained.

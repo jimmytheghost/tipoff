@@ -203,6 +203,7 @@ a { color: var(--accent); }
   padding: 0.4rem 0.75rem;
   border-left: 4px solid var(--accent);
   border-radius: 0.4375rem 0.4375rem 0 0;
+  box-shadow: inset 0 -1px 0 rgb(174 187 208 / 16%);
   background: var(--raised);
   font: 700 1.55rem/1 var(--heading);
   letter-spacing: 0.025em;
