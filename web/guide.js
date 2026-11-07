@@ -125,6 +125,27 @@ function mark(url, className) {
   return image;
 }
 
+// Presentation only: retain source team names in snapshots and hover titles.
+const teamLocations = [
+  "Anaheim", "Arizona", "Atlanta", "Baltimore", "Boston", "Brooklyn", "Buffalo",
+  "Calgary", "Carolina", "Charlotte", "Chicago", "Cincinnati", "Cleveland",
+  "Colorado", "Columbus", "Connecticut", "Dallas", "Denver", "Detroit", "Edmonton",
+  "Florida", "Golden State", "Green Bay", "Houston", "Indiana", "Indianapolis",
+  "Jacksonville", "Kansas City", "Las Vegas", "Los Angeles", "LA", "Memphis",
+  "Miami", "Milwaukee", "Minnesota", "Montréal", "Montreal", "Nashville",
+  "New England", "New Jersey", "New Orleans", "New York", "Oklahoma City",
+  "Orlando", "Ottawa", "Philadelphia", "Phoenix", "Pittsburgh", "Portland",
+  "Sacramento", "Salt Lake City", "San Antonio", "San Diego", "San Francisco",
+  "San Jose", "Seattle", "St. Louis", "St Louis", "Tampa Bay", "Tennessee",
+  "Texas", "Toronto", "Utah", "Vancouver", "Vegas", "Washington", "Winnipeg",
+].sort((a, b) => b.length - a.length);
+
+function shortTeamName(name) {
+  const trimmed = name.trim();
+  const location = teamLocations.find(location => trimmed.toLowerCase().startsWith(`${location.toLowerCase()} `));
+  return location ? trimmed.slice(location.length).trim() || trimmed : trimmed;
+}
+
 function team(name, code, league) {
   const line = element("span", "", "tipoff-team");
   if (/^[A-Z0-9]{2,5}$/i.test(code)) {
@@ -135,7 +156,7 @@ function team(name, code, league) {
       : `https://a.espncdn.com/i/teamlogos/${league}/500/${slug}.png`;
     line.append(mark(url, "tipoff-team-logo"));
   }
-  const label = element("span", name, "tipoff-team-name");
+  const label = element("span", shortTeamName(name), "tipoff-team-name");
   label.title = name;
   line.append(label);
   return line;

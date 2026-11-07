@@ -2,6 +2,12 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Short team names across sports — November 6, 2026
+
+- The shared web team renderer removes recognized location prefixes, keeping team names such as Celtics, 76ers, Red Wings, Blues, Trail Blazers, and White Sox. Applies to Following, National Broadcasts, and All Games for all five sports. Source names remain in hover titles; provider output and cached snapshots are unchanged. Unknown names remain unchanged.
+- **34 JavaScript short-name checks executed, 34 passed**, spanning NBA, NFL, WNBA, NHL, MLB, multiword names, bare names, unknown names, and a location-only input. `node --check web/guide.js` and `git diff --check` passed. **0 native app tests executed**; presentation-only change.
+- Verified the November 10 local view shows Red Wings @ Blues, Panthers @ Blue Jackets, Predators @ Kings, and Celtics @ 76ers. Confirmed short names also appear in the expanded full schedule and original names remain in hover titles. Local preview updated; not deployed.
+
 ## Inline national broadcaster logos — November 6, 2026
 
 - National broadcaster logos now precede the matchup with the start time on the right, using the shared row renderer across highlights and All Games. Other broadcasters remain below. National names are deduplicated against the remaining listings, radio stays hidden, and regional/Altitude details remain intact.
