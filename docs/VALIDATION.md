@@ -2,6 +2,12 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Status message alignment — November 7, 2026
+
+- Removed the static summary label and vertically centered the remaining status text with equal padding and the existing 44 px target. Initial markup says “Loading schedules…”; completed messages and expanded source details remain unchanged. The disclosure stays collapsed by default.
+- **7 existing summary cases, collapsed-default markup check, and 16 existing route checks passed**. No new unit tests; **0 native app tests executed**. Local geometry measured **13.74 px top / 13.75 px bottom** around the status text. Git whitespace passed.
+- Published `tipoff-web-status-alignment-20261107-01`, frontend `20261107-19`: **2 files, 8 release assertions, 2 installed hashes, 6 browser/crawler preview checks passed**. Messages rendering remains untested. No JavaScript/provider/runtime/cache changes. Live panel stayed collapsed, displayed only “All schedules loaded Nov 7, 2026, 2:32 PM”, and retained equal top/bottom spacing. Screenshot `/tmp/tipoff-status-message-centered-live.jpg`.
+
 ## Schedule status summary refinement — November 7, 2026
 
 - Kept the status disclosure collapsed by default. All successful results show “All schedules loaded” with the browser-local load completion timestamp. Saved results count as loaded; their original source timestamps, saved/fallback labels, and error descriptions remain in expanded rows. Partial/failed results show loaded/error counts and any pending loads.

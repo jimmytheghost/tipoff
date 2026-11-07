@@ -188,3 +188,10 @@ All 75 existing web unit cases and 16 route checks passed (91 total); JavaScript
 ## Schedule status summary refinement — November 7, 2026
 
 Published `tipoff-web-status-summary-20261107-01`, frontend `20261107-18`: JavaScript and HTML only. Schedule status remains collapsed by default. All five successful results, including saved results, produce “All schedules loaded” with the browser-local completion date and time. This is the current load completion time; the expanded rows retain original data freshness, saved/fallback labels, and error details. Partial/failed loads show counts such as “4 loaded - 1 error”, with pending loading counts when applicable. Seven summary cases and the collapsed-default markup check passed, plus 16 existing local route checks. Eight release assertions, two installed hashes, and six browser/crawler preview checks passed. Native app tests executed: 0. Frozen payload/backup/rollback retained in ignored publication operations notes. Messages rendering remains untested.
+
+
+## Status message alignment — November 7, 2026
+
+Published `tipoff-web-status-alignment-20261107-01`, frontend `20261107-19`: CSS/HTML only. Removed the static “Schedule status” summary label, leaving only the success timestamp or loading/error counts and disclosure indicator. The collapsed row uses center alignment and symmetric padding with its existing 44 px target. The initial HTML reads “Loading schedules…” until the existing script updates it; expanded per-sport information is unchanged.
+
+Seven existing summary cases, the collapsed-default markup check, and 16 existing route checks passed. Eight release assertions, two installed hashes, and six browser/crawler preview checks passed. Native app tests executed: 0. Local measured text spacing was 13.74 px above and 13.75 px below. Frozen release and guarded rollback remain in the ignored publication workspace. Messages rendering remains untested.

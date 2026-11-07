@@ -768,10 +768,10 @@ ul.tipoff-inline-broadcasts {
 .tipoff-schedule-status > summary {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
+  align-items: center;
   gap: 0.25rem 0.75rem;
   min-height: 44px;
-  padding: 0.65rem 0.875rem;
+  padding: 0.625rem 0.875rem;
   cursor: pointer;
   list-style: none;
 }
