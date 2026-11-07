@@ -2,6 +2,12 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Date toolbar refinement — November 7, 2026
+
+- Removed the date component’s enclosing fill, border, and rounded frame. A thin bottom rule now anchors a 24 rem toolbar to the page; muted arrows have transparent borders/backgrounds and Today retains a subtle outline with neutral text. Hover/focus states and 44 px controls remain. Footer behavior is unchanged.
+- Local checks covered **1261 px** desktop and **325 px** mobile. The group had transparent background and only a bottom border; no horizontal overflow at 325 px. Next-day mouse and Today keyboard activation passed. Live toolbar and footer checked. **0 app tests executed** for this CSS-only refinement; JavaScript syntax and Git whitespace passed.
+- Published `tipoff-web-date-refinement-20261107-01`, CSS/HTML only, frontend version `20261107-07`. All **9 deployment assertions**, **2 installed hashes**, and **4 browser/crawler preview checks** passed. Rollback records and screenshots remain in the ignored deployment workspace. Actual Messages rendering was not tested.
+
 ## Date component and bottom footer — November 7, 2026
 
 - Grouped date navigation in a solid, bordered container. Previous/next and Today have visible button borders/backgrounds, 44 px minimum targets, existing keyboard focus styling, and lime Today text. Date updates and calendar-day behavior are unchanged.

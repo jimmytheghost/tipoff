@@ -96,16 +96,14 @@ a { color: var(--accent); }
   grid-template-columns: 44px minmax(0, 1fr) 44px auto;
   align-items: center;
   gap: 0.375rem;
-  max-width: 26rem;
-  padding: 0.375rem;
-  border: 1px solid var(--line);
-  border-radius: 0.625rem;
-  background: var(--surface);
+  max-width: 24rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--line);
 }
 
 .tipoff-date #date {
   margin: 0;
-  font: 600 1rem/1.15 var(--text);
+  font: 500 1rem/1.25 var(--text);
   text-align: center;
 }
 
@@ -129,16 +127,27 @@ a { color: var(--accent); }
 #previous,
 #next,
 #today {
-  border: 1px solid var(--line);
-  background: var(--canvas);
+  background: transparent;
+  font-weight: 500;
 }
 
-#today { color: var(--accent); }
+#previous,
+#next {
+  border-color: transparent;
+  color: var(--muted);
+}
+
+#today {
+  margin-left: 0.5rem;
+  border-radius: 0.25rem;
+  color: var(--ink);
+}
 
 #previous:hover,
 #next:hover,
 #today:hover {
-  background: var(--raised);
+  background: var(--surface);
+  color: var(--ink);
 }
 
 .tipoff-date svg {

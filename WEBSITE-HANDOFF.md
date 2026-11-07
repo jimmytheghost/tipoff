@@ -101,3 +101,8 @@ Published `tipoff-web-divider-20261107-01`, CSS and HTML only (asset version `20
 Published `tipoff-web-navigation-20261107-01`: CSS and HTML only, asset version `20261107-06`. The date selector now has a bordered solid container, visible previous/next button surfaces, and lime Today text. Existing 44 px button targets, accessible labels, keyboard focus, and calendar-day behavior remain. A viewport-height flex layout places the footer at the bottom of short pages and after expanded content on long pages, with no trailing gap or fixed overlay.
 
 Local checks covered short pages, expanded All Games, next-day/Today interaction, and 325 px layout without horizontal overflow. Live date controls and footer placement passed. All nine deployment assertions, two installed hashes, and four canonical/alias browser/crawler preview checks passed. Backup, frozen payload, guarded rollback command, and screenshot evidence remain in the isolated deployment workspace.
+
+
+## Date toolbar refinement — November 7, 2026
+
+Published `tipoff-web-date-refinement-20261107-01`, CSS and HTML only (frontend version `20261107-07`). Replaced the enclosed date box with a transparent 24 rem toolbar anchored by one thin bottom rule, muted arrow controls, and a neutral outlined Today button. Existing 44 px targets, keyboard focus/activation, calendar-day navigation, and bottom footer are preserved. Local 1261 px desktop and 325 px mobile checks passed without overflow; live appearance verified. All nine release assertions, two installed hashes, and four browser/crawler preview checks passed. The isolated deployment workspace retains the frozen payload, backups, rollback command, and screenshot evidence.
