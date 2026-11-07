@@ -2,6 +2,12 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Empty national heading — November 7, 2026
+
+- Highlight headings now reflect rendered groups during incremental loading and after completion. Empty national sections hide their large heading and show the faint “No national broadcasts listed.” message after successful loading. A followed national game suppresses a false no-national message; source errors remain in the status disclosure.
+- **4 existing client-loading cases and 16 existing route checks passed**. JavaScript syntax/Git whitespace passed. **0 new unit tests / 0 native app tests executed** for this presentation change.
+- Local November 7: national heading hidden and revised message shown. November 8: Following and National Broadcasts headings present, one national group, empty message cleared. Published `tipoff-web-empty-national-20261107-01`, frontend `20261107-22`: **2 files, 9 release assertions, 2 installed hashes, 6 browser/crawler preview checks passed**. Messages rendering remains untested. No provider/runtime/cache changes.
+
 ## Mobile viewport audit after cropped capture — November 7, 2026
 
 - Investigated the reported right-edge cutoff on the live guide. The earlier full-page screenshot clipped the capture; the live document had no horizontal overflow. No frontend code change or deployment was needed.
@@ -597,3 +603,5 @@ Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone C
 ## Known limits
 
 Website endpoints are undocumented and can change. NBA.com itself omitted local TV listings for several upcoming games in the samples; ESPN also omitted some local/streaming options. No source can presently be claimed complete or covered by an availability SLA. Tipoff only shows supplied listings and does not infer subscription or blackout eligibility. Deferred: broadcaster watch links, global regions, and additional sports.
+
+Live verification repeated both November 7 (national headline hidden, revised empty message) and November 8 (national headline restored with games). Screenshot: `/tmp/tipoff-empty-national-live.jpg`.

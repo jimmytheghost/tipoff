@@ -453,6 +453,15 @@ async function fetchSchedule(params, signal) {
   throw new Error("Schedule refresh timed out");
 }
 
+function updateHighlightHeadings() {
+  const hasFollowedGames = Boolean(followedLeagues.querySelector("section:not([hidden])"));
+  const hasNationalGames = Boolean(nationalLeagues.querySelector("section:not([hidden])"));
+  following.hidden = !hasFollowedGames;
+  highlightsTitle.textContent = hasFollowedGames ? "Following" : "National Broadcasts";
+  highlightsTitle.hidden = !hasFollowedGames && !hasNationalGames;
+  nationalTitle.hidden = !hasFollowedGames || !hasNationalGames;
+}
+
 async function loadLeague(id, day, signal) {
   const { section, title, gameCount, status, results, national, followed } = sections.get(id);
   section.replaceChildren(title, results);
@@ -484,9 +493,6 @@ async function loadLeague(id, day, signal) {
         else if (nationalBroadcasts.length) highlight = "tipoff-game-national";
         list.append(gameRow(game, id, game.broadcasts, highlight, { collapseBroadcasts: !highlight }));
         if (isFollowed) {
-          following.hidden = false;
-          highlightsTitle.textContent = "Following";
-          nationalTitle.hidden = false;
           followed.games.append(gameRow(game, id, game.broadcasts, undefined, { compact: true }));
           if (nationalBroadcasts.length && !followed.title.querySelector(".tipoff-national-marker")) {
             followed.title.querySelector(".tipoff-header-name").append(element("span", "National", "tipoff-national-marker"));
@@ -510,6 +516,7 @@ async function loadLeague(id, day, signal) {
       details.append(toggle, results);
       section.replaceChildren(details);
     }
+    updateHighlightHeadings();
     return true;
   } catch {
     if (signal.aborted) return;
@@ -517,6 +524,7 @@ async function loadLeague(id, day, signal) {
     summaries.forEach(resetSummary);
     gameCount.textContent = "";
     updateSourceStatus(id, status, "unavailable", "Schedule unavailable.");
+    updateHighlightHeadings();
     return false;
   }
 }
@@ -533,6 +541,7 @@ async function loadDay() {
   const { signal } = request;
   following.hidden = true;
   highlightsTitle.textContent = "National Broadcasts";
+  highlightsTitle.hidden = true;
   nationalTitle.hidden = true;
   sourceStates.clear();
   nationalStatus.textContent = "";
@@ -547,15 +556,13 @@ async function loadDay() {
   for (const { section } of sections.values()) {
     if (section.firstElementChild.matches(".tipoff-inactive-league")) leagues.append(section);
   }
-  const hasFollowedGames = Boolean(followedLeagues.querySelector("section:not([hidden])"));
-  following.hidden = !hasFollowedGames;
-  highlightsTitle.textContent = hasFollowedGames ? "Following" : "National Broadcasts";
-  nationalTitle.hidden = !hasFollowedGames;
+  updateHighlightHeadings();
   if (loaded.some(result => !result)) {
     nationalStatus.textContent = "";
   } else {
-    nationalStatus.textContent = nationalLeagues.querySelector("section:not([hidden])")
-      ? "" : "No other national broadcasts listed.";
+    const hasNationalGames = nationalLeagues.querySelector("section:not([hidden])") ||
+      followedLeagues.querySelector(".tipoff-national-marker");
+    nationalStatus.textContent = hasNationalGames ? "" : "No national broadcasts listed.";
   }
 }
 
