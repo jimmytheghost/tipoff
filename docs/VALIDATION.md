@@ -2,6 +2,15 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Approved web redesign deployment — November 6, 2026
+
+- Published `tipoff-web-20261106-02`: only guide HTML, CSS, and JavaScript. Versioned CSS/JS URLs avoid stale frontend assets. The staged files were formatted with Prettier 3.6.2. No backend, runtime, cache, route, or sitemap changes.
+- All **8 deployment HTTP assertions** and **3 installed file checksums** passed, including canonical/alias/slash routes, exact CSS/JS hashes, portfolio link, and a schedule endpoint. A separate deployment verify run passed again.
+- Link-preview checks: **8 page/image checks passed** (four routes × browser/Facebook crawler agents), including canonical metadata and decoded 1920 × 1080 PNG. Messages client rendering remains untested.
+- Five live league endpoints returned valid November 6 America/Denver snapshots: NBA **9** via labeled ESPN fallback, NFL **0**, WNBA **0**, NHL **3**, MLB **0**. The first concurrent NBA check returned HTTP 503; retry returned HTTP 200 with nine fallback games. The backend was unchanged.
+- Live browser checks covered default collapsed All Games, expansion, NBA/NHL filters, short team names, fallback source/freshness, Next/Today controls, and keyboard collapse. At 325 px content width, the page had no horizontal overflow.
+- JavaScript syntax and Git whitespace checks passed. **0 native app tests executed** for this frontend deployment; the previously recorded 34 short-name and 10 classification checks apply to unchanged JavaScript behavior. Frozen release/backup/rollback details are retained in the ignored isolated deployment workspace.
+
 ## Consistent national network column — November 6, 2026
 
 - National rows reserve the same network column width regardless of the number of broadcasters, centering icons within it and aligning all away-team logos. The column uses 6.5 rem normally and 4.2 rem on narrow screens, with icon wrapping inside the reserved space.
