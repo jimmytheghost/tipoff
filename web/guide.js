@@ -189,7 +189,10 @@ function broadcastList(broadcasts) {
     if (logo) {
       const image = mark(logo, "tipoff-network-logo");
       if (["espn+", "cbs", "fox", "peacock", "tnt", "hbo max", "trutv", "altitude", "alt", "altitude 2", "alt2"].includes(key)) image.classList.add("tipoff-network-logo-light");
-      image.addEventListener("load", () => label.classList.add("tipoff-visually-hidden"), { once: true });
+      image.addEventListener("load", () => {
+        image.style.setProperty("--network-ratio", image.naturalWidth / image.naturalHeight);
+        label.classList.add("tipoff-visually-hidden");
+      }, { once: true });
       item.append(image);
     }
     item.append(label);

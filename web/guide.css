@@ -8,6 +8,7 @@
   --ink: #f5f7fc;
   --muted: #aebbd0;
   --accent: #c8fa54;
+  --icon-gap: 0.5rem;
   --text: "Roboto", system-ui, sans-serif;
   --heading: "Barlow Condensed", var(--text);
 }
@@ -272,7 +273,7 @@ a { color: var(--accent); }
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.35rem;
+  gap: var(--icon-gap);
   min-width: 0;
   font-size: 0.875rem;
   font-weight: 700;
@@ -281,7 +282,7 @@ a { color: var(--accent); }
 .tipoff-matchup-home {
   display: flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: var(--icon-gap);
   min-width: 0;
 }
 
@@ -293,7 +294,7 @@ a { color: var(--accent); }
 .tipoff-team {
   display: flex;
   align-items: center;
-  gap: 0.3rem;
+  gap: var(--icon-gap);
   min-width: 0;
 }
 
@@ -307,7 +308,7 @@ a { color: var(--accent); }
 ul.tipoff-broadcasts {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem;
+  gap: var(--icon-gap);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -316,15 +317,16 @@ ul.tipoff-broadcasts {
 .tipoff-broadcast {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: var(--icon-gap);
   min-width: 0;
   max-width: 100%;
-  padding: 0.2rem 0.45rem;
+  padding: 0.2rem 0;
 }
 
 .tipoff-network-logo {
-  width: 4.25rem;
-  height: 1.5rem;
+  width: min(var(--network-max-width, 4.25rem), calc(var(--network-height, 1.5rem) * var(--network-ratio, 2)));
+  height: auto;
+  aspect-ratio: var(--network-ratio, 2);
   object-fit: contain;
   flex-shrink: 0;
 }
@@ -554,7 +556,7 @@ ul.tipoff-inline-broadcasts {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 0.2rem;
+  gap: var(--icon-gap);
   width: 100%;
 }
 
@@ -564,8 +566,8 @@ ul.tipoff-inline-broadcasts {
 }
 
 .tipoff-inline-broadcasts .tipoff-network-logo {
-  width: 2rem;
-  height: 1rem;
+  --network-max-width: 1.8rem;
+  --network-height: 1rem;
 }
 
 @media (max-width: 32rem) {

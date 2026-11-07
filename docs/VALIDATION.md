@@ -2,6 +2,13 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Consistent icon spacing — November 6, 2026
+
+- Replaced fixed-width logo image slots with proportional boxes and a shared 0.5 rem gap across network groups, regional labels, and team-logo/name pairs. Natural image ratios are applied after load, including percentage-sized SVGs. National rows retain the fixed-width network column and aligned away logos.
+- Local browser measurements confirmed 8 px gaps for normal and inline broadcaster groups on November 7 and 10. All five national away logos retained the same x=148.02 px position at 540 px. All logo boxes had nonzero dimensions; the 325 px view had no horizontal overflow.
+- Published `tipoff-web-20261106-05`: CSS, JavaScript, and HTML. All **8 deployment HTTP assertions**, **3 installed file checksums**, and **4 browser/crawler page/image preview checks** passed. Preparation 04 was superseded locally without publication.
+- JavaScript syntax and Git whitespace checks passed. **0 app tests executed**; frontend presentation change with unchanged source providers and caches.
+
 ## Altitude 2, Altitude+, and NBA TV logos — November 6, 2026
 
 - Added distinct Altitude 2 / ALT2, Altitude+, and NBA TV logos. Kept accessible broadcaster names and text fallback. Altitude 2 renders white; Altitude+ uses its official white mark; NBA TV retains its colors and remains excluded from national highlights.
