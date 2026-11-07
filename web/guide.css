@@ -641,6 +641,12 @@ ul.tipoff-broadcasts {
   white-space: nowrap;
 }
 
+.tipoff-league-count {
+  color: #8794a7;
+  font: 500 0.5625rem/1.2 var(--text);
+  letter-spacing: 0.08em;
+}
+
 .tipoff-national-marker {
   margin-inline-start: 0;
   color: var(--accent);
@@ -741,9 +747,22 @@ ul.tipoff-inline-broadcasts {
 }
 
 .tipoff-followed-body h4 {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
   margin: 0;
-  color: var(--muted);
-  font-size: 0.75rem;
+  color: var(--accent);
+  font: 700 0.625rem/1.4 var(--text);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.tipoff-followed-body h4::after {
+  content: "";
+  flex: 1;
+  min-width: 1.5rem;
+  height: 1px;
+  background: rgb(200 250 84 / 18%);
 }
 
 .tipoff-followed-body > h4 { margin-bottom: -0.5rem; }

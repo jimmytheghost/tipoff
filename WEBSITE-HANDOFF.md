@@ -270,3 +270,12 @@ Published `tipoff-web-header-metadata-20261107-01`, frontend `20261107-27`: HTML
 Seven existing status-summary cases and collapsed-default markup check passed, plus 16 existing route checks. JavaScript syntax/Git whitespace passed; native app tests executed: 0. Local November 8 headers had 12 px right insets and center offsets within 0.004 px; 319 px had no horizontal overflow. At 1261 px both footer nodes were block-level with the timestamp 15 px below the label. Nine release assertions, three installed hashes, and six browser/crawler preview checks passed. Frozen release/guarded rollback remain in ignored publication operations notes. Messages rendering remains untested.
 
 Live November 8 confirmed right-aligned, centered National/count groups; desktop 1261 px confirmed the timestamp below its label. Screenshot: `/tmp/tipoff-right-header-metadata-live.jpg`.
+
+
+## Softer counts and styled detail labels — November 7, 2026
+
+Published `tipoff-web-detail-labels-20261107-01`, frontend `20261107-28`: CSS/HTML only. Shared game counts now use 9 px / weight 500 / #8794a7, matching the footer timestamp’s smaller/fainter hierarchy while keeping their centered right alignment. National markers retain their original lime emphasis. Expanded Following card headings “Broadcast listings” and “Altitude details” use 10 px / weight 700 lime uppercase text with 0.12 em letter spacing and a faint trailing rule. Source-listed broadcasters, notes, times, and freshness text are unchanged.
+
+Formatting/Git whitespace passed; no unit/native app tests executed for this CSS-only adjustment. Local expanded Nuggets verified both styled headings, softer counts, and no overflow down to the browser’s reported 266 px viewport. Nine release assertions, two installed hashes, and six browser/crawler preview checks passed. Frozen release/guarded rollback remain in ignored publication operations notes. Messages rendering remains untested.
+
+Live expanded Nuggets verified both heading styles and softer counts without horizontal overflow. Screenshot: `/tmp/tipoff-detail-labels-live.jpg`.

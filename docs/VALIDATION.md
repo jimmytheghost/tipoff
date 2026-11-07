@@ -2,6 +2,12 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Softer game counts and styled detail labels — November 7, 2026
+
+- Game counts now match the footer timestamp’s hierarchy: **9 px / 500 / #8794a7**, retaining right alignment/vertical centering. National markers remain lime. Expanded Following headings use **10 px / 700 / lime / uppercase / 0.12 em tracking**, with faint trailing rules. Broadcast data, notes, times, and freshness are unchanged.
+- Local expanded Nuggets verified both heading styles and count computed styles. At the reported **266 px** viewport, heading bounds stayed inside the page and `scrollWidth=266`. Formatting/Git whitespace passed. **0 web unit tests / 0 native app tests executed** for the CSS-only change.
+- Published `tipoff-web-detail-labels-20261107-01`, frontend `20261107-28`: **2 files, 9 release assertions, 2 installed hashes, 6 browser/crawler preview checks passed**. Live expanded Nuggets confirmed counts at **9 px / 500 / RGB(135,148,167)**, both headings lime uppercase, and approximately **1 px** trailing rules, without horizontal overflow. Screenshot `/tmp/tipoff-detail-labels-live.jpg`. No JavaScript/provider/runtime/cache changes. Messages rendering remains untested.
+
 ## Right-aligned card metadata and desktop footer lines — November 7, 2026
 
 - Shared headers place names on the left and a separate metadata group on the right; National markers precede game counts within that group. Both are vertically centered. Footer success label/timestamp now stay on separate lines at every screen size, retaining the smaller/fainter timestamp.
