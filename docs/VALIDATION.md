@@ -2,6 +2,12 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Horizontal inline logo groups — November 7, 2026
+
+- Inline broadcaster groups now use nowrap with proportional flex shrink on their items/images. Multiple marks fit side by side in the existing fixed column; single marks retain the larger shared caps. The white NBC artwork, clean ESPN wordmark, 0.5 rem gaps, away-logo alignment, and expanded-list wrapping are preserved.
+- Local November 10 checks covered 540 px and 325 px. ESPN+/Hulu/Disney+ remained on one line, with matching vertical centers within 0.01 px at 325 px; all five national matchups started at 103.62 px. No horizontal overflow. The single NBC mark retained its 23.72 × 22.39 px size at 540 px. Live November 10 horizontal grouping was verified.
+- CSS/HTML-only release `tipoff-web-logo-row-20261107-01`, asset version `20261107-11`. JavaScript syntax and Git whitespace passed; **0 app tests and 0 web unit tests executed** for this CSS adjustment. All **9 release assertions**, **2 installed hashes**, and **4 browser/crawler preview checks** passed. Frozen payload, backup/rollback information, and screenshot remain in the ignored deployment workspace. Actual Messages rendering remains untested.
+
 ## Readable broadcaster logos — November 7, 2026
 
 - Replaced black-letter horizontal NBC artwork with the colored-peacock/white-letter [NBC asset](https://commons.wikimedia.org/wiki/File:NBC_2023_white_logo.svg). Replaced ESPN’s padded red tile with its [clean vector wordmark](https://commons.wikimedia.org/wiki/File:ESPN_wordmark.svg), rendered white using the existing monochrome-logo class. Both SVG endpoints returned HTTP 200 and image/svg+xml and parsed successfully. Broadcaster names/text fallbacks remain intact.
