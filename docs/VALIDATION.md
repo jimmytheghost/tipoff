@@ -2,6 +2,13 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Inline national broadcaster logos — November 6, 2026
+
+- National broadcaster logos now precede the matchup with the start time on the right, using the shared row renderer across highlights and All Games. Other broadcasters remain below. National names are deduplicated against the remaining listings, radio stays hidden, and regional/Altitude details remain intact.
+- National matchups stay on one line; long names use an ellipsis while preserving full accessible text and hover titles. On narrow screens the logo group can wrap within its column.
+- Browser verified November 10: all five national NBA/NHL rows had a single 22.4 px matchup line and approximately 44.8 px row height at a 540 px content viewport. The regional Avalanche listing retained its broadcaster below. No horizontal overflow at 540 px or 325 px.
+- `node --check web/guide.js` and `git diff --check` passed. **0 app tests executed**; frontend layout change with unchanged source providers and caches. Local preview updated; not deployed.
+
 ## TNT, HBO Max, Altitude, and truTV logos — November 6, 2026
 
 - Added the four requested broadcaster marks. Altitude and ALT map to the same logo; Altitude 2 and Altitude+ keep their distinct text. All four render white on the dark background and retain existing accessible source names, text fallback, and regional tags.

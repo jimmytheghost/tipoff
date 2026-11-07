@@ -202,9 +202,19 @@ function gameRow(game, league, broadcasts, highlight, collapseBroadcasts = false
     content.append(heading);
     row.append(content);
   }
+  const nationalBroadcasts = broadcasts.filter(broadcast => isNationalBroadcast(broadcast, league));
+  if (nationalBroadcasts.length) {
+    heading.classList.add("tipoff-game-inline");
+    const logos = broadcastList(nationalBroadcasts);
+    logos.classList.add("tipoff-inline-broadcasts");
+    heading.append(logos);
+  }
   heading.append(matchup, element("span", start, "tipoff-start"));
   if (game.notice) heading.append(element("span", game.notice, "tipoff-game-notice"));
-  content.append(broadcastList(broadcasts));
+  const nationalNames = new Set(nationalBroadcasts.map(broadcast => broadcast.name.trim().toLowerCase()));
+  const otherBroadcasts = broadcasts.filter(broadcast =>
+    !nationalNames.has(broadcast.name.trim().toLowerCase()) && !broadcast.category.toLowerCase().includes("radio"));
+  if (!nationalBroadcasts.length || otherBroadcasts.length) content.append(broadcastList(otherBroadcasts));
   if (game.altitude && broadcasts === game.broadcasts) {
     const details = element("details", "", "tipoff-altitude");
     const altitude = game.altitude;

@@ -543,3 +543,43 @@ ul.tipoff-broadcasts {
   .tipoff-summary-heading { grid-template-columns: 1fr; }
   .tipoff-summary-heading .tipoff-date { width: 100%; }
 }
+
+
+.tipoff-game-inline {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+}
+
+ul.tipoff-inline-broadcasts {
+  grid-column: auto;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.2rem;
+  max-width: 8rem;
+}
+
+.tipoff-inline-broadcasts .tipoff-broadcast {
+  padding: 0;
+  font-size: 0.7rem;
+}
+
+.tipoff-inline-broadcasts .tipoff-network-logo {
+  width: 2rem;
+  height: 1rem;
+}
+
+@media (max-width: 32rem) {
+  ul.tipoff-inline-broadcasts {
+    flex-wrap: wrap;
+    max-width: 4.2rem;
+  }
+}
+
+.tipoff-game-inline .tipoff-matchup {
+  flex-wrap: nowrap;
+}
+
+.tipoff-game-inline .tipoff-team-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
