@@ -624,9 +624,10 @@ ul.tipoff-broadcasts {
   gap: 0.5rem;
 }
 
-.tipoff-header-identity {
+.tipoff-header-meta {
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
+  margin-inline-start: auto;
   gap: 0.5rem;
   flex-shrink: 0;
   white-space: nowrap;
@@ -641,7 +642,7 @@ ul.tipoff-broadcasts {
 }
 
 .tipoff-national-marker {
-  margin-inline-start: 0.5rem;
+  margin-inline-start: 0;
   color: var(--accent);
 }
 
@@ -830,12 +831,10 @@ ul.tipoff-inline-broadcasts {
   padding-top: 0.5rem;
 }
 
-@media (max-width: 32rem) {
-  .tipoff-status-loaded-label,
-  .tipoff-status-loaded-time {
-    display: block;
-    white-space: nowrap;
-  }
+.tipoff-status-loaded-label,
+.tipoff-status-loaded-time {
+  display: block;
+  white-space: nowrap;
 }
 
 .tipoff-status-loaded-time {

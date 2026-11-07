@@ -103,9 +103,9 @@ function leagueHeader(tag, id, label) {
   const name = element("span", label, "tipoff-header-name");
   name.id = `${id}-name`;
   const gameCount = element("span", "", "tipoff-league-count");
-  const identity = element("span", "", "tipoff-header-identity");
-  identity.append(name, gameCount);
-  title.append(identity);
+  const metadata = element("span", "", "tipoff-header-meta");
+  metadata.append(gameCount);
+  title.append(name, metadata);
   return { title, name, gameCount };
 }
 
@@ -515,7 +515,7 @@ async function loadLeague(id, day, signal) {
         if (isFollowed) {
           followed.games.append(gameRow(game, id, game.broadcasts, undefined, { compact: true }));
           if (nationalBroadcasts.length && !followed.title.querySelector(".tipoff-national-marker")) {
-            followed.title.querySelector(".tipoff-header-name").append(element("span", "National", "tipoff-national-marker"));
+            followed.title.querySelector(".tipoff-header-meta").prepend(element("span", "National", "tipoff-national-marker"));
           }
         } else if (nationalBroadcasts.length) {
           national.games.append(gameRow(game, id, nationalBroadcasts));

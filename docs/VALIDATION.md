@@ -2,6 +2,12 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Right-aligned card metadata and desktop footer lines — November 7, 2026
+
+- Shared headers place names on the left and a separate metadata group on the right; National markers precede game counts within that group. Both are vertically centered. Footer success label/timestamp now stay on separate lines at every screen size, retaining the smaller/fainter timestamp.
+- **7 existing summary cases, collapsed-default markup check, and 16 existing route checks passed**. JavaScript syntax/Git whitespace passed. **0 new unit tests / 0 native app tests executed**. Local November 8: metadata right inset **12 px**, center offset **−0.004 px** for both Broncos and NFL headers; **319 px** had no horizontal overflow. At **1261 px**, both footer nodes were block-level, with timestamp **15 px** below the label.
+- Published `tipoff-web-header-metadata-20261107-01`, frontend `20261107-27`: **3 files, 9 release assertions, 3 installed hashes, 6 browser/crawler preview checks passed**. Live November 8 confirmed both header groups at 12 px right inset and −0.004 px center offset. Live 1261 px footer confirmed block label/time with a 15 px vertical offset. Screenshot `/tmp/tipoff-right-header-metadata-live.jpg`. No provider/runtime/cache changes. Messages rendering remains untested.
+
 ## Quieter footer timestamp — November 7, 2026
 
 - Footer successful-load time uses **0.9 em / 500 / #8794a7** beneath the stronger label, preserving mobile stacking and desktop inline layout. No JavaScript or message/data changes. Live computed styles confirmed label **10 px / 700 / RGB(174,187,208)** versus timestamp **9 px / 500 / RGB(135,148,167)**, with no horizontal overflow at 513 px. Screenshot `/tmp/tipoff-quieter-footer-timestamp-live.jpg`.
