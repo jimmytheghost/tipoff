@@ -141,7 +141,14 @@ const sections = new Map(buttons.slice(1).map(button => {
   const sourceRow = element("div");
   sourceRow.append(element("dt", button.textContent), status);
   scheduleStatuses.append(sourceRow);
-  return [id, { section, title, gameCount, status, results, national, followed }];
+  let altitudeStatus;
+  if (id === "nba") {
+    const row = element("div");
+    const value = element("dd");
+    row.append(element("dt", "Altitude"), value);
+    altitudeStatus = { row, value, anchor: sourceRow };
+  }
+  return [id, { section, title, gameCount, status, results, national, followed, altitudeStatus }];
 }));
 
 function select(league) {
@@ -426,7 +433,6 @@ function gameRow(game, league, broadcasts, highlight, { collapseBroadcasts = fal
     if (altitude.postgame) showTimes.append(element("span", `Postgame ${timeFormat.format(new Date(altitude.postgame))}`));
     if (showTimes.childElementCount) details.append(showTimes);
     for (const note of altitude.notes) details.append(element("p", note));
-    details.append(element("p", `${altitude.saved ? "Saved Altitude data" : "Altitude updated"} ${stampFormat.format(new Date(altitude.fetchedAt))}`, "tipoff-meta"));
     content.append(details);
   }
   matchupSizes.observe(matchup);
@@ -485,7 +491,8 @@ function updateHighlightHeadings() {
 }
 
 async function loadLeague(id, day, signal) {
-  const { section, title, gameCount, status, results, national, followed } = sections.get(id);
+  const { section, title, gameCount, status, results, national, followed, altitudeStatus } = sections.get(id);
+  altitudeStatus?.row.remove();
   section.replaceChildren(title, results);
   gameCount.textContent = "";
   const summaries = followed ? [national, followed] : [national];
@@ -504,6 +511,14 @@ async function loadLeague(id, day, signal) {
     const updated = stampFormat.format(new Date(snapshot.fetchedAt));
     updateSourceStatus(id, status, saved ? "saved" : "updated",
       `${snapshot.source} · ${saved ? "Saved listings" : "Updated"} ${updated}${snapshot.altitudeWarning ? ` · ${snapshot.altitudeWarning}` : ""}`);
+    if (altitudeStatus) {
+      const freshness = [...new Set(snapshot.games.filter(game => game.altitude).map(({ altitude }) =>
+        `${altitude.saved ? "Saved Altitude data" : "Altitude updated"} ${stampFormat.format(new Date(altitude.fetchedAt))}`))];
+      if (freshness.length) {
+        altitudeStatus.value.textContent = freshness.join("; ");
+        altitudeStatus.anchor.after(altitudeStatus.row);
+      }
+    }
     if (count) {
       const list = element("ul", "", "tipoff-games");
       for (const game of snapshot.games) {

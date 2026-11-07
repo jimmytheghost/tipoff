@@ -2,6 +2,12 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Altitude freshness in footer status — November 7, 2026
+
+- Removed Altitude freshness from shared game details. An optional footer Altitude row follows NBA and preserves the supplement’s original timestamp and “Altitude updated” / “Saved Altitude data” label. Duplicate labels are merged; date changes remove the prior row before loading. The loaded/error summary still counts five sports.
+- **7 existing summary cases, collapsed-default markup check, and 16 existing route checks passed**. JavaScript syntax/Git whitespace passed. **0 new unit tests / 0 native app tests executed**. Local November 7: no supplement freshness in main content; six footer rows with the original Altitude timestamp. November 8: optional row removed, five sport rows remain.
+- Published `tipoff-web-altitude-status-20261107-01`, frontend `20261107-30`: **2 files, 9 release assertions, 2 installed hashes, 6 browser/crawler preview checks passed**. Live verification found no supplement freshness in main content and an Altitude footer row preserving **3:38 PM**, distinct from the current **3:57 PM** load completion time. Six source rows stayed within the viewport. Screenshot `/tmp/tipoff-altitude-footer-status-live.jpg`. No provider/runtime/cache changes. Messages rendering remains untested.
+
 ## Compact Altitude information — November 7, 2026
 
 - Altitude information uses **12 px** type, tighter **0.3 rem** paragraph margins, and **10 px** freshness text. Pregame/postgame labels share one flex row; missing times are omitted, with whole-label wrapping only if needed at extreme narrow widths. Original source fields/notes/saved timestamps are unchanged.

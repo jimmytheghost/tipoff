@@ -288,3 +288,12 @@ Published `tipoff-web-altitude-compact-20261107-01`, frontend `20261107-29`: HTM
 JavaScript syntax, formatting, and Git whitespace passed; no unit/native app tests executed for this presentation change. Local expanded Nuggets verified 12/10 px text and identical pregame/postgame row positions at regular and 319 px widths, with no horizontal overflow. Nine release assertions, three installed hashes, and six browser/crawler preview checks passed. Frozen release/guarded rollback remain in ignored publication operations notes. Messages rendering remains untested.
 
 Live expanded Nuggets verified smaller text and both show times on one row, without horizontal overflow. Screenshot: `/tmp/tipoff-compact-altitude-live.jpg`.
+
+
+## Altitude freshness in footer status — November 7, 2026
+
+Published `tipoff-web-altitude-status-20261107-01`, frontend `20261107-30`: JavaScript/HTML only. Removed the Altitude updated / Saved Altitude data timestamp from the shared game-detail renderer, so both Following and All Games keep only the network names, show times, and notes. The expanded footer now has an optional Altitude row after NBA, using the original supplement timestamp and saved label. Duplicate freshness labels are merged without altering source data. The row clears on date changes and stays absent if the selected day has no supplement. It does not add a sixth sport to the load/error counts.
+
+Seven existing status-summary cases and collapsed-default markup check passed, plus 16 existing route checks. JavaScript syntax/Git whitespace passed; native app tests executed: 0. Local November 7 verified no freshness timestamp in main content and six footer rows (five sports plus Altitude), with the supplement’s original fetched time. November 8 removed the optional row and left the five sport rows. Nine release assertions, two installed hashes, and six browser/crawler preview checks passed. Frozen release/guarded rollback remain in ignored publication operations notes. Messages rendering remains untested.
+
+Live verification confirmed Altitude freshness appears only in the footer panel, preserving the original 3:38 PM value separately from the current load completion time. Screenshot: `/tmp/tipoff-altitude-footer-status-live.jpg`.
