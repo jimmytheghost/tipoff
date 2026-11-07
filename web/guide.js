@@ -120,6 +120,31 @@ const logoAliases = {
   mlb: { CWS: "chw", OAK: "ath", WSN: "wsh" },
 };
 
+// MLB StatsAPI IDs matched to ESPN team metadata on November 7, 2026.
+// https://statsapi.mlb.com/api/v1/teams?sportId=1
+const mlbLogoCodes = {
+  108: "laa", 109: "ari", 110: "bal", 111: "bos", 112: "chc", 113: "cin",
+  114: "cle", 115: "col", 116: "det", 117: "hou", 118: "kc", 119: "lad",
+  120: "wsh", 121: "nym", 133: "ath", 134: "pit", 135: "sd", 136: "sea",
+  137: "sf", 138: "stl", 139: "tb", 140: "tex", 141: "tor", 142: "min",
+  143: "phi", 144: "atl", 145: "chw", 146: "mia", 147: "nyy", 158: "mil",
+};
+
+function teamLogoSources(code, league) {
+  if (typeof code !== "string" || !/^[A-Z0-9]{2,5}$/i.test(code) || !logoAliases[league]) return [];
+  const key = code.toUpperCase();
+  const numericMLB = league === "mlb" && /^\d+$/.test(key);
+  const original = numericMLB ? `https://www.mlbstatic.com/team-logos/${key}.svg` : null;
+  const slug = numericMLB ? mlbLogoCodes[key] : logoAliases[league][key] ?? key.toLowerCase();
+  if (!slug) return original ? [original] : [];
+  // ESPN lists these as rel=["full", "dark"] in its public team metadata.
+  return [
+    `https://a.espncdn.com/i/teamlogos/${league}/500-dark/${slug}.png`,
+    `https://a.espncdn.com/i/teamlogos/${league}/500/${slug}.png`,
+    ...(original ? [original] : []),
+  ];
+}
+
 const networkLogos = new Map([
   ["altitude 2", "https://cdn.tvpassport.com/image/station/240x135/v2/s56256_h15_ab.png"],
   ["alt2", "https://cdn.tvpassport.com/image/station/240x135/v2/s56256_h15_ab.png"],
@@ -144,12 +169,16 @@ const networkLogos = new Map([
   ["cbs", "https://upload.wikimedia.org/wikipedia/commons/4/4e/CBS_logo.svg"],
 ]);
 
-function mark(url, className) {
+function mark(url, className, fallbackUrls = []) {
   const image = element("img", "", className);
   image.alt = "";
   image.referrerPolicy = "no-referrer";
   image.loading = "lazy";
-  image.addEventListener("error", () => image.remove(), { once: true });
+  let fallback = 0;
+  image.addEventListener("error", () => {
+    if (fallback < fallbackUrls.length) image.src = fallbackUrls[fallback++];
+    else image.remove();
+  });
   image.src = url;
   return image;
 }
@@ -194,14 +223,8 @@ function fullTeamName(name, league) {
 
 function team(name, code, league) {
   const line = element("span", "", "tipoff-team");
-  if (/^[A-Z0-9]{2,5}$/i.test(code)) {
-    const key = code.toUpperCase();
-    const slug = logoAliases[league][key] ?? key.toLowerCase();
-    const url = league === "mlb" && /^\d+$/.test(key)
-      ? `https://www.mlbstatic.com/team-logos/${key}.svg`
-      : `https://a.espncdn.com/i/teamlogos/${league}/500/${slug}.png`;
-    line.append(mark(url, "tipoff-team-logo"));
-  }
+  const [url, ...fallbacks] = teamLogoSources(code, league);
+  if (url) line.append(mark(url, "tipoff-team-logo", fallbacks));
   const displayName = fullTeamName(name, league);
   const label = element("span", "", "tipoff-team-name");
   label.append(element("span", displayName, "tipoff-team-full"), element("span", shortTeamName(displayName), "tipoff-team-short"));

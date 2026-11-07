@@ -2,6 +2,14 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Dark-background team artwork — November 7, 2026
+
+- ESPN’s public team metadata explicitly supplies rel=[full,dark] versions for **139 teams**: NBA 30, NFL 32, WNBA 15, NHL 32, MLB 30. Fetched and decoded **all 139 dark PNGs successfully** (HTTP 200/image assets). Reviewed default/dark comparisons for 12 representative marks on the guide’s actual surface and at row size, including Jazz, Jets, Rams, Giants, Lightning, Maple Leafs, Capitals, Rockies, Tigers, Yankees, Liberty, and Grizzlies. Some already suitable marks are unchanged; difficult marks gain the provider’s light artwork or outlines. Audit metadata, asset results, and comparison sheet remain in ignored `.build/team-logo-review`.
+- Shared team rendering now prefers 500-dark artwork, preserves league aliases, and retries the default ESPN asset on failure. Numeric MLB IDs are matched using MLB’s [team metadata](https://statsapi.mlb.com/api/v1/teams?sportId=1) to ESPN’s [MLB team/logo metadata](https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/teams?limit=100); the original MLB SVG is retained as a final fallback, including for unknown IDs. All-failed images are removed while names remain. No CSS recoloring, sizing, schedule-source, or persisted data changes.
+- **17 new logo routing/fallback cases passed**, covering all five sports, league aliases, MLB numeric IDs, unknown IDs, unsafe input, fallback order/non-mutation, and original network-logo failure behavior. **58 existing web cases passed**: **75 web cases total**. JavaScript syntax and Git whitespace passed; **0 native app tests executed** for this frontend artwork change. All 139 dark image endpoints decoded separately from unit tests.
+- Local November 17 showed loaded dark assets for all 10 visible NBA/NHL teams, with materially brighter Jazz, Capitals, Lightning, and Maple Leafs marks. Live November 17 and November 8 representative team artwork verified on the existing dark rows; names, network columns, and row sizes remain intact.
+- Published `tipoff-web-dark-teams-20261107-01`: JavaScript/HTML only, frontend `20261107-15`. All **10 release assertions**, **2 installed hashes**, and **4 browser/crawler preview checks** passed. Native providers/cache/runtime and existing team/logo source identity fields are unchanged. Actual Messages rendering remains untested. Frozen payload, backups, rollback command, comparison audit, and screenshot evidence remain in ignored build workspaces.
+
 ## Date chevron removal — November 7, 2026
 
 - Removed the date button’s decorative ::after arrow. Date text, previous/next day arrows, and calendar behavior remain intact. JavaScript syntax and Git whitespace checks passed; **0 app tests / 0 web unit tests executed** for this CSS-only removal.
