@@ -257,6 +257,48 @@ function gameRow(game, league, broadcasts, highlight, collapseBroadcasts = false
   return row;
 }
 
+function schedulePause(signal) {
+  return new Promise((resolve, reject) => {
+    const abort = () => {
+      clearTimeout(timer);
+      reject(new DOMException("Schedule changed", "AbortError"));
+    };
+    const timer = setTimeout(() => {
+      signal.removeEventListener("abort", abort);
+      resolve();
+    }, 1500);
+    if (signal.aborted) abort();
+    else signal.addEventListener("abort", abort, { once: true });
+  });
+}
+
+async function fetchSchedule(params, signal) {
+  const deadline = Date.now() + 95000;
+  do {
+    const attempt = new AbortController();
+    const abort = () => attempt.abort();
+    signal.addEventListener("abort", abort, { once: true });
+    const timer = setTimeout(abort, 8000);
+    let response;
+    let data;
+    try {
+      if (signal.aborted) attempt.abort();
+      response = await fetch(`/tip-off/schedule?${params}`, { signal: attempt.signal });
+      data = await response.json();
+    } finally {
+      clearTimeout(timer);
+      signal.removeEventListener("abort", abort);
+    }
+    if (response.status === 202 && data.refreshing) {
+      await schedulePause(signal);
+      continue;
+    }
+    if (!response.ok) throw new Error("Schedule request failed");
+    return data;
+  } while (!signal.aborted && Date.now() < deadline);
+  throw new Error("Schedule refresh timed out");
+}
+
 async function loadLeague(id, day, signal) {
   const { section, title, gameCount, status, results, national, followed } = sections.get(id);
   section.replaceChildren(title, results);
@@ -267,9 +309,7 @@ async function loadLeague(id, day, signal) {
   results.replaceChildren();
   try {
     const params = new URLSearchParams({ sport: id, day, zone });
-    const response = await fetch(`/tip-off/schedule?${params}`, { signal });
-    if (!response.ok) throw new Error("Schedule request failed");
-    const { snapshot, saved } = await response.json();
+    const { snapshot, saved } = await fetchSchedule(params, signal);
     if (signal.aborted) return;
     if (!snapshot || snapshot.day !== day || snapshot.timeZone !== zone || (snapshot.guide ?? "nba") !== id) {
       throw new Error("Schedule unavailable");
@@ -279,7 +319,7 @@ async function loadLeague(id, day, signal) {
     const updated = stampFormat.format(new Date(snapshot.fetchedAt));
     status.replaceChildren(
       element("span", snapshot.source, "tipoff-league-source"),
-      element("span", `${saved ? "Refresh failed, saved" : "Updated"} ${updated}`)
+      element("span", `${saved ? "Saved listings" : "Updated"} ${updated}`)
     );
     for (const summary of summaries) {
       summary.status.replaceChildren(...[...status.children].map(node => node.cloneNode(true)));
@@ -297,6 +337,9 @@ async function loadLeague(id, day, signal) {
         else if (nationalBroadcasts.length) highlight = "tipoff-game-national";
         list.append(gameRow(game, id, game.broadcasts, highlight, !highlight));
         if (isFollowed) {
+          following.hidden = false;
+          highlightsTitle.textContent = "Following";
+          nationalTitle.hidden = false;
           followed.games.append(gameRow(game, id, game.broadcasts));
           if (nationalBroadcasts.length && !followed.title.querySelector(".tipoff-national-marker")) {
             followed.title.querySelector(".tipoff-header-name").append(element("span", "National", "tipoff-national-marker"));

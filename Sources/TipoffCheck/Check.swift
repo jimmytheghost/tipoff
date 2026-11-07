@@ -7,9 +7,9 @@ import TipoffCore
 
 @main struct Check {
     @MainActor static func main() async throws {
-        if CommandLine.arguments.dropFirst().first == "--web" {
+        if ["--web", "--web-cached"].contains(CommandLine.arguments.dropFirst().first ?? "") {
             do {
-                try await writeWebSchedule(arguments: Array(CommandLine.arguments.dropFirst(2)))
+                try await writeWebSchedule(arguments: Array(CommandLine.arguments.dropFirst(2)), cacheOnly: CommandLine.arguments[1] == "--web-cached")
             } catch {
                 FileHandle.standardError.write(Data("Invalid schedule request.\n".utf8))
                 Foundation.exit(EXIT_FAILURE)

@@ -2,6 +2,18 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Live schedule loading repair — November 6, 2026
+
+- Root cause: the old PHP endpoint held each HTTP request while an NBA refresh ran, sharing one lock across every date in that sport. Slow refreshes caused 20-second lock waits and up to 85-second process waits, even when working saved schedules existed.
+- Added read-only `TipoffCheck --web-cached`, returning the same typed, ISO 8601, display-ordered model without any networking or cache writes. Production now returns saved schedules immediately, retaining source and freshness, and refreshes in detached bounded jobs with per-sport/date/zone locks. Cold caches return 202; failed attempts back off; client polling has abort and timeout bounds. Followed results render before all league requests finish. The local Python preview still uses the original `--web` path.
+- `scripts/test.sh`: **57 tests passed**, including the four-case parameterized test (**60 individual test/case executions**). `scripts/package-app.sh .build/loading-package` built and signed the app successfully. Live `.build/debug/TipoffCheck 2026-11-06 --nhl`: **NHL.com, 3 games**.
+- `python3 Tests/Web/cache-only-test.py .build/debug/TipoffCheck`: **7 executed, 7 passed** (fresh/stale/missing/malformed cache, identity isolation, telemetry exclusion, invalid dates, original bytes/freshness).
+- Final PHP fixture run under PHP 8.4: **9 executed, 9 passed**, covering fresh/stale data, busy-lock latency, cold pending-to-ready, wrong day/zone, malformed data, failure backoff, and independent date locks. An earlier eight-case smoke run also passed. Both deployed PHP files linted with production PHP 8.1.
+- `node Tests/Web/fetch-schedule-test.cjs`: **4 executed, 4 passed**, covering immediate cache responses, 202 polling, date-change cancellation, and bounded pending time. JavaScript syntax and Git whitespace checks passed.
+- Linux amd64 executable built in `swift:6.3-jammy`, stripped, dependency-checked, and validated as www-data against the real saved November 7 NBA cache (**7 games**) before atomic replacement. Previous executable retained with rollback hash guard; persisted caches were not replaced.
+- Published `tipoff-web-loading-20261106-01`: new schedule helper PHP, endpoint PHP, guide JS, and HTML. All **9 HTTP assertions** and **4 installed checksums** passed. Six concurrent live endpoint checks returned in **0.284–0.993 seconds** across NBA/NHL/NFL dates, with 200 for available saved schedules and 202 for two cold NBA dates. All identity checks passed.
+- Live browser verified November 7 Nuggets/Avalanche listings and November 8 Broncos/national listings during background refreshes, without the old cross-date wait. Saved listings showed their original timestamps. No source or cache schema changed.
+
 ## Consistent icon spacing — November 6, 2026
 
 - Replaced fixed-width logo image slots with proportional boxes and a shared 0.5 rem gap across network groups, regional labels, and team-logo/name pairs. Natural image ratios are applied after load, including percentage-sized SVGs. National rows retain the fixed-width network column and aligned away logos.

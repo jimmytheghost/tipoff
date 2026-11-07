@@ -5,7 +5,7 @@ private struct WebSchedule: Encodable {
     let snapshot: ScheduleSnapshot?
     let saved: Bool
 
-    static func write(arguments: [String]) async throws {
+    static func write(arguments: [String], cacheOnly: Bool) async throws {
         guard arguments.count == 4,
               let guide = ScheduleGuide(rawValue: arguments[0]),
               let zone = TimeZone(identifier: arguments[2]) else { throw FeedError.invalid }
@@ -22,7 +22,9 @@ private struct WebSchedule: Encodable {
         let cache = ScheduleCache(directory: directory.appendingPathComponent(guide.rawValue))
         let previous = cache.read(day: arguments[1], timeZone: zone.identifier, guide: guide)
         let result: WebSchedule
-        if let previous, Date().timeIntervalSince(previous.fetchedAt) < 300 {
+        if cacheOnly {
+            result = WebSchedule(snapshot: previous, saved: previous.map { Date().timeIntervalSince($0.fetchedAt) >= 300 } ?? false)
+        } else if let previous, Date().timeIntervalSince(previous.fetchedAt) < 300 {
             result = WebSchedule(snapshot: previous, saved: false)
         } else {
             let altitude = AltitudeProvider(cacheURL: directory.appendingPathComponent("altitude.json"))
@@ -45,6 +47,6 @@ private struct WebSchedule: Encodable {
     }
 }
 
-func writeWebSchedule(arguments: [String]) async throws {
-    try await WebSchedule.write(arguments: arguments)
+func writeWebSchedule(arguments: [String], cacheOnly: Bool = false) async throws {
+    try await WebSchedule.write(arguments: arguments, cacheOnly: cacheOnly)
 }
