@@ -98,6 +98,8 @@ const logoAliases = {
 };
 
 const networkLogos = new Map([
+  ["peacock", "https://upload.wikimedia.org/wikipedia/commons/2/20/NBCUniversal_Peacock_Logo_%282026%29.svg"],
+  ["fox", "https://upload.wikimedia.org/wikipedia/commons/f/f7/FOX_wordmark-black.svg"],
   ["prime video", "https://upload.wikimedia.org/wikipedia/commons/9/90/Prime_Video_logo_%282024%29.svg"],
   ["espn", "https://a.espncdn.com/i/espn/espn_logos/espn_red.png"],
   ["espn+", "https://upload.wikimedia.org/wikipedia/commons/8/80/ESPN_Plus.svg"],
@@ -156,7 +158,7 @@ function broadcastList(broadcasts) {
     const label = element("span", name);
     if (logo) {
       const image = mark(logo, "tipoff-network-logo");
-      if (key === "espn+" || key === "cbs") image.classList.add("tipoff-network-logo-light");
+      if (["espn+", "cbs", "fox", "peacock"].includes(key)) image.classList.add("tipoff-network-logo-light");
       image.addEventListener("load", () => label.classList.add("tipoff-visually-hidden"), { once: true });
       item.append(image);
     }
@@ -167,7 +169,7 @@ function broadcastList(broadcasts) {
 }
 
 const nonFeaturedNetworks = new Set([
-  "nbatv", "nhln", "nhlnetwork", "mlbtv", "nhlcenterice", "centerice",
+  "nflnet", "nflnetwork", "nfln", "nbatv", "nhln", "nhlnetwork", "mlbtv", "nhlcenterice", "centerice",
   "nflsundayticket", "sundayticket", "mlbextrainnings", "extrainnings",
 ]);
 

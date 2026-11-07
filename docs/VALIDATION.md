@@ -2,6 +2,12 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Peacock / FOX logos and NFL Network exclusion — November 6, 2026
+
+- Added Wikimedia Commons Peacock and FOX wordmarks using the existing accessible-name and text-fallback behavior, with white rendering for the dark background. Both SVG URLs returned HTTP 200 with image/svg+xml; browser checks confirmed successful image loads.
+- Excluded normalized NFL Net, NFL Network, and NFLN listings from national highlights. November 8 showed 11 other national NFL games, with Bengals–Falcons absent from the summary and retained in All Games with expandable NFL Net details. FOX logos loaded on Sunday listings. November 9 Wizards–Pistons displayed the Peacock logo.
+- **10 JavaScript classification checks executed, 10 passed**: three NFL Network aliases, FOX, Peacock, CBS, NBA TV, NHL Network, League Pass, and regional FOX. `node --check web/guide.js` and `git diff --check` passed. **0 native app tests executed**; frontend-only change, no provider or cache changes. Local preview updated; not deployed.
+
 ## Conditional landing heading — November 6, 2026
 
 - Following appears as the top heading only when followed games are listed. Otherwise National Broadcasts occupies that row beside the date controls, without a duplicate heading or empty Following section. Followed schedule errors remain visible independently of the heading.
