@@ -364,7 +364,7 @@ ul.tipoff-broadcasts {
 }
 
 .tipoff-summary h2,
-.tipoff-summary-heading h2 {
+.tipoff-highlights-title {
   margin: 0;
   font: 700 1.65rem/1.1 var(--heading);
 }
@@ -533,19 +533,7 @@ ul.tipoff-broadcasts {
 .tipoff-summary-groups { margin-top: 0.75rem; }
 
 
-.tipoff-summary-heading {
-  display: grid;
-  grid-template-columns: auto minmax(0, 26rem);
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem 1rem;
-}
-
-@media (max-width: 32rem) {
-  .tipoff-summary-heading { grid-template-columns: 1fr; }
-  .tipoff-summary-heading .tipoff-date { width: 100%; }
-}
-
+.tipoff-highlights-title { margin-top: 1rem; }
 
 .tipoff-game-inline {
   grid-template-columns: 6.5rem minmax(0, 1fr) auto;

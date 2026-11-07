@@ -2,6 +2,12 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Section headings below date navigation — November 7, 2026
+
+- Moved the conditional Following / National Broadcasts heading out of the date-controls wrapper into the page body immediately below the selector, at every viewport width. Existing conditional heading behavior and schedule loading are unchanged.
+- Local browser geometry at 498 px showed the date selector ending at y=125.62 px, the section heading starting at y=141.62 px, and followed cards starting below it. The 325 px view retained the order without horizontal overflow. Live November 8 showed the same order above the Broncos card.
+- Published `tipoff-web-20261107-01`, replacing only guide HTML and CSS with asset version `20261107-01`. All **9 deployment assertions** and **2 installed checksums** passed. JavaScript syntax and Git whitespace checks passed. **0 app tests executed** for this layout-only change. Canonical/alias preview verification passed for browser and crawler agents (**4 page/image checks**).
+
 ## Live schedule loading repair — November 6, 2026
 
 - Root cause: the old PHP endpoint held each HTTP request while an NBA refresh ran, sharing one lock across every date in that sport. Slow refreshes caused 20-second lock waits and up to 85-second process waits, even when working saved schedules existed.
