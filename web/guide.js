@@ -43,7 +43,9 @@ function leagueHeader(tag, id, label) {
   const gameCount = element("span", "", "tipoff-league-count");
   const status = element("span", "", "tipoff-league-freshness");
   status.setAttribute("role", "status");
-  title.append(name, gameCount, status);
+  const identity = element("span", "", "tipoff-header-identity");
+  identity.append(name, gameCount);
+  title.append(identity, status);
   return { title, name, gameCount, status };
 }
 

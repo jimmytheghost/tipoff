@@ -461,8 +461,17 @@ ul.tipoff-broadcasts {
 
 .tipoff-league-header {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
+}
+
+.tipoff-header-identity {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .tipoff-league-count,

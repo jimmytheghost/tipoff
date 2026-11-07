@@ -2,6 +2,12 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Inline header game counts — November 7, 2026
+
+- Grouped the shared header name and game count with baseline alignment, keeping the optional National marker on that same line. Source/freshness remains right-aligned and may wrap below the intact left group on narrow screens. Applies to Following, National Broadcasts, and All Games; flat-mode rollback remains intact.
+- Local November 8 Broncos text bounds matched exactly for National and 1 GAME: top **204.21 px**, bottom **216.29 px** at 498 px. At 325 px the group used baseline alignment and had no horizontal overflow.
+- Published `tipoff-web-headers-20261107-01`: HTML/CSS/JS, asset version `20261107-03`. All **9 deployment assertions** and **3 installed hashes** passed. JavaScript syntax and Git whitespace checks passed. **0 app tests executed** for this header-layout-only change. Live text bounds matched the local baseline measurements. Canonical/alias browser/crawler preview checks passed (**4 page/image checks**).
+
 ## Reversible flat-surface pass — November 7, 2026
 
 - Audit found no authored CSS gradient functions. Applied a scoped flat-surface treatment: uniform card/header fills, no alternating row shading, and muted text instead of whole-row brightness filters for collapsed games/empty leagues. Original styles remain behind the `tipoff-flat` body switch.
