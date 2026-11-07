@@ -2,6 +2,13 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Schedule status summary refinement — November 7, 2026
+
+- Kept the status disclosure collapsed by default. All successful results show “All schedules loaded” with the browser-local load completion timestamp. Saved results count as loaded; their original source timestamps, saved/fallback labels, and error descriptions remain in expanded rows. Partial/failed results show loaded/error counts and any pending loads.
+- **7 new summary cases passed**, covering empty/partial loads, fresh/saved success, singular/multiple/all failures; collapsed-default markup check passed. **16 existing route checks passed**. JavaScript syntax and Git whitespace passed. **0 native app tests executed**.
+- Published `tipoff-web-status-summary-20261107-01`, frontend `20261107-18`: **2 files, 8 release assertions, 2 installed hashes, 6 browser/crawler preview checks passed**. Actual Messages rendering remains untested. No provider/runtime/cache changes.
+- Live browser confirmed the panel remained collapsed and read “All schedules loaded Nov 7, 2026, 2:26 PM”; all five expanded-row source strings retained their original 2:19 PM saved timestamps. Screenshot `/tmp/tipoff-collapsed-status-live.jpg`.
+
 ## Consolidated schedule status — November 7, 2026
 
 - Moved source/freshness out of all card headers into a single initially closed disclosure below All Games, with loading/loaded, saved, and unavailable counts and five per-sport source/timestamp rows. Preserved saved timestamps, explicit fallback identities, and Altitude supplement warnings. Date changes reset loading states and aborted older requests cannot replace current results. Game-specific broadcast listings/notes remain in their disclosures.

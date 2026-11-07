@@ -18,19 +18,23 @@ const scheduleStatuses = document.querySelector("#schedule-statuses");
 const scheduleStatusSummary = document.querySelector("#schedule-status-summary");
 const sourceStates = new Map();
 
+function scheduleStatusText(states, completedAt, total = 5) {
+  const loaded = states.filter(value => value === "updated" || value === "saved").length;
+  const errors = states.filter(value => value === "unavailable").length;
+  const pending = total - loaded - errors;
+  if (!pending && !errors) return `All schedules loaded ${completedAt}`;
+  return [
+    `${loaded} loaded`,
+    errors ? `${errors} ${errors === 1 ? "error" : "errors"}` : "",
+    pending ? `${pending} loading` : "",
+  ].filter(Boolean).join(" - ");
+}
+
 function updateSourceStatus(id, node, state, text) {
   sourceStates.set(id, state);
   node.textContent = text;
-  const states = [...sourceStates.values()];
-  const loading = states.filter(value => value === "loading").length;
-  const unavailable = states.filter(value => value === "unavailable").length;
-  const saved = states.filter(value => value === "saved").length;
-  const loaded = states.filter(value => value === "updated" || value === "saved").length;
-  scheduleStatusSummary.textContent = [
-    loading ? `${loading} loading` : `${loaded} loaded`,
-    saved ? `${saved} saved` : "",
-    unavailable ? `${unavailable} unavailable` : "",
-  ].filter(Boolean).join(" · ");
+  scheduleStatusSummary.textContent = scheduleStatusText(
+    [...sourceStates.values()], stampFormat.format(new Date()));
 }
 const dateFormat = new Intl.DateTimeFormat(undefined, { weekday: "short", month: "short", day: "numeric" });
 const timeFormat = new Intl.DateTimeFormat(undefined, { timeStyle: "short", timeZone: zone });
