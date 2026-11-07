@@ -573,3 +573,16 @@ ul.tipoff-inline-broadcasts {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+
+/* Flat-surface pass. Remove tipoff-flat from <body> to restore the prior look. */
+.tipoff-flat .tipoff-league-header,
+.tipoff-flat .tipoff-game {
+  background: var(--surface);
+}
+
+.tipoff-flat .tipoff-game:has(> .tipoff-game-details:not([open])),
+.tipoff-flat .tipoff-inactive-league:not([open]) {
+  filter: none;
+  color: var(--muted);
+}

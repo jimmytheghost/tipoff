@@ -2,6 +2,13 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Reversible flat-surface pass — November 7, 2026
+
+- Audit found no authored CSS gradient functions. Applied a scoped flat-surface treatment: uniform card/header fills, no alternating row shading, and muted text instead of whole-row brightness filters for collapsed games/empty leagues. Original styles remain behind the `tipoff-flat` body switch.
+- Tested rollback locally: removing the body class restored the prior header RGB(28,42,64); re-enabling it restored RGB(20,31,48). All 17 measured collapsed game rows had the flat fill and filter=none. At 325 px there was no horizontal overflow.
+- Published `tipoff-web-flat-20261107-01`, HTML/CSS only. All **9 HTTP assertions** and **2 installed hashes** passed. Live November 8 national headers and rows shared RGB(20,31,48), with background-image=none. The previous HTML/CSS backup and rollback command are retained in the isolated deployment workspace.
+- JavaScript syntax and Git whitespace checks passed. **0 app tests executed** for the CSS/markup-only pass. Canonical/alias preview checks passed for browser and crawler agents (**4 page/image checks**). Schedule data and source behavior are unchanged.
+
 ## Section headings below date navigation — November 7, 2026
 
 - Moved the conditional Following / National Broadcasts heading out of the date-controls wrapper into the page body immediately below the selector, at every viewport width. Existing conditional heading behavior and schedule loading are unchanged.
