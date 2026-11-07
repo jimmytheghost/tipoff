@@ -44,6 +44,18 @@ function dateFromDayKey(value) {
   return dayKey(selected) === value ? selected : null;
 }
 
+function calendarDaysForMonth(day) {
+  const first = new Date(day.getFullYear(), day.getMonth(), 1, 12);
+  return Array.from({ length: 42 }, (_, index) =>
+    new Date(first.getFullYear(), first.getMonth(), 1 - first.getDay() + index, 12));
+}
+
+function shiftCalendarMonth(day, offset) {
+  const month = new Date(day.getFullYear(), day.getMonth() + offset, 1, 12);
+  const last = new Date(month.getFullYear(), month.getMonth() + 1, 0, 12).getDate();
+  return new Date(month.getFullYear(), month.getMonth(), Math.min(day.getDate(), last), 12);
+}
+
 function leagueHeader(tag, id, label) {
   const title = element(tag, "", "tipoff-league-header");
   title.id = id;
@@ -460,7 +472,6 @@ async function loadDay() {
   request?.abort();
   request = new AbortController();
   const key = dayKey(date);
-  datePicker.value = key;
   dateTitle.setAttribute("aria-label", `Choose schedule date, ${date.toLocaleDateString(undefined, { dateStyle: "full" })}`);
   dateTitle.textContent = dayKey(new Date()) === key ? `Today · ${dateFormat.format(date)}` : dateFormat.format(date);
   const { signal } = request;
@@ -504,29 +515,133 @@ const dateControls = document.querySelector(".tipoff-date");
 const desktopLayout = window.matchMedia("(min-width: 64rem)");
 function placeDateControls() {
   const focused = document.activeElement;
+  const calendar = dateControls.querySelector("#date-picker");
+  if (calendar.matches(":popover-open")) calendar.hidePopover();
+  dateTitle.setAttribute("aria-expanded", "false");
   if (desktopLayout.matches) document.querySelector("#header-date").append(dateControls);
   else highlightsTitle.before(dateControls);
-  if (dateControls.contains(focused)) focused.focus({ preventScroll: true });
+  if (calendar.contains(focused)) dateTitle.focus({ preventScroll: true });
+  else if (dateControls.contains(focused)) focused.focus({ preventScroll: true });
 }
 desktopLayout.addEventListener("change", placeDateControls);
 placeDateControls();
 
 const datePicker = document.querySelector("#date-picker");
-dateTitle.addEventListener("click", () => {
-  if (typeof datePicker.showPicker === "function") {
-    try { datePicker.showPicker(); return; } catch { /* Show a visible native field below. */ }
-  }
-  datePicker.parentElement.setAttribute("data-native-fallback", "");
-  datePicker.tabIndex = 0;
-  datePicker.focus();
-});
-datePicker.addEventListener("change", () => {
-  const selected = dateFromDayKey(datePicker.value);
-  if (!selected) { datePicker.value = dayKey(date); return; }
+const calendarGrid = document.querySelector("#calendar-days");
+const calendarTitle = document.querySelector("#calendar-title");
+const calendarMonthFormat = new Intl.DateTimeFormat(undefined, { month: "long", year: "numeric" });
+const calendarDayFormat = new Intl.DateTimeFormat(undefined, { dateStyle: "full" });
+let calendarDay = new Date(date);
+
+for (let index = 0; index < 7; index++) {
+  const day = new Date(2026, 10, 1 + index, 12); // Sunday through Saturday.
+  const label = element("span", new Intl.DateTimeFormat(undefined, { weekday: "narrow" }).format(day));
+  label.setAttribute("role", "columnheader");
+  label.setAttribute("aria-label", new Intl.DateTimeFormat(undefined, { weekday: "long" }).format(day));
+  document.querySelector("#calendar-weekdays").append(label);
+}
+
+function renderCalendar(focusDay = false) {
+  calendarTitle.textContent = calendarMonthFormat.format(calendarDay);
+  calendarGrid.replaceChildren();
+  const selected = dayKey(date);
+  const today = dayKey(new Date());
+  const active = dayKey(calendarDay);
+  let week;
+  calendarDaysForMonth(calendarDay).forEach((day, index) => {
+    if (index % 7 === 0) {
+      week = element("div", "", "tipoff-calendar-week");
+      week.setAttribute("role", "row");
+      calendarGrid.append(week);
+    }
+    const key = dayKey(day);
+    const button = element("button", String(day.getDate()), "tipoff-calendar-day");
+    button.type = "button";
+    button.dataset.day = key;
+    button.tabIndex = key === active ? 0 : -1;
+    button.setAttribute("role", "gridcell");
+    button.setAttribute("aria-label", calendarDayFormat.format(day));
+    button.setAttribute("aria-selected", String(key === selected));
+    if (key === today) button.setAttribute("aria-current", "date");
+    if (day.getMonth() !== calendarDay.getMonth()) button.setAttribute("data-outside", "");
+    week.append(button);
+  });
+  if (focusDay) calendarGrid.querySelector('[tabindex="0"]').focus({ preventScroll: true });
+}
+
+function positionCalendar() {
+  if (!datePicker.matches(":popover-open")) return;
+  const anchor = dateTitle.getBoundingClientRect();
+  const panel = datePicker.getBoundingClientRect();
+  const left = Math.max(8, Math.min(anchor.left + anchor.width / 2 - panel.width / 2, window.innerWidth - panel.width - 8));
+  const below = anchor.bottom + 8;
+  const top = below + panel.height <= window.innerHeight - 8 ? below : Math.max(8, anchor.top - panel.height - 8);
+  datePicker.style.left = `${left}px`;
+  datePicker.style.top = `${top}px`;
+}
+
+function chooseCalendarDay(key) {
+  const selected = dateFromDayKey(key);
+  if (!selected) return;
   date = selected;
+  datePicker.hidePopover();
+  dateTitle.focus({ preventScroll: true });
   loadDay();
-  if (!datePicker.parentElement.hasAttribute("data-native-fallback")) dateTitle.focus();
+}
+
+datePicker.addEventListener("beforetoggle", event => {
+  if (event.newState === "open") {
+    calendarDay = dateFromDayKey(dayKey(date));
+    renderCalendar();
+  }
 });
+datePicker.addEventListener("toggle", event => {
+  dateTitle.setAttribute("aria-expanded", String(event.newState === "open"));
+  if (event.newState === "open") {
+    positionCalendar();
+    calendarGrid.querySelector('[tabindex="0"]').focus({ preventScroll: true });
+  }
+});
+calendarGrid.addEventListener("click", event => {
+  const button = event.target.closest("[data-day]");
+  if (button) chooseCalendarDay(button.dataset.day);
+});
+calendarGrid.addEventListener("keydown", event => {
+  const button = event.target.closest("[data-day]");
+  if (!button) return;
+  const day = dateFromDayKey(button.dataset.day);
+  let offset;
+  if (event.key === "ArrowLeft") offset = -1;
+  else if (event.key === "ArrowRight") offset = 1;
+  else if (event.key === "ArrowUp") offset = -7;
+  else if (event.key === "ArrowDown") offset = 7;
+  else if (event.key === "Home") offset = -day.getDay();
+  else if (event.key === "End") offset = 6 - day.getDay();
+  else if (event.key === "PageUp" || event.key === "PageDown") {
+    calendarDay = shiftCalendarMonth(day, (event.key === "PageUp" ? -1 : 1) * (event.shiftKey ? 12 : 1));
+  } else return;
+  event.preventDefault();
+  if (offset !== undefined) calendarDay = new Date(day.getFullYear(), day.getMonth(), day.getDate() + offset, 12);
+  renderCalendar(true);
+});
+datePicker.addEventListener("keydown", event => {
+  if (event.key === "Escape") {
+    event.preventDefault();
+    event.stopPropagation();
+    datePicker.hidePopover();
+    dateTitle.focus({ preventScroll: true });
+  }
+});
+for (const [id, offset] of [["calendar-previous", -1], ["calendar-next", 1]]) {
+  document.querySelector(`#${id}`).addEventListener("click", () => {
+    calendarDay = shiftCalendarMonth(calendarDay, offset);
+    renderCalendar();
+    positionCalendar();
+  });
+}
+document.querySelector("#calendar-today").addEventListener("click", () => chooseCalendarDay(dayKey(new Date())));
+window.addEventListener("resize", positionCalendar);
+window.addEventListener("scroll", positionCalendar, { passive: true });
 
 document.querySelector("#zone").textContent = zone.replaceAll("_", " ");
 for (const button of buttons.slice(1)) {
