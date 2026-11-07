@@ -444,6 +444,18 @@ function moveDay(offset) {
   loadDay();
 }
 
+// Move the same controls so resizing retains the selected date and listeners.
+const dateControls = document.querySelector(".tipoff-date");
+const desktopLayout = window.matchMedia("(min-width: 64rem)");
+function placeDateControls() {
+  const focused = document.activeElement;
+  if (desktopLayout.matches) document.querySelector("#header-date").append(dateControls);
+  else highlightsTitle.before(dateControls);
+  if (dateControls.contains(focused)) focused.focus({ preventScroll: true });
+}
+desktopLayout.addEventListener("change", placeDateControls);
+placeDateControls();
+
 document.querySelector("#zone").textContent = zone.replaceAll("_", " ");
 for (const button of buttons.slice(1)) {
   const label = button.querySelector("span");

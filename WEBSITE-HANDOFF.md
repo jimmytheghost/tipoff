@@ -106,3 +106,10 @@ Local checks covered short pages, expanded All Games, next-day/Today interaction
 ## Date toolbar refinement — November 7, 2026
 
 Published `tipoff-web-date-refinement-20261107-01`, CSS and HTML only (frontend version `20261107-07`). Replaced the enclosed date box with a transparent 24 rem toolbar anchored by one thin bottom rule, muted arrow controls, and a neutral outlined Today button. Existing 44 px targets, keyboard focus/activation, calendar-day navigation, and bottom footer are preserved. Local 1261 px desktop and 325 px mobile checks passed without overflow; live appearance verified. All nine release assertions, two installed hashes, and four browser/crawler preview checks passed. The isolated deployment workspace retains the frozen payload, backups, rollback command, and screenshot evidence.
+
+
+## Responsive date placement — November 7, 2026
+
+Published `tipoff-web-responsive-date-20261107-01`, HTML/CSS/JS only (asset version `20261107-08`). At 64 rem / 1024 px and wider, the same date-control group moves into the header between brand and back link. On tablet/mobile it returns above the section heading in main and spans the full content width. Desktop has no separate baseline; the body toolbar retains its thin rule. Relocation preserves selected date, listeners, and focus without duplicate IDs/controls. Footer behavior remains intact.
+
+Local checks covered 1261 px desktop, 833 px tablet, and 325 px mobile, including date/focus preservation through resizing, no overflow, and keyboard Today. Four client-loading checks, nine release assertions, three installed hashes, and four browser/crawler preview checks passed. Live responsive placement was verified. Frozen release, backup, guarded rollback command, and screenshot evidence remain in the isolated deployment workspace.

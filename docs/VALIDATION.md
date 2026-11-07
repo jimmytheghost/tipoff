@@ -2,6 +2,12 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Responsive date placement — November 7, 2026
+
+- The single date-control group moves into a centered header slot at **64 rem / 1024 px** and wider, between the brand and back link. Below that breakpoint it stays in main above the section heading and spans the full content width. Header placement removes the redundant bottom rule; the body toolbar keeps its thin baseline. Date/listener state and keyboard focus are retained when moving the original node.
+- Local desktop **1261 px**: one date group inside the header, 384 px wide, within its 60.83 px height; no horizontal overflow. After selecting November 8, resizing to **833 px** preserved that date and moved controls into main, with toolbar and section widths both **769.34 px**. At **325 px**, both widths were **297.01 px**, with no overflow. Focus remained on Next through relocation; keyboard Today restored November 7.
+- **4 client-loading tests passed**, JavaScript syntax and Git whitespace passed. **0 native app tests executed** for this frontend layout change. Published `tipoff-web-responsive-date-20261107-01` with HTML/CSS/JS and asset version `20261107-08`. All **9 release assertions**, **3 installed hashes**, and **4 browser/crawler preview checks** passed. Live desktop/header and mobile/body placement verified; footer remains at the document bottom. Actual Messages rendering remains untested. Frozen release, backup/rollback information, and screenshots are in the ignored deployment workspace.
+
 ## Date toolbar refinement — November 7, 2026
 
 - Removed the date component’s enclosing fill, border, and rounded frame. A thin bottom rule now anchors a 24 rem toolbar to the page; muted arrows have transparent borders/backgrounds and Today retains a subtle outline with neutral text. Hover/focus states and 44 px controls remain. Footer behavior is unchanged.
