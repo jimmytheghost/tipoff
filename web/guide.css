@@ -546,15 +546,16 @@ ul.tipoff-broadcasts {
 
 
 .tipoff-game-inline {
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: 6.5rem minmax(0, 1fr) auto;
 }
 
 ul.tipoff-inline-broadcasts {
   grid-column: auto;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   gap: 0.2rem;
-  max-width: 8rem;
+  width: 100%;
 }
 
 .tipoff-inline-broadcasts .tipoff-broadcast {
@@ -568,9 +569,8 @@ ul.tipoff-inline-broadcasts {
 }
 
 @media (max-width: 32rem) {
-  ul.tipoff-inline-broadcasts {
-    flex-wrap: wrap;
-    max-width: 4.2rem;
+  .tipoff-game-inline {
+    grid-template-columns: 4.2rem minmax(0, 1fr) auto;
   }
 }
 

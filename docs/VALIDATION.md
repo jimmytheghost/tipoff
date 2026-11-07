@@ -2,6 +2,12 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Consistent national network column — November 6, 2026
+
+- National rows reserve the same network column width regardless of the number of broadcasters, centering icons within it and aligning all away-team logos. The column uses 6.5 rem normally and 4.2 rem on narrow screens, with icon wrapping inside the reserved space.
+- Browser verified November 10 and 11 rows with one, two, and three networks. At 540 px, all measured national away logos began at x=148.02 px with a 104 px network column. At the narrow 325 px content viewport, all four November 11 away logos began at x=103.62 px with no horizontal overflow.
+- `node --check web/guide.js` and `git diff --check` passed. **0 app tests executed**; CSS-only behavior change. Local preview updated; not deployed.
+
 ## Short team names across sports — November 6, 2026
 
 - The shared web team renderer removes recognized location prefixes, keeping team names such as Celtics, 76ers, Red Wings, Blues, Trail Blazers, and White Sox. Applies to Following, National Broadcasts, and All Games for all five sports. Source names remain in hover titles; provider output and cached snapshots are unchanged. Unknown names remain unchanged.
