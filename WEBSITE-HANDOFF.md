@@ -2,6 +2,10 @@
 
 Updated November 7, 2026. Status: approved simplified landing view deployed. The current [Tipoff source](https://github.com/jimmytheghost/tipoff) ships native macOS and Windows apps.
 
+## Portfolio expansion content package — November 7, 2026
+
+Prepared [the portfolio handoff](docs/portfolio/HANDOFF.md), [ready-to-place copy](docs/portfolio/PAGE-COPY.md), and [asset guide](docs/portfolio/ASSETS.md) for a fuller case study following the live tzMiniFigs and Pick a Psych references. Includes 12 page-ready images (six real browser captures, three native macOS renders, a labeled Windows feature diagram, overview composition, and social artwork), three reference captures, a contact sheet, provenance/size/hash manifest, and reproduction scripts. Existing Alec Miller video/poster/credit and supplied motivation are preserved in the instructions and copy. No website implementation or deployment was performed. No Windows desktop was available; an optional real-capture replacement brief is included, and the diagram must remain labeled. Native renders use a live-fetched November 7 NBA.com + Altitude snapshot, seven games. See docs/VALIDATION.md for actual checks.
+
 ## Page and routes
 
 - The public viewing guide is at `https://www.jimmyweber.com/tipoff`. `/tip-off` and `/sports` redirect to it and the page metadata uses the canonical URL. Verify slash variants and the final host with the site's routing.

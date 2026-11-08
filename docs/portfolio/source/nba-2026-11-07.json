@@ -1,0 +1,191 @@
+{
+  "day" : "2026-11-07",
+  "fetchedAt" : 815797681.494214,
+  "games" : [
+    {
+      "altitude" : {
+        "fetchedAt" : 815797681.465488,
+        "networks" : [
+          "ALT2",
+          "Altitude+"
+        ],
+        "notes" : [
+
+        ],
+        "postgame" : 815790600,
+        "pregame" : 815778000,
+        "saved" : false
+      },
+      "away" : "Nuggets",
+      "awayCode" : "DEN",
+      "broadcasts" : [
+        {
+          "category" : "Altitude guide",
+          "name" : "Altitude 2"
+        },
+        {
+          "category" : "Altitude guide",
+          "name" : "Altitude+"
+        },
+        {
+          "category" : "National",
+          "name" : "NBA TV"
+        },
+        {
+          "category" : "Home radio",
+          "name" : "93.5\/107.5 The Fan"
+        },
+        {
+          "category" : "Away radio",
+          "name" : "Altitude Sports Radio 92.5 FM"
+        }
+      ],
+      "home" : "Pacers",
+      "homeCode" : "IND",
+      "id" : "nba-0022600189",
+      "scheduleDay" : "2026-11-07",
+      "start" : 815781600
+    },
+    {
+      "away" : "Nets",
+      "awayCode" : "BKN",
+      "broadcasts" : [
+        {
+          "category" : "Home radio",
+          "name" : "WZGC"
+        },
+        {
+          "category" : "Away radio",
+          "name" : "101.9 FM \/ 660 AM"
+        },
+        {
+          "category" : "Subscription",
+          "name" : "League Pass"
+        }
+      ],
+      "home" : "Hawks",
+      "homeCode" : "ATL",
+      "id" : "nba-0022600190",
+      "scheduleDay" : "2026-11-07",
+      "start" : 815790600
+    },
+    {
+      "away" : "Knicks",
+      "awayCode" : "NYK",
+      "broadcasts" : [
+        {
+          "category" : "National",
+          "name" : "NBA TV"
+        },
+        {
+          "category" : "Home radio",
+          "name" : "WTAM 1100 \/ 100.7 WMMS \/ S: La Mega 1300"
+        },
+        {
+          "category" : "Away radio",
+          "name" : "880 ESPN New York"
+        }
+      ],
+      "home" : "Cavaliers",
+      "homeCode" : "CLE",
+      "id" : "nba-0022600191",
+      "scheduleDay" : "2026-11-07",
+      "start" : 815792400
+    },
+    {
+      "away" : "Wizards",
+      "awayCode" : "WAS",
+      "broadcasts" : [
+        {
+          "category" : "Home radio",
+          "name" : "WWLS\/WKY"
+        },
+        {
+          "category" : "Away radio",
+          "name" : "106.7 The Fan\/The Team 980 AM\/Bloomberg 99.1"
+        },
+        {
+          "category" : "Subscription",
+          "name" : "League Pass"
+        }
+      ],
+      "home" : "Thunder",
+      "homeCode" : "OKC",
+      "id" : "nba-0022600192",
+      "scheduleDay" : "2026-11-07",
+      "start" : 815792400
+    },
+    {
+      "away" : "Magic",
+      "awayCode" : "ORL",
+      "broadcasts" : [
+        {
+          "category" : "Home radio",
+          "name" : "95.7 The Game"
+        },
+        {
+          "category" : "Away radio",
+          "name" : "104.5 The Beat"
+        },
+        {
+          "category" : "Subscription",
+          "name" : "League Pass"
+        }
+      ],
+      "home" : "Warriors",
+      "homeCode" : "GSW",
+      "id" : "nba-0022600193",
+      "scheduleDay" : "2026-11-07",
+      "start" : 815794200
+    },
+    {
+      "away" : "Rockets",
+      "awayCode" : "HOU",
+      "broadcasts" : [
+        {
+          "category" : "Home radio",
+          "name" : "AZ Sports 98.7 FM \/ S: KSUN 1400AM"
+        },
+        {
+          "category" : "Away radio",
+          "name" : "790 AM \/ 740 AM \/ 101.7 FM"
+        },
+        {
+          "category" : "Subscription",
+          "name" : "League Pass"
+        }
+      ],
+      "home" : "Suns",
+      "homeCode" : "PHX",
+      "id" : "nba-0022600194",
+      "scheduleDay" : "2026-11-07",
+      "start" : 815796000
+    },
+    {
+      "away" : "Spurs",
+      "awayCode" : "SAS",
+      "broadcasts" : [
+        {
+          "category" : "Home radio",
+          "name" : "Rip City Radio 620"
+        },
+        {
+          "category" : "Away radio",
+          "name" : "WOAI\/KXTN"
+        },
+        {
+          "category" : "Subscription",
+          "name" : "League Pass"
+        }
+      ],
+      "home" : "Trail Blazers",
+      "homeCode" : "POR",
+      "id" : "nba-0022600195",
+      "scheduleDay" : "2026-11-07",
+      "start" : 815799600
+    }
+  ],
+  "limitedCoverage" : false,
+  "source" : "NBA.com + Altitude",
+  "timeZone" : "America\/Denver"
+}

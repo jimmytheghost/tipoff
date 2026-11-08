@@ -2,6 +2,12 @@
 
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
+## Portfolio expansion package — November 7, 2026
+
+- Prepared and visually reviewed [the portfolio package](portfolio/HANDOFF.md): ready-to-place copy, outline, 12 page-ready images, three reference captures, captions/alt text, provenance and SHA-256 manifest, contact sheet, reproduction scripts, and proposed social metadata. The existing video and supplied motivation are preserved. Windows imagery is explicitly a feature diagram; real Windows captures are unavailable in this environment.
+- Existing live `TipoffCheck 2026-11-07`: **NBA.com + Altitude, seven games**; generated three native view renders from the unmodified snapshot. Six actual browser states captured at desktop/phone sizes. Checked image decoding/dimensions/hashes, local package links, script syntax, exact preserved copy, excluded snapshot fields, and diff whitespace. Detailed evidence and limitations: [portfolio validation](portfolio/VALIDATION.md).
+- **0 native app tests / 0 Windows tests / 0 web unit tests executed** for this content/artwork-only work. No runtime changes, app rebuild, website integration, or publication. Live proposed link-preview/Message rendering checks remain for the website agent.
+
 ## Heading-free show times — November 7, 2026
 
 - Removed the Altitude heading/disclosure wrapper; show times sit directly below broadcast listings. They share game-count styles: **9 px / 500 / RGB(135,148,167) / 0.72 px tracking / uppercase**. Notes remain readable below, with footer freshness unchanged.

@@ -1,0 +1,167 @@
+[
+  {
+    "file": "assets/tipoff-overview.png",
+    "kind": "editorial composition",
+    "width": 1800,
+    "height": 1120,
+    "bytes": 359174,
+    "sha256": "460dd0acea24813faac4160e552fbd072e7e33ac7076724eea5a0ae067b94762",
+    "caption": "Tipoff on macOS and in the browser. Composite of native view and live website captures.",
+    "alt": "Tipoff icon above a macOS schedule view and the desktop browser guide.",
+    "provenance": "See ASSETS.md for source and reproduction details."
+  },
+  {
+    "file": "assets/macos-nba-dark.png",
+    "kind": "native view render",
+    "width": 720,
+    "height": 1330,
+    "bytes": 119689,
+    "sha256": "e0bf72cb5ab6474759995e3a501600a65a5fe7b21c0c78f87ebaf4bbc814635a",
+    "caption": "The macOS guide in Dark appearance, with Nuggets listings first. Production-view render using November 7, 2026 listings.",
+    "alt": "Dark macOS Tipoff guide showing five sport tabs and Nuggets at Pacers with Altitude 2, Altitude+, and NBA TV listings.",
+    "provenance": "See ASSETS.md for source and reproduction details."
+  },
+  {
+    "file": "assets/macos-nba-light.png",
+    "kind": "native view render",
+    "width": 720,
+    "height": 1330,
+    "bytes": 117800,
+    "sha256": "674e87e07f6b7a3ff014ab78e160ef848e767555ce443cc6c28cb69233ea2dc5",
+    "caption": "The same macOS guide in Light appearance. Production-view render.",
+    "alt": "Light macOS Tipoff guide with five sport tabs, teams, local game times, and supplied broadcasters.",
+    "provenance": "See ASSETS.md for source and reproduction details."
+  },
+  {
+    "file": "assets/macos-altitude-details.png",
+    "kind": "native view render",
+    "width": 616,
+    "height": 480,
+    "bytes": 50797,
+    "sha256": "2622113b7d8a163dde1e95a00703e3895d14b3d1133d133b5681500b2b9860ba",
+    "caption": "Matching Altitude listings include show times, regional notes when supplied, and their original check time. Production-view render.",
+    "alt": "Nuggets broadcast details from Altitude with game, pregame, postgame, and source freshness information.",
+    "provenance": "See ASSETS.md for source and reproduction details."
+  },
+  {
+    "file": "assets/windows-feature-diagram.png",
+    "kind": "feature diagram",
+    "width": 1600,
+    "height": 900,
+    "bytes": 69724,
+    "sha256": "71b5cb139a65d1a90ed4ca5d0c2a7b72c2bb6d4539189b729c6731976ba6fc58",
+    "caption": "The Windows app\u2019s tray, guide, and settings flow. Explanatory feature diagram, not a Windows screenshot.",
+    "alt": "Diagram describing the Windows tray icon, five-sport flyout, and Light, Dark, and startup settings; not a screenshot.",
+    "provenance": "See ASSETS.md for source and reproduction details."
+  },
+  {
+    "file": "assets/web-following-desktop.jpg",
+    "kind": "live browser capture",
+    "width": 1440,
+    "height": 1000,
+    "bytes": 37876,
+    "sha256": "d2aa4393c16c78c328899df664aacaec430047142bbc65a06987c5a2dcc56689",
+    "caption": "Following highlights the Nuggets and Avalanche on November 7, 2026. No national broadcasts are listed for this selection.",
+    "alt": "Desktop browser guide with Nuggets and Avalanche highlights and All Games collapsed.",
+    "provenance": "Captured November 7, 2026 from https://www.jimmyweber.com/tipoff using the in-app browser; local times America/Denver."
+  },
+  {
+    "file": "assets/web-national-desktop.jpg",
+    "kind": "live browser capture",
+    "width": 1440,
+    "height": 1037,
+    "bytes": 88837,
+    "sha256": "65d5fe69c1cee8285ac073212cc21b497f48b512ebe613a122d6e5ba8afe27c5",
+    "caption": "The browser guide on November 8, 2026, with Broncos coverage in Following and the remaining national listings below.",
+    "alt": "Desktop Tipoff browser guide showing Broncos at Panthers and national NFL broadcasts with local start times.",
+    "provenance": "Captured November 7, 2026 from https://www.jimmyweber.com/tipoff using the in-app browser; local times America/Denver."
+  },
+  {
+    "file": "assets/web-all-games-desktop.jpg",
+    "kind": "live browser capture",
+    "width": 1440,
+    "height": 2679,
+    "bytes": 264795,
+    "sha256": "997acc4065191af4c7f08f16e63769d0e70b7c5e13cb4838467f8997eb1785ef",
+    "caption": "All Games expands the full schedule and five league filters below the highlights.",
+    "alt": "Expanded desktop All Games section with All, NBA, NFL, WNBA, NHL, and MLB filters and daily schedules.",
+    "provenance": "Captured November 7, 2026 from https://www.jimmyweber.com/tipoff using the in-app browser; local times America/Denver."
+  },
+  {
+    "file": "assets/web-national-mobile.jpg",
+    "kind": "live browser capture",
+    "width": 390,
+    "height": 1097,
+    "bytes": 55960,
+    "sha256": "3a29055fc883afa9949a5a544a11e576a8b1f991b7675497aeb9fe24560d428f",
+    "caption": "The November 8 browser guide at a 390-pixel phone viewport.",
+    "alt": "Phone layout of Following and national NFL broadcasts with logos, matchups, and scheduled start times.",
+    "provenance": "Captured November 7, 2026 from https://www.jimmyweber.com/tipoff using the in-app browser; local times America/Denver."
+  },
+  {
+    "file": "assets/web-calendar-mobile.jpg",
+    "kind": "live browser capture",
+    "width": 390,
+    "height": 844,
+    "bytes": 40581,
+    "sha256": "48d97270ef5006b5100b4895d88c2af7862a138f644e8639935ebccab2c0086a",
+    "caption": "The browser calendar at a 390-pixel phone viewport, with November 8 selected.",
+    "alt": "Dark calendar popover over the phone schedule, showing November 2026 and the Today control.",
+    "provenance": "Captured November 7, 2026 from https://www.jimmyweber.com/tipoff using the in-app browser; local times America/Denver."
+  },
+  {
+    "file": "assets/web-details-status-desktop.jpg",
+    "kind": "live browser capture",
+    "width": 1280,
+    "height": 720,
+    "bytes": 52594,
+    "sha256": "3a6bbb431c87cb7b9d1ce04f031129025f7fdaffc54ea47d54a521e2ff8403c4",
+    "caption": "Expanded Nuggets broadcast details and the source/freshness disclosure. The live NBA and MLB responses used ESPN fallback in this capture.",
+    "alt": "Nuggets broadcaster details with pregame and postgame times, alongside the footer panel naming each sport\u2019s source and update time.",
+    "provenance": "Captured November 7, 2026 from https://www.jimmyweber.com/tipoff using the in-app browser; local times America/Denver."
+  },
+  {
+    "file": "assets/tipoff-social-v1.png",
+    "kind": "link preview composition",
+    "width": 1200,
+    "height": 630,
+    "bytes": 137793,
+    "sha256": "b6ddb91976c1dec3ee99f588a51128e0e361145088df7c1d35a105c41a9f034c",
+    "caption": "Proposed portfolio link-preview artwork. Not deployed.",
+    "alt": "Tipoff app icon with macOS and browser viewing-guide images.",
+    "provenance": "See ASSETS.md for source and reproduction details."
+  },
+  {
+    "file": "assets/reference-tipoff-before.jpg",
+    "kind": "reference only",
+    "width": 514,
+    "height": 2803,
+    "bytes": 209406,
+    "sha256": "293b6c357357f4a4a97b3c5116e981bc33de33db7b50d13d5f27e1d170c12cb0",
+    "caption": "Existing Tipoff portfolio page before this proposed expansion.",
+    "alt": "Full-page reference capture of the previous Tipoff portfolio page.",
+    "provenance": "See ASSETS.md for source and reproduction details."
+  },
+  {
+    "file": "assets/reference-pick-a-psych.jpg",
+    "kind": "reference only",
+    "width": 1280,
+    "height": 9973,
+    "bytes": 780526,
+    "sha256": "64dd8c923ad631289ff00a31dbf61879f29f5f4610c1d8e96299ef675d99c8e1",
+    "caption": "Pick a Psych editorial reference; do not publish as Tipoff media.",
+    "alt": "Full-page reference capture of the Pick a Psych case study.",
+    "provenance": "See ASSETS.md for source and reproduction details."
+  },
+  {
+    "file": "assets/reference-tzminifigs.jpg",
+    "kind": "reference only",
+    "width": 1280,
+    "height": 21907,
+    "bytes": 2057855,
+    "sha256": "eb9a49b3b2c3fbf10f62986658b9f8116851b08db08fa02f5a6331115f1fbf48",
+    "caption": "tzMiniFigs editorial reference; do not publish as Tipoff media.",
+    "alt": "Full-page reference capture of the tzMiniFigs case study.",
+    "provenance": "See ASSETS.md for source and reproduction details."
+  }
+]
