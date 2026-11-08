@@ -21,7 +21,7 @@ To try the browser guide locally on macOS, run `scripts/preview-web.sh` with Pyt
 
 On the live guide, saved schedules load immediately with their original timestamps while refreshes run in the background. Refresh locks are isolated by sport, date, and time zone. A date with no saved data returns a pending response that the browser polls for up to 95 seconds; individual HTTP attempts time out after 8 seconds. A source failure never turns a missing schedule into “No games scheduled.” Return to the date or select Today to read a completed background refresh.
 
-The [portfolio content package](docs/portfolio/HANDOFF.md) contains expanded page copy, a section outline, screenshots/native renders, labeled Windows feature imagery, captions, and link-preview artwork for the JimmyWeber.com agent. It preserves the existing video and supplied motivation; the proposed portfolio expansion has not been integrated or published.
+The [portfolio content package](docs/portfolio/HANDOFF.md) contains expanded page copy, a section outline, screenshots/native renders, labeled Windows feature imagery, captions, and link-preview artwork for the JimmyWeber.com agent. It preserves the existing video and supplied motivation; the expanded [portfolio page](https://www.jimmyweber.com/pages/projects/tipoff/) is now published.
 
 ## What it does today
 

@@ -670,3 +670,8 @@ Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone C
 Website endpoints are undocumented and can change. NBA.com itself omitted local TV listings for several upcoming games in the samples; ESPN also omitted some local/streaming options. No source can presently be claimed complete or covered by an availability SLA. Tipoff only shows supplied listings and does not infer subscription or blackout eligibility. Deferred: broadcaster watch links, global regions, and additional sports.
 
 Live verification repeated both November 7 (national headline hidden, revised empty message) and November 8 (national headline restored with games). Screenshot: `/tmp/tipoff-empty-national-live.jpg`.
+
+
+## Portfolio publication — November 7, 2026
+
+Website-only publication verified the expanded portfolio at https://www.jimmyweber.com/pages/projects/tipoff/: 13 installed file hashes, 17 HTTP assertions, browser/crawler metadata and decoded 1200 × 630 PNG, and live desktop/mobile/dark-mode image/lightbox/video checks passed. Widths: 1440, 390, 325 px, with no horizontal overflow. Reviewed section-navigation removal and centered-video changes are included. Existing shared JS served valid text/javascript; corrected its initial check expectation without changing deployed code. Actual Messages rendering remains untested. Native app tests executed: 0; no app/provider/runtime source changed. See WEBSITE-HANDOFF.md for image provenance and public URLs.

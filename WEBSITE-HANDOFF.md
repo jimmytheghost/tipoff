@@ -1,6 +1,6 @@
 # Tipoff website handoff
 
-Updated November 7, 2026. Status: approved simplified landing view deployed. The current [Tipoff source](https://github.com/jimmytheghost/tipoff) ships native macOS and Windows apps.
+Updated November 7, 2026. Status: browser guide and expanded portfolio page deployed. The current [Tipoff source](https://github.com/jimmytheghost/tipoff) ships native macOS and Windows apps.
 
 ## Portfolio expansion content package — November 7, 2026
 
@@ -319,3 +319,12 @@ Published `tipoff-web-altitude-inline-20261107-01`, frontend `20261107-32`: HTML
 JavaScript syntax, formatting, and Git whitespace passed; no unit/native tests executed for this presentation change. Local expanded Nuggets confirmed no Altitude heading, identical count/time computed styles, and both show times on one row. Nine release assertions, three installed hashes, and six browser/crawler preview checks passed. Frozen release/guarded rollback remain in ignored publication operations notes. Messages rendering remains untested.
 
 Live expanded Nuggets confirmed heading-free show times matching game counts exactly, without horizontal overflow. Screenshot: `/tmp/tipoff-inline-show-times-live.jpg`.
+
+
+## Portfolio expansion published — November 7, 2026
+
+The expanded portfolio is live at https://www.jimmyweber.com/pages/projects/tipoff/ following Jimmy's explicit publication request. The website release installed the portfolio controller, scoped stylesheet, media manifest, and ten selected original images from `docs/portfolio/`. It uses the Pick a Psych/tzMiniFigs image-and-text layout and shared image lightbox. Alec Miller's video/poster/credit and Jimmy's supplied motivation are preserved. The Windows feature diagram remains labeled, and native production-view renders retain their captions. The reviewed page has no introduction section-button group and centers the video/credit. The browser app at https://www.jimmyweber.com/tipoff was unchanged.
+
+Nine displayed images, seven descriptive sections, video metadata/controls and credit, centered geometry, keyboard lightbox/focus return, dark mode, and 1440/390/325 px layouts passed live checks with no horizontal overflow or JavaScript errors. All 13 installed file hashes and 17 HTTP content/MIME/checksum checks passed. An initial check had an incorrect expected MIME for unchanged shared JavaScript; verification passed after correcting the expectation to the server's valid text/javascript, without changing the frozen payload. Browser and Facebook crawler checks passed for the portfolio canonical metadata and public 1200 × 630 PNG at https://www.jimmyweber.com/assets/img/projects/tipoff/tipoff-social-v1.png. Actual Messages rendering remains untested.
+
+Image source/provenance and reproducible composition scripts remain in `docs/portfolio/`. No reference captures, source snapshots, private data, native app code, or schedule runtime files were published. Website operations retain the release, screenshots, backups, and guarded rollback. Native app tests executed: 0 for this portfolio-only deployment.
