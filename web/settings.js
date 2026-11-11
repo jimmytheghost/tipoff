@@ -22,45 +22,30 @@ function supportedZone(zone) {
 }
 
 const deviceZoneLabel = "Use device time zone";
-const countryPriority = ["US", "CA", "MX", "GB", "FR", "DE", "ES", "IT"];
-const regionPriority = ["Europe", "America", "Australia", "Asia", "Africa", "Pacific", "Atlantic", "Indian", "Antarctica"];
-const usZones = new Map([
-  ["America/New_York", "Eastern"],
-  ["America/Chicago", "Central"],
-  ["America/Denver", "Mountain"],
-  ["America/Los_Angeles", "Pacific"],
-  ["America/Phoenix", "Arizona"],
-  ["America/Anchorage", "Alaska"],
-  ["Pacific/Honolulu", "Hawaii"],
-]);
-
-const featuredZones = {
-  US: [...usZones.keys()],
-  CA: ["America/Toronto", "America/Vancouver", "America/Edmonton", "America/Regina",
-    "America/Winnipeg", "America/Halifax", "America/St_Johns"],
-  MX: ["America/Mexico_City", "America/Cancun", "America/Tijuana", "America/Monterrey",
-    "America/Merida", "America/Chihuahua", "America/Hermosillo"],
-};
-
-function zoneName(zone) {
-  const [, ...parts] = zone.split("/");
-  const location = parts.reverse().join(", ").replaceAll("_", " ") || zone;
-  const region = usZones.get(zone);
-  return region ? `${region} (${location})` : location;
+const utcZoneLabel = "Coordinated Universal Time (UTC)";
+function zoneLocation(zone) {
+  return zone.split("/").pop().replaceAll("_", " ");
 }
 
-function timeZoneCountries(table) {
+function zoneTitle(zone) {
+  if (zone === "UTC") return utcZoneLabel;
+  return new Intl.DateTimeFormat("en", { timeZone: zone, timeZoneName: "longGeneric" })
+    .formatToParts().find(part => part.type === "timeZoneName")?.value ?? zoneLocation(zone);
+}
+
+function timeZoneGroups(table) {
   const names = new Intl.DisplayNames(["en"], { type: "region" });
-  const rank = (order, key) => order.includes(key) ? order.indexOf(key) : order.length;
-  return Object.entries(table).map(([code, ids]) => {
-    const featured = featuredZones[code] ?? [];
-    const zones = [...new Set([...featured, ...ids])].filter(supportedZone);
-    const region = ids[0].split("/")[0];
-    return { code, name: names.of(code), zones, region };
-  }).filter(country => country.zones.length).sort((a, b) =>
-    rank(countryPriority, a.code) - rank(countryPriority, b.code) ||
-    rank(regionPriority, a.region) - rank(regionPriority, b.region) ||
-    a.name.localeCompare(b.name, "en"));
+  return Object.entries(table).map(([name, entries]) => ({
+    name,
+    zones: entries.map(entry => {
+      const zone = supportedZone(entry.zone) || entry.zones.find(supportedZone);
+      if (!zone) return null;
+      const label = entry.name || zoneTitle(zone);
+      const keywords = [name, label, ...entry.cities, ...entry.zones,
+        ...entry.countries.map(code => names.of(code)), ...entry.countries].join(" ");
+      return { zone, label, cities: entry.cities, aliases: entry.zones, keywords };
+    }).filter(Boolean),
+  }));
 }
 
 function searchText(text) {
@@ -73,20 +58,36 @@ function initializeZonePicker(picker) {
   const value = picker.querySelector("#tipoff-settings-zone");
   const search = picker.querySelector("#tipoff-zone-search");
   const results = picker.querySelector("#tipoff-zone-results");
-  let countries;
-  let request;
+  let groups;
+  const request = fetch("/tipoff/time-zones.json?v=20261110-02", { signal: AbortSignal.timeout(5000) })
+    .then(response => {
+      if (!response.ok) throw new Error("Time zone list unavailable");
+      return response.json();
+    }).then(timeZoneGroups).catch(() => [{
+      name: "Time zones",
+      zones: (Intl.supportedValuesOf?.("timeZone") ?? [Intl.DateTimeFormat().resolvedOptions().timeZone])
+        .map(zone => ({ zone, label: zoneTitle(zone), cities: [zoneLocation(zone)], aliases: [zone], keywords: zone })),
+    }]);
 
   function select(zone) {
     value.value = zone;
-    selectedLabel.textContent = zone ? zoneName(zone) : deviceZoneLabel;
+    const matching = groups?.flatMap(group => group.zones).find(entry => entry.aliases.includes(zone));
+    selectedLabel.textContent = zone ? matching?.label ?? zoneTitle(zone) : deviceZoneLabel;
   }
 
-  function option(zone, label) {
+  function option({ zone, label, cities = [], aliases = [zone] }) {
     const button = document.createElement("button");
     button.type = "button";
     button.className = "tipoff-zone-option";
-    button.setAttribute("aria-pressed", String(zone === value.value));
-    button.textContent = label;
+    button.setAttribute("aria-pressed", String(aliases.includes(value.value)));
+    const title = document.createElement("span");
+    title.textContent = label;
+    button.append(title);
+    if (cities.length) {
+      const examples = document.createElement("small");
+      examples.textContent = cities.join(", ");
+      button.append(examples);
+    }
     button.addEventListener("click", () => {
       select(zone);
       picker.open = false;
@@ -99,12 +100,12 @@ function initializeZonePicker(picker) {
     const section = document.createElement("section");
     const heading = document.createElement("h3");
     heading.textContent = name;
-    section.append(heading, ...zones.slice(0, showAll ? zones.length : 7).map(zone => option(zone, zoneName(zone))));
+    section.append(heading, ...zones.slice(0, showAll ? zones.length : 7).map(option));
     if (!showAll && zones.length > 7) {
       const more = document.createElement("details");
       const label = document.createElement("summary");
       label.textContent = `Show ${zones.length - 7} more`;
-      more.append(label, ...zones.slice(7).map(zone => option(zone, zoneName(zone))));
+      more.append(label, ...zones.slice(7).map(option));
       section.append(more);
     }
     return section;
@@ -114,18 +115,18 @@ function initializeZonePicker(picker) {
     const terms = searchText(search.value.trim()).split(/\s+/).filter(Boolean);
     const matches = text => terms.every(term => searchText(text).includes(term));
     const nodes = [];
-    if (matches(deviceZoneLabel)) nodes.push(option("", deviceZoneLabel));
-    for (const { code, name, zones, region } of countries ?? []) {
-      const visible = zones.filter(zone => matches([name, code, region, zoneName(zone), zone].join(" ")));
+    if (matches(deviceZoneLabel)) nodes.push(option({ zone: "", label: deviceZoneLabel }));
+    for (const { name, zones } of groups ?? []) {
+      const visible = zones.filter(zone => matches(zone.keywords));
       if (visible.length) nodes.push(group(name, visible, terms.length > 0));
     }
-    if (countries && matches("UTC Coordinated Universal Time")) {
-      nodes.push(group("Other", ["UTC"], true));
+    if (groups && matches("UTC Coordinated Universal Time")) {
+      nodes.push(group("Other", [{ zone: "UTC", label: utcZoneLabel }], true));
     }
-    if (!nodes.length || !countries) {
+    if (!nodes.length || !groups) {
       const status = document.createElement("p");
       status.setAttribute("role", "status");
-      status.textContent = countries ? "No matching time zones." : "Loading time zones…";
+      status.textContent = groups ? "No matching time zones." : "Loading time zones…";
       nodes.push(status);
     }
     results.replaceChildren(...nodes);
@@ -138,21 +139,15 @@ function initializeZonePicker(picker) {
     event.preventDefault();
     results.querySelector(".tipoff-zone-option")?.focus();
   });
-  picker.addEventListener("toggle", async () => {
+  picker.addEventListener("toggle", () => {
     if (!picker.open) return;
     search.value = "";
     render();
     search.focus({ preventScroll: true });
-    if (countries) return;
-    request ??= fetch("/tipoff/time-zones.json?v=20261110-01", { signal: AbortSignal.timeout(5000) })
-      .then(response => {
-        if (!response.ok) throw new Error("Time zone list unavailable");
-        return response.json();
-      }).then(timeZoneCountries).catch(() => [{
-        code: "", name: "Time zones", region: "",
-        zones: Intl.supportedValuesOf?.("timeZone") ?? [Intl.DateTimeFormat().resolvedOptions().timeZone],
-      }]);
-    countries = await request;
+  });
+  request.then(data => {
+    groups = data;
+    select(value.value);
     if (picker.open) render();
   });
   picker.addEventListener("keydown", event => {

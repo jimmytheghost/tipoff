@@ -1002,10 +1002,9 @@ ul.tipoff-inline-broadcasts {
   cursor: pointer;
 }
 .tipoff-zone-option {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.125rem 0.5rem;
   width: 100%;
   min-height: 2rem;
   padding: 0.375rem 0.625rem;
@@ -1017,10 +1016,18 @@ ul.tipoff-inline-broadcasts {
   text-align: left;
   cursor: pointer;
 }
+.tipoff-zone-option small {
+  grid-column: 1;
+  color: var(--muted);
+  font-size: 0.6875rem;
+  line-height: 1.35;
+}
 .tipoff-zone-option:hover,
 .tipoff-zone-option[aria-pressed="true"] { background: var(--raised); }
 .tipoff-zone-option[aria-pressed="true"]::after {
   content: "✓" / "";
+  grid-column: 2;
+  grid-row: 1;
   color: var(--accent);
 }
 #tipoff-preferences fieldset {

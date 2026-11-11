@@ -2,7 +2,7 @@
 
 ## Browser Settings and Google sign-in
 
-Implemented in Tipoff source and verified locally. The public guide uses a footer gear for **Settings**, optional Google sign-in, and the existing Schedule sources rows (provider, freshness, fallback/saved status, and matched Altitude freshness). The guide defaults to the device time zone and the four Colorado teams. The searchable time zone picker groups entries by country, starting with the United States, Canada, Mexico, and European countries. The team picker covers all five leagues. Signed-out saves use browser storage. Google accounts have private server storage and a 30-day browser session. Account settings take precedence on sign-in, and a first account save may be seeded with that browser’s guest choices.
+Implemented in Tipoff source and verified locally. The public guide uses a footer gear for **Settings**, optional Google sign-in, and the existing Schedule sources rows (provider, freshness, fallback/saved status, and matched Altitude freshness). The guide defaults to the device time zone and the four Colorado teams. The searchable picker groups locations with matching clock rules under named time zones with example cities. Sections start with the United States, Canada, and Mexico, then Europe. The team picker covers all five leagues. Signed-out saves use browser storage. Google accounts have private server storage and a 30-day browser session. Account settings take precedence on sign-in, and a first account save may be seeded with that browser’s guest choices.
 
 ### Website activation
 
@@ -12,7 +12,7 @@ Implemented in Tipoff source and verified locally. The public guide uses a foote
 - Preserve the private settings directory and configuration through releases and rollbacks. Include account preferences in private backups. The data directory holds hashed preference filenames, lock files, and private PHP sessions. For account deletion, remove matching account sessions and the preference record identified by the verified subject’s SHA-256 hash, with backups handled under the site’s retention procedures.
 - Verify an actual Google test-user sign-in, a guest visit, save, a fresh browser tab with the existing session, a second browser sign-in, sign-out and sign-in again, and public browsing during an account service failure. Verify production cookie flags, no-store headers and absence of shared cache hits, canonical routes, and the new privacy page’s link preview. Local fixture validation did not exercise Google consent or production.
 
-The time zone catalog is a snapshot of the public-domain IANA 2026f country-to-zone table. When updating it, use the country code and time zone identifier columns from the versioned source. The picker puts common zones first in the United States, Canada, and Mexico. [IANA 2026f zone.tab](https://data.iana.org/time-zones/tzdb-2026f/zone.tab)
+The catalog is generated from IANA 2026f. Unpack the versioned data and run `python3 scripts/update-web-time-zones.py /path/to/unpacked/tzdata 2026-11-10 > web/time-zones.json` with `zic` and `zdump` available. The generator groups matching UTC offset transitions from the supplied date through 2100 within each geographic section. It uses representative IANA identifiers for new selections and the catalog's member identifiers to display existing choices without migrating their stored values. [IANA time zone release data](https://data.iana.org/time-zones/releases/tzdata2026f.tar.gz)
 
 ### Local account checks
 

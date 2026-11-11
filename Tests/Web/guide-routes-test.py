@@ -67,8 +67,13 @@ try:
     status, headers, body = get('/tipoff/time-zones.json')
     zones = json.loads(body)
     assert status == 200 and headers['Content-Type'] == 'application/json'
-    assert 'America/Denver' in zones['US'] and 'America/Toronto' in zones['CA']
-    assert 'America/Mexico_City' in zones['MX'] and 'Europe/Paris' in zones['FR']
+    north_america = {entry['zone']: entry for entry in zones['United States, Canada & Mexico']}
+    assert 'America/Toronto' in north_america['America/New_York']['zones']
+    assert 'America/Detroit' in north_america['America/New_York']['zones']
+    assert 'America/Phoenix' not in north_america['America/Denver']['zones']
+    assert 'America/Mexico_City' in north_america
+    europe = {entry['zone']: entry for entry in zones['Europe']}
+    assert {'Europe/Berlin', 'Europe/Rome'} <= set(europe['Europe/Paris']['zones'])
     status, _, body = get('/tipoff/privacy')
     assert status == 200 and b'content="https://www.jimmyweber.com/tipoff/privacy"' in body
     assert get('/tipoff/account')[0] == 503
