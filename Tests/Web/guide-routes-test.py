@@ -64,6 +64,11 @@ try:
     assert status == 200 and headers['Content-Type'] == 'application/json'
     assert {league: len(teams) for league, teams in json.loads(body).items()} == {
         'nba': 30, 'nfl': 32, 'wnba': 15, 'nhl': 32, 'mlb': 30}
+    status, headers, body = get('/tipoff/time-zones.json')
+    zones = json.loads(body)
+    assert status == 200 and headers['Content-Type'] == 'application/json'
+    assert 'America/Denver' in zones['US'] and 'America/Toronto' in zones['CA']
+    assert 'America/Mexico_City' in zones['MX'] and 'Europe/Paris' in zones['FR']
     status, _, body = get('/tipoff/privacy')
     assert status == 200 and b'content="https://www.jimmyweber.com/tipoff/privacy"' in body
     assert get('/tipoff/account')[0] == 503

@@ -21,6 +21,151 @@ function supportedZone(zone) {
   }
 }
 
+const deviceZoneLabel = "Use device time zone";
+const countryPriority = ["US", "CA", "MX", "GB", "FR", "DE", "ES", "IT"];
+const regionPriority = ["Europe", "America", "Australia", "Asia", "Africa", "Pacific", "Atlantic", "Indian", "Antarctica"];
+const usZones = new Map([
+  ["America/New_York", "Eastern"],
+  ["America/Chicago", "Central"],
+  ["America/Denver", "Mountain"],
+  ["America/Los_Angeles", "Pacific"],
+  ["America/Phoenix", "Arizona"],
+  ["America/Anchorage", "Alaska"],
+  ["Pacific/Honolulu", "Hawaii"],
+]);
+
+const featuredZones = {
+  US: [...usZones.keys()],
+  CA: ["America/Toronto", "America/Vancouver", "America/Edmonton", "America/Regina",
+    "America/Winnipeg", "America/Halifax", "America/St_Johns"],
+  MX: ["America/Mexico_City", "America/Cancun", "America/Tijuana", "America/Monterrey",
+    "America/Merida", "America/Chihuahua", "America/Hermosillo"],
+};
+
+function zoneName(zone) {
+  const [, ...parts] = zone.split("/");
+  const location = parts.reverse().join(", ").replaceAll("_", " ") || zone;
+  const region = usZones.get(zone);
+  return region ? `${region} (${location})` : location;
+}
+
+function timeZoneCountries(table) {
+  const names = new Intl.DisplayNames(["en"], { type: "region" });
+  const rank = (order, key) => order.includes(key) ? order.indexOf(key) : order.length;
+  return Object.entries(table).map(([code, ids]) => {
+    const featured = featuredZones[code] ?? [];
+    const zones = [...new Set([...featured, ...ids])].filter(supportedZone);
+    const region = ids[0].split("/")[0];
+    return { code, name: names.of(code), zones, region };
+  }).filter(country => country.zones.length).sort((a, b) =>
+    rank(countryPriority, a.code) - rank(countryPriority, b.code) ||
+    rank(regionPriority, a.region) - rank(regionPriority, b.region) ||
+    a.name.localeCompare(b.name, "en"));
+}
+
+function searchText(text) {
+  return text.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase();
+}
+
+function initializeZonePicker(picker) {
+  const summary = picker.querySelector("summary");
+  const selectedLabel = picker.querySelector("#tipoff-zone-current");
+  const value = picker.querySelector("#tipoff-settings-zone");
+  const search = picker.querySelector("#tipoff-zone-search");
+  const results = picker.querySelector("#tipoff-zone-results");
+  let countries;
+  let request;
+
+  function select(zone) {
+    value.value = zone;
+    selectedLabel.textContent = zone ? zoneName(zone) : deviceZoneLabel;
+  }
+
+  function option(zone, label) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "tipoff-zone-option";
+    button.setAttribute("aria-pressed", String(zone === value.value));
+    button.textContent = label;
+    button.addEventListener("click", () => {
+      select(zone);
+      picker.open = false;
+      summary.focus({ preventScroll: true });
+    });
+    return button;
+  }
+
+  function group(name, zones, showAll) {
+    const section = document.createElement("section");
+    const heading = document.createElement("h3");
+    heading.textContent = name;
+    section.append(heading, ...zones.slice(0, showAll ? zones.length : 7).map(zone => option(zone, zoneName(zone))));
+    if (!showAll && zones.length > 7) {
+      const more = document.createElement("details");
+      const label = document.createElement("summary");
+      label.textContent = `Show ${zones.length - 7} more`;
+      more.append(label, ...zones.slice(7).map(zone => option(zone, zoneName(zone))));
+      section.append(more);
+    }
+    return section;
+  }
+
+  function render() {
+    const terms = searchText(search.value.trim()).split(/\s+/).filter(Boolean);
+    const matches = text => terms.every(term => searchText(text).includes(term));
+    const nodes = [];
+    if (matches(deviceZoneLabel)) nodes.push(option("", deviceZoneLabel));
+    for (const { code, name, zones, region } of countries ?? []) {
+      const visible = zones.filter(zone => matches([name, code, region, zoneName(zone), zone].join(" ")));
+      if (visible.length) nodes.push(group(name, visible, terms.length > 0));
+    }
+    if (countries && matches("UTC Coordinated Universal Time")) {
+      nodes.push(group("Other", ["UTC"], true));
+    }
+    if (!nodes.length || !countries) {
+      const status = document.createElement("p");
+      status.setAttribute("role", "status");
+      status.textContent = countries ? "No matching time zones." : "Loading time zones…";
+      nodes.push(status);
+    }
+    results.replaceChildren(...nodes);
+    results.scrollTop = 0;
+  }
+
+  search.addEventListener("input", render);
+  search.addEventListener("keydown", event => {
+    if (event.key !== "ArrowDown" && event.key !== "Enter") return;
+    event.preventDefault();
+    results.querySelector(".tipoff-zone-option")?.focus();
+  });
+  picker.addEventListener("toggle", async () => {
+    if (!picker.open) return;
+    search.value = "";
+    render();
+    search.focus({ preventScroll: true });
+    if (countries) return;
+    request ??= fetch("/tipoff/time-zones.json?v=20261110-01", { signal: AbortSignal.timeout(5000) })
+      .then(response => {
+        if (!response.ok) throw new Error("Time zone list unavailable");
+        return response.json();
+      }).then(timeZoneCountries).catch(() => [{
+        code: "", name: "Time zones", region: "",
+        zones: Intl.supportedValuesOf?.("timeZone") ?? [Intl.DateTimeFormat().resolvedOptions().timeZone],
+      }]);
+    countries = await request;
+    if (picker.open) render();
+  });
+  picker.addEventListener("keydown", event => {
+    if (event.key === "Escape" && picker.open) {
+      event.preventDefault();
+      event.stopPropagation();
+      picker.open = false;
+      summary.focus({ preventScroll: true });
+    }
+  });
+  return { current: () => value.value, select, close: () => { picker.open = false; } };
+}
+
 async function accountRequest({ body, csrf, challenge = false, timeout = 12000 } = {}) {
   const response = await fetch(accountUrl + (challenge ? "?signin=1" : ""), {
     credentials: "same-origin",
@@ -68,9 +213,10 @@ function loadGoogle() {
 
 export function initializeSettings(applyPreferences, defaultTeamIds) {
   const form = document.querySelector("#tipoff-preferences");
-  if (!form) return;
+  const picker = document.querySelector("#tipoff-zone-picker");
+  if (!form || !picker) return;
   const defaultPreferences = { timeZone: "", teams: defaultTeamIds };
-  const zone = document.querySelector("#tipoff-settings-zone");
+  const zone = initializeZonePicker(picker);
   const choices = document.querySelector("#tipoff-team-options");
   const account = document.querySelector("#tipoff-account-label");
   const signOut = document.querySelector("#tipoff-sign-out");
@@ -107,10 +253,7 @@ export function initializeSettings(applyPreferences, defaultTeamIds) {
 
   function showPreferences(preferences) {
     const value = valid(preferences ?? defaultPreferences);
-    if (value.timeZone && !Array.from(zone.options).some(option => option.value === value.timeZone)) {
-      zone.add(new Option(value.timeZone.replaceAll("_", " "), value.timeZone));
-    }
-    zone.value = value.timeZone;
+    zone.select(value.timeZone);
     const selected = new Set(value.teams);
     for (const [id, checkbox] of checkboxes) checkbox.checked = selected.has(id);
     updateTeamCounts();
@@ -127,6 +270,7 @@ export function initializeSettings(applyPreferences, defaultTeamIds) {
 
   function setBusy(value) {
     busy = value;
+    if (value) zone.close();
     signOut.disabled = value;
     for (const control of form.elements) control.disabled = value;
   }
@@ -187,9 +331,6 @@ export function initializeSettings(applyPreferences, defaultTeamIds) {
     .then(([teams, initialSession]) => {
       catalog = teams;
       session = initialSession;
-      const zones = new Set(["UTC", ...(Intl.supportedValuesOf?.("timeZone") ?? []),
-        Intl.DateTimeFormat().resolvedOptions().timeZone]);
-      for (const value of [...zones].sort()) zone.add(new Option(value.replaceAll("_", " "), value));
       for (const [league, clubs] of Object.entries(catalog)) {
         const group = document.createElement("details");
         const label = document.createElement("summary");
@@ -224,7 +365,8 @@ export function initializeSettings(applyPreferences, defaultTeamIds) {
     });
 
   panel.addEventListener("toggle", async () => {
-    if (panel.open && await ready && panel.open && session) void showGoogleButton();
+    if (!panel.open) zone.close();
+    else if (await ready && panel.open && session) void showGoogleButton();
   });
   retry.addEventListener("click", () => void showGoogleButton());
   signOut.addEventListener("click", () => void mutate({ action: "logout" }));
@@ -232,7 +374,7 @@ export function initializeSettings(applyPreferences, defaultTeamIds) {
     event.preventDefault();
     if (busy) return;
     const teams = [...checkboxes].filter(([, checkbox]) => checkbox.checked).map(([id]) => id);
-    const preferences = valid({ timeZone: zone.value, teams });
+    const preferences = valid({ timeZone: zone.current(), teams });
     if (session?.signedIn) {
       void mutate({ action: "save", preferences });
       return;

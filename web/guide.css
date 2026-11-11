@@ -936,20 +936,92 @@ ul.tipoff-inline-broadcasts {
   margin-top: 1rem;
 }
 #tipoff-preferences > button { justify-self: start; }
-#tipoff-preferences > label,
+#tipoff-zone-label,
 #tipoff-preferences legend {
   color: var(--ink);
   font-weight: 600;
 }
-#tipoff-preferences select {
-  width: 100%;
-  min-height: 2.5rem;
-  padding: 0.375rem 0.5rem;
+#tipoff-zone-picker {
+  min-width: 0;
   border: 1px solid var(--line);
   border-radius: 0.25rem;
   background: var(--surface);
+}
+#tipoff-zone-picker > summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.5rem;
+  padding: 0.375rem 0.625rem;
+  color: var(--ink);
+  cursor: pointer;
+}
+#tipoff-zone-picker > summary::-webkit-details-marker { display: none; }
+#tipoff-zone-picker > summary::after {
+  content: "";
+  width: 0.4rem;
+  height: 0.4rem;
+  margin-right: 0.125rem;
+  border-right: 1px solid;
+  border-bottom: 1px solid;
+  transform: rotate(45deg);
+}
+#tipoff-zone-picker[open] > summary::after { transform: rotate(225deg); }
+#tipoff-zone-search {
+  width: calc(100% - 1rem);
+  min-height: 2.25rem;
+  margin: 0 0.5rem 0.375rem;
+  padding: 0.375rem 0.625rem;
+  border: 1px solid var(--line);
+  border-radius: 0.25rem;
+  background: var(--raised);
   color: var(--ink);
   font: inherit;
+}
+#tipoff-zone-results {
+  max-height: min(17rem, 42dvh);
+  overflow-y: auto;
+  padding: 0 0.5rem 0.5rem;
+}
+#tipoff-zone-results section {
+  border-top: 1px solid var(--line);
+  margin-top: 0.375rem;
+  padding-top: 0.375rem;
+}
+#tipoff-zone-results h3 {
+  margin: 0;
+  padding: 0.125rem 0.625rem;
+  color: var(--muted);
+  font-size: 0.6875rem;
+  font-weight: 500;
+}
+#tipoff-zone-results details summary {
+  min-height: 2rem;
+  padding: 0.375rem 0.625rem;
+  cursor: pointer;
+}
+.tipoff-zone-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 2rem;
+  padding: 0.375rem 0.625rem;
+  border: 0;
+  border-radius: 0.25rem;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.tipoff-zone-option:hover,
+.tipoff-zone-option[aria-pressed="true"] { background: var(--raised); }
+.tipoff-zone-option[aria-pressed="true"]::after {
+  content: "✓" / "";
+  color: var(--accent);
 }
 #tipoff-preferences fieldset {
   min-width: 0;

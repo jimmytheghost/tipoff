@@ -1,5 +1,10 @@
 # Validation
 
+## Country-grouped time zone picker — November 10, 2026
+
+- **22 Chromium checks** passed at 320 and 1280 px. They covered country order, common U.S. options, muted headings and separators, opening additional zones, accent-insensitive search, an empty search, focus on selection and Escape, and saving and restoring the selected zone.
+- **106 JavaScript cases**, **26 local route checks**, and **58 Swift tests** passed. macOS packaging and signature verification passed. Live `TipoffCheck 2026-11-10` returned **6 NBA.com games**. Browser checks used fixture schedules. Google consent and production publishing were outside this preview.
+
 ## Browser Settings and Google sign-in — November 10, 2026
 
 - **106 JavaScript cases**, **25 local route checks**, **28 account integration scenarios** on PHP 8.1.34, **12 PHP schedule runtime scenarios**, and **7 schedule cache integration tests** passed. Account checks covered verification failures, CSRF and origin checks, session and cookie expiry, rotation, account isolation, saving and restoring settings, and concurrent writes.

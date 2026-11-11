@@ -22,8 +22,8 @@
   <meta name="twitter:description" content="Game times and broadcast listings for the NBA, NFL, WNBA, NHL, and MLB.">
   <meta name="twitter:image" content="https://www.jimmyweber.com/assets/img/projects/tipoff-banner.png">
   <meta name="twitter:image:alt" content="The Tipoff name and basketball icon on a white background">
-  <link rel="stylesheet" href="/tipoff/guide.css?v=20261110-04">
-  <script type="module" src="/tipoff/guide.js?v=20261110-03"></script>
+  <link rel="stylesheet" href="/tipoff/guide.css?v=20261110-05">
+  <script type="module" src="/tipoff/guide.js?v=20261110-04"></script>
 </head>
 <body class="tipoff-flat">
   <header class="tipoff-header">
@@ -118,10 +118,14 @@
             <button id="tipoff-sign-out" class="button" type="button" hidden>Sign out</button>
           </div>
           <form id="tipoff-preferences" hidden>
-            <label for="tipoff-settings-zone">Time zone</label>
-            <select id="tipoff-settings-zone" name="timeZone">
-              <option value="">Use device time zone</option>
-            </select>
+            <span id="tipoff-zone-label">Time zone</span>
+            <details id="tipoff-zone-picker">
+              <summary aria-labelledby="tipoff-zone-label tipoff-zone-current"><span id="tipoff-zone-current">Use device time zone</span></summary>
+              <input id="tipoff-settings-zone" name="timeZone" type="hidden">
+              <label class="tipoff-visually-hidden" for="tipoff-zone-search">Search time zones</label>
+              <input id="tipoff-zone-search" type="search" placeholder="Search by city or country" autocomplete="off">
+              <div id="tipoff-zone-results"></div>
+            </details>
             <fieldset>
               <legend>Teams to follow</legend>
               <div id="tipoff-team-options"></div>
