@@ -1,5 +1,12 @@
 # Validation
 
+## Tomorrow typography release — November 10, 2026
+
+Published `tipoff-web-tomorrow-20261110-01` with stylesheet version `20261110-03`. The release includes five font files, two licenses, the stylesheet, and the guide HTML. The font files were installed before the stylesheet and page. The basketball artwork and original Barlow Condensed wordmark retain their approved appearance.
+
+100 JavaScript cases and 21 local route checks passed. Nine installed-file hashes, 16 live HTTP assertions, and eight browser and crawler checks passed. Live checks at 390 and 1280 px confirmed Tomorrow team names at 14 and 15 px respectively, an uppercase AVALANCHE heading, and no horizontal overflow. Screenshots: `/tmp/tipoff-tomorrow-live-390.jpg` and `/tmp/tipoff-tomorrow-live-1280.jpg`. Native tests and Messages rendering were outside this web typography check. The frozen release includes a guarded rollback.
+
+
 ## Tomorrow typography preview — November 10, 2026
 
 100 JavaScript cases and 21 local route checks passed, including five font-file responses. The browser rendered the local Tomorrow faces and original Barlow Condensed wordmark. Layout checks at 320, 390, and 1280 px showed no horizontal overflow. At 390 px, the calendar opened with Tomorrow and dismissed with Escape. No native tests ran for this local web presentation preview. After increasing team-name size and reducing the weight to 500, 100 JavaScript cases passed again. The visible names fit or wrapped at 320, 390, and 1280 px without horizontal overflow.
