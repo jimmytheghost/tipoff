@@ -47,13 +47,15 @@ public static partial class FeedDecoder
                 ("homeRadioBroadcasters", "Home radio"), ("awayRadioBroadcasters", "Away radio"), ("subscriptionBroadcasters", "Subscription") };
             foreach (var (key, category) in categories)
             {
-                if (!groups.TryGetProperty(key, out var list) || list.ValueKind != JsonValueKind.Array) continue;
+                if (!groups.TryGetProperty(key, out var list)) continue;
+                if (list.ValueKind != JsonValueKind.Array) throw new FeedException("NBA.com returned malformed broadcasters.");
                 foreach (var item in list.EnumerateArray())
                 {
                     var name = Text(item, "broadcasterDisplay");
                     if (name.Length == 0) name = Text(item, "broadcasterDisplayName");
                     if (name.Length == 0) name = Text(item, "broadcasterName");
-                    if (name.Length > 0) broadcasts.Add(new(name, category));
+                    if (name.Length == 0) throw new FeedException("NBA.com omitted a broadcaster name.");
+                    broadcasts.Add(new(name, category));
                 }
             }
         }
@@ -132,9 +134,12 @@ public static partial class FeedDecoder
         if (result.Count == 0 && competition.TryGetProperty("broadcasts", out var older) && older.ValueKind == JsonValueKind.Array)
         foreach (var item in older.EnumerateArray())
         {
+            var region = Text(item, "region");
+            if (region.Length > 0 && !region.Equals("us", StringComparison.OrdinalIgnoreCase)) continue;
+            var kind = item.TryGetProperty("type", out var mediaType) ? Text(mediaType, "shortName") : "";
             if (!item.TryGetProperty("names", out var names) || names.ValueKind != JsonValueKind.Array) continue;
             var market = Text(item, "market");
-            foreach (var name in names.EnumerateArray()) if (name.GetString() is { Length: > 0 } value) result.Add(new(value, market.Length == 0 ? "TV / streaming" : CultureInfo.InvariantCulture.TextInfo.ToTitleCase(market)));
+            foreach (var name in names.EnumerateArray()) if (name.GetString() is { Length: > 0 } value) result.Add(new(value, kind.Equals("radio", StringComparison.OrdinalIgnoreCase) ? "Radio" : market.Length == 0 ? "TV / streaming" : CultureInfo.InvariantCulture.TextInfo.ToTitleCase(market)));
         }
         return Unique(result);
     }

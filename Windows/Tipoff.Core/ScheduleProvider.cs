@@ -36,7 +36,7 @@ public sealed class ScheduleProvider : IScheduleLoading, IDisposable
                 source = "NBA.com";
                 limited = false;
             }
-            catch (OperationCanceledException) { throw; }
+            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested) { throw; }
             catch
             {
                 games = await FetchEspnDays(sourceDays, guide, cancellationToken);
@@ -61,7 +61,7 @@ public sealed class ScheduleProvider : IScheduleLoading, IDisposable
                 source = guide == ScheduleGuide.Nhl ? "NHL.com" : "MLB.com";
                 limited = guide == ScheduleGuide.Nhl;
             }
-            catch (OperationCanceledException) { throw; }
+            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested) { throw; }
             catch
             {
                 games = await FetchEspnDays(sourceDays, guide, cancellationToken);

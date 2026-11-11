@@ -166,3 +166,5 @@ The check writes a snapshot to `/tmp/tipoff-preview.png.json`; the renderer uses
 ## License
 
 The code is [MIT licensed](LICENSE): use it, change it, and share it. It’s provided as-is. Third-party schedule data, names, and marks remain with their respective owners; see [NOTICE](NOTICE). Tipoff is not affiliated with or endorsed by the NBA, NFL, WNBA, NHL, MLB, ESPN, Altitude, or any team or broadcaster.
+
+Background reliability: malformed NBA broadcaster structures are rejected; Windows source timeouts can use fallback sources and saved Altitude listings. Windows refresh eligibility is checked each minute, with refresh after wake and automatic date rollover while following today. See [validation](docs/VALIDATION.md) for platform verification limits.

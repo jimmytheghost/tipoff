@@ -17,6 +17,7 @@ public sealed class MainViewModel : INotifyPropertyChanged, IDisposable
     private bool cached;
     private string? error;
     private DateTimeOffset? lastAttempt;
+    private bool followsToday = true;
 
     public event PropertyChangedEventHandler? PropertyChanged;
     public ObservableCollection<GameCard> Games { get; } = [];
@@ -38,12 +39,19 @@ public sealed class MainViewModel : INotifyPropertyChanged, IDisposable
     public string Message => BuildMessage();
     public Visibility MessageVisibility => Message.Length == 0 ? Visibility.Collapsed : Visibility.Visible;
 
-    public async Task OpenedAsync()
+    public async Task OpenedAsync(bool force = false)
     {
+        TimeZoneInfo.ClearCachedData();
         var currentZone = TimeZoneInfo.Local;
         var today = DateOnly.FromDateTime(DateTime.Now);
-        if (currentZone.Id != TimeZone.Id) { TimeZone = currentZone; SelectedDate = today; snapshot = null; }
-        if (lastAttempt is null || DateTimeOffset.UtcNow - lastAttempt > TimeSpan.FromMinutes(5)) await RefreshAsync();
+        if (currentZone.Id != TimeZone.Id || (followsToday && SelectedDate != today))
+        {
+            TimeZone = currentZone;
+            if (followsToday) SelectedDate = today;
+            snapshot = null;
+            lastAttempt = null;
+        }
+        if (force || lastAttempt is null || DateTimeOffset.UtcNow - lastAttempt > TimeSpan.FromMinutes(5)) await RefreshAsync();
         else UpdateRelativeTime();
     }
 
@@ -60,6 +68,7 @@ public sealed class MainViewModel : INotifyPropertyChanged, IDisposable
     public async Task MoveDayAsync(int offset)
     {
         SelectedDate = SelectedDate.AddDays(offset);
+        followsToday = SelectedDate == DateOnly.FromDateTime(DateTime.Now);
         snapshot = null;
         Games.Clear();
         NotifyAll();
@@ -75,6 +84,7 @@ public sealed class MainViewModel : INotifyPropertyChanged, IDisposable
             SelectedDate = today.AddDays(offset);
         }
         else SelectedDate = today;
+        followsToday = SelectedDate == today;
         snapshot = null;
         Games.Clear();
         NotifyAll();

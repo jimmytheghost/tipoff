@@ -675,3 +675,10 @@ Live verification repeated both November 7 (national headline hidden, revised em
 ## Portfolio publication — November 7, 2026
 
 Website-only publication verified the expanded portfolio at https://www.jimmyweber.com/pages/projects/tipoff/: 13 installed file hashes, 17 HTTP assertions, browser/crawler metadata and decoded 1200 × 630 PNG, and live desktop/mobile/dark-mode image/lightbox/video checks passed. Widths: 1440, 390, 325 px, with no horizontal overflow. Reviewed section-navigation removal and centered-video changes are included. Existing shared JS served valid text/javascript; corrected its initial check expectation without changing deployed code. Actual Messages rendering remains untested. Native app tests executed: 0; no app/provider/runtime source changed. See WEBSITE-HANDOFF.md for image provenance and public URLs.
+
+
+## Background reliability fixes — November 10, 2026
+
+NBA broadcaster fields now reject malformed structures and nameless entries rather than silently replacing working listings. Windows distinguishes caller cancellation from source timeouts, allowing ESPN fallback and saved Altitude recovery. Its older ESPN broadcast parser preserves radio classification and excludes explicitly non-US listings. Windows now checks refresh eligibility each minute, refreshes after resume, and follows today across midnight while retaining deliberately selected dates.
+
+Validation: 58 Swift tests passed (including a new malformed-broadcaster regression); macOS packaging and signature verification passed; live NBA TipoffCheck returned six games from NBA.com. Windows/.NET tests were not executed because the SDK is unavailable on this Mac. Windows timer/resume behavior still needs native verification. No front-end presentation changes. Website refresh behavior and server job bounding remain outstanding.

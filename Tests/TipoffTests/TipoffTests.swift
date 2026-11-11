@@ -163,3 +163,11 @@ private actor ControlledProvider: ScheduleLoading {
     let games = try FeedDecoder.nbaPage(Data(html.utf8), expectedDay: "2026-10-20")
     #expect(games.first?.notice == "Postponed")
 }
+
+
+@Test func malformedNBABroadcastersAreRejected() throws {
+    let game: [String: Any] = ["gameId": "test", "homeTeam": [:], "awayTeam": [:],
+        "gameDateEst": "2026-10-20", "broadcasters": "changed schema"]
+    let data = try JSONSerialization.data(withJSONObject: ["leagueSchedule": ["gameDates": [["games": [game]]]]])
+    #expect(throws: (any Error).self) { try FeedDecoder.nba(data) }
+}

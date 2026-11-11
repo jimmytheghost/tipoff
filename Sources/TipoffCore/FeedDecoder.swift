@@ -56,6 +56,7 @@ public enum FeedDecoder {
                 guard let home = row["homeTeam"] as? [String: Any], let away = row["awayTeam"] as? [String: Any],
                       let id = row["gameId"] as? String else { throw FeedError.invalid }
                 var broadcasts: [Broadcast] = []
+                if let value = row["broadcasters"], !(value is [String: Any]) { throw FeedError.invalid }
                 let groups = row["broadcasters"] as? [String: Any] ?? [:]
                 let categories = [
                     ("nationalBroadcasters", "National"), ("nationalTvBroadcasters", "National"), ("nationalOttBroadcasters", "Streaming"),
@@ -65,8 +66,10 @@ public enum FeedDecoder {
                     ("awayRadioBroadcasters", "Away radio"), ("subscriptionBroadcasters", "Subscription")
                 ]
                 for (key, category) in categories {
+                    if let value = groups[key], !(value is [[String: Any]]) { throw FeedError.invalid }
                     for b in groups[key] as? [[String: Any]] ?? [] {
                         let name = ["broadcasterDisplay", "broadcasterDisplayName", "broadcasterName"].map { text(b[$0]) }.first { !$0.isEmpty } ?? ""
+                        guard !name.isEmpty else { throw FeedError.invalid }
                         broadcasts.append(Broadcast(name: name, category: category))
                     }
                 }

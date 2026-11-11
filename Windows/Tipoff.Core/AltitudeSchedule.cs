@@ -215,10 +215,10 @@ public sealed class AltitudeProvider
                 File.Move(temporary, cachePath, true);
                 return new(schedule, null, false);
             }
-            catch (OperationCanceledException) { throw; }
+            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested) { throw; }
             catch { return new(schedule, "Couldn’t save Altitude’s offline listings.", false); }
         }
-        catch (OperationCanceledException) { throw; }
+        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested) { throw; }
         catch
         {
             try
@@ -226,7 +226,7 @@ public sealed class AltitudeProvider
                 var saved = JsonSerializer.Deserialize<AltitudeSchedule>(await File.ReadAllTextAsync(cachePath, cancellationToken), JsonOptions);
                 if (saved is not null) return new(saved, "Altitude refresh failed. Showing saved Altitude listings; check Details for their age.", true);
             }
-            catch (OperationCanceledException) { throw; }
+            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested) { throw; }
             catch { }
             return new(null, "Couldn’t check Altitude’s Nuggets listings. Other listings are still shown.", false);
         }

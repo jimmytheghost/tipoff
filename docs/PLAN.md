@@ -95,3 +95,10 @@ Implemented: Avalanche games lead the NHL list and Rockies games lead MLB, with 
 The repository includes source for both platforms and an older macOS-only, NBA-only Apple Silicon download (v0.2.0). This is a shared personal project, not a supported product roadmap.
 
 Do not add scores, standings, or live game telemetry to this product without an explicit change in direction.
+
+
+## Background reliability fixes — November 10, 2026
+
+NBA broadcaster fields now reject malformed structures and nameless entries rather than silently replacing working listings. Windows distinguishes caller cancellation from source timeouts, allowing ESPN fallback and saved Altitude recovery. Its older ESPN broadcast parser preserves radio classification and excludes explicitly non-US listings. Windows now checks refresh eligibility each minute, refreshes after resume, and follows today across midnight while retaining deliberately selected dates.
+
+Validation: 58 Swift tests passed (including a new malformed-broadcaster regression); macOS packaging and signature verification passed; live NBA TipoffCheck returned six games from NBA.com. Windows/.NET tests were not executed because the SDK is unavailable on this Mac. Windows timer/resume behavior still needs native verification. No front-end presentation changes. Website refresh behavior and server job bounding remain outstanding.

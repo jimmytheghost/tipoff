@@ -18,10 +18,17 @@ public partial class MainWindow : Window, IDisposable
         InitializeComponent();
         DataContext = viewModel;
         clock = new DispatcherTimer { Interval = TimeSpan.FromMinutes(1) };
-        clock.Tick += (_, _) => viewModel.UpdateRelativeTime();
+        clock.Tick += async (_, _) => await viewModel.OpenedAsync();
+        Microsoft.Win32.SystemEvents.PowerModeChanged += PowerModeChanged;
         clock.Start();
         Loaded += (_, _) => UpdateGuideButtons();
         SizeChanged += (_, _) => { if (IsVisible) PositionNearTaskbar(); };
+    }
+
+    private void PowerModeChanged(object sender, Microsoft.Win32.PowerModeChangedEventArgs e)
+    {
+        if (e.Mode == Microsoft.Win32.PowerModes.Resume)
+            Dispatcher.BeginInvoke(new Action(async () => { await viewModel.OpenedAsync(force: true); }));
     }
 
     public Task OpenedAsync() => viewModel.OpenedAsync();
@@ -92,6 +99,7 @@ public partial class MainWindow : Window, IDisposable
     public void Dispose()
     {
         clock.Stop();
+        Microsoft.Win32.SystemEvents.PowerModeChanged -= PowerModeChanged;
         viewModel.Dispose();
     }
 }
