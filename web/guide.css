@@ -665,6 +665,8 @@ ul.tipoff-broadcasts {
   gap: 0.5rem;
 }
 
+#following .tipoff-header-name { text-transform: uppercase; }
+
 .tipoff-header-meta {
   display: inline-flex;
   align-items: center;

@@ -4,6 +4,8 @@
 
 100 JavaScript cases and 21 local route checks passed, including five font-file responses. The browser rendered the local Tomorrow faces and original Barlow Condensed wordmark. Layout checks at 320, 390, and 1280 px showed no horizontal overflow. At 390 px, the calendar opened with Tomorrow and dismissed with Escape. No native tests ran for this local web presentation preview. After increasing team-name size and reducing the weight to 500, 100 JavaScript cases passed again. The visible names fit or wrapped at 320, 390, and 1280 px without horizontal overflow.
 
+The local preview also showed the Avalanche heading in uppercase after the Following-only CSS adjustment. Browser and whitespace checks covered this styling change.
+
 ## Frontend release — November 10, 2026
 
 Published `tipoff-web-frontend-20261110-01`, with CSS and JavaScript version `20261110-02`. The release replaces the guide HTML, stylesheet, and JavaScript. Cached HTML can load the updated JavaScript during the transition. The schedule reader and cache were outside the release.
