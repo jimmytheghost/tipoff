@@ -2,7 +2,7 @@
 
 ## Tomorrow typography preview — November 10, 2026
 
-100 JavaScript cases and 21 local route checks passed, including five font-file responses. The browser rendered the local Tomorrow faces and original Barlow Condensed wordmark. Layout checks at 320, 390, and 1280 px showed no horizontal overflow. At 390 px, the calendar opened with Tomorrow and dismissed with Escape. No native tests ran for this local web presentation preview.
+100 JavaScript cases and 21 local route checks passed, including five font-file responses. The browser rendered the local Tomorrow faces and original Barlow Condensed wordmark. Layout checks at 320, 390, and 1280 px showed no horizontal overflow. At 390 px, the calendar opened with Tomorrow and dismissed with Escape. No native tests ran for this local web presentation preview. After increasing team-name size and reducing the weight to 500, 100 JavaScript cases passed again. The visible names fit or wrapped at 320, 390, and 1280 px without horizontal overflow.
 
 ## Frontend release — November 10, 2026
 

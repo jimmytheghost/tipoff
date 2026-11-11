@@ -455,8 +455,10 @@ a { color: var(--accent); }
   align-items: center;
   gap: var(--icon-gap);
   min-width: 0;
-  font-size: 0.875rem;
-  font-weight: 600;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
 }
 
 .tipoff-matchup-home {
@@ -753,7 +755,7 @@ ul.tipoff-inline-broadcasts {
 
 /* Keep the scheduled time beside the matchup, with room for network names below. */
 @media (max-width: 32rem) {
-  .tipoff-matchup { --icon-gap: 0.375rem; font-size: 0.8125rem; }
+  .tipoff-matchup { --icon-gap: 0.375rem; font-size: 0.875rem; }
   .tipoff-game-inline { grid-template-columns: minmax(0, 1fr) auto; }
   .tipoff-game-inline .tipoff-matchup { grid-column: 1; grid-row: 1; }
   .tipoff-game-inline .tipoff-start { grid-column: 2; grid-row: 1; }
