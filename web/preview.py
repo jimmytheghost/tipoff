@@ -22,6 +22,18 @@ PAGE_ASSETS = {
     "/assets/img/projects/tipoff-favicon.svg": "favicon.svg",
     "/assets/img/projects/tipoff-home-mark.svg": "home-mark.svg",
     "/pages/projects/tipoff/": "portfolio-preview.html",
+    **{
+        f"/assets/fonts/tipoff/{name}": f"fonts/{name}"
+        for name in (
+            "Tomorrow-Regular.ttf",
+            "Tomorrow-Medium.ttf",
+            "Tomorrow-SemiBold.ttf",
+            "Tomorrow-Bold.ttf",
+            "Tomorrow-OFL.txt",
+            "BarlowCondensed-ExtraBoldItalic.woff2",
+            "BarlowCondensed-OFL.txt",
+        )
+    },
 }
 
 

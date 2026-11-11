@@ -1,5 +1,7 @@
 # Tipoff · macOS & Windows
 
+The local Tomorrow typography preview is on `codex/tipoff-tomorrow-preview`. Run `scripts/preview-web.sh 8766` and open `http://127.0.0.1:8766/tipoff`. The page uses Tomorrow at 400, 500, 600, and 700, with the original Barlow Condensed ExtraBold Italic wordmark. The browser serves the licensed font files from `web/fonts/`. To publish this preview later, include those files under `assets/fonts/tipoff/` before publishing the versioned stylesheet and guide HTML.
+
 The browser guide puts broadcaster names below highlighted matchups at widths up to 32 rem. Shorter team names can wrap as needed. Refresh checks the selected day, and a notice above the schedule identifies saved or unavailable leagues. The footer shows original source timestamps.
 
 **Who’s playing, when, and where can I watch?** A small native macOS menu bar and Windows system-tray app for NBA, NFL, WNBA, NHL, and MLB broadcast listings. No scores.

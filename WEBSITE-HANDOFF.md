@@ -1,5 +1,7 @@
 # Tipoff website handoff
 
+The local Tomorrow typography preview is on `codex/tipoff-tomorrow-preview`. Run `scripts/preview-web.sh 8766` and open `http://127.0.0.1:8766/tipoff`. The page uses Tomorrow at 400, 500, 600, and 700, with the original Barlow Condensed ExtraBold Italic wordmark. The browser serves the licensed font files from `web/fonts/`. To publish this preview later, include those files under `assets/fonts/tipoff/` before publishing the versioned stylesheet and guide HTML.
+
 ## Frontend release — November 10, 2026
 
 Published `tipoff-web-frontend-20261110-01`, with CSS and JavaScript version `20261110-02`. The release replaces the guide HTML, stylesheet, and JavaScript. Cached HTML can load the updated JavaScript during the transition. The schedule reader and cache were outside the release.

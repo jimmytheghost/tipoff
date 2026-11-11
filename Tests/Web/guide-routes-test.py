@@ -53,6 +53,11 @@ try:
         assert json.loads(body) == {'sport':['nhl'], 'day':['2026-11-17'], 'zone':['America/Denver']}
     status, _, body = get('/pages/projects/tipoff/')
     assert status == 200 and b'href="/tipoff"' in body
+    for name in ('Tomorrow-Regular', 'Tomorrow-Medium', 'Tomorrow-SemiBold', 'Tomorrow-Bold'):
+        status, _, body = get(f'/assets/fonts/tipoff/{name}.ttf')
+        assert status == 200 and body.startswith(bytes((0, 1, 0, 0))), name
+    status, _, body = get('/assets/fonts/tipoff/BarlowCondensed-ExtraBoldItalic.woff2')
+    assert status == 200 and body.startswith(b'wOF2')
     assert get('/tipoff/unknown')[0] == 404
 finally:
     server.shutdown()

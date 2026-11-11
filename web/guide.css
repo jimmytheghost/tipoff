@@ -1,3 +1,44 @@
+@font-face {
+  font-family: "Tomorrow";
+  src: url("/assets/fonts/tipoff/Tomorrow-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Tomorrow";
+  src: url("/assets/fonts/tipoff/Tomorrow-Medium.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Tomorrow";
+  src: url("/assets/fonts/tipoff/Tomorrow-SemiBold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Tomorrow";
+  src: url("/assets/fonts/tipoff/Tomorrow-Bold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* This is the original Tipoff wordmark face. */
+@font-face {
+  font-family: "Barlow Condensed";
+  src: url("/assets/fonts/tipoff/BarlowCondensed-ExtraBoldItalic.woff2") format("woff2");
+  font-style: italic;
+  font-weight: 800;
+  font-display: swap;
+}
+
 :root {
   color-scheme: dark;
   --canvas: #0b111c;
@@ -9,8 +50,8 @@
   --muted: #aebbd0;
   --accent: #c8fa54;
   --icon-gap: 0.5rem;
-  --text: "Roboto", system-ui, sans-serif;
-  --heading: "Barlow Condensed", var(--text);
+  --text: "Tomorrow", system-ui, sans-serif;
+  --wordmark: "Barlow Condensed", system-ui, sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -59,7 +100,7 @@ a { color: var(--accent); }
   gap: 0.5rem;
   flex-shrink: 0;
   color: var(--accent);
-  font: italic 800 2.15rem/1 var(--heading);
+  font: italic 800 2.15rem/1 var(--wordmark);
   text-decoration: none;
   text-transform: uppercase;
 }
@@ -166,7 +207,7 @@ a { color: var(--accent); }
 
 .tipoff-calendar-header h3 {
   margin: 0;
-  font: 700 1rem/1.3 var(--text);
+  font: 600 1rem/1.3 var(--text);
   text-align: center;
 }
 
@@ -202,7 +243,7 @@ a { color: var(--accent); }
 .tipoff-calendar .tipoff-calendar-day[aria-selected="true"] {
   background: var(--accent);
   color: var(--canvas);
-  font-weight: 800;
+  font-weight: 700;
   opacity: 1;
 }
 
@@ -214,7 +255,7 @@ a { color: var(--accent); }
   border-top: 1px solid var(--line);
   border-radius: 0;
   color: var(--accent);
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .button {
@@ -227,7 +268,7 @@ a { color: var(--accent); }
   border-radius: 0.375rem;
   background: var(--surface);
   color: var(--ink);
-  font: 700 0.875rem/1 var(--text);
+  font: 600 0.875rem/1 var(--text);
   text-decoration: none;
   cursor: pointer;
 }
@@ -287,7 +328,7 @@ a { color: var(--accent); }
   padding-inline: 0.2rem;
   border: 0;
   background: transparent;
-  font: 700 1.1rem/1 var(--heading);
+  font: 600 1.1rem/1 var(--text);
   text-transform: uppercase;
 }
 
@@ -317,7 +358,7 @@ a { color: var(--accent); }
 }
 
 .tipoff-zone-label {
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
@@ -343,7 +384,7 @@ a { color: var(--accent); }
   border-radius: 0.4375rem 0.4375rem 0 0;
   box-shadow: inset 0 -1px 0 rgb(174 187 208 / 16%);
   background: var(--raised);
-  font: 700 1.55rem/1 var(--heading);
+  font: 700 1.1rem/1.2 var(--text);
   letter-spacing: 0.025em;
 }
 
@@ -378,7 +419,7 @@ a { color: var(--accent); }
 
 .tipoff-start {
   color: var(--accent);
-  font: 700 1.1rem/1.2 var(--heading);
+  font: 700 1rem/1.2 var(--text);
   text-align: right;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
@@ -415,7 +456,7 @@ a { color: var(--accent); }
   gap: var(--icon-gap);
   min-width: 0;
   font-size: 0.875rem;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .tipoff-matchup-home {
@@ -493,7 +534,7 @@ ul.tipoff-broadcasts {
   white-space: nowrap;
   color: var(--ink);
   font-size: 0.7rem;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .tipoff-pass .tipoff-station-tag {
@@ -519,7 +560,7 @@ ul.tipoff-broadcasts {
 .tipoff-summary h2,
 .tipoff-highlights-title {
   margin: 0;
-  font: 700 1.65rem/1.1 var(--heading);
+  font: 700 1.45rem/1.15 var(--text);
 }
 
 .tipoff-summary-groups {
@@ -549,7 +590,7 @@ ul.tipoff-broadcasts {
 
 @media (min-width: 44rem) {
   .tipoff-summary-groups {
-    grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
     align-items: start;
   }
 }
@@ -634,7 +675,7 @@ ul.tipoff-broadcasts {
 .tipoff-league-count,
 .tipoff-national-marker {
   color: var(--muted);
-  font: 800 0.65rem/1.2 var(--text);
+  font: 700 0.65rem/1.2 var(--text);
   text-transform: uppercase;
   white-space: nowrap;
 }
@@ -664,7 +705,7 @@ ul.tipoff-broadcasts {
   justify-content: space-between;
   min-height: 48px;
   padding-block: 0.5rem;
-  font: 700 1.65rem/1.1 var(--heading);
+  font: 700 1.45rem/1.15 var(--text);
   cursor: pointer;
   list-style: none;
 }
@@ -712,6 +753,7 @@ ul.tipoff-inline-broadcasts {
 
 /* Keep the scheduled time beside the matchup, with room for network names below. */
 @media (max-width: 32rem) {
+  .tipoff-matchup { --icon-gap: 0.375rem; font-size: 0.8125rem; }
   .tipoff-game-inline { grid-template-columns: minmax(0, 1fr) auto; }
   .tipoff-game-inline .tipoff-matchup { grid-column: 1; grid-row: 1; }
   .tipoff-game-inline .tipoff-start { grid-column: 2; grid-row: 1; }
@@ -732,7 +774,7 @@ ul.tipoff-inline-broadcasts {
 
 .tipoff-matchup-short .tipoff-team-short { white-space: normal; overflow-wrap: anywhere; }
 
-@media (max-width: 27rem) {
+@media (max-width: 31rem) {
   .tipoff-date { grid-template-columns: 44px minmax(0, 1fr) 44px; }
   .tipoff-date-actions { grid-column: 1 / -1; justify-content: center; }
 }
@@ -776,7 +818,7 @@ ul.tipoff-inline-broadcasts {
   gap: 0.625rem;
   margin: 0;
   color: var(--accent);
-  font: 700 0.625rem/1.4 var(--text);
+  font: 600 0.625rem/1.4 var(--text);
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -832,7 +874,7 @@ ul.tipoff-inline-broadcasts {
   flex: 1;
   min-width: 0;
   font-size: 0.625rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   text-align: right;
@@ -842,7 +884,7 @@ ul.tipoff-inline-broadcasts {
 #national-status {
   color: #727f91;
   font-size: 0.625rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
