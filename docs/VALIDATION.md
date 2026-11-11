@@ -1,5 +1,9 @@
 # Validation
 
+## Dark Google sign-in button — November 10, 2026
+
+Published the Google-provided dark outlined button in release `tipoff-web-google-button-20261110-01`. Release `tipoff-web-google-button-20261110-02` matched the embedded frame’s canvas to its document so the white margins disappeared. The live browser rendered the personalized dark button inside Settings with a 44 px frame. The releases passed **7** and **8** public HTTP checks respectively. **106 JavaScript cases**, **26 local route checks**, and **6 link-preview browser and crawler checks** passed. Live verification covered appearance and loading.
+
 ## Live Google sign-in activation — November 10, 2026
 
 Configured the dedicated Tipoff Web client for the production origin and saved the live homepage and privacy URLs in Google Cloud. Verified the real Google button rendered on the public site. Three production account checks passed for the signed-out response, the non-cacheable Google challenge and secure 30-day cookie, and rejection of an unauthenticated preferences save. A real user login and the signed-in save and reload remain for the user’s test.

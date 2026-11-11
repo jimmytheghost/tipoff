@@ -313,7 +313,7 @@ export function initializeSettings(applyPreferences, defaultTeamIds, { leagueMar
         },
       });
       googleButton.replaceChildren();
-      identity.renderButton(googleButton, { theme: "outline", size: "large" });
+      identity.renderButton(googleButton, { theme: "outline_dark", size: "large" });
     } catch {
       signInReady = false;
       googleButton.textContent = "";

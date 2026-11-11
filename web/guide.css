@@ -924,6 +924,8 @@ ul.tipoff-inline-broadcasts {
   color: var(--ink);
 }
 .tipoff-settings-panel p { margin: 0.5rem 0; }
+/* Match the embedded document’s canvas so its transparent margins stay transparent. */
+#tipoff-google-button iframe { color-scheme: light; }
 .tipoff-settings-panel [hidden] { display: none; }
 .tipoff-settings-panel .button {
   min-height: 2.5rem;
