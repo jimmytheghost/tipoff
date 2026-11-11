@@ -1,5 +1,9 @@
 # Validation
 
+## Browser Settings release — November 10, 2026
+
+Released the browser Settings, named time zones, team logo tiles, and privacy page at JimmyWeber.com. Verified nine installed file checksums, the five added Apache route rules, 11 live HTTP checks, and eight link-preview page and crawler checks. The public sitemap check uses the host published by the existing sitemap generator. In the live browser, all five sources loaded, Settings opened, and the NBA picker showed 30 logo tiles in its Eastern and Western columns. The private account backend passed PHP 8.1 syntax and permission checks. The account endpoint returned private, non-cacheable HTTP 503 while Google Auth setup awaits consent. No live Google account was authorized and Messages rendering was outside the preview checks.
+
 ## Conference and league team tiles — November 10, 2026
 
 - **26 Chromium checks** passed at 360 and 1280 px. Checks covered the two columns and full membership for all five leagues, rendered team and league logos, name fallback when artwork failed, keyboard and pointer selection, visible selected styling and counts, saving to Following, and restoring favorites after reload. Schedule responses used fixtures.
