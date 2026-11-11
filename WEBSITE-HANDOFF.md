@@ -1,5 +1,7 @@
 # Tipoff website handoff
 
+**Local preview.** The local frontend preview puts broadcaster names under highlighted matchups at up to 32 rem, keeps shorter team names visible and lets them wrap, adds Refresh for the selected day, and shows saved or unavailable leagues above the schedule. The footer still gives the original source timestamps. Run `scripts/preview-web.sh` on `codex/tipoff-frontend-preview`. Switch to `main` and reload to restore the baseline.
+
 Updated November 10, 2026. Status: browser guide and expanded portfolio page deployed. The current [Tipoff source](https://github.com/jimmytheghost/tipoff) ships native macOS and Windows apps.
 
 ## Portfolio expansion content package — November 7, 2026

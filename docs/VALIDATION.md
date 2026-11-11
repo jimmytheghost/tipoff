@@ -1,5 +1,9 @@
 # Validation
 
+## Local frontend preview — November 10, 2026
+
+100 JavaScript cases and 16 local route checks passed. Browser checks at 320, 390, and 1280 px covered visible network text, team names, and no horizontal overflow. Refresh retained a selected past date. Saved and unavailable notices were checked with three JavaScript cases. No native tests or production checks were run for the local web presentation change.
+
 ## Website background reliability — November 10, 2026
 
 Published `tipoff-web-reliability-20261110-01` (JavaScript version `20261110-01`) to https://www.jimmyweber.com/tipoff. Replaced only the guide JavaScript, HTML script version, PHP schedule runtime, and separately backed-up Linux TipoffCheck executable. Layout, CSS, artwork, routing, and live schedule caches were preserved.

@@ -1,5 +1,7 @@
 # Product plan
 
+**Local preview.** The local frontend preview puts broadcaster names under highlighted matchups at up to 32 rem, keeps shorter team names visible and lets them wrap, adds Refresh for the selected day, and shows saved or unavailable leagues above the schedule. The footer still gives the original source timestamps. Run `scripts/preview-web.sh` on `codex/tipoff-frontend-preview`. Switch to `main` and reload to restore the baseline.
+
 ## Website background reliability — November 10, 2026
 
 Published `tipoff-web-reliability-20261110-01` (JavaScript version `20261110-01`) to https://www.jimmyweber.com/tipoff. Replaced only the guide JavaScript, HTML script version, PHP schedule runtime, and separately backed-up Linux TipoffCheck executable. Layout, CSS, artwork, routing, and live schedule caches were preserved.

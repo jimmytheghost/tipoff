@@ -1,5 +1,7 @@
 # Tipoff · macOS & Windows
 
+**Local preview.** The local frontend preview puts broadcaster names under highlighted matchups at up to 32 rem, keeps shorter team names visible and lets them wrap, adds Refresh for the selected day, and shows saved or unavailable leagues above the schedule. The footer still gives the original source timestamps. Run `scripts/preview-web.sh` on `codex/tipoff-frontend-preview`. Switch to `main` and reload to restore the baseline.
+
 **Who’s playing, when, and where can I watch?** A small native macOS menu bar and Windows system-tray app for NBA, NFL, WNBA, NHL, and MLB broadcast listings. No scores.
 
 I built this because I was tired of checking the NBA schedule every day to figure out which channel or streaming service had a game. I’m a Nuggets and Broncos fan in Mountain Time, so there’s an Altitude-specific supplement for Nuggets games and highlighted Denver matchups in both guides. The Rockies and Avalanche get the same treatment in MLB and NHL.

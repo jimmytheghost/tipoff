@@ -14,6 +14,7 @@ const followedTeams = new Map([
 ]);
 const nationalLeagues = document.querySelector("#national-leagues");
 const nationalStatus = document.querySelector("#national-status");
+const scheduleAlert = document.querySelector("#schedule-alert");
 const scheduleStatuses = document.querySelector("#schedule-statuses");
 const scheduleStatusSummary = document.querySelector("#schedule-status-summary");
 const sourceStates = new Map();
@@ -40,9 +41,20 @@ function scheduleStatusText(states, completedAt, total = 5) {
   ].filter(Boolean).join(" - ");
 }
 
+function scheduleAlertText(states) {
+  const messages = [];
+  for (const [state, label] of [["unavailable", "Unavailable"], ["saved", "Saved listings"]]) {
+    const sports = [...states].filter(([, value]) => value === state).map(([id]) => id.toUpperCase());
+    if (sports.length) messages.push(`${label}: ${sports.join(", ")}`);
+  }
+  return messages.join(" · ");
+}
+
 function updateSourceStatus(id, node, state, text) {
   sourceStates.set(id, state);
   node.textContent = text;
+  const notice = scheduleAlertText(sourceStates);
+  if (scheduleAlert.textContent !== notice) scheduleAlert.textContent = notice;
   const completedAt = new Date();
   const stamp = stampFormat.format(completedAt);
   const message = scheduleStatusText([...sourceStates.values()], stamp);
@@ -293,8 +305,6 @@ function team(name, code, league) {
 
 function fitMatchupNames(matchup) {
   if (!matchup?.isConnected || !matchup.getBoundingClientRect().width) return;
-  // Measure name layouts with their normal logo size before enlarging logo-only rows.
-  matchup.classList.remove("tipoff-matchup-logos");
   const gap = node => Number.parseFloat(getComputedStyle(node).columnGap) || 0;
   const teams = [...matchup.querySelectorAll(".tipoff-team")];
   const required = variant => teams.reduce((total, node) => {
@@ -305,12 +315,7 @@ function fitMatchupNames(matchup) {
     gap(matchup) + gap(matchup.querySelector(".tipoff-matchup-home")));
   const available = Math.floor(matchup.getBoundingClientRect().width);
   const short = Math.ceil(required("full")) > available;
-  const logosReady = teams.length === 2 && teams.every(node => {
-    const logo = node.querySelector(".tipoff-team-logo");
-    return logo?.complete && logo.naturalWidth > 0;
-  });
   matchup.classList.toggle("tipoff-matchup-short", short);
-  matchup.classList.toggle("tipoff-matchup-logos", short && Math.ceil(required("short")) > available && logosReady);
 }
 
 const matchupSizes = new ResizeObserver(entries => {
@@ -340,7 +345,7 @@ function broadcastList(broadcasts, { showMarketLabels = true } = {}) {
     } else if (showMarketLabels && categories.some(category => /^(home|away|local|regional)\b/.test(category))) {
       item.append(element("span", "Regional", "tipoff-station-tag"));
     }
-    const label = element("span", name);
+    const label = element("span", name, "tipoff-network-name");
     if (logo) {
       const image = mark(logo, "tipoff-network-logo");
       if (["nbcsn", "nbc sports network", "espn", "espn+", "cbs", "fox", "peacock", "tnt", "hbo max", "trutv", "altitude", "alt", "altitude 2", "alt2"].includes(logoKey)) image.classList.add("tipoff-network-logo-light");
@@ -615,6 +620,7 @@ async function loadDay() {
   highlightsTitle.hidden = true;
   nationalTitle.hidden = true;
   sourceStates.clear();
+  scheduleAlert.textContent = "";
   nationalStatus.textContent = "";
   for (const { section, national, followed } of sections.values()) {
     leagues.append(section);
@@ -651,7 +657,7 @@ function placeDateControls() {
   if (calendar.matches(":popover-open")) calendar.hidePopover();
   dateTitle.setAttribute("aria-expanded", "false");
   if (desktopLayout.matches) document.querySelector("#header-date").append(dateControls);
-  else highlightsTitle.before(dateControls);
+  else scheduleAlert.before(dateControls);
   if (calendar.contains(focused)) dateTitle.focus({ preventScroll: true });
   else if (dateControls.contains(focused)) focused.focus({ preventScroll: true });
 }
@@ -788,8 +794,11 @@ for (const button of buttons.slice(1)) {
 buttons.forEach(button => button.addEventListener("click", () => select(button.dataset.league)));
 document.querySelector("#previous").addEventListener("click", () => moveDay(-1));
 document.querySelector("#next").addEventListener("click", () => moveDay(1));
+document.querySelector("#refresh").addEventListener("click", loadDay);
 document.querySelector("#today").addEventListener("click", () => {
-  date = new Date();
+  const today = new Date();
+  if (dayKey(date) === dayKey(today)) return;
+  date = today;
   loadDay();
 });
 loadDay();

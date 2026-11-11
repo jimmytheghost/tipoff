@@ -16,11 +16,11 @@ let count=0;
 function expect(short, icons) {context.fitMatchupNames(row); assert.equal(classes.has('tipoff-matchup-short'),short);assert.equal(classes.has('tipoff-matchup-logos'),icons);count++;}
 expect(false,false);
 width=200;expect(true,false);
-width=150;expect(true,true);
+width=150;expect(true,false);
 width=300;expect(false,false);
 width=150;logos[0].complete=false;expect(true,false);
 logos[0].complete=true;logos[0].naturalWidth=0;expect(true,false);
-logos[0].naturalWidth=500;expect(true,true);
+logos[0].naturalWidth=500;expect(true,false);
 logos[0]=null;expect(true,false);
 context.fitMatchupNames(null);
 console.log(`${count} matchup sizing/resize/logo fallback cases passed`);

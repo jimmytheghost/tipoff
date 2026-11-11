@@ -17,3 +17,11 @@ const cases = [
 for (const [states, expected] of cases) assert.equal(context.scheduleStatusText(states, stamp), expected);
 assert.match(fs.readFileSync('web/index.html', 'utf8'), /<details class="tipoff-schedule-status">/);
 console.log('7 schedule-status summary cases and collapsed-default markup check passed');
+
+const alertCases = [
+  [[['nba', 'updated'], ['nfl', 'loading']], ''],
+  [[['nba', 'saved'], ['nfl', 'saved']], 'Saved listings: NBA, NFL'],
+  [[['nba', 'saved'], ['wnba', 'unavailable']], 'Unavailable: WNBA · Saved listings: NBA'],
+];
+for (const [states, expected] of alertCases) assert.equal(context.scheduleAlertText(new Map(states)), expected);
+console.log('3 schedule notice cases passed');

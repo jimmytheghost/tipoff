@@ -68,8 +68,12 @@
         </div>
       </div>
       <button class="button" id="next" type="button" aria-label="Next day"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
-      <button class="button" id="today" type="button">Today</button>
+      <div class="tipoff-date-actions">
+        <button class="button" id="today" type="button">Today</button>
+        <button class="button" id="refresh" type="button">Refresh</button>
+      </div>
     </div>
+    <p id="schedule-alert" class="tipoff-schedule-alert" role="status"></p>
     <h2 id="highlights-title" class="tipoff-highlights-title" hidden>National Broadcasts</h2>
     <section class="tipoff-summary" id="following" aria-label="Following" hidden>
       <div id="followed-leagues" class="tipoff-summary-groups"></div>
