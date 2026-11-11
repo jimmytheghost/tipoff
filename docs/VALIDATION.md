@@ -1,5 +1,18 @@
 # Validation
 
+## Website background reliability — November 10, 2026
+
+Published `tipoff-web-reliability-20261110-01` (JavaScript version `20261110-01`) to https://www.jimmyweber.com/tipoff. Replaced only the guide JavaScript, HTML script version, PHP schedule runtime, and separately backed-up Linux TipoffCheck executable. Layout, CSS, artwork, routing, and live schedule caches were preserved.
+
+Saved responses render immediately and are polled while the server reports a refresh, including HTTP 200 saved responses. Fresh results replace them automatically. A bounded 45-entry in-memory cache retains the same sport/date/time-zone snapshot through request failures, keeping its original timestamp and a saved/failure label. Date changes abort obsolete responses. Unchanged polling results do not rebuild game rows.
+
+Server admission permits at most five detached refreshes managed by the new scheduler. The child holds both its per-request lock and global slot for its lifetime (including the 85-second timeout). Full capacity returns a pending response without spawning queued workers. Cleanup runs at most hourly, removing inactive request records older than one day while retaining active locks and the fixed admission/slot locks. The Linux reader includes strict NBA broadcaster validation from the native reliability fix.
+
+Validation: 58 Swift tests; 97 JavaScript cases/scenarios; 7 cache integration tests; 16 route checks; 12 PHP 8.1 runtime scenarios; collapsed-status markup and syntax/whitespace checks passed. macOS packaging/signature checks passed. Linux static-Swift build and production dependency resolution passed; production www-data read the existing NBA cache and fetched seven NHL games with the new executable. A separate native NBA check returned six NBA.com games. Production NBA live checking exceeded its 85-second bound; saved NBA data remained available, honestly labeled. No Windows tests were executed.
+
+The deployed three web-file hashes and nine release HTTP assertions passed. Live browser confirmed version 20261110-01, saved NBA rows alongside automatically updated NFL/WNBA/NHL/MLB timestamps, five national rows retained on Today refresh, and no desktop horizontal overflow. Screenshot: /tmp/tipoff-reliability-live.jpg. Eight browser/crawler page and PNG checks passed; actual Messages rendering remains untested. Frozen payload, runtime backup, and guarded rollback procedure are retained in the ignored publication workspace.
+
+
 Original macOS environment: Apple Silicon macOS, Apple Swift 6.3.3, standalone Command Line Tools. Windows checks use Windows x64 and .NET SDK 9.0.203. Initial personal-use time zone: America/Denver.
 
 ## Portfolio expansion package — November 7, 2026

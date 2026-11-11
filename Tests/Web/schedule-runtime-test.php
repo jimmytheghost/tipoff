@@ -95,4 +95,40 @@ check('another date can refresh while this date is locked', function () use ($ba
     expect($status === 202 && $body['refreshing'] && microtime(true) - $start < 0.5, 'other date was blocked');
     flock($lock, LOCK_UN); fclose($lock);
 });
+
+check('five occupied slots defer networking and preserve cache', function () use ($base, $snapshot) {
+    $r = fixture($base, 'capacity', $snapshot, true);
+    mkdir("$r/cache/web-requests");
+    $locks = [];
+    for ($i=0; $i<5; $i++) {
+        $lock=fopen("$r/cache/web-requests/slot-$i.lock", 'c');
+        flock($lock, LOCK_EX); $locks[]=$lock;
+    }
+    [$status,$body]=tipoffSchedule($r,'nba','2026-11-06','America/Denver');
+    expect($status===200 && $body['refreshing'] && $body['snapshot']===$snapshot,'capacity lost saved data');
+    expect(!file_exists("$r/refreshes"),'capacity exceeded');
+    foreach ($locks as $lock) fclose($lock);
+});
+check('child holds both date and global slot until finished', function () use ($base) {
+    $r=fixture($base,'inherited',null,false);
+    tipoffSchedule($r,'nba','2026-11-06','America/Denver');
+    $key=hash('sha256',"nba\n2026-11-06\nAmerica/Denver");
+    foreach (["$key.lock",'slot-0.lock'] as $name) {
+        $lock=fopen("$r/cache/web-requests/$name",'c');
+        expect(!flock($lock,LOCK_EX|LOCK_NB),'child lost inherited lock'); fclose($lock);
+    }
+    usleep(1000000);
+    $lock=fopen("$r/cache/web-requests/slot-0.lock",'c');
+    expect(flock($lock,LOCK_EX|LOCK_NB),'slot not released'); fclose($lock);
+});
+check('cleanup removes expired records but retains active jobs', function () use ($base) {
+    $jobs="$base/cleanup";mkdir($jobs);
+    $old=str_repeat('a',64);$busy=str_repeat('b',64);
+    foreach ([$old,$busy] as $key) foreach (['lock','attempt'] as $suffix) touch("$jobs/$key.$suffix",time()-90000);
+    $lock=fopen("$jobs/$busy.lock",'r+');flock($lock,LOCK_EX);
+    tipoffCleanJobs($jobs);
+    expect(!file_exists("$jobs/$old.lock") && !file_exists("$jobs/$old.attempt"),'expired records retained');
+    expect(file_exists("$jobs/$busy.lock") && file_exists("$jobs/$busy.attempt"),'active records deleted');
+    fclose($lock);
+});
 echo "$passed tests executed, $passed passed\n";

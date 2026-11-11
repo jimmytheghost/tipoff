@@ -452,7 +452,7 @@ function schedulePause(signal) {
   });
 }
 
-async function fetchSchedule(params, signal) {
+async function fetchSchedule(params, signal, onSnapshot = () => {}) {
   const deadline = Date.now() + 95000;
   do {
     const attempt = new AbortController();
@@ -469,7 +469,9 @@ async function fetchSchedule(params, signal) {
       clearTimeout(timer);
       signal.removeEventListener("abort", abort);
     }
-    if (response.status === 202 && data.refreshing) {
+    if (signal.aborted) throw new DOMException("Schedule changed", "AbortError");
+    if (response.ok && data.snapshot) onSnapshot(data);
+    if (data.refreshing && (response.status === 202 || response.ok)) {
       await schedulePause(signal);
       continue;
     }
@@ -488,22 +490,30 @@ function updateHighlightHeadings() {
   nationalTitle.hidden = !hasFollowedGames || !hasNationalGames;
 }
 
+const rememberedSchedules = new Map();
+
 async function loadLeague(id, day, signal) {
   const { section, title, gameCount, status, results, national, followed, altitudeStatus } = sections.get(id);
-  altitudeStatus?.row.remove();
-  section.replaceChildren(title, results);
-  gameCount.textContent = "";
   const summaries = followed ? [national, followed] : [national];
   const followedTeam = followedTeams.get(id);
-  updateSourceStatus(id, status, "loading", "Loading schedule…");
-  results.replaceChildren();
-  try {
-    const params = new URLSearchParams({ sport: id, day, zone });
-    const { snapshot, saved } = await fetchSchedule(params, signal);
+  const key = JSON.stringify([id, day, zone]);
+  let previous = rememberedSchedules.get(key);
+  let renderedSignature;
+  function render({ snapshot, saved }) {
     if (signal.aborted) return;
-    if (!snapshot || snapshot.day !== day || snapshot.timeZone !== zone || (snapshot.guide ?? "nba") !== id) {
-      throw new Error("Schedule unavailable");
+    if (!snapshot || snapshot.day !== day || snapshot.timeZone !== zone || (snapshot.guide ?? "nba") !== id ||
+        !Array.isArray(snapshot.games)) throw new Error("Schedule unavailable");
+    const signature = JSON.stringify({ snapshot, saved });
+    if (signature === renderedSignature) return;
+    renderedSignature = undefined;
+    // Detach old observations as well as nodes when replacing a snapshot.
+    for (const root of [results, ...summaries.map(value => value.games)]) {
+      root.querySelectorAll(".tipoff-matchup").forEach(node => matchupSizes.unobserve(node));
     }
+    altitudeStatus?.row.remove();
+    section.replaceChildren(title, results);
+    results.replaceChildren();
+    summaries.forEach(resetSummary);
     const count = snapshot.games.length;
     gameCount.textContent = `${count} ${count === 1 ? "game" : "games"}`;
     const updated = stampFormat.format(new Date(snapshot.fetchedAt));
@@ -552,9 +562,35 @@ async function loadLeague(id, day, signal) {
       section.replaceChildren(details);
     }
     updateHighlightHeadings();
+    renderedSignature = signature;
+    previous = { snapshot, saved };
+    rememberedSchedules.delete(key);
+    rememberedSchedules.set(key, previous);
+    while (rememberedSchedules.size > 45) rememberedSchedules.delete(rememberedSchedules.keys().next().value);
+  }
+  if (previous) render({ ...previous, saved: true });
+  else {
+    altitudeStatus?.row.remove();
+    section.replaceChildren(title, results);
+    results.replaceChildren();
+    gameCount.textContent = "";
+  }
+  updateSourceStatus(id, status, previous ? "saved" : "loading",
+    previous ? status.textContent + " · Refreshing…" : "Loading schedule…");
+  try {
+    const params = new URLSearchParams({ sport: id, day, zone });
+    const result = await fetchSchedule(params, signal, render);
+    if (signal.aborted) return;
+    if (!result.snapshot) throw new Error("Schedule unavailable");
+    status.textContent = status.textContent.replace(" · Refreshing…", "");
     return true;
   } catch {
     if (signal.aborted) return;
+    if (previous) {
+      render({ ...previous, saved: true });
+      updateSourceStatus(id, status, "saved", status.textContent.replace(" · Refreshing…", "") + " · Refresh failed; showing saved listings.");
+      return true;
+    }
     results.replaceChildren();
     summaries.forEach(resetSummary);
     gameCount.textContent = "";
