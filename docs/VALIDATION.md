@@ -1,5 +1,12 @@
 # Validation
 
+## Frontend release — November 10, 2026
+
+Published `tipoff-web-frontend-20261110-01`, with CSS and JavaScript version `20261110-02`. The release replaces the guide HTML, stylesheet, and JavaScript. Cached HTML can load the updated JavaScript during the transition. The schedule reader and cache were outside the release.
+
+100 JavaScript cases and 16 local route checks passed, along with JavaScript syntax and Git whitespace checks. Nine public release checks and three installed-file hash checks passed. Eight browser and crawler checks covered canonical and shortcut routes and the 1920 × 1080 preview PNG. Messages rendering was not tested. Live checks at 390 and 1280 px confirmed no horizontal overflow, visible mobile broadcaster names, the saved-league notice, and Refresh retaining the selected day. No native tests ran for this presentation release. Screenshots are at `/tmp/tipoff-frontend-live-mobile.jpg` and `/tmp/tipoff-frontend-live-desktop.jpg`. The frozen release includes a guarded rollback.
+
+
 ## Local frontend preview — November 10, 2026
 
 100 JavaScript cases and 16 local route checks passed. Browser checks at 320, 390, and 1280 px covered visible network text, team names, and no horizontal overflow. Refresh retained a selected past date. Saved and unavailable notices were checked with three JavaScript cases. No native tests or production checks were run for the local web presentation change.

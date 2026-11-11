@@ -54,7 +54,7 @@ function updateSourceStatus(id, node, state, text) {
   sourceStates.set(id, state);
   node.textContent = text;
   const notice = scheduleAlertText(sourceStates);
-  if (scheduleAlert.textContent !== notice) scheduleAlert.textContent = notice;
+  if (scheduleAlert && scheduleAlert.textContent !== notice) scheduleAlert.textContent = notice;
   const completedAt = new Date();
   const stamp = stampFormat.format(completedAt);
   const message = scheduleStatusText([...sourceStates.values()], stamp);
@@ -620,7 +620,7 @@ async function loadDay() {
   highlightsTitle.hidden = true;
   nationalTitle.hidden = true;
   sourceStates.clear();
-  scheduleAlert.textContent = "";
+  if (scheduleAlert) scheduleAlert.textContent = "";
   nationalStatus.textContent = "";
   for (const { section, national, followed } of sections.values()) {
     leagues.append(section);
@@ -657,7 +657,7 @@ function placeDateControls() {
   if (calendar.matches(":popover-open")) calendar.hidePopover();
   dateTitle.setAttribute("aria-expanded", "false");
   if (desktopLayout.matches) document.querySelector("#header-date").append(dateControls);
-  else scheduleAlert.before(dateControls);
+  else (scheduleAlert ?? highlightsTitle).before(dateControls);
   if (calendar.contains(focused)) dateTitle.focus({ preventScroll: true });
   else if (dateControls.contains(focused)) focused.focus({ preventScroll: true });
 }
@@ -794,10 +794,11 @@ for (const button of buttons.slice(1)) {
 buttons.forEach(button => button.addEventListener("click", () => select(button.dataset.league)));
 document.querySelector("#previous").addEventListener("click", () => moveDay(-1));
 document.querySelector("#next").addEventListener("click", () => moveDay(1));
-document.querySelector("#refresh").addEventListener("click", loadDay);
+const refreshButton = document.querySelector("#refresh");
+refreshButton?.addEventListener("click", loadDay);
 document.querySelector("#today").addEventListener("click", () => {
   const today = new Date();
-  if (dayKey(date) === dayKey(today)) return;
+  if (refreshButton && dayKey(date) === dayKey(today)) return;
   date = today;
   loadDay();
 });
