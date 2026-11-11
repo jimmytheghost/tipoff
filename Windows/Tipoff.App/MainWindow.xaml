@@ -158,7 +158,17 @@
           <ItemsControl ItemsSource="{Binding Games}">
             <ItemsControl.ItemTemplate>
               <DataTemplate>
-                <Border Background="{DynamicResource CardBrush}" BorderBrush="{DynamicResource CardBorderBrush}" BorderThickness="1" CornerRadius="8" Padding="7,3" Margin="0,0,0,3">
+                <Border Background="{DynamicResource CardBrush}" BorderThickness="1" CornerRadius="8" Padding="7,3" Margin="0,0,0,3">
+                  <Border.Style>
+                    <Style TargetType="Border">
+                      <Setter Property="BorderBrush" Value="{DynamicResource CardBorderBrush}" />
+                      <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsPreferred}" Value="True">
+                          <Setter Property="BorderBrush" Value="{DynamicResource MintBrush}" />
+                        </DataTrigger>
+                      </Style.Triggers>
+                    </Style>
+                  </Border.Style>
                   <StackPanel>
                     <Grid VerticalAlignment="Center">
                       <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="68" /><ColumnDefinition Width="96" /></Grid.ColumnDefinitions>

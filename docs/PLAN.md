@@ -125,3 +125,9 @@ Do not add scores, standings, or live game telemetry to this product without an 
 NBA broadcaster fields now reject malformed structures and nameless entries rather than silently replacing working listings. Windows distinguishes caller cancellation from source timeouts, allowing ESPN fallback and saved Altitude recovery. Its older ESPN broadcast parser preserves radio classification and excludes explicitly non-US listings. Windows now checks refresh eligibility each minute, refreshes after resume, and follows today across midnight while retaining deliberately selected dates.
 
 Validation: 58 Swift tests passed (including a new malformed-broadcaster regression); macOS packaging and signature verification passed; live NBA TipoffCheck returned six games from NBA.com. Windows/.NET tests were not executed because the SDK is unavailable on this Mac. Windows timer/resume behavior still needs native verification. No front-end presentation changes. Website refresh behavior and server job bounding remain outstanding.
+
+## Windows display and refresh follow-up - November 11, 2026
+
+Implemented the unavailable schedule state, updating Altitude detail ages from their original timestamps, and preferred-team mint outlines in Light and Dark themes. Routine open/timer checks keep active requests running; late failures from superseded requests cannot replace newer results. Added a Windows app regression runner with injectable schedule loading, clock, timezone, and isolated cache, plus `scripts/test-windows.ps1` to build and run both Windows suites.
+
+Validation passed: 29 core tests and 12 app tests (41 total), Release solution build, isolated x64 package, and live NBA check (10 games from NBA.com + Altitude). Resume and rollover coverage uses simulated time and the forced-refresh entry point; actual sleep/wake remains unverified. Calendar, cross-sport views, logos, and expanded web layouts remain outside this change.

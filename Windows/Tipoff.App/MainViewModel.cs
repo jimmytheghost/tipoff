@@ -9,8 +9,10 @@ namespace Tipoff.App;
 
 public sealed class MainViewModel : INotifyPropertyChanged, IDisposable
 {
-    private readonly ScheduleProvider provider = new();
-    private readonly ScheduleCache cache = new();
+    private readonly IScheduleLoading provider;
+    private readonly Func<DateTimeOffset> now;
+    private readonly Func<TimeZoneInfo> localZone;
+    private readonly ScheduleCache cache;
     private CancellationTokenSource? request;
     private ScheduleSnapshot? snapshot;
     private bool refreshing;
@@ -19,22 +21,39 @@ public sealed class MainViewModel : INotifyPropertyChanged, IDisposable
     private DateTimeOffset? lastAttempt;
     private bool followsToday = true;
 
+    public MainViewModel(IScheduleLoading? provider = null, ScheduleCache? cache = null,
+        Func<DateTimeOffset>? now = null, Func<TimeZoneInfo>? localZone = null)
+    {
+        this.provider = provider ?? new ScheduleProvider();
+        this.cache = cache ?? new ScheduleCache();
+        this.now = now ?? (() => DateTimeOffset.UtcNow);
+        this.localZone = localZone ?? (() => TimeZoneInfo.Local);
+        TimeZone = this.localZone();
+        SelectedDate = Today;
+    }
+
+    private DateOnly Today => DateOnly.FromDateTime(TimeZoneInfo.ConvertTime(now(), localZone()).DateTime);
+
     public event PropertyChangedEventHandler? PropertyChanged;
     public ObservableCollection<GameCard> Games { get; } = [];
     public ScheduleGuide Guide { get; private set; } = ScheduleGuide.Nba;
-    public DateOnly SelectedDate { get; private set; } = DateOnly.FromDateTime(DateTime.Now);
+    public DateOnly SelectedDate { get; private set; }
     public TimeZoneInfo TimeZone { get; private set; } = TimeZoneInfo.Local;
 
-    public string DateTitle => SelectedDate == DateOnly.FromDateTime(DateTime.Now) ? "Today" : SelectedDate.ToString("ddd, MMM d", CultureInfo.CurrentCulture);
+    public string DateTitle => SelectedDate == Today ? "Today" : SelectedDate.ToString("ddd, MMM d", CultureInfo.CurrentCulture);
     public string DateSubtitle => $"{SelectedDate:MMM d} · local time" + (snapshot is null ? "" : $" · {snapshot.Games.Count} {(snapshot.Games.Count == 1 ? "game" : "games")}");
     public string JumpLabel => Guide == ScheduleGuide.Nfl ? "Sunday" : "Today";
     public Visibility JumpVisibility => ShouldShowJump ? Visibility.Visible : Visibility.Collapsed;
-    private bool ShouldShowJump => Guide == ScheduleGuide.Nfl ? SelectedDate.DayOfWeek != DayOfWeek.Sunday : SelectedDate != DateOnly.FromDateTime(DateTime.Now);
+    private bool ShouldShowJump => Guide == ScheduleGuide.Nfl ? SelectedDate.DayOfWeek != DayOfWeek.Sunday : SelectedDate != Today;
     public string Source => snapshot?.Source ?? $"{Guide.Title()} broadcast listings";
     public string Freshness => snapshot is null ? (refreshing ? "Checking the latest listings…" : "Not checked yet") : FormatFreshness(snapshot.FetchedAt, cached);
-    public bool IsFreshnessWarning => cached || snapshot is { } value && DateTimeOffset.UtcNow - value.FetchedAt > TimeSpan.FromMinutes(10);
+    public bool IsFreshnessWarning => cached || snapshot is { } value && now() - value.FetchedAt > TimeSpan.FromMinutes(10);
     public bool CanRefresh => !refreshing;
-    public string EmptyMessage => refreshing && snapshot is null ? "Finding the lineup…" : $"No {Guide.Title()} games scheduled.\nCheck the next day’s lineup.";
+    public string EmptyMessage => snapshot is not null
+        ? $"No {Guide.Title()} games scheduled.\nCheck the next day's lineup."
+        : refreshing ? "Finding the lineup..."
+        : error is not null ? "Schedule unavailable.\nTry refreshing the listings."
+        : "Listings not checked yet.";
     public Visibility EmptyVisibility => Games.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
     public string Message => BuildMessage();
     public Visibility MessageVisibility => Message.Length == 0 ? Visibility.Collapsed : Visibility.Visible;
@@ -42,8 +61,8 @@ public sealed class MainViewModel : INotifyPropertyChanged, IDisposable
     public async Task OpenedAsync(bool force = false)
     {
         TimeZoneInfo.ClearCachedData();
-        var currentZone = TimeZoneInfo.Local;
-        var today = DateOnly.FromDateTime(DateTime.Now);
+        var currentZone = localZone();
+        var today = Today;
         if (currentZone.Id != TimeZone.Id || (followsToday && SelectedDate != today))
         {
             TimeZone = currentZone;
@@ -51,7 +70,8 @@ public sealed class MainViewModel : INotifyPropertyChanged, IDisposable
             snapshot = null;
             lastAttempt = null;
         }
-        if (force || lastAttempt is null || DateTimeOffset.UtcNow - lastAttempt > TimeSpan.FromMinutes(5)) await RefreshAsync();
+        if (refreshing && !force && lastAttempt is not null) { UpdateRelativeTime(); return; }
+        if (force || lastAttempt is null || now() - lastAttempt > TimeSpan.FromMinutes(5)) await RefreshAsync();
         else UpdateRelativeTime();
     }
 
@@ -68,7 +88,7 @@ public sealed class MainViewModel : INotifyPropertyChanged, IDisposable
     public async Task MoveDayAsync(int offset)
     {
         SelectedDate = SelectedDate.AddDays(offset);
-        followsToday = SelectedDate == DateOnly.FromDateTime(DateTime.Now);
+        followsToday = SelectedDate == Today;
         snapshot = null;
         Games.Clear();
         NotifyAll();
@@ -77,7 +97,7 @@ public sealed class MainViewModel : INotifyPropertyChanged, IDisposable
 
     public async Task JumpAsync()
     {
-        var today = DateOnly.FromDateTime(DateTime.Now);
+        var today = Today;
         if (Guide == ScheduleGuide.Nfl)
         {
             var offset = ((int)DayOfWeek.Sunday - (int)today.DayOfWeek + 7) % 7;
@@ -97,7 +117,7 @@ public sealed class MainViewModel : INotifyPropertyChanged, IDisposable
         request?.Dispose();
         request = new CancellationTokenSource();
         var token = request.Token;
-        lastAttempt = DateTimeOffset.UtcNow;
+        lastAttempt = now();
         error = null;
         if (snapshot is null)
         {
@@ -117,6 +137,7 @@ public sealed class MainViewModel : INotifyPropertyChanged, IDisposable
             try { cache.Write(result); } catch { error = "Couldn’t save an offline copy."; }
         }
         catch (OperationCanceledException) when (token.IsCancellationRequested) { return; }
+        catch when (token.IsCancellationRequested) { return; }
         catch
         {
             cached = snapshot is not null;
@@ -124,12 +145,13 @@ public sealed class MainViewModel : INotifyPropertyChanged, IDisposable
         }
         finally
         {
-            if (!token.IsCancellationRequested) { refreshing = false; NotifyAll(); }
+            if (!token.IsCancellationRequested) { refreshing = false; UpdateRelativeTime(); NotifyAll(); }
         }
     }
 
     public void UpdateRelativeTime()
     {
+        foreach (var game in Games) game.UpdateRelativeTime(now());
         OnPropertyChanged(nameof(Freshness));
         OnPropertyChanged(nameof(IsFreshnessWarning));
     }
@@ -138,7 +160,7 @@ public sealed class MainViewModel : INotifyPropertyChanged, IDisposable
     {
         Games.Clear();
         if (snapshot is not null)
-            foreach (var game in snapshot.DisplayGames) Games.Add(GameCard.From(game, TimeZone));
+            foreach (var game in snapshot.DisplayGames) Games.Add(GameCard.From(game, TimeZone, now()));
     }
 
     private string BuildMessage()
@@ -149,9 +171,9 @@ public sealed class MainViewModel : INotifyPropertyChanged, IDisposable
         return string.Join(" ", messages);
     }
 
-    private static string FormatFreshness(DateTimeOffset fetchedAt, bool saved)
+    private string FormatFreshness(DateTimeOffset fetchedAt, bool saved)
     {
-        var age = DateTimeOffset.UtcNow - fetchedAt;
+        var age = now() - fetchedAt;
         var prefix = saved ? "Saved" : "Checked";
         if (age < TimeSpan.FromMinutes(1)) return $"{prefix} just now";
         if (age < TimeSpan.FromHours(1)) return $"{prefix} {(int)age.TotalMinutes}m ago";
@@ -170,7 +192,7 @@ public sealed class MainViewModel : INotifyPropertyChanged, IDisposable
     {
         request?.Cancel();
         request?.Dispose();
-        provider.Dispose();
+        (provider as IDisposable)?.Dispose();
     }
 }
 
@@ -186,12 +208,33 @@ public sealed record GameCard(
     string DetailsNetworks,
     string DetailsTimes,
     string DetailsNotes,
-    string DetailsFreshness)
+    string InitialDetailsFreshness) : INotifyPropertyChanged
 {
+    public event PropertyChangedEventHandler? PropertyChanged;
+    public DateTimeOffset? DetailsFetchedAt { get; init; }
+    public bool DetailsSaved { get; init; }
+    private DateTimeOffset displayTime;
+    public bool IsPreferred => PreferredLabel.Length != 0;
+    public string DetailsFreshness
+    {
+        get
+        {
+            if (DetailsFetchedAt is not { } fetchedAt) return InitialDetailsFreshness;
+            var age = displayTime - fetchedAt;
+            var ageText = age < TimeSpan.FromMinutes(1) ? "just now" : age < TimeSpan.FromHours(1) ? $"{(int)age.TotalMinutes}m ago" : age < TimeSpan.FromDays(1) ? $"{(int)age.TotalHours}h ago" : $"{(int)age.TotalDays}d ago";
+            return $"Altitude schedule · {(DetailsSaved ? "saved" : "checked")} {ageText}";
+        }
+    }
+    public void UpdateRelativeTime(DateTimeOffset now)
+    {
+        displayTime = now;
+        PropertyChanged?.Invoke(this, new(nameof(DetailsFreshness)));
+    }
+
     public Visibility PreferredVisibility => PreferredLabel.Length == 0 ? Visibility.Collapsed : Visibility.Visible;
     public Visibility NoticeVisibility => Notice.Length == 0 ? Visibility.Collapsed : Visibility.Visible;
 
-    public static GameCard From(Game game, TimeZoneInfo zone)
+    public static GameCard From(Game game, TimeZoneInfo zone, DateTimeOffset? now = null)
     {
         var video = game.Broadcasts.Where(item => !item.Category.Contains("radio", StringComparison.OrdinalIgnoreCase)).ToList();
         var broadcastText = video.Count == 0 ? "Not listed" : string.Join("\n", video.GroupBy(item => item.Category).Select(group => $"{group.Key.ToUpperInvariant()}\n{string.Join(" / ", group.Select(item => item.Name))}"));
@@ -204,14 +247,14 @@ public sealed record GameCard(
         if (details.Pregame is { } pregame) times.Add($"Pregame {Local(pregame)}");
         if (game.Start is { } start) times.Add($"Game {Local(start)}");
         if (details.Postgame is { } postgame) times.Add($"Postgame {Local(postgame)}");
-        var age = DateTimeOffset.UtcNow - details.FetchedAt;
-        var ageText = age < TimeSpan.FromMinutes(1) ? "just now" : age < TimeSpan.FromHours(1) ? $"{(int)age.TotalMinutes}m ago" : age < TimeSpan.FromDays(1) ? $"{(int)age.TotalHours}h ago" : $"{(int)age.TotalDays}d ago";
-        return new(game.Away, "@ " + game.Home, game.PreferredTeamLabel ?? "", game.TimeLabel(zone), game.Notice ?? "", broadcastText,
+        var card = new GameCard(game.Away, "@ " + game.Home, game.PreferredTeamLabel ?? "", game.TimeLabel(zone), game.Notice ?? "", broadcastText,
             Visibility.Visible,
             details.Notes.Count == 0 ? "Details" : "Details*",
             details.Networks.Count == 0 ? "No additional network listed" : string.Join(" / ", details.Networks),
             string.Join("  ·  ", times),
             string.Join("\n", details.Notes),
-            $"Altitude schedule · {(details.Saved ? "saved" : "checked")} {ageText}");
+            "") { DetailsFetchedAt = details.FetchedAt, DetailsSaved = details.Saved };
+        card.UpdateRelativeTime(now ?? DateTimeOffset.UtcNow);
+        return card;
     }
 }

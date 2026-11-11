@@ -174,3 +174,7 @@ The check writes a snapshot to `/tmp/tipoff-preview.png.json`; the renderer uses
 The code is [MIT licensed](LICENSE): use it, change it, and share it. It’s provided as-is. Third-party schedule data, names, and marks remain with their respective owners; see [NOTICE](NOTICE). Tipoff is not affiliated with or endorsed by the NBA, NFL, WNBA, NHL, MLB, ESPN, Altitude, or any team or broadcaster.
 
 Background reliability: malformed NBA broadcaster structures are rejected; Windows source timeouts can use fallback sources and saved Altitude listings. Windows refresh eligibility is checked each minute, with refresh after wake and automatic date rollover while following today. See [validation](docs/VALIDATION.md) for platform verification limits.
+
+### Windows display and refresh checks
+
+Windows distinguishes an unavailable schedule from a successfully loaded empty schedule. Saved listings retain their original freshness, including the Altitude detail age, which updates each minute without closing expanded details. Preferred-team cards use the theme's mint outline. Run `scripts/test-windows.ps1` to build the Windows solution and execute both the core fixture runner and app regression runner. Real sleep/wake and system timezone changes still require hands-on verification.
