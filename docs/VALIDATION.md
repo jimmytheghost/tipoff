@@ -1,5 +1,9 @@
 # Validation
 
+## Live Google sign-in activation — November 10, 2026
+
+Configured the dedicated Tipoff Web client for the production origin and saved the live homepage and privacy URLs in Google Cloud. Verified the real Google button rendered on the public site. Three production account checks passed for the signed-out response, the non-cacheable Google challenge and secure 30-day cookie, and rejection of an unauthenticated preferences save. A real user login and the signed-in save and reload remain for the user’s test.
+
 ## Browser Settings release — November 10, 2026
 
 Released the browser Settings, named time zones, team logo tiles, and privacy page at JimmyWeber.com. Verified nine installed file checksums, the five added Apache route rules, 11 live HTTP checks, and eight link-preview page and crawler checks. The public sitemap check uses the host published by the existing sitemap generator. In the live browser, all five sources loaded, Settings opened, and the NBA picker showed 30 logo tiles in its Eastern and Western columns. The private account backend passed PHP 8.1 syntax and permission checks. The account endpoint returned private, non-cacheable HTTP 503 while Google Auth setup awaits consent. No live Google account was authorized and Messages rendering was outside the preview checks.
