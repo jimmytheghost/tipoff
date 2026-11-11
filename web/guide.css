@@ -849,7 +849,7 @@ ul.tipoff-inline-broadcasts {
 .tipoff-altitude-times > span { white-space: nowrap; }
 .tipoff-followed-body .tipoff-altitude-times { margin: 0; }
 
-/* Source/freshness details open upward from the footer. */
+/* Settings open upward from the footer. */
 .tipoff-schedule-status {
   position: relative;
   min-width: 0;
@@ -862,9 +862,8 @@ ul.tipoff-inline-broadcasts {
 
 .tipoff-schedule-status > summary {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: 0.25rem 0.75rem;
+  gap: 0.75rem;
   min-height: 44px;
   padding: 0.5rem 0 0.5rem 0.75rem;
   cursor: pointer;
@@ -872,8 +871,14 @@ ul.tipoff-inline-broadcasts {
 }
 
 .tipoff-schedule-status > summary::-webkit-details-marker { display: none; }
-.tipoff-schedule-status > summary::after { content: "+" / ""; margin-left: auto; }
-.tipoff-schedule-status[open] > summary::after { content: "−" / ""; }
+.tipoff-settings-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: none;
+  color: var(--ink);
+}
+.tipoff-schedule-status[open] .tipoff-settings-icon,
+.tipoff-schedule-status > summary:hover .tipoff-settings-icon { color: var(--accent); }
 #schedule-status-summary {
   flex: 1;
   min-width: 0;
@@ -883,8 +888,6 @@ ul.tipoff-inline-broadcasts {
   text-transform: uppercase;
   text-align: right;
 }
-.tipoff-schedule-status > summary { flex-wrap: nowrap; }
-.tipoff-schedule-status > summary::after { flex-shrink: 0; }
 #national-status {
   color: #727f91;
   font-size: 0.625rem;
@@ -899,20 +902,102 @@ ul.tipoff-inline-broadcasts {
   .tipoff-date-today::after { content: none; }
   .tipoff-date #date { font-size: 0.9375rem; }
 }
-.tipoff-schedule-status dl {
+.tipoff-settings-panel {
   position: absolute;
   bottom: calc(100% + 0.75rem);
   right: 0;
   z-index: 20;
-  width: min(30rem, calc(100vw - 2rem));
-  max-height: min(24rem, calc(100dvh - 6rem));
+  width: min(29rem, calc(100vw - 2rem));
+  max-height: min(34rem, calc(100dvh - 6rem));
+  overscroll-behavior: contain;
   overflow-y: auto;
   margin: 0;
-  padding: 0.875rem;
-  border: 0;
+  padding: 1rem;
+  border: 1px solid var(--line);
   border-radius: 0.375rem;
   background: var(--raised);
   box-shadow: 0 0.5rem 2rem rgb(0 0 0 / 25%);
+}
+.tipoff-settings-panel h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  color: var(--ink);
+}
+.tipoff-settings-panel p { margin: 0.5rem 0; }
+.tipoff-settings-panel [hidden] { display: none; }
+.tipoff-settings-panel .button {
+  min-height: 2.5rem;
+  padding: 0.375rem 0.75rem;
+  font: inherit;
+}
+#tipoff-preferences:not([hidden]) {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+#tipoff-preferences > button { justify-self: start; }
+#tipoff-preferences > label,
+#tipoff-preferences legend {
+  color: var(--ink);
+  font-weight: 600;
+}
+#tipoff-preferences select {
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0.375rem 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: 0.25rem;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+}
+#tipoff-preferences fieldset {
+  min-width: 0;
+  padding: 0;
+  margin: 0.25rem 0;
+  border: 0;
+}
+#tipoff-team-options summary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.25rem;
+  padding: 0.25rem 0.5rem;
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+}
+#tipoff-team-options summary::-webkit-details-marker { display: none; }
+#tipoff-team-options summary::before { content: "▸" / ""; }
+#tipoff-team-options details[open] summary::before { content: "▾" / ""; }
+#tipoff-team-options summary span { margin-left: auto; }
+.tipoff-team-options {
+  display: grid;
+  padding: 0.25rem 0.5rem;
+}
+.tipoff-team-options label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.25rem;
+  color: var(--ink);
+  cursor: pointer;
+}
+.tipoff-team-options input { accent-color: var(--accent); }
+.tipoff-sources {
+  border-top: 1px solid var(--line);
+  margin-top: 0.875rem;
+  padding-top: 0.75rem;
+}
+.tipoff-sources h3 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 0.75rem;
+}
+.tipoff-sources dl { margin: 0.25rem 0 0; }
+.tipoff-settings-privacy {
+  display: inline-block;
+  margin-top: 0.75rem;
+  color: var(--muted);
 }
 .tipoff-schedule-status dl > div {
   display: grid;

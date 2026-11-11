@@ -1,6 +1,8 @@
 """Loopback-only Tipoff preview server."""
 import datetime
+from http.client import HTTPConnection
 import mimetypes
+import os
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 import re
@@ -16,6 +18,9 @@ PAGE_ASSETS = {
     "/tipoff": "index.html",
     "/tipoff/guide.js": "guide.js",
     "/tipoff/guide.css": "guide.css",
+    "/tipoff/settings.js": "settings.js",
+    "/tipoff/teams.json": "accounts/teams.json",
+    "/tipoff/privacy": "privacy.html",
     "/tip-off/guide.js": "guide.js",
     "/tip-off/guide.css": "guide.css",
     "/assets/img/projects/tipoff-header-mark.png": "brand-mark.png",
@@ -46,10 +51,54 @@ class Preview(BaseHTTPRequestHandler):
             self.end_headers()
         elif url.path in {"/tipoff/schedule", "/tip-off/schedule"}:
             self.schedule(parse_qs(url.query))
+        elif url.path == "/tipoff/account":
+            self.account(url.query)
         elif url.path in PAGE_ASSETS:
             self.file(WEB / PAGE_ASSETS[url.path])
         else:
             self.send_error(404)
+
+    def do_POST(self):
+        url = urlsplit(self.path)
+        if url.path == "/tipoff/account":
+            self.account(url.query)
+        else:
+            self.send_error(404)
+
+    def account(self, query):
+        port = os.environ.get("TIPOFF_ACCOUNT_PREVIEW_PORT", "")
+        if not port.isdecimal() or not 1 <= int(port) <= 65535:
+            self.send_error(503, "Google sign-in is unavailable")
+            return
+        try:
+            length = int(self.headers.get("Content-Length", "0"))
+        except ValueError:
+            length = -1
+        if not 0 <= length <= 16384:
+            self.send_error(413)
+            return
+        headers = {key: self.headers[key] for key in
+                   ("Origin", "Cookie", "Content-Type", "X-Tipoff-CSRF", "Sec-Fetch-Site")
+                   if key in self.headers}
+        connection = HTTPConnection("127.0.0.1", int(port), timeout=12)
+        try:
+            connection.request(self.command, "/account.php" + ("?" + query if query else ""),
+                               self.rfile.read(length), headers)
+            response = connection.getresponse()
+            body = response.read()
+            self.send_response(response.status)
+            for key, value in response.getheaders():
+                if key.lower() in {"content-type", "cache-control", "set-cookie", "x-content-type-options"}:
+                    self.send_header(key, value)
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+        except (BrokenPipeError, ConnectionResetError):
+            pass
+        except OSError:
+            self.send_error(503, "Google sign-in is unavailable")
+        finally:
+            connection.close()
 
     def reply(self, content, media_type):
         self.send_response(200)

@@ -15,3 +15,5 @@ Resources/*.iconset/
 *.p8
 *.key
 *.mobileprovision
+web/accounts/vendor/
+web/accounts/config.php

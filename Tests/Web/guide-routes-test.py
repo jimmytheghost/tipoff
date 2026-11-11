@@ -58,6 +58,15 @@ try:
         assert status == 200 and body.startswith(bytes((0, 1, 0, 0))), name
     status, _, body = get('/assets/fonts/tipoff/BarlowCondensed-ExtraBoldItalic.woff2')
     assert status == 200 and body.startswith(b'wOF2')
+    status, _, body = get('/tipoff/settings.js')
+    assert status == 200 and b'/tipoff/account' in body
+    status, headers, body = get('/tipoff/teams.json')
+    assert status == 200 and headers['Content-Type'] == 'application/json'
+    assert {league: len(teams) for league, teams in json.loads(body).items()} == {
+        'nba': 30, 'nfl': 32, 'wnba': 15, 'nhl': 32, 'mlb': 30}
+    status, _, body = get('/tipoff/privacy')
+    assert status == 200 and b'content="https://www.jimmyweber.com/tipoff/privacy"' in body
+    assert get('/tipoff/account')[0] == 503
     assert get('/tipoff/unknown')[0] == 404
 finally:
     server.shutdown()

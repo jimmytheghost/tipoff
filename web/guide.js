@@ -1,17 +1,20 @@
 const buttons = [...document.querySelectorAll("[data-league]")];
-const zone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+const deviceZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+let zone = deviceZone;
 const dateTitle = document.querySelector("#date");
 const leagues = document.querySelector("#leagues");
 const followedLeagues = document.querySelector("#followed-leagues");
 const following = document.querySelector("#following");
 const highlightsTitle = document.querySelector("#highlights-title");
 const nationalTitle = document.querySelector("#national-title");
-const followedTeams = new Map([
-  ["nba", { name: "Nuggets", codes: ["DEN"] }],
-  ["nfl", { name: "Broncos", codes: ["DEN"] }],
-  ["nhl", { name: "Avalanche", codes: ["COL"] }],
-  ["mlb", { name: "Rockies", codes: ["115", "COL"] }],
-]);
+const defaultTeams = {
+  nba: [{ id: "DEN", nickname: "Nuggets", codes: ["DEN"] }],
+  nfl: [{ id: "DEN", nickname: "Broncos", codes: ["DEN"] }],
+  nhl: [{ id: "COL", nickname: "Avalanche", codes: ["COL"] }],
+  mlb: [{ id: "COL", nickname: "Rockies", codes: ["115", "COL"] }],
+};
+const defaultTeamIds = Object.entries(defaultTeams).flatMap(([league, clubs]) => clubs.map(club => league + ":" + club.id));
+let teamSelection = defaultTeamIds.join(",");
 const nationalLeagues = document.querySelector("#national-leagues");
 const nationalStatus = document.querySelector("#national-status");
 const scheduleAlert = document.querySelector("#schedule-alert");
@@ -69,9 +72,9 @@ function updateSourceStatus(id, node, state, text) {
   }
 }
 const dateFormat = new Intl.DateTimeFormat(undefined, { weekday: "short", month: "short", day: "numeric" });
-const timeFormat = new Intl.DateTimeFormat(undefined, { timeStyle: "short", timeZone: zone });
-const stampFormat = new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short", timeZone: zone });
-let date = new Date();
+let timeFormat = new Intl.DateTimeFormat(undefined, { timeStyle: "short", timeZone: zone });
+let stampFormat = new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short", timeZone: zone });
+let date = todayInZone();
 let active = "all";
 let request;
 
@@ -95,6 +98,15 @@ function dateFromDayKey(value) {
   selected.setFullYear(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
   selected.setHours(12, 0, 0, 0);
   return dayKey(selected) === value ? selected : null;
+}
+
+function todayInZone(now = new Date(), timeZone = zone) {
+  const parts = new Intl.DateTimeFormat("en", {
+    timeZone, calendar: "gregory", numberingSystem: "latn",
+    year: "numeric", month: "2-digit", day: "2-digit",
+  }).formatToParts(now);
+  const values = Object.fromEntries(parts.map(({ type, value }) => [type, value]));
+  return dateFromDayKey(`${values.year}-${values.month}-${values.day}`);
 }
 
 function calendarDaysForMonth(day) {
@@ -147,8 +159,6 @@ const sections = new Map(buttons.slice(1).map(button => {
   section.append(title, results);
   leagues.append(section);
   const national = summaryGroup(nationalLeagues, `national-${id}`, button.textContent);
-  const followedTeam = followedTeams.get(id);
-  const followed = followedTeam && summaryGroup(followedLeagues, `followed-${id}`, followedTeam.name);
   const status = element("dd");
   const sourceRow = element("div");
   sourceRow.append(element("dt", button.textContent), status);
@@ -160,8 +170,41 @@ const sections = new Map(buttons.slice(1).map(button => {
     row.append(element("dt", "Altitude"), value);
     altitudeStatus = { row, value, anchor: sourceRow };
   }
-  return [id, { section, title, gameCount, status, results, national, followed, altitudeStatus }];
+  return [id, { section, title, gameCount, status, results, national, followed: [], altitudeStatus }];
 }));
+
+function setFollowedGroups(teams) {
+  followedLeagues.replaceChildren();
+  for (const [id, section] of sections) {
+    section.followed = (teams[id] ?? []).map(team => ({
+      ...summaryGroup(followedLeagues, `followed-${id}-${team.id}`, team.nickname),
+      codes: team.codes,
+    }));
+  }
+}
+
+function applyPreferences(preferences, catalog) {
+  const nextZone = preferences.timeZone || deviceZone;
+  const nextSelection = preferences.teams.join(",");
+  if (zone === nextZone && teamSelection === nextSelection) return;
+
+  if (zone !== nextZone) {
+    const onToday = dayKey(date) === dayKey(todayInZone());
+    zone = nextZone;
+    if (onToday) date = todayInZone();
+    timeFormat = new Intl.DateTimeFormat(undefined, { timeStyle: "short", timeZone: zone });
+    stampFormat = new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short", timeZone: zone });
+    document.querySelector("#zone").textContent = zone.replaceAll("_", " ");
+  }
+  if (teamSelection !== nextSelection) {
+    teamSelection = nextSelection;
+    const selected = new Set(preferences.teams);
+    setFollowedGroups(Object.fromEntries(Object.entries(catalog).map(([league, clubs]) => [
+      league, clubs.filter(club => selected.has(league + ":" + club.id)),
+    ])));
+  }
+  if (request) loadDay();
+}
 
 function select(league) {
   active = league;
@@ -498,9 +541,8 @@ function updateHighlightHeadings() {
 const rememberedSchedules = new Map();
 
 async function loadLeague(id, day, signal) {
-  const { section, title, gameCount, status, results, national, followed, altitudeStatus } = sections.get(id);
-  const summaries = followed ? [national, followed] : [national];
-  const followedTeam = followedTeams.get(id);
+  const { section, title, gameCount, status, results, national, followed = [], altitudeStatus } = sections.get(id);
+  const summaries = [national, ...followed];
   const key = JSON.stringify([id, day, zone]);
   let previous = rememberedSchedules.get(key);
   let renderedSignature;
@@ -536,16 +578,16 @@ async function loadLeague(id, day, signal) {
       const list = element("ul", "", "tipoff-games");
       for (const game of snapshot.games) {
         const nationalBroadcasts = game.broadcasts.filter(broadcast => isNationalBroadcast(broadcast, id));
-        const isFollowed = followedTeam && [game.awayCode, game.homeCode]
-          .some(code => followedTeam.codes.includes(code.toUpperCase()));
+        const followedGroup = followed.find(({ codes }) => [game.awayCode, game.homeCode]
+          .some(code => codes.includes(code?.toUpperCase())));
         let highlight;
-        if (isFollowed) highlight = "tipoff-game-followed";
+        if (followedGroup) highlight = "tipoff-game-followed";
         else if (nationalBroadcasts.length) highlight = "tipoff-game-national";
         list.append(gameRow(game, id, game.broadcasts, highlight, { collapseBroadcasts: !highlight }));
-        if (isFollowed) {
-          followed.games.append(gameRow(game, id, game.broadcasts, undefined, { compact: true }));
-          if (nationalBroadcasts.length && !followed.title.querySelector(".tipoff-national-marker")) {
-            followed.title.querySelector(".tipoff-header-meta").prepend(element("span", "National", "tipoff-national-marker"));
+        if (followedGroup) {
+          followedGroup.games.append(gameRow(game, id, game.broadcasts, undefined, { compact: true }));
+          if (nationalBroadcasts.length && !followedGroup.title.querySelector(".tipoff-national-marker")) {
+            followedGroup.title.querySelector(".tipoff-header-meta").prepend(element("span", "National", "tipoff-national-marker"));
           }
         } else if (nationalBroadcasts.length) {
           national.games.append(gameRow(game, id, nationalBroadcasts));
@@ -612,7 +654,7 @@ async function loadDay() {
   const key = dayKey(date);
   dateTitle.setAttribute("aria-label", `Choose schedule date, ${date.toLocaleDateString(undefined, { dateStyle: "full" })}`);
   dateTitle.replaceChildren();
-  if (dayKey(new Date()) === key) dateTitle.append(element("span", "Today", "tipoff-date-today"));
+  if (dayKey(todayInZone()) === key) dateTitle.append(element("span", "Today", "tipoff-date-today"));
   dateTitle.append(element("span", dateFormat.format(date), "tipoff-date-label"));
   const { signal } = request;
   following.hidden = true;
@@ -625,7 +667,7 @@ async function loadDay() {
   for (const { section, national, followed } of sections.values()) {
     leagues.append(section);
     resetSummary(national);
-    if (followed) resetSummary(followed);
+    followed.forEach(resetSummary);
   }
   const ids = [...sections.keys()];
   const loaded = await Promise.all(ids.map(id => loadLeague(id, key, signal)));
@@ -683,7 +725,7 @@ function renderCalendar(focusDay = false) {
   calendarTitle.textContent = calendarMonthFormat.format(calendarDay);
   calendarGrid.replaceChildren();
   const selected = dayKey(date);
-  const today = dayKey(new Date());
+  const today = dayKey(todayInZone());
   const active = dayKey(calendarDay);
   let week;
   calendarDaysForMonth(calendarDay).forEach((day, index) => {
@@ -777,7 +819,7 @@ for (const [id, offset] of [["calendar-previous", -1], ["calendar-next", 1]]) {
     positionCalendar();
   });
 }
-document.querySelector("#calendar-today").addEventListener("click", () => chooseCalendarDay(dayKey(new Date())));
+document.querySelector("#calendar-today").addEventListener("click", () => chooseCalendarDay(dayKey(todayInZone())));
 window.addEventListener("resize", positionCalendar);
 window.addEventListener("scroll", positionCalendar, { passive: true });
 
@@ -797,9 +839,19 @@ document.querySelector("#next").addEventListener("click", () => moveDay(1));
 const refreshButton = document.querySelector("#refresh");
 refreshButton?.addEventListener("click", loadDay);
 document.querySelector("#today").addEventListener("click", () => {
-  const today = new Date();
+  const today = todayInZone();
   if (refreshButton && dayKey(date) === dayKey(today)) return;
   date = today;
   loadDay();
 });
-loadDay();
+setFollowedGroups(defaultTeams);
+const settingsReady = import("/tipoff/settings.js?v=20261110-01")
+  .then(({ initializeSettings }) => initializeSettings(applyPreferences, defaultTeamIds))
+  .catch(() => {
+    const message = document.querySelector("#tipoff-settings-message");
+    if (message) message.textContent = "Settings could not load. Reload to try again.";
+  });
+// Restore returning preferences first when available, with a short bound for the public schedule.
+Promise.race([settingsReady, new Promise(resolve => setTimeout(resolve, 400))]).then(() => {
+  if (!request) loadDay();
+});

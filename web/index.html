@@ -22,8 +22,8 @@
   <meta name="twitter:description" content="Game times and broadcast listings for the NBA, NFL, WNBA, NHL, and MLB.">
   <meta name="twitter:image" content="https://www.jimmyweber.com/assets/img/projects/tipoff-banner.png">
   <meta name="twitter:image:alt" content="The Tipoff name and basketball icon on a white background">
-  <link rel="stylesheet" href="/tipoff/guide.css?v=20261110-03">
-  <script type="module" src="/tipoff/guide.js?v=20261110-02"></script>
+  <link rel="stylesheet" href="/tipoff/guide.css?v=20261110-04">
+  <script type="module" src="/tipoff/guide.js?v=20261110-03"></script>
 </head>
 <body class="tipoff-flat">
   <header class="tipoff-header">
@@ -101,8 +101,40 @@
     <div class="tipoff-header-inner">
       <a class="tipoff-back" href="https://www.jimmyweber.com/" aria-label="Back to JimmyWeber.com" title="Back to JimmyWeber.com"><img class="tipoff-home-mark" src="/assets/img/projects/tipoff-home-mark.svg?v=20261107-01" alt="" width="25" height="32"></a>
       <details class="tipoff-schedule-status">
-        <summary><span id="schedule-status-summary" role="status">Loading schedules…</span></summary>
-        <dl id="schedule-statuses"></dl>
+        <summary>
+          <span id="schedule-status-summary" role="status">Loading schedules…</span>
+          <svg class="tipoff-settings-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M10 3h4l.6 2.6 1.6.9 2.5-.8 2 3.5-1.9 1.8v2l1.9 1.8-2 3.5-2.5-.8-1.6.9L14 21h-4l-.6-2.6-1.6-.9-2.5.8-2-3.5L5.2 13v-2L3.3 9.2l2-3.5 2.5.8 1.6-.9L10 3Z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+          <span class="tipoff-visually-hidden">Settings</span>
+        </summary>
+        <div class="tipoff-settings-panel">
+          <h2>Settings</h2>
+          <div id="tipoff-account">
+            <p id="tipoff-account-label"></p>
+            <div id="tipoff-google-button"></div>
+            <button id="tipoff-account-retry" class="button" type="button" hidden>Retry sign-in</button>
+            <button id="tipoff-sign-out" class="button" type="button" hidden>Sign out</button>
+          </div>
+          <form id="tipoff-preferences" hidden>
+            <label for="tipoff-settings-zone">Time zone</label>
+            <select id="tipoff-settings-zone" name="timeZone">
+              <option value="">Use device time zone</option>
+            </select>
+            <fieldset>
+              <legend>Teams to follow</legend>
+              <div id="tipoff-team-options"></div>
+            </fieldset>
+            <button class="button" type="submit">Save settings</button>
+          </form>
+          <p id="tipoff-settings-message" role="status"></p>
+          <section aria-labelledby="tipoff-sources-heading" class="tipoff-sources">
+            <h3 id="tipoff-sources-heading">Schedule sources</h3>
+            <dl id="schedule-statuses"></dl>
+          </section>
+          <a class="tipoff-settings-privacy" href="/tipoff/privacy">Privacy</a>
+        </div>
       </details>
     </div>
   </footer>

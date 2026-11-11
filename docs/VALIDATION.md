@@ -1,5 +1,11 @@
 # Validation
 
+## Browser Settings and Google sign-in — November 10, 2026
+
+- **106 JavaScript cases**, **25 local route checks**, **28 account integration scenarios** on PHP 8.1.34, **12 PHP schedule runtime scenarios**, and **7 schedule cache integration tests** passed. Account checks covered verification failures, CSRF and origin checks, session and cookie expiry, rotation, account isolation, saving and restoring settings, and concurrent writes.
+- **20 Chromium browser scenarios** passed at 320, 390, and 1280 px against the PHP account backend with a fixture Google credential and fixture schedules. Verified guest persistence, selected-zone calendar and game times, team aliases and highlight deduplication, sign-in and sign-out, returning-tab and second-browser restoration, footer source rows, panel bounds, Escape focus, and public browsing with an unavailable account service.
+- `scripts/test.sh` passed **58 Swift tests**. `scripts/package-app.sh` and the macOS app signature check passed. Live `TipoffCheck 2026-11-10` returned **6 NBA.com games**. No Windows tests ran. Real Google consent and production account behavior still require activation and verification.
+
 ## Tomorrow typography release — November 10, 2026
 
 Published `tipoff-web-tomorrow-20261110-01` with stylesheet version `20261110-03`. The release includes five font files, two licenses, the stylesheet, and the guide HTML. The font files were installed before the stylesheet and page. The basketball artwork and original Barlow Condensed wordmark retain their approved appearance.

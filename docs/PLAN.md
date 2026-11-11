@@ -4,6 +4,12 @@ The live browser guide uses Tomorrow at weights 400, 500, 600, and 700. The orig
 
 The browser guide puts broadcaster names below highlighted matchups at widths up to 32 rem. Shorter team names can wrap as needed. Refresh checks the selected day, and a notice above the schedule identifies saved or unavailable leagues. The footer shows original source timestamps.
 
+## Browser Settings and accounts
+
+The browser guide keeps its public schedule and opens Settings from the gear at the bottom right. Settings includes the existing source and freshness details, a device or selected time zone, and a team picker for the five leagues. The selected zone determines both Today and game start times. The default Following teams are the Nuggets, Broncos, Avalanche, and Rockies. Each matchup appears once in Following even when both teams are selected.
+
+Guest settings are stored in the browser. The optional Google flow follows Pick a Psych, with server-verified Google identity, private account settings, and a separate 30-day Tipoff session cookie. On first sign-in, an account can adopt saved guest choices. Returning accounts load their saved choices across devices after sign-in. See the [website handoff](../WEBSITE-HANDOFF.md#browser-settings-and-google-sign-in) for activation.
+
 ## Website background reliability — November 10, 2026
 
 Published `tipoff-web-reliability-20261110-01` (JavaScript version `20261110-01`) to https://www.jimmyweber.com/tipoff. Replaced only the guide JavaScript, HTML script version, PHP schedule runtime, and separately backed-up Linux TipoffCheck executable. Layout, CSS, artwork, routing, and live schedule caches were preserved.
