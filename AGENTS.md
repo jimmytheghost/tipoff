@@ -1,5 +1,7 @@
 # Tipoff
 
+Read [Jimmy Weber’s Agentic Toolkit](https://github.com/jimmytheghost/agentic-toolkit/blob/main/README.md) on GitHub for shared guidance relevant to the task. The private toolkit requires authenticated access. If it is unavailable, say what you could not read and continue with the project instructions where possible.
+
 Native NBA/NFL/WNBA/NHL/MLB viewing guide for macOS 15+ (SwiftUI menu bar app, part of the Bug / Worklog suite) and Windows 10/11 x64 (C# / WPF system-tray app).
 
 - Keep the 360-point width, mint accent, system typography, and subtle rounded cards.
@@ -25,4 +27,4 @@ Native NBA/NFL/WNBA/NHL/MLB viewing guide for macOS 15+ (SwiftUI menu bar app, p
 
 ## JimmyWeber.com
 
-For work on the browser guide, read [website publishing](core/WEBSITE-PUBLISHING.md), [website copy and layout](core/WEBSITE-COPY-AND-LAYOUT.md), and [link previews](core/LINK-PREVIEWS.md). Maintain [the handoff](WEBSITE-HANDOFF.md) and track imported guidance in [TOOLKIT_IMPORTS.md](TOOLKIT_IMPORTS.md).
+For work on the browser guide, read the toolkit’s [website publishing](https://github.com/jimmytheghost/agentic-toolkit/blob/main/core/WEBSITE-PUBLISHING.md), [website copy and layout](https://github.com/jimmytheghost/agentic-toolkit/blob/main/core/WEBSITE-COPY-AND-LAYOUT.md), and [link previews](https://github.com/jimmytheghost/agentic-toolkit/blob/main/core/LINK-PREVIEWS.md) guides. Maintain [the website handoff](WEBSITE-HANDOFF.md).

@@ -30,7 +30,7 @@ Build the production executable from this repository in the official `swift:6.3-
 
 ## Link preview and integration checks
 
-The page uses **Tipoff** and “Game times and broadcast listings for the NBA, NFL, WNBA, NHL, and MLB” in its initial HTML metadata. The preview uses the existing 1920 × 1080 [Tipoff banner](https://www.jimmyweber.com/assets/img/projects/tipoff-banner.png) already hosted by JimmyWeber.com. The image was fetched with a preview crawler user agent. Inspect the final crop in Messages during live verification. See [link preview requirements](core/LINK-PREVIEWS.md).
+The page uses **Tipoff** and “Game times and broadcast listings for the NBA, NFL, WNBA, NHL, and MLB” in its initial HTML metadata. The preview uses the existing 1920 × 1080 [Tipoff banner](https://www.jimmyweber.com/assets/img/projects/tipoff-banner.png) already hosted by JimmyWeber.com. The image was fetched with a preview crawler user agent. Inspect the final crop in Messages during live verification. See [link preview requirements](https://github.com/jimmytheghost/agentic-toolkit/blob/main/core/LINK-PREVIEWS.md).
 
 Before release, verify both shortcuts, direct visits and reloads, phone and desktop layouts, keyboard use, date navigation around midnight and daylight saving changes, and schedule behavior with fresh, empty, failed, and saved feeds. Check the actual preview image and crawler metadata on both URLs. Record the deployment file list, verification results, and rollback in the website workspace.
 
