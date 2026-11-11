@@ -272,6 +272,16 @@ const networkLogos = new Map([
   ["cbs", "https://upload.wikimedia.org/wikipedia/commons/4/4e/CBS_logo.svg"],
 ]);
 
+function leagueMark(league) {
+  return mark(`https://a.espncdn.com/i/teamlogos/leagues/500/${league}.png`, "tipoff-league-logo");
+}
+
+function teamPickerMark(league, club) {
+  const code = league === "mlb" ? club.codes.find(code => /^\d+$/.test(code)) ?? club.id : club.id;
+  const [url, ...fallbacks] = teamLogoSources(code, league);
+  return url ? mark(url, "tipoff-team-tile-logo", fallbacks) : null;
+}
+
 function mark(url, className, fallbackUrls = []) {
   const image = element("img", "", className);
   image.alt = "";
@@ -826,10 +836,7 @@ window.addEventListener("scroll", positionCalendar, { passive: true });
 document.querySelector("#zone").textContent = zone.replaceAll("_", " ");
 for (const button of buttons.slice(1)) {
   const label = button.querySelector("span");
-  const logo = mark(
-    `https://a.espncdn.com/i/teamlogos/leagues/500/${button.dataset.league}.png`,
-    "tipoff-league-logo"
-  );
+  const logo = leagueMark(button.dataset.league);
   logo.addEventListener("load", () => label.classList.add("tipoff-visually-hidden"), { once: true });
   button.prepend(logo);
 }
@@ -845,8 +852,8 @@ document.querySelector("#today").addEventListener("click", () => {
   loadDay();
 });
 setFollowedGroups(defaultTeams);
-const settingsReady = import("/tipoff/settings.js?v=20261110-03")
-  .then(({ initializeSettings }) => initializeSettings(applyPreferences, defaultTeamIds))
+const settingsReady = import("/tipoff/settings.js?v=20261110-04")
+  .then(({ initializeSettings }) => initializeSettings(applyPreferences, defaultTeamIds, { leagueMark, teamPickerMark }))
   .catch(() => {
     const message = document.querySelector("#tipoff-settings-message");
     if (message) message.textContent = "Settings could not load. Reload to try again.";

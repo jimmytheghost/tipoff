@@ -206,7 +206,7 @@ function loadGoogle() {
   return googleScript;
 }
 
-export function initializeSettings(applyPreferences, defaultTeamIds) {
+export function initializeSettings(applyPreferences, defaultTeamIds, { leagueMark, teamPickerMark }) {
   const form = document.querySelector("#tipoff-preferences");
   const picker = document.querySelector("#tipoff-zone-picker");
   if (!form || !picker) return;
@@ -219,7 +219,7 @@ export function initializeSettings(applyPreferences, defaultTeamIds) {
   const retry = document.querySelector("#tipoff-account-retry");
   const message = document.querySelector("#tipoff-settings-message");
   const panel = form.closest("details");
-  const checkboxes = new Map();
+  const tiles = new Map();
   const groupCounts = [];
   let guest = browserPreferences();
   let session;
@@ -227,7 +227,7 @@ export function initializeSettings(applyPreferences, defaultTeamIds) {
   let busy = false;
   let signInReady = false;
 
-  const teamsRequest = fetch("/tipoff/teams.json?v=20261110-01", { signal: AbortSignal.timeout(10000) })
+  const teamsRequest = fetch("/tipoff/teams.json?v=20261110-02", { signal: AbortSignal.timeout(10000) })
     .then(response => {
       if (!response.ok) throw new Error("Team settings could not load.");
       return response.json();
@@ -236,13 +236,13 @@ export function initializeSettings(applyPreferences, defaultTeamIds) {
   function valid(preferences) {
     return {
       timeZone: supportedZone(preferences.timeZone),
-      teams: [...new Set(preferences.teams)].filter(id => checkboxes.has(id)),
+      teams: [...new Set(preferences.teams)].filter(id => tiles.has(id)),
     };
   }
 
   function updateTeamCounts() {
-    for (const { count, inputs } of groupCounts) {
-      count.textContent = inputs.filter(input => input.checked).length;
+    for (const { count, buttons } of groupCounts) {
+      count.textContent = buttons.filter(button => button.getAttribute("aria-pressed") === "true").length;
     }
   }
 
@@ -250,7 +250,7 @@ export function initializeSettings(applyPreferences, defaultTeamIds) {
     const value = valid(preferences ?? defaultPreferences);
     zone.select(value.timeZone);
     const selected = new Set(value.teams);
-    for (const [id, checkbox] of checkboxes) checkbox.checked = selected.has(id);
+    for (const [id, button] of tiles) button.setAttribute("aria-pressed", String(selected.has(id)));
     updateTeamCounts();
     applyPreferences(value, catalog);
   }
@@ -330,25 +330,50 @@ export function initializeSettings(applyPreferences, defaultTeamIds) {
         const group = document.createElement("details");
         const label = document.createElement("summary");
         const count = document.createElement("span");
-        label.append(league.toUpperCase(), count);
+        count.className = "tipoff-team-count";
+        label.append(leagueMark(league), league.toUpperCase(), count);
         const options = document.createElement("div");
         options.className = "tipoff-team-options";
-        const inputs = [];
+        const buttons = [];
+        const columns = new Map();
         for (const club of clubs) {
           const id = league + ":" + club.id;
-          const row = document.createElement("label");
-          const checkbox = document.createElement("input");
-          checkbox.type = "checkbox";
-          checkbox.value = id;
-          checkbox.addEventListener("change", updateTeamCounts);
-          checkboxes.set(id, checkbox);
-          inputs.push(checkbox);
-          row.append(checkbox, club.name);
-          options.append(row);
+          const tile = document.createElement("button");
+          tile.type = "button";
+          tile.className = "tipoff-team-tile";
+          tile.title = club.name;
+          tile.setAttribute("aria-label", club.name);
+          tile.setAttribute("aria-pressed", "false");
+          const mark = document.createElement("span");
+          mark.className = "tipoff-team-tile-mark";
+          const logo = teamPickerMark(league, club);
+          if (logo) mark.append(logo);
+          const name = document.createElement("span");
+          name.textContent = club.nickname;
+          tile.append(mark, name);
+          tile.addEventListener("click", () => {
+            tile.setAttribute("aria-pressed", String(tile.getAttribute("aria-pressed") !== "true"));
+            updateTeamCounts();
+          });
+          tiles.set(id, tile);
+          buttons.push(tile);
+          const column = club.group ?? "Teams";
+          if (!columns.has(column)) columns.set(column, []);
+          columns.get(column).push(tile);
+        }
+        for (const [index, column] of [...columns].sort(([a], [b]) => a.localeCompare(b)).entries()) {
+          const [name, teams] = column;
+          const section = document.createElement("section");
+          const heading = document.createElement("h3");
+          heading.id = `tipoff-team-column-${league}-${index}`;
+          heading.textContent = name;
+          section.setAttribute("aria-labelledby", heading.id);
+          section.append(heading, ...teams);
+          options.append(section);
         }
         group.append(label, options);
         choices.append(group);
-        groupCounts.push({ count, inputs });
+        groupCounts.push({ count, buttons });
       }
       showAccount();
       showPreferences(session?.signedIn ? session.preferences : guest);
@@ -368,7 +393,7 @@ export function initializeSettings(applyPreferences, defaultTeamIds) {
   form.addEventListener("submit", event => {
     event.preventDefault();
     if (busy) return;
-    const teams = [...checkboxes].filter(([, checkbox]) => checkbox.checked).map(([id]) => id);
+    const teams = [...tiles].filter(([, tile]) => tile.getAttribute("aria-pressed") === "true").map(([id]) => id);
     const preferences = valid({ timeZone: zone.current(), teams });
     if (session?.signedIn) {
       void mutate({ action: "save", preferences });

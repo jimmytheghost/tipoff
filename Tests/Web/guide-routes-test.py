@@ -64,6 +64,16 @@ try:
     assert status == 200 and headers['Content-Type'] == 'application/json'
     assert {league: len(teams) for league, teams in json.loads(body).items()} == {
         'nba': 30, 'nfl': 32, 'wnba': 15, 'nhl': 32, 'mlb': 30}
+    columns = {
+        'nba': {'Eastern Conference': 15, 'Western Conference': 15},
+        'nfl': {'AFC': 16, 'NFC': 16},
+        'wnba': {'Eastern Conference': 7, 'Western Conference': 8},
+        'nhl': {'Eastern Conference': 16, 'Western Conference': 16},
+        'mlb': {'American League': 15, 'National League': 15},
+    }
+    for league, teams in json.loads(body).items():
+        assert len({team['id'] for team in teams}) == len(teams)
+        assert {group: sum(team['group'] == group for team in teams) for group in columns[league]} == columns[league]
     status, headers, body = get('/tipoff/time-zones.json')
     zones = json.loads(body)
     assert status == 200 and headers['Content-Type'] == 'application/json'

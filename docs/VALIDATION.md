@@ -1,5 +1,10 @@
 # Validation
 
+## Conference and league team tiles — November 10, 2026
+
+- **26 Chromium checks** passed at 360 and 1280 px. Checks covered the two columns and full membership for all five leagues, rendered team and league logos, name fallback when artwork failed, keyboard and pointer selection, visible selected styling and counts, saving to Following, and restoring favorites after reload. Schedule responses used fixtures.
+- All **139 team** and **5 league** primary logo URLs returned images. **106 JavaScript cases**, **26 local route checks**, **28 PHP account integration scenarios**, and **58 Swift tests** passed. macOS packaging and signature verification passed. Live `TipoffCheck 2026-11-10` returned **6 NBA.com games**.
+
 ## Shared time-zone options — November 10, 2026
 
 - **18 Chromium checks** passed at 320 and 1280 px. Checks covered common and secondary city searches, shared North American and European options, seasonal and year-round Mountain Time, restoring an existing Toronto setting, keyboard selection, and saving and restoring a newly selected zone.
