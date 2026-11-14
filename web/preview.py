@@ -19,6 +19,7 @@ PAGE_ASSETS = {
     "/tipoff/guide.js": "guide.js",
     "/tipoff/guide.css": "guide.css",
     "/tipoff/settings.js": "settings.js",
+    "/tipoff/time-zones.json": "time-zones.json",
     "/tipoff/teams.json": "accounts/teams.json",
     "/tipoff/privacy": "privacy.html",
     "/tip-off/guide.js": "guide.js",

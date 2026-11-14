@@ -1,5 +1,12 @@
 # Validation
 
+## Browser appearance and date controls release — November 13, 2026
+
+- Published `tipoff-web-appearance-20261113-01` with frontend asset version `20261113-03`. Publication and a separate verification confirmed four installed checksums and 14 public HTTP assertions.
+- Before publication, **106 JavaScript cases**, the collapsed-default markup check, **26 local route checks**, and **64 fixture-based Chromium checks** passed for the merged guide. The checks included the live Settings implementation’s time-zone search and team tile selection.
+- **24 live Chromium checks** at 390 and 1280 px passed for lime branding, Light/Dark and reload persistence, date navigation, footer Refresh, time-zone and team controls, and responses from the live schedule endpoint. **Eight browser and preview-crawler checks** passed for the canonical page and shortcuts with the existing 1920 × 1080 PNG.
+- The release used the existing account and schedule services. Actual Messages rendering and Google consent were outside this verification. Native tests executed: 0.
+
 ## Lime palette and date controls preview — November 13, 2026
 
 - **106 JavaScript cases**, the collapsed-default markup check, and **25 local route checks** passed.
@@ -11,6 +18,33 @@
 - **106 JavaScript cases**, one collapsed-default markup check, and **25 local route checks** passed.
 - **57 Chromium checks** with fixture schedules passed at 320, 390, and 1280 px. They covered switching and reload persistence, appearance before the guide module runs, keyboard dismissal, readable calendar selections, theme-aware broadcaster marks, and matching schedule geometry and typography against the original guide. Appearance also worked for the visit when team settings and browser storage were unavailable.
 - The key text and accent color pairs measured at least 4.5:1 contrast. Canonical and share-preview metadata matched the prior guide. Native tests executed: 0. This was a local browser preview.
+
+## Dark Google sign-in button — November 10, 2026
+
+Published the Google-provided dark outlined button in release `tipoff-web-google-button-20261110-01`. Release `tipoff-web-google-button-20261110-02` matched the embedded frame’s canvas to its document so the white margins disappeared. The live browser rendered the personalized dark button inside Settings with a 44 px frame. The releases passed **7** and **8** public HTTP checks respectively. **106 JavaScript cases**, **26 local route checks**, and **6 link-preview browser and crawler checks** passed. Live verification covered appearance and loading.
+
+## Live Google sign-in activation — November 10, 2026
+
+Configured the dedicated Tipoff Web client for the production origin and saved the live homepage and privacy URLs in Google Cloud. Verified the real Google button rendered on the public site. Three production account checks passed for the signed-out response, the non-cacheable Google challenge and secure 30-day cookie, and rejection of an unauthenticated preferences save. A real user login and the signed-in save and reload remain for the user’s test.
+
+## Browser Settings release — November 10, 2026
+
+Released the browser Settings, named time zones, team logo tiles, and privacy page at JimmyWeber.com. Verified nine installed file checksums, the five added Apache route rules, 11 live HTTP checks, and eight link-preview page and crawler checks. The public sitemap check uses the host published by the existing sitemap generator. In the live browser, all five sources loaded, Settings opened, and the NBA picker showed 30 logo tiles in its Eastern and Western columns. The private account backend passed PHP 8.1 syntax and permission checks. The account endpoint returned private, non-cacheable HTTP 503 while Google Auth setup awaits consent. No live Google account was authorized and Messages rendering was outside the preview checks.
+
+## Conference and league team tiles — November 10, 2026
+
+- **26 Chromium checks** passed at 360 and 1280 px. Checks covered the two columns and full membership for all five leagues, rendered team and league logos, name fallback when artwork failed, keyboard and pointer selection, visible selected styling and counts, saving to Following, and restoring favorites after reload. Schedule responses used fixtures.
+- All **139 team** and **5 league** primary logo URLs returned images. **106 JavaScript cases**, **26 local route checks**, **28 PHP account integration scenarios**, and **58 Swift tests** passed. macOS packaging and signature verification passed. Live `TipoffCheck 2026-11-10` returned **6 NBA.com games**.
+
+## Shared time-zone options — November 10, 2026
+
+- **18 Chromium checks** passed at 320 and 1280 px. Checks covered common and secondary city searches, shared North American and European options, seasonal and year-round Mountain Time, restoring an existing Toronto setting, keyboard selection, and saving and restoring a newly selected zone.
+- **106 JavaScript cases**, **26 local route checks**, and **58 Swift tests** passed. The catalog regenerated byte-for-byte. macOS packaging and signature verification passed. Live `TipoffCheck 2026-11-10` returned **6 NBA.com games**. Browser checks used fixture schedules.
+
+## Country-grouped time zone picker — November 10, 2026
+
+- **22 Chromium checks** passed at 320 and 1280 px. They covered country order, common U.S. options, muted headings and separators, opening additional zones, accent-insensitive search, an empty search, focus on selection and Escape, and saving and restoring the selected zone.
+- **106 JavaScript cases**, **26 local route checks**, and **58 Swift tests** passed. macOS packaging and signature verification passed. Live `TipoffCheck 2026-11-10` returned **6 NBA.com games**. Browser checks used fixture schedules. Google consent and production publishing were outside this preview.
 
 ## Browser Settings and Google sign-in — November 10, 2026
 
