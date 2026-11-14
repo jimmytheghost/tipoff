@@ -2,6 +2,7 @@ const buttons = [...document.querySelectorAll("[data-league]")];
 const deviceZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 let zone = deviceZone;
 const dateTitle = document.querySelector("#date");
+const todayButton = document.querySelector("#today");
 const leagues = document.querySelector("#leagues");
 const followedLeagues = document.querySelector("#followed-leagues");
 const following = document.querySelector("#following");
@@ -652,9 +653,13 @@ async function loadDay() {
   request?.abort();
   request = new AbortController();
   const key = dayKey(date);
+  const today = dayKey(todayInZone());
+  todayButton.hidden = key === today;
+  if (key < today && todayButton.previousElementSibling !== dateTitle) dateTitle.after(todayButton);
+  if (key > today && todayButton.nextElementSibling !== dateTitle) dateTitle.before(todayButton);
   dateTitle.setAttribute("aria-label", `Choose schedule date, ${date.toLocaleDateString(undefined, { dateStyle: "full" })}`);
   dateTitle.replaceChildren();
-  if (dayKey(todayInZone()) === key) dateTitle.append(element("span", "Today", "tipoff-date-today"));
+  if (key === today) dateTitle.append(element("span", "Today", "tipoff-date-today"));
   dateTitle.append(element("span", dateFormat.format(date), "tipoff-date-label"));
   const { signal } = request;
   following.hidden = true;
@@ -836,13 +841,11 @@ for (const button of buttons.slice(1)) {
 buttons.forEach(button => button.addEventListener("click", () => select(button.dataset.league)));
 document.querySelector("#previous").addEventListener("click", () => moveDay(-1));
 document.querySelector("#next").addEventListener("click", () => moveDay(1));
-const refreshButton = document.querySelector("#refresh");
-refreshButton?.addEventListener("click", loadDay);
-document.querySelector("#today").addEventListener("click", () => {
-  const today = todayInZone();
-  if (refreshButton && dayKey(date) === dayKey(today)) return;
-  date = today;
+document.querySelector("#refresh").addEventListener("click", loadDay);
+todayButton.addEventListener("click", () => {
+  date = todayInZone();
   loadDay();
+  dateTitle.focus({ preventScroll: true });
 });
 setFollowedGroups(defaultTeams);
 const settingsReady = import("/tipoff/settings.js?v=20261113-01")

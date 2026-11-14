@@ -27,8 +27,8 @@
       if (localStorage.getItem("tipoff.appearance") === "light") document.documentElement.dataset.appearance = "light";
     } catch {}
   </script>
-  <link rel="stylesheet" href="/tipoff/guide.css?v=20261113-01">
-  <script type="module" src="/tipoff/guide.js?v=20261113-01"></script>
+  <link rel="stylesheet" href="/tipoff/guide.css?v=20261113-02">
+  <script type="module" src="/tipoff/guide.js?v=20261113-02"></script>
 </head>
 <body class="tipoff-flat">
   <header class="tipoff-header">
@@ -58,6 +58,7 @@
       <button class="button" id="previous" type="button" aria-label="Previous day"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
       <div class="tipoff-date-choice">
         <button id="date" type="button" aria-label="Choose schedule date" aria-haspopup="dialog" aria-expanded="false" aria-controls="date-picker" popovertarget="date-picker" aria-live="polite"></button>
+        <button id="today" class="tipoff-text-button" type="button" hidden>Today</button>
         <div id="date-picker" class="tipoff-calendar" popover="auto" role="dialog" aria-labelledby="calendar-title">
           <div class="tipoff-calendar-header">
             <button id="calendar-previous" class="tipoff-calendar-nav" type="button" aria-label="Previous month"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
@@ -72,10 +73,6 @@
         </div>
       </div>
       <button class="button" id="next" type="button" aria-label="Next day"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
-      <div class="tipoff-date-actions">
-        <button class="button" id="today" type="button">Today</button>
-        <button class="button" id="refresh" type="button">Refresh</button>
-      </div>
     </div>
     <p id="schedule-alert" class="tipoff-schedule-alert" role="status"></p>
     <h2 id="highlights-title" class="tipoff-highlights-title" hidden>National Broadcasts</h2>
@@ -105,6 +102,7 @@
   <footer class="tipoff-footer">
     <div class="tipoff-header-inner">
       <a class="tipoff-back" href="https://www.jimmyweber.com/" aria-label="Back to JimmyWeber.com" title="Back to JimmyWeber.com"><img class="tipoff-home-mark" src="/assets/img/projects/tipoff-home-mark.svg?v=20261107-01" alt="" width="25" height="32"></a>
+      <button id="refresh" class="tipoff-text-button" type="button">Refresh</button>
       <details class="tipoff-schedule-status">
         <summary>
           <span id="schedule-status-summary" role="status">Loading schedules…</span>

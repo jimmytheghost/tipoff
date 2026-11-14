@@ -1,5 +1,11 @@
 # Validation
 
+## Lime palette and date controls preview — November 13, 2026
+
+- **106 JavaScript cases**, the collapsed-default markup check, and **25 local route checks** passed.
+- **62 Chromium checks** with fixture schedules passed at 266, 320, 390, and 1280 px. Verified lime branding and selected dates in both appearances, the Today shortcut on either side of the date and hidden on the current day, calendar navigation, keyboard focus, responsive date controls, and time-zone changes. Footer Refresh preserved the selected past or future date, and the footer fit at all four widths.
+- Page-wide horizontal overflow was checked at 320, 390, and 1280 px. Native tests executed: 0. This was a local browser preview.
+
 ## Browser appearance preview — November 13, 2026
 
 - **106 JavaScript cases**, one collapsed-default markup check, and **25 local route checks** passed.

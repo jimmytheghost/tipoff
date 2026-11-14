@@ -50,9 +50,10 @@
   --ink: #fafafa;
   --muted: #c4c5c7;
   --subtle: #a3a4a6;
-  --accent: #78b5ff;
+  --accent: #c8fa54;
+  --accent-ink: var(--accent);
+  --followed-outline: #93b94c;
   --on-accent: #111213;
-  --red: #ff575c;
   --logo-invert: 1;
   --icon-gap: 0.5rem;
   --text: "Tomorrow", system-ui, sans-serif;
@@ -70,9 +71,8 @@
   --ink: #1c1d1e;
   --muted: #494b4e;
   --subtle: #606267;
-  --accent: #005cb8;
-  --on-accent: #ffffff;
-  --red: #c20d20;
+  --accent-ink: #536b00;
+  --followed-outline: #758443;
   --logo-invert: 0;
 }
 
@@ -89,10 +89,10 @@ body {
   font: 1rem/1.5 var(--text);
 }
 
-a { color: var(--accent); }
+a { color: var(--accent-ink); }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--accent-ink);
   outline-offset: 3px;
 }
 
@@ -121,7 +121,7 @@ a { color: var(--accent); }
   align-items: center;
   gap: 0.5rem;
   flex-shrink: 0;
-  color: var(--red);
+  color: var(--accent);
   font: italic 800 2.15rem/1 var(--wordmark);
   text-decoration: none;
   text-transform: uppercase;
@@ -146,6 +146,16 @@ a { color: var(--accent); }
 .tipoff-home-mark { display: block; width: auto; height: 2rem; }
 .tipoff-back:hover { opacity: 0.8; }
 
+:root[data-appearance="light"] .tipoff-brand span {
+  -webkit-text-stroke: 1.5px #202600;
+  paint-order: stroke fill;
+}
+
+:root[data-appearance="light"] :is(.tipoff-brand-mark, .tipoff-home-mark) {
+  filter: drop-shadow(0 0.6px 0 #202600) drop-shadow(0 -0.6px 0 #202600)
+    drop-shadow(0.6px 0 0 #202600) drop-shadow(-0.6px 0 0 #202600);
+}
+
 .tipoff-guide {
   flex: 1 0 auto;
   padding-block: clamp(1.3rem, 4vw, 2.5rem) 3rem;
@@ -156,7 +166,7 @@ a { color: var(--accent); }
 
 .tipoff-date {
   display: grid;
-  grid-template-columns: 44px minmax(0, 1fr) 44px auto;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
   align-items: center;
   gap: 0.375rem;
   width: 100%;
@@ -182,11 +192,16 @@ a { color: var(--accent); }
   }
 }
 
-.tipoff-date-choice { position: relative; min-width: 0; }
+.tipoff-date-choice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  gap: 0.25rem;
+}
 
 .tipoff-date #date {
   display: block;
-  width: 100%;
   min-height: 44px;
   padding: 0.25rem;
   border: 0;
@@ -261,7 +276,7 @@ a { color: var(--accent); }
 #calendar-weekdays span { padding-block: 0.375rem; }
 .tipoff-calendar-day { min-width: 0; min-height: 44px; font-variant-numeric: tabular-nums; }
 .tipoff-calendar-day[data-outside] { color: var(--subtle); }
-.tipoff-calendar-day[aria-current="date"] { border-color: var(--accent); color: var(--accent); }
+.tipoff-calendar-day[aria-current="date"] { border-color: var(--accent-ink); color: var(--accent-ink); }
 .tipoff-calendar .tipoff-calendar-day[aria-selected="true"] {
   background: var(--accent);
   color: var(--on-accent);
@@ -276,7 +291,7 @@ a { color: var(--accent); }
   margin-top: 0.5rem;
   border-top: 1px solid var(--line);
   border-radius: 0;
-  color: var(--accent);
+  color: var(--accent-ink);
   font-weight: 600;
 }
 
@@ -297,31 +312,30 @@ a { color: var(--accent); }
 
 .button:hover { background: var(--raised); }
 
-#previous,
-#next,
-#today {
+.tipoff-text-button {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 0.25rem;
+  border: 0;
+  border-radius: 0.25rem;
   background: transparent;
-  font-weight: 500;
+  color: var(--accent-ink);
+  font: 600 0.75rem/1 var(--text);
+  cursor: pointer;
 }
+
+.tipoff-text-button:hover { text-decoration: underline; }
 
 #previous,
 #next {
+  background: transparent;
+  font-weight: 500;
   border-color: transparent;
   color: var(--muted);
 }
 
-.tipoff-date-actions { display: flex; gap: 0.375rem; }
-
-#today,
-#refresh {
-  border-radius: 0.25rem;
-  color: var(--ink);
-}
-
 #previous:hover,
-#next:hover,
-#today:hover,
-#refresh:hover {
+#next:hover {
   background: var(--surface);
   color: var(--ink);
 }
@@ -359,8 +373,8 @@ a { color: var(--accent); }
 }
 
 .tipoff-filters [aria-pressed="true"] {
-  box-shadow: inset 0 -2px var(--accent);
-  color: var(--accent);
+  box-shadow: inset 0 -2px var(--accent-ink);
+  color: var(--accent-ink);
 }
 
 .tipoff-league-logo {
@@ -440,7 +454,7 @@ a { color: var(--accent); }
 .tipoff-game p { margin: 0; }
 
 .tipoff-start {
-  color: var(--accent);
+  color: var(--accent-ink);
   font: 700 1rem/1.2 var(--text);
   text-align: right;
   white-space: nowrap;
@@ -458,7 +472,7 @@ a { color: var(--accent); }
 .tipoff-altitude summary {
   width: fit-content;
   padding-block: 0.4rem;
-  color: var(--accent);
+  color: var(--accent-ink);
   cursor: pointer;
 }
 
@@ -470,6 +484,9 @@ a { color: var(--accent); }
   border-top: 1px solid var(--line);
   background: var(--surface);
 }
+
+.tipoff-footer .tipoff-header-inner { gap: 0.5rem; }
+#refresh { margin-inline-start: auto; }
 
 .tipoff-matchup {
   display: flex;
@@ -549,7 +566,6 @@ ul.tipoff-broadcasts {
   flex-shrink: 0;
 }
 
-.tipoff-home-mark,
 .tipoff-network-logo-light {
   filter: brightness(0) invert(var(--logo-invert));
 }
@@ -604,13 +620,13 @@ ul.tipoff-broadcasts {
 
 .tipoff-game.tipoff-game-national,
 .tipoff-game.tipoff-game-followed {
-  border: 1px solid var(--red);
+  border: 1px solid var(--accent-ink);
   border-radius: 0.375rem;
   margin: 0.4rem;
 }
 
 .tipoff-game.tipoff-game-followed {
-  border-color: var(--accent);
+  border-color: var(--followed-outline);
 }
 
 @media (min-width: 44rem) {
@@ -717,7 +733,7 @@ ul.tipoff-broadcasts {
 
 .tipoff-national-marker {
   margin-inline-start: 0;
-  color: var(--red);
+  color: var(--accent-ink);
 }
 
 .tipoff-all-games {
@@ -741,7 +757,7 @@ ul.tipoff-broadcasts {
 
 .tipoff-all-games > summary::after {
   content: "＋" / "";
-  color: var(--accent);
+  color: var(--accent-ink);
 }
 
 .tipoff-all-games[open] > summary::after { content: "−" / ""; }
@@ -801,11 +817,6 @@ ul.tipoff-inline-broadcasts {
 
 .tipoff-matchup-short .tipoff-team-short { white-space: normal; overflow-wrap: anywhere; }
 
-@media (max-width: 31rem) {
-  .tipoff-date { grid-template-columns: 44px minmax(0, 1fr) 44px; }
-  .tipoff-date-actions { grid-column: 1 / -1; justify-content: center; }
-}
-
 .tipoff-schedule-alert {
   margin: 0 0 1rem;
   padding: 0.6rem 0.75rem;
@@ -844,7 +855,7 @@ ul.tipoff-inline-broadcasts {
   align-items: center;
   gap: 0.625rem;
   margin: 0;
-  color: var(--accent);
+  color: var(--accent-ink);
   font: 600 0.625rem/1.4 var(--text);
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -876,8 +887,6 @@ ul.tipoff-inline-broadcasts {
 .tipoff-schedule-status {
   position: relative;
   min-width: 0;
-  max-width: calc(100% - 60px);
-  margin-left: auto;
   border: 0;
   color: var(--muted);
   font: 400 0.75rem/1.5 var(--text);
@@ -886,9 +895,9 @@ ul.tipoff-inline-broadcasts {
 .tipoff-schedule-status > summary {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.5rem;
   min-height: 44px;
-  padding: 0.5rem 0 0.5rem 0.75rem;
+  padding: 0.5rem 0;
   cursor: pointer;
   list-style: none;
 }
@@ -901,7 +910,7 @@ ul.tipoff-inline-broadcasts {
   color: var(--ink);
 }
 .tipoff-schedule-status[open] .tipoff-settings-icon,
-.tipoff-schedule-status > summary:hover .tipoff-settings-icon { color: var(--accent); }
+.tipoff-schedule-status > summary:hover .tipoff-settings-icon { color: var(--accent-ink); }
 #schedule-status-summary {
   flex: 1;
   min-width: 0;
@@ -1008,7 +1017,7 @@ ul.tipoff-inline-broadcasts {
   color: var(--ink);
   cursor: pointer;
 }
-.tipoff-team-options input { accent-color: var(--accent); }
+.tipoff-team-options input { accent-color: var(--accent-ink); }
 .tipoff-sources {
   border-top: 1px solid var(--line);
   margin-top: 0.875rem;
@@ -1052,4 +1061,9 @@ ul.tipoff-inline-broadcasts {
   font-size: 0.9em;
   font-weight: 500;
   color: var(--subtle);
+}
+
+@media (max-width: 18rem) {
+  .tipoff-status-loaded-label,
+  .tipoff-status-loaded-time { white-space: normal; }
 }
