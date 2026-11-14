@@ -1,10 +1,10 @@
 # Tipoff website handoff
 
-## Dark header and footer preview — November 13, 2026
+## Dark header and footer published — November 13, 2026
 
-The local guide keeps the near-black header and charcoal footer in both appearances. Light mode uses the light palette for the schedule, date picker, and Settings panel. The lime marks use the same artwork treatment in both modes. Chromium verified the preview at 320, 615, and 1280 px.
+Published release `tipoff-web-dark-bars-20261113-01` to [JimmyWeber.com/tipoff](https://www.jimmyweber.com/tipoff). Both appearances keep the near-black header and charcoal footer behind the lime branding. The Light palette still applies to the schedule, calendar, and Settings panel.
 
-A future website release needs only the guide stylesheet and HTML, in that order. The stylesheet URL in the preview uses version `20261113-04`. The current published release is documented below.
+The release installs the approved stylesheet and guide HTML from `4e82009` in that order. The stylesheet uses version `20261113-04`. Both installed checksums, seven public HTTP assertions, eight browser and preview-crawler checks, and 16 live Chromium checks passed. Live browser checks at 615 and 1280 px covered bar contrast, Light persistence, date controls, and panel colors. Messages rendering was outside this verification. The local deployment workspace holds the frozen release, screenshots, and guarded rollback.
 
 ## Browser appearance and date controls published — November 13, 2026
 

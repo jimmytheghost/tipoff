@@ -1,9 +1,10 @@
 # Validation
 
-## Dark header and footer preview — November 13, 2026
+## Dark header and footer release — November 13, 2026
 
 - **106 JavaScript cases**, the collapsed-default markup check, and **26 local route checks** passed.
 - **30 local Chromium checks** at 320, 615, and 1280 px covered consistent dark bars across appearances, lime branding and focus colors, light schedule cards and panels, readable date controls inside and outside the header, Light persistence, and layout overflow. Native tests executed: 0.
+- Published `tipoff-web-dark-bars-20261113-01`. Both installed checksums, seven public HTTP assertions, eight browser and preview-crawler checks, and **16 live Chromium checks** at 615 and 1280 px passed. Messages rendering was outside this verification.
 
 ## Browser appearance and date controls release — November 13, 2026
 
