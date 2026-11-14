@@ -1,6 +1,6 @@
 # Tipoff portfolio expansion handoff
 
-Prepared November 7, 2026 for the JimmyWeber.com agent. This is a content and asset package, not a website implementation or deployment. The user requested preparation only. Source baseline: `a1ea842`; see the delivering commit for these assets. No sibling project was modified.
+This content and asset package was prepared November 7, 2026 from source baseline `a1ea842`. The [expanded portfolio page](https://www.jimmyweber.com/pages/projects/tipoff/) was subsequently published. The [website handoff](../../WEBSITE-HANDOFF.md#portfolio-expansion-published--november-7-2026) records the deployed scope, artwork, and verification.
 
 ## Start here
 

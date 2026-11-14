@@ -35,7 +35,7 @@ Configured the dedicated Tipoff Web client for the production origin and saved t
 
 ## Browser Settings release — November 10, 2026
 
-Released the browser Settings, named time zones, team logo tiles, and privacy page at JimmyWeber.com. Verified nine installed file checksums, the five added Apache route rules, 11 live HTTP checks, and eight link-preview page and crawler checks. The public sitemap check uses the host published by the existing sitemap generator. In the live browser, all five sources loaded, Settings opened, and the NBA picker showed 30 logo tiles in its Eastern and Western columns. The private account backend passed PHP 8.1 syntax and permission checks. The account endpoint returned private, non-cacheable HTTP 503 while Google Auth setup awaits consent. No live Google account was authorized and Messages rendering was outside the preview checks.
+Released the browser Settings, named time zones, team logo tiles, and privacy page at JimmyWeber.com. Verified nine installed file checksums, the five added Apache route rules, 11 live HTTP checks, and eight link-preview page and crawler checks. The public sitemap check uses the host published by the existing sitemap generator. In the live browser, all five sources loaded, Settings opened, and the NBA picker showed 30 logo tiles in its Eastern and Western columns. The private account backend passed PHP 8.1 syntax and permission checks. At initial publication the account endpoint returned private, non-cacheable HTTP 503 pending Google configuration. The subsequent activation checks above verified the signed-out production response and sign-in button. No live Google account was authorized and Messages rendering was outside the preview checks.
 
 ## Conference and league team tiles — November 10, 2026
 
@@ -776,7 +776,7 @@ Website-only publication verified the expanded portfolio at https://www.jimmyweb
 
 NBA broadcaster fields now reject malformed structures and nameless entries rather than silently replacing working listings. Windows distinguishes caller cancellation from source timeouts, allowing ESPN fallback and saved Altitude recovery. Its older ESPN broadcast parser preserves radio classification and excludes explicitly non-US listings. Windows now checks refresh eligibility each minute, refreshes after resume, and follows today across midnight while retaining deliberately selected dates.
 
-Validation: 58 Swift tests passed (including a new malformed-broadcaster regression); macOS packaging and signature verification passed; live NBA TipoffCheck returned six games from NBA.com. Windows/.NET tests were not executed because the SDK is unavailable on this Mac. Windows timer/resume behavior still needs native verification. No front-end presentation changes. Website refresh behavior and server job bounding remain outstanding.
+Validation: 58 Swift tests passed (including a new malformed-broadcaster regression); macOS packaging and signature verification passed; live NBA TipoffCheck returned six games from NBA.com. Windows/.NET tests were not executed because the SDK is unavailable on this Mac. Windows timer/resume behavior still needs native verification. No front-end presentation changes. Website refresh behavior and server job bounding shipped in the separate November 10 website reliability release.
 
 ## Windows display and refresh follow-up - November 11, 2026
 
