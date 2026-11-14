@@ -1,5 +1,11 @@
 # Tipoff website handoff
 
+## Dark header and footer preview — November 13, 2026
+
+The local guide keeps the near-black header and charcoal footer in both appearances. Light mode uses the light palette for the schedule, date picker, and Settings panel. The lime marks use the same artwork treatment in both modes. Chromium verified the preview at 320, 615, and 1280 px.
+
+A future website release needs only the guide stylesheet and HTML, in that order. The stylesheet URL in the preview uses version `20261113-04`. The current published release is documented below.
+
 ## Browser appearance and date controls published — November 13, 2026
 
 Published release `tipoff-web-appearance-20261113-01` to [JimmyWeber.com/tipoff](https://www.jimmyweber.com/tipoff). Settings includes Light and Dark with the original lime branding. Dark is the default and the browser remembers the choice. Refresh lives in the footer and checks the selected day. The compact Today shortcut appears to the right of past dates and to the left of future dates. It is hidden on the current day.

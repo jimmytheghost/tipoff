@@ -1,5 +1,10 @@
 # Validation
 
+## Dark header and footer preview — November 13, 2026
+
+- **106 JavaScript cases**, the collapsed-default markup check, and **26 local route checks** passed.
+- **30 local Chromium checks** at 320, 615, and 1280 px covered consistent dark bars across appearances, lime branding and focus colors, light schedule cards and panels, readable date controls inside and outside the header, Light persistence, and layout overflow. Native tests executed: 0.
+
 ## Browser appearance and date controls release — November 13, 2026
 
 - Published `tipoff-web-appearance-20261113-01` with frontend asset version `20261113-03`. Publication and a separate verification confirmed four installed checksums and 14 public HTTP assertions.
