@@ -1,5 +1,11 @@
 # Validation
 
+## Browser appearance preview — November 13, 2026
+
+- **106 JavaScript cases**, one collapsed-default markup check, and **25 local route checks** passed.
+- **57 Chromium checks** with fixture schedules passed at 320, 390, and 1280 px. They covered switching and reload persistence, appearance before the guide module runs, keyboard dismissal, readable calendar selections, theme-aware broadcaster marks, and matching schedule geometry and typography against the original guide. Appearance also worked for the visit when team settings and browser storage were unavailable.
+- The key text and accent color pairs measured at least 4.5:1 contrast. Canonical and share-preview metadata matched the prior guide. Native tests executed: 0. This was a local browser preview.
+
 ## Browser Settings and Google sign-in — November 10, 2026
 
 - **106 JavaScript cases**, **25 local route checks**, **28 account integration scenarios** on PHP 8.1.34, **12 PHP schedule runtime scenarios**, and **7 schedule cache integration tests** passed. Account checks covered verification failures, CSRF and origin checks, session and cookie expiry, rotation, account isolation, saving and restoring settings, and concurrent writes.

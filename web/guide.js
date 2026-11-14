@@ -845,7 +845,7 @@ document.querySelector("#today").addEventListener("click", () => {
   loadDay();
 });
 setFollowedGroups(defaultTeams);
-const settingsReady = import("/tipoff/settings.js?v=20261110-01")
+const settingsReady = import("/tipoff/settings.js?v=20261113-01")
   .then(({ initializeSettings }) => initializeSettings(applyPreferences, defaultTeamIds))
   .catch(() => {
     const message = document.querySelector("#tipoff-settings-message");

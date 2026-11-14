@@ -1,5 +1,11 @@
 # Tipoff website handoff
 
+## Browser appearance preview — November 13, 2026
+
+Settings includes an Appearance selector for ESPN-inspired Light and Dark palettes. Dark is the default. The choice applies immediately and stays in the current browser. Preview locally with `scripts/preview-web.sh`. Fixture-based Chromium checks covered both themes at 320, 390, and 1280 px.
+
+The preview changes `web/index.html`, `web/guide.css`, `web/guide.js`, and `web/settings.js`, with frontend asset version `20261113-01`. For a future release, publish the updated CSS and JavaScript before the guide HTML using the existing route mappings. Canonical URL and share-preview metadata remain associated with the existing Tipoff banner. This preview has no production deployment.
+
 ## Browser Settings and Google sign-in
 
 Implemented in Tipoff source and verified locally. The public guide uses a footer gear for **Settings**, optional Google sign-in, and the existing Schedule sources rows (provider, freshness, fallback/saved status, and matched Altitude freshness). The guide defaults to the device time zone and the four Colorado teams. The team picker covers all five leagues. Signed-out saves use browser storage. Google accounts have private server storage and a 30-day browser session. Account settings take precedence on sign-in, and a first account save may be seeded with that browser’s guest choices.

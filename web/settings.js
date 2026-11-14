@@ -67,6 +67,16 @@ function loadGoogle() {
 }
 
 export function initializeSettings(applyPreferences, defaultTeamIds) {
+  const appearance = document.querySelector("#tipoff-appearance");
+  if (appearance) {
+    const root = document.documentElement;
+    appearance.value = root.dataset.appearance ?? "dark";
+    appearance.addEventListener("change", () => {
+      root.dataset.appearance = appearance.value;
+      try { localStorage.setItem("tipoff.appearance", appearance.value); } catch {}
+    });
+  }
+
   const form = document.querySelector("#tipoff-preferences");
   if (!form) return;
   const defaultPreferences = { timeZone: "", teams: defaultTeamIds };

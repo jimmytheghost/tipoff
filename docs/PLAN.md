@@ -8,6 +8,8 @@ The browser guide puts broadcaster names below highlighted matchups at widths up
 
 The browser guide keeps its public schedule and opens Settings from the gear at the bottom right. Settings includes the existing source and freshness details, a device or selected time zone, and a team picker for the five leagues. The selected zone determines both Today and game start times. The default Following teams are the Nuggets, Broncos, Avalanche, and Rockies. Each matchup appears once in Following even when both teams are selected.
 
+Appearance offers ESPN-inspired Light and Dark palettes. Dark is the default. The choice takes effect immediately and is saved in the current browser.
+
 Guest settings are stored in the browser. The optional Google flow follows Pick a Psych, with server-verified Google identity, private account settings, and a separate 30-day Tipoff session cookie. On first sign-in, an account can adopt saved guest choices. Returning accounts load their saved choices across devices after sign-in. See the [website handoff](../WEBSITE-HANDOFF.md#browser-settings-and-google-sign-in) for activation.
 
 ## Website background reliability — November 10, 2026
